@@ -1,26 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "target": "esnext", // 컴파일 대상 ECMAScript 버전 (최신 버전으로 설정)
+    "module": "esnext", // 모듈 시스템 (ES 모듈 형식으로 설정)
+    "lib": ["dom", "dom.iterable", "esnext"], // 사용할 라이브러리 목록
+    "allowJs": true, // JavaScript 파일 허용 여부
+    "skipLibCheck": true, // 라이브러리 검사 생략 여부
+    "esModuleInterop": true, // ES 모듈 간의 default import 지원 설정
+    "allowSyntheticDefaultImports": true, // default import 를 사용하여 모든 모듈의 default 내보내기를 지원 여부
+    "strict": true, // 엄격한 타입 검사 활성화
+    "forceConsistentCasingInFileNames": true, // 파일 이름에서 일관된 대소문자 강제 여부
+    "noFallthroughCasesInSwitch": true, // switch 문에서 case 절 끝에 break 또는 return을 강제 여부
+    "moduleResolution": "node", // 모듈 해석 방식 설정
+    "resolveJsonModule": true, // .json 파일을 모듈로 해석 여부
+    "isolatedModules": false, // 각 파일을 독립적인 모듈로 컴파일 여부
+    "jsx": "react-jsx", // JSX 문법 설정 (React 프로젝트라면 react-jsx 사용)
+    "baseUrl": "./", // 모듈을 해석할 기본 경로 설정
+    "typeRoots": ["./node_modules/@types"], // @types 패키지를 검색할 루트 경로 설정
+    "types": [] // 프로젝트에서 사용할 타입 정의 파일 목록
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"] // 포함할 파일 및 디렉터리 목록 설정
 }
