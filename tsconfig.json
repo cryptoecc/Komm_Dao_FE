@@ -8,7 +8,7 @@
     "esModuleInterop": true, // ES 모듈 간의 default import 지원 설정
     "allowSyntheticDefaultImports": true, // default import 를 사용하여 모든 모듈의 default 내보내기를 지원 여부
     "strict": true, // 엄격한 타입 검사 활성화
-    "forceConsistentCasingInFileNames": true, // 파일 이름에서 일관된 대소문자 강제 여부
+    "forceConsistentCasingInFileNames": false, // 파일 이름에서 일관된 대소문자 강제 여부
     "noFallthroughCasesInSwitch": true, // switch 문에서 case 절 끝에 break 또는 return을 강제 여부
     "moduleResolution": "node", // 모듈 해석 방식 설정
     "resolveJsonModule": true, // .json 파일을 모듈로 해석 여부
