@@ -10,7 +10,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Container $size={1440}>
-        <Router /> {/* Router 컴포넌트 추가 */}
+        <Router />
       </Container>
     </ThemeProvider>
   );
