@@ -1,8 +1,9 @@
+// src/style/GlobalStyle.tsx
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'WLFont';
+    font-family: '';
     src: url('/public/fonts/Montserrat-Regular.ttf') format('truetype');
   }
 
@@ -10,9 +11,14 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
+  html, body, #root {
+    width: 100%;
     height: 100%;
-    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
     /* background-image: ${({ theme }) =>
       `linear-gradient(to bottom, ${theme.colors.black} 0%, ${theme.colors.black800} 100%)`}; */
     background-color: #ffffff;
@@ -99,8 +105,6 @@ const GlobalStyle = createGlobalStyle`
   hgroup,
   menu,
   nav,
-  output,
-  ruby,
   section,
   summary,
   time,

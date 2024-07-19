@@ -1,14 +1,13 @@
-// src/style/layout.ts
 import styled from 'styled-components';
 
 interface PageProps {
-  $size: number;
+  $size?: number;
 }
 
 export const Container = styled.main<PageProps>`
-  width: ${(props) => props.theme.sizes.maxWidth}px;
-  height: ${(props) => props.theme.sizes.maxHeight}px;
-  max-width: ${({ $size }) => `${$size}px`};
+  width: ${(props) => props.theme.sizes.fullWidth};
+  height: ${(props) => props.theme.sizes.fullHeight};
+  max-width: ${({ $size }) => ($size ? `${$size}px` : '100%')};
   display: flex;
   flex-direction: column;
   margin: 0 auto;

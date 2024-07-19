@@ -2,9 +2,10 @@
 import { DefaultTheme } from 'styled-components';
 
 const sizes = {
-  maxWidth: 1440,
-  maxHeight: 1024,
+  fullWidth: '100%',
+  fullHeight: '100%',
 };
+
 const colors = {
   blue: '#627EEA',
   red: '#E2554C',
