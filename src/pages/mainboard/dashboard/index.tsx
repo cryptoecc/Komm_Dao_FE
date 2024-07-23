@@ -7,7 +7,7 @@ import ConnectWallet from '../../../components/walletbtn/ConnectWallet';
 
 const DashboardContainer = styled.div`
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
+  background-color: ${({ theme }) => theme.colors.white1};
   position: relative; /* For absolute positioning of ConnectWallet */
 `;
 

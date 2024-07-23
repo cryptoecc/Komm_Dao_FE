@@ -14,11 +14,17 @@ import {
   StatItem,
   StatValue,
 } from './ProfileCard.style';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileCard: React.FC = () => {
+  const navigate = useNavigate();
+  const handleProfileClick = () => {
+    navigate('/mainboard/dashboard/profile');
+  };
+
   return (
     <ProfileCardContainer>
-      <ProfileInfo>
+      <ProfileInfo onClick={handleProfileClick}>
         <ProfileImage src="/assets/images/profile_default.png" alt="Profile" />
         <ProfileName>Stella</ProfileName>
         <ProfileJob>Marketer</ProfileJob>
