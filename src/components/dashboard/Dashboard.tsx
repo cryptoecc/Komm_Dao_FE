@@ -5,10 +5,10 @@ import { Wrapper, Title, Content } from './Dashboard.style';
 
 const Dashboard: React.FC = () => {
   return (
-    <Wrapper>
+    <>
       <Title>Dashboard Page</Title>
       <Content>This is the dashboard content.</Content>
-    </Wrapper>
+    </>
   );
 };
 
