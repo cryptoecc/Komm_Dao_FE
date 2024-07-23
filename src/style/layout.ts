@@ -10,5 +10,6 @@ export const Container = styled.main<PageProps>`
   max-width: ${({ $size }) => ($size ? `${$size}px` : '100%')};
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
   margin: 0 auto;
 `;

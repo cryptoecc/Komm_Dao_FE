@@ -3,16 +3,21 @@ import styled from 'styled-components';
 
 export const ContainerMain = styled.div`
   display: flex;
+  /* width: 100%; */
+  /* height: 100%; */
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
+  margin-top: 80px;
   justify-content: center;
-  height: 100vh; /* 화면 전체 높이 */
+  height: 55vh;
 `;
 
 export const Logo = styled.img`
-  width: 200px; /* 로고 이미지 너비 */
-  height: auto; /* 높이 자동 조정 */
-  margin-bottom: 20px; /* 로고와 텍스트 사이 간격 */
+  width: 320px;
+  height: 320px;
+  flex-shrink: 0;
+  /* margin-bottom: 20px; 로고와 텍스트 사이 간격 */
 `;
 
 export const Text = styled.p`
