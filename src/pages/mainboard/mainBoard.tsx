@@ -12,7 +12,7 @@ const MainBoardContainer = styled.div`
 const ContentArea = styled.div`
   flex: 1;
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
+  background-color: ${({ theme }) => theme.colors.white1};
 `;
 
 const MainBoard: React.FC = () => {

@@ -9,6 +9,8 @@ import Deal from './pages/mainboard/deal';
 import Discover from './pages/mainboard/discover';
 import Contribution from './pages/mainboard/contribution';
 import Governance from './pages/mainboard/governance';
+import ProfileMyPage from './pages/mainboard/dashboard/profile';
+import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -25,6 +27,8 @@ const Router = () => {
         { path: PATH.DISCOVER, element: <Discover /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
         { path: PATH.GOVERNANCE, element: <Governance /> },
+        { path: PATH.PROFILE, element: <ProfileMyPage /> },
+        { path: PATH.PROFILE_UPDATE, element: <ProfileUpdate /> },
       ],
     },
   ]);

@@ -21,6 +21,7 @@ const colors = {
   white70: '#D0D0D0',
   white15: '#f9f9f9',
   white10: '#F4F4F4',
+  white1: '#F8F8FA',
   white5: '#f0f0f0',
   white: '#ffffff',
   transparent: 'transparent',
