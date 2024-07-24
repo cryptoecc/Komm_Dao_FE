@@ -1,14 +1,19 @@
-// src/pages/mainboard/dashboard/profile/ProfileUpdate.tsx
-
-import React from 'react';
+import ProfileEdit from '../../../../../components/dashboard/profile/mypage/ProfileUpdate';
+import styled from 'styled-components';
 
 const ProfileUpdate: React.FC = () => {
   return (
-    <div>
-      <h1>Profile Update Page</h1>
-      {/* 여기에 프로필 업데이트 폼 등을 추가합니다. */}
-    </div>
+    <ProfileContainer>
+      <ProfileEdit />
+    </ProfileContainer>
   );
 };
+
+const ProfileContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+`;
 
 export default ProfileUpdate;

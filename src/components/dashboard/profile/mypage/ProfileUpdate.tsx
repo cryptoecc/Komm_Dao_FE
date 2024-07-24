@@ -1,61 +1,77 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
+import {
+  Container,
+  Header,
+  MainContent,
+  ProfileImageSection,
+  ProfileImage,
+  EditImageButton,
+  InputSection,
+  HorizontalGroup,
+  InputField,
+  Label,
+  Input,
+  ButtonGroup,
+  Button,
+  MembershipNftInputWrapper,
+  MembershipNftIcon,
+  MembershipNftLink,
+} from './ProfileUpdate.style';
 
-interface ProfileEditFormProps {
-  onSave: () => void;
-}
-
-const ProfileEditForm: React.FC<ProfileEditFormProps> = ({ onSave }) => {
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('john.doe@example.com');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // 폼 제출 처리 후 저장
-    onSave();
-  };
-
+const ProfileUpdate: React.FC = () => {
   return (
-    <FormContainer onSubmit={handleSubmit}>
-      <FormField>
-        <label>Name:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      </FormField>
-      <FormField>
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </FormField>
-      <SubmitButton type="submit">Save Changes</SubmitButton>
-    </FormContainer>
+    <Container>
+      <Header>Edit Profile</Header>
+      <MainContent>
+        <ProfileImageSection>
+          <ProfileImage src="/assets/images/profile_default.png" alt="Profile" />
+          <EditImageButton>Edit Image</EditImageButton>
+        </ProfileImageSection>
+        <InputSection>
+          <HorizontalGroup>
+            <InputField>
+              <Label>Name</Label>
+              <Input type="text" placeholder="Enter your name" />
+            </InputField>
+            <InputField>
+              <Label>Membership NFT</Label>
+              <MembershipNftInputWrapper>
+                <MembershipNftIcon src="/assets/images/openSea.png" alt="OpenSea Icon" />
+                <MembershipNftLink href="https://opensea.io/assets/nft" target="_blank" rel="noopener noreferrer">
+                  View on OpenSea
+                </MembershipNftLink>
+                <Input type="text" />
+              </MembershipNftInputWrapper>
+            </InputField>
+          </HorizontalGroup>
+          <InputField>
+            <Label>Email</Label>
+            <Input type="email" placeholder="Enter your email" />
+          </InputField>
+          <InputField>
+            <Label>Wallet Address</Label>
+            <Input type="text" placeholder="Enter your wallet address" />
+          </InputField>
+          <InputField>
+            <Label>Bio</Label>
+            <Input type="text" placeholder="Enter a short bio" />
+          </InputField>
+          <InputField>
+            <Label>Role</Label>
+            <select>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+              <option value="viewer">Viewer</option>
+            </select>
+          </InputField>
+          <ButtonGroup>
+            <Button className="cancel">Cancel</Button>
+            <Button className="save">Save</Button>
+          </ButtonGroup>
+        </InputSection>
+      </MainContent>
+    </Container>
   );
 };
 
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const FormField = styled.div`
-  margin-bottom: 20px;
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-`;
-
-const SubmitButton = styled.button`
-  padding: 10px;
-  background-color: #875cff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-export default ProfileEditForm;
+export default ProfileUpdate;

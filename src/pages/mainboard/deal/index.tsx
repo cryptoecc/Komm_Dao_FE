@@ -5,7 +5,7 @@ import ConnectWallet from '../../../components/walletbtn/ConnectWallet';
 
 const DealContainer = styled.div`
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
+  background-color: ${({ theme }) => theme.colors.white1};
   position: relative; /* For absolute positioning of ConnectWallet */
 `;
 
@@ -32,7 +32,7 @@ const ConnectWalletWrapper = styled.div`
 const Deal: React.FC = () => {
   return (
     <DealContainer>
-      <DealTitle>Deal</DealTitle>
+      <DealTitle>Deal : XP 1,000p 이상 접근</DealTitle>
       <ConnectWalletWrapper>
         <ConnectWallet />
       </ConnectWalletWrapper>
