@@ -1,8 +1,6 @@
-// src/components/dashboard/profile/mypage/ProfileDetails.tsx
 import React from 'react';
 import {
   Container,
-  Banner,
   ProfileImageWrapper,
   ProfileImage,
   Info,
