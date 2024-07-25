@@ -28,7 +28,6 @@ export const ProfileImage = styled.img`
 
 export const ProfileName = styled.div`
   color: #000;
-  font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
@@ -37,7 +36,6 @@ export const ProfileName = styled.div`
 
 export const ProfileJob = styled.div`
   color: #6926d7;
-  font-family: Inter;
   font-size: 22px;
   font-style: normal;
   font-weight: 700;
@@ -54,7 +52,6 @@ export const PointsWrap = styled.div`
 
 export const Points = styled.div`
   color: #6926d7;
-  font-family: Inter;
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
@@ -69,7 +66,6 @@ export const PointsIcon = styled.img`
 
 export const XP = styled.div`
   color: #6926d7;
-  font-family: Inter;
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
@@ -94,7 +90,6 @@ export const StatItem = styled.div`
   display: flex;
   justify-content: space-between;
   color: #000;
-  font-family: Inter;
   font-size: 24px;
   font-weight: 400;
   font-style: normal;
@@ -103,7 +98,6 @@ export const StatItem = styled.div`
 
 export const StatValue = styled.div`
   color: #000;
-  font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 400;

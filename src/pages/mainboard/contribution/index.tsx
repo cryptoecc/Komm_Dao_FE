@@ -10,7 +10,6 @@ const ContributionContainer = styled.div`
 
 const ContributionTitle = styled.h1`
   color: #1a0737;
-  font-family: Inter, sans-serif;
   font-size: 32px;
   font-style: normal;
   font-weight: 400;
