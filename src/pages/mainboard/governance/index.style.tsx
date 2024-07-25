@@ -34,7 +34,7 @@ export const MainSection = styled.section`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin: 57px 0 0 0;
+    margin: 47px 0 0 0;
 `
 export const SubSection = styled.section`
     display: flex;
