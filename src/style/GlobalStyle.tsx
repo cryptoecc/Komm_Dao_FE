@@ -2,11 +2,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: '';
-    src: url('/public/fonts/Montserrat-Regular.ttf') format('truetype');
-  }
-
   * {
     box-sizing: border-box;
   }
@@ -20,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     /* background-image: ${({ theme }) =>
-      `linear-gradient(to bottom, ${theme.colors.black} 0%, ${theme.colors.black800} 100%)`}; */
+    `linear-gradient(to bottom, ${theme.colors.black} 0%, ${theme.colors.black800} 100%)`}; */
     background-color: #ffffff;
     font-size: 14px;
   }
@@ -115,7 +110,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
   }
 
