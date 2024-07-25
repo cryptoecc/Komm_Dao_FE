@@ -1,41 +1,31 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import ConnectWallet from '../../../components/walletbtn/ConnectWallet';
-
-const GovernanceContainer = styled.div`
-  padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
-  position: relative; /* For absolute positioning of ConnectWallet */
-`;
-
-const GovernanceTitle = styled.h1`
-  color: #1a0737;
-  font-family: Inter, sans-serif;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 20px; /* Adjust margin as needed */
-`;
-
-const GovernanceContent = styled.div`
-  /* Add your styles here */
-`;
-
-const ConnectWalletWrapper = styled.div`
-  position: absolute; /* Positioning to place it at the top right */
-  top: 20px; /* Adjust top position */
-  right: 20px; /* Adjust right position */
-`;
+import { GovernanceContainer, GovernanceTitle, GovernanceContent, ConnectWalletWrapper, MainSection, SubSection, NavBar, NavList } from './index.style';
+import { sections } from './variables';
 
 const Governance: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
   return (
     <GovernanceContainer>
       <GovernanceTitle>Governance</GovernanceTitle>
       <ConnectWalletWrapper>
         <ConnectWallet />
       </ConnectWalletWrapper>
-      <GovernanceContent>{/* Add your content here */}</GovernanceContent>
+      <GovernanceContent>
+        <MainSection>
+          <NavBar>
+            {sections.map((el, i) => (
+              <NavList active={i === activeIndex} onClick={() => setActiveIndex(i)} key={i}>
+                {el}
+              </NavList>
+            ))}
+          </NavBar>
+        </MainSection>
+        <SubSection>
+
+        </SubSection>
+      </GovernanceContent>
     </GovernanceContainer>
   );
 };

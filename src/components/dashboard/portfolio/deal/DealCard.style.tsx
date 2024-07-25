@@ -19,7 +19,6 @@ export const DealCardContainer = styled.div`
 
 export const DealText = styled.div`
   color: #000;
-  font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -42,7 +41,6 @@ export const ListWrap = styled.div`
 
 export const Name = styled.div`
   color: #fff;
-  font-family: Inter;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -51,7 +49,6 @@ export const Name = styled.div`
 
 export const USDT = styled.div`
   color: #fff;
-  font-family: Inter;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -60,7 +57,6 @@ export const USDT = styled.div`
 
 export const Date = styled.div`
   color: #fff;
-  font-family: Inter;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;

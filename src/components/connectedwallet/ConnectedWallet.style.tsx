@@ -21,7 +21,6 @@ export const ModalHeader = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  font-family: Inter;
   padding: 0px 256px 60px 0px;
   /* top: 150px; */
 `;
