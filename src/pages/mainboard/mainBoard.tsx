@@ -6,13 +6,13 @@ import styled from 'styled-components';
 
 const MainBoardContainer = styled.div`
   display: flex;
-  height: 100vh;
+  height: auto;
 `;
 
 const ContentArea = styled.div`
   flex: 1;
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white1};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const MainBoard: React.FC = () => {
