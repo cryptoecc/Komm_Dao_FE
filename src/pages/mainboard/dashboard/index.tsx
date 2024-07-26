@@ -8,7 +8,6 @@ import UserStats from 'src/components/dashboard/userstats';
 const DashboardContainer = styled.div`
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.white};
-  position: relative;
 `;
 
 const DashboardTitle = styled.h1`
