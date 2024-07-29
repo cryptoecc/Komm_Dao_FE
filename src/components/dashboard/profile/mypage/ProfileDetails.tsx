@@ -23,11 +23,10 @@ import {
   OpenSeaLink,
   EditButton,
   EditIcon,
-  CardContainerWrapper,
 } from './ProfileDetails.style';
-import JoinCard from './JoinCard';
 import { PATH } from 'src/constants/path';
 import { useNavigate } from 'react-router-dom';
+import CardListsContainer from './card/CardListsContainer';
 
 const editIconPath = '/assets/images/edit_icon.png';
 const profile_images = '/assets/images/profile_default.png';
@@ -82,10 +81,7 @@ const ProfileDetails: React.FC = () => {
         <EditIcon src={editIconPath} alt="Edit Icon" />
         Edit
       </EditButton>
-      <CardContainerWrapper>
-        <JoinCard title="Card 1" content="Content for card 1" />
-        <JoinCard title="Card 2" content="Content for card 2" />
-      </CardContainerWrapper>
+      <CardListsContainer />
     </Container>
   );
 };

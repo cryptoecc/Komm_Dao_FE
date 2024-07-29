@@ -47,9 +47,9 @@ export const ProfileImage = styled.img`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; /* 모바일 화면에서 중앙 정렬 */
-  margin-left: 0; /* 모바일 화면에서는 마진 제거 */
-  gap: 10px; /* 요소들 사이의 간격 */
+  align-items: left;
+  margin-left: 0;
+  gap: 10px;
 
   @media (min-width: 769px) {
     margin-left: 10px; /* 큰 화면에서는 마진 추가 */
@@ -233,19 +233,22 @@ export const OpenSeaLink = styled.a`
 `;
 
 export const EditButton = styled.button`
+  height: 58px;
+  padding: 17px 26px;
+  gap: 10px;
+  flex-shrink: 0;
   border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
   background: #000;
   color: white;
-  padding: 10px 20px;
   font-family: Inter;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
   position: absolute;
+  border-radius: 20px;
+  background: var(--Purple-900, #7c4dff);
   top: 20px; /* 상단에서 20px 위치 */
   right: 20px; /* 우측에서 20px 위치 */
 
@@ -260,36 +263,4 @@ export const EditIcon = styled.img`
   width: 20px;
   height: 20px;
   display: block;
-`;
-
-export const CardWrapper = styled.div`
-  width: 100%; /* 기본 너비는 100% */
-  max-width: 300px; /* 카드의 최대 너비 설정 */
-  background-color: #fff; /* 카드 배경 색상 */
-  border: 1px solid #ddd; /* 카드 테두리 색상 */
-  border-radius: 8px; /* 카드 모서리 둥글게 */
-  padding: 16px; /* 카드 내부 여백 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 카드 그림자 */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 카드 내용 중앙 정렬 */
-  gap: 8px; /* 카드 내용 사이의 간격 */
-
-  @media (max-width: 768px) {
-    max-width: 70%; /* 모바일 화면에서 카드의 최대 너비를 70%로 조정 */
-  }
-`;
-
-export const CardContainerWrapper = styled.div`
-  display: flex;
-  align-items: flex-end; /* 우측 정렬 */
-  bottom: 20px; /* 하단에서 20px 위치 */
-  right: 20px; /* 우측에서 20px 위치 */
-  gap: 10px; /* 카드 사이의 간격 */
-
-  @media (max-width: 768px) {
-    bottom: 10px; /* 하단에서 10px 위치 */
-    right: 10px; /* 우측에서 10px 위치 */
-    gap: 5px; /* 모바일 화면에서 카드 사이의 간격 줄이기 */
-  }
 `;
