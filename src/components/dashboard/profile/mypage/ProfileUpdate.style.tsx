@@ -1,31 +1,52 @@
 import styled from 'styled-components';
 
+// 기존 스타일 코드
 export const Container = styled.div`
-  width: 70%;
+  width: 100%;
   height: 100%;
   border-radius: 30px;
-  background: rgba(227, 217, 255, 0.3);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  align-items: flex-start;
+  gap: 40px;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
 `;
 
 export const Header = styled.h1`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
 `;
 
 export const MainContent = styled.div`
   display: flex;
-  gap: 30px;
   align-items: flex-start;
+  gap: 50px;
+
+  @media (max-width: 600px) {
+    gap: 20px;
+    flex-direction: column;
+  }
 `;
 
 export const ProfileImageSection = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
+
+  @media (max-width: 600px) {
+    align-items: center;
+  }
 `;
 
 export const ProfileImage = styled.img`
@@ -36,6 +57,11 @@ export const ProfileImage = styled.img`
   background: lightgray;
   background-size: cover;
   background-repeat: no-repeat;
+
+  @media (max-width: 600px) {
+    width: 120px;
+    height: 120px;
+  }
 `;
 
 export const EditImageButton = styled.button`
@@ -46,7 +72,17 @@ export const EditImageButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background-color: #6e4dd3;
+    background: #d1d1e9;
+    color: var(--Purple-900, #7c4dff);
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  @media (max-width: 600px) {
+    padding: 8px;
+    font-size: 14px;
   }
 `;
 
@@ -55,51 +91,183 @@ export const InputSection = styled.div`
   flex-direction: column;
   gap: 20px;
   flex-grow: 1;
+
+  @media (max-width: 600px) {
+    gap: 15px;
+  }
 `;
 
 export const HorizontalGroup = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 50px;
+  flex-direction: row; /* Ensure horizontal alignment */
+  width: 100%;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 15px;
+  }
 `;
 
-export const InputField = styled.div`
+// Generic InputField with max-width
+const InputField = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 100%;
+  max-width: ${(props) => props.maxWidth || '100%'};
+  position: relative; /* Added for absolute positioning of icon */
+
+  @media (max-width: 600px) {
+    max-width: 100%;
+  }
+`;
+
+// Updated NoBorderInput style to add padding-right for icon
+export const NoBorderInput = styled.input`
+  padding: 10px;
+  border: none; /* Remove border */
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%; /* Ensure input takes up available space */
+  padding-left: 20px; /* Space for icon/link on the left */
+  padding-right: 40px; /* Space for icon on the right */
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+    padding: 8px;
+  }
+`;
+
+export const NameField = styled(InputField)`
+  max-width: 385px;
+  display: flex;
+`;
+
+// New styles for icons
+export const InputIcon = styled.img`
+  position: absolute;
+  right: 10px; /* Position icon on the right */
+  top: 45%;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  @media (max-width: 600px) {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+export const BioInputIcon = styled.img`
+  position: absolute;
+  right: 10px; /* Position icon on the right */
+  bottom: 5%;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  @media (max-width: 600px) {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+export const MembershipNftField = styled(InputField)`
+  max-width: 830px;
+`;
+
+export const EmailField = styled(InputField)`
+  width: auto;
+`;
+
+export const WalletAddressField = styled(InputField)`
+  max-width: 830px;
+`;
+
+export const BioField = styled(InputField)`
+  max-width: 830px;
+`;
+
+export const ExpertiseField = styled(InputField)`
+  width: auto;
 `;
 
 export const Label = styled.label`
   font-size: 16px;
   font-weight: bold;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 export const Input = styled.input`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
-  width: 100%; /* 입력 상자가 가능한 모든 공간을 차지하도록 설정 */
-  padding-left: 20px; /* 아이콘과 링크 공간을 위해 왼쪽 여백 추가 */
+  width: 100%; /* Ensure input takes up available space */
+  padding-left: 20px; /* Space for icon/link on the left */
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  @media (max-width: 600px) {
+    font-size: 14px;
+    padding: 8px;
+  }
+`;
+
+export const BioInput = styled.textarea`
+  width: 832.47px;
+  height: 181.478px;
+  flex-shrink: 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%; /* Ensure input takes up available space */
+  padding-left: 20px; /* Space for icon/link on the left */
+  vertical-align: top; /* Ensure text starts from the top */
+  resize: none; /* Prevents resizing */
+
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+    padding: 8px;
+  }
 `;
 
 export const MembershipNftInputWrapper = styled.div`
   display: flex;
   align-items: center;
-  position: relative; /* 아이콘과 링크를 절대 위치로 배치하기 위한 설정 */
+  position: relative;
   width: 100%;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const MembershipNftIcon = styled.img`
   position: absolute;
-  left: 10px; /* 아이콘의 왼쪽 위치 조정 */
+  left: 10px;
   width: 24px;
   height: 24px;
+
+  @media (max-width: 600px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const MembershipNftLink = styled.a`
   position: absolute;
-  left: 40px; /* 링크의 왼쪽 위치 조정 */
+  left: 40px;
   color: #875cff;
   font-family: Inter;
   font-size: 16px;
@@ -108,6 +276,29 @@ export const MembershipNftLink = styled.a`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+    left: 30px;
+  }
+`;
+
+export const SelectField = styled.select`
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 830px;
+  background: url('../../../../assets/profile/arrow_down.png') no-repeat right 10px center;
+  background-size: 24px 24px;
+  appearance: none;
+
+  @media (max-width: 600px) {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-size: 20px 20px;
+  }
 `;
 
 export const ButtonGroup = styled.div`
@@ -115,6 +306,12 @@ export const ButtonGroup = styled.div`
   gap: 20px;
   justify-content: flex-end;
   margin-top: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
 `;
 
 export const Button = styled.button`
@@ -123,18 +320,74 @@ export const Button = styled.button`
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+
   &.cancel {
-    background-color: #ddd;
-    color: black;
+    border-radius: 20px;
+    border: 1px solid #000;
+    background: #fff;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
   &.save {
-    background-color: #875cff;
-    color: white;
+    border-radius: 20px;
+    color: #fff;
+    background: var(--Purple-900, #7c4dff);
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
   &.save:hover {
-    background-color: #6e4dd3;
+    &:hover {
+      background: #d1d1e9;
+      color: var(--Purple-900, #7c4dff);
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
   }
   &.cancel:hover {
-    background-color: #bbb;
+    &:hover {
+      background: #d1d1e9;
+      color: var(--Purple-900, #7c4dff);
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+`;
+
+// New styles for checkbox and text
+export const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+
+  @media (max-width: 600px) {
+    /* flex-direction: column; */
+    align-items: flex-start;
+  }
+`;
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  cursor: pointer;
+`;
+
+export const CheckboxLabel = styled.label`
+  font-size: 16px;
+  font-weight: normal;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
   }
 `;
