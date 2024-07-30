@@ -251,6 +251,14 @@ export const EditButton = styled.button`
   background: var(--Purple-900, #7c4dff);
   top: 20px; /* 상단에서 20px 위치 */
   right: 20px; /* 우측에서 20px 위치 */
+  &:hover {
+    background: #d1d1e9;
+    color: var(--Purple-900, #7c4dff);
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
 
   @media (max-width: 768px) {
     position: fixed; /* 모바일 화면에서 고정 위치로 변경 */
