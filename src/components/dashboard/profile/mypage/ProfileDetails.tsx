@@ -1,3 +1,4 @@
+// src/pages/dashboard/ProfileDetails.tsx
 import React from 'react';
 import {
   Container,
@@ -27,11 +28,7 @@ import {
 import { PATH } from 'src/constants/path';
 import { useNavigate } from 'react-router-dom';
 import CardListsContainer from './card/CardListsContainer';
-
-const editIconPath = '/assets/images/edit_icon.png';
-const profile_images = '/assets/images/profile_default.png';
-const copyIconPath = '/assets/images/copy_icon.png';
-const openSeaIconPath = '/assets/images/openSea.png';
+import { images } from '../../../../assets/dashboard/images';
 
 const ProfileDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -48,7 +45,7 @@ const ProfileDetails: React.FC = () => {
   return (
     <Container>
       <ProfileContainer>
-        <ProfileImage src={profile_images} alt="Profile" />
+        <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
         <Info>
           <Name>Stella</Name>
           <Job>Marketer</Job>
@@ -60,7 +57,7 @@ const ProfileDetails: React.FC = () => {
         <WalletAddressContentsWrap>
           <WalletContents>0x1234...abcd</WalletContents>
           <CopyButton onClick={handleCopy}>
-            <CopyIcon src={copyIconPath} alt="Copy Icon" />
+            <CopyIcon src={images.copyIcon} alt="Copy Icon" />
           </CopyButton>
         </WalletAddressContentsWrap>
       </WalletAddressWrap>
@@ -71,14 +68,14 @@ const ProfileDetails: React.FC = () => {
       <MembershipNftWrap>
         <MembershipNftTitle>Membership NFT</MembershipNftTitle>
         <MembershipNftWrapInner>
-          <OpenSeaIcon src={openSeaIconPath} alt="OpenSea Icon" />
+          <OpenSeaIcon src={images.openSeaIcon} alt="OpenSea Icon" />
           <OpenSeaLink href="https://opensea.io/assets/nft" target="_blank" rel="noopener noreferrer">
             View on OpenSea
           </OpenSeaLink>
         </MembershipNftWrapInner>
       </MembershipNftWrap>
       <EditButton onClick={handleEditClick}>
-        <EditIcon src={editIconPath} alt="Edit Icon" />
+        <EditIcon src={images.editIcon} alt="Edit Icon" />
         Edit
       </EditButton>
       <CardListsContainer />

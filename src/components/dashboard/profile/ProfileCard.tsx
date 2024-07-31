@@ -1,3 +1,4 @@
+// src/pages/dashboard/ProfileCard.tsx
 import React from 'react';
 import {
   ProfileCardContainer,
@@ -17,7 +18,8 @@ import {
   StyledLink,
 } from './ProfileCard.style';
 import { useNavigate } from 'react-router-dom';
-import { formatNumber } from '../../../../src/utils/utils'; // 포맷터 가져오기
+import { formatNumber } from '../../../../src/utils/utils';
+import { images } from '../../../assets/dashboard/images';
 
 const ProfileCard: React.FC = () => {
   const navigate = useNavigate();
@@ -37,14 +39,14 @@ const ProfileCard: React.FC = () => {
   return (
     <ProfileCardContainer>
       <ProfileInfo onClick={handleProfileClick}>
-        <ProfileImage src="/assets/images/profile_default.png" alt="Profile" />
+        <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
         <ProfileName>Stella</ProfileName>
         <ProfileJob>Marketer</ProfileJob>
       </ProfileInfo>
       <PointsWrap>
         <Points>
           Points
-          <PointsIcon src="/assets/images/error.png" alt="Points Icon" />
+          <PointsIcon src={images.pointsIcon} alt="Points Icon" />
           <Tooltip>
             Earn points through various activities to unlock rewards. Your total XP will be used for rewards.
           </Tooltip>
