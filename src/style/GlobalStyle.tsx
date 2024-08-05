@@ -1,4 +1,3 @@
-// src/style/GlobalStyle.tsx
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -19,16 +18,32 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    /* background-image: ${({ theme }) =>
-      `linear-gradient(to bottom, ${theme.colors.black} 0%, ${theme.colors.black800} 100%)`}; */
     background-color: #ffffff;
     font-size: 14px;
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
+    @media (max-width: 480px) {
+      font-size: 10px;
+    }
   }
 
   :root {
     --text-size-primary: 14px;
     --text-size-medium: 16px;
     --text-size-large: 26px;
+
+    @media (max-width: 768px) {
+      --text-size-primary: 12px;
+      --text-size-medium: 14px;
+      --text-size-large: 22px;
+    }
+
+    @media (max-width: 480px) {
+      --text-size-primary: 10px;
+      --text-size-medium: 12px;
+      --text-size-large: 18px;
+    }
   }
 
   /* reset.css */
@@ -117,9 +132,16 @@ const GlobalStyle = createGlobalStyle`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+
+    @media (max-width: 768px) {
+      font-size: 90%;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 80%;
+    }
   }
 
-  /* HTML5 display-role reset for older browsers */
   article,
   aside,
   details,
@@ -133,17 +155,21 @@ const GlobalStyle = createGlobalStyle`
   section {
     display: block;
   }
+
   body {
     line-height: 1;
   }
+
   ol,
   ul {
     list-style: none;
   }
+
   blockquote,
   q {
     quotes: none;
   }
+
   blockquote:before,
   blockquote:after,
   q:before,
@@ -151,10 +177,12 @@ const GlobalStyle = createGlobalStyle`
     content: '';
     content: none;
   }
+
   table {
     border-collapse: collapse;
     border-spacing: 0;
   }
+
   /* a tag reset*/
   a {
     color: initial;
