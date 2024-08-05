@@ -1,5 +1,6 @@
 export const PATH = {
   MAIN: '/',
+  REGISTER: '/registration',
   MAINBOARD: '/mainboard',
   DASHBOARD: '/mainboard/dashboard',
   DEAL: '/mainboard/deal',

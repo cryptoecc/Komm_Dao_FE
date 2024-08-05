@@ -9,6 +9,7 @@ import Deal from './pages/mainboard/deal';
 import Discover from './pages/mainboard/discover';
 import Contribution from './pages/mainboard/contribution';
 import Governance from './pages/mainboard/governance';
+import SignupPage from './pages/register/SignupPage';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
 
@@ -31,6 +32,7 @@ const Router = () => {
         { path: PATH.PROFILE_UPDATE, element: <ProfileUpdate /> },
       ],
     },
+    { path: PATH.REGISTER, element: <SignupPage /> },
   ]);
 
   return <RouterProvider router={router} />;

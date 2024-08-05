@@ -1,0 +1,57 @@
+import styled from 'styled-components';
+
+export const CharterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+`;
+
+export const Title = styled.h1`
+  font-size: 36px;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 30px;
+`;
+export const DocumentContent = styled.div`
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  height: 600px;
+  overflow-y: scroll;
+  background-color: #fff;
+  margin-bottom: 20px;
+`;
+
+export const AcceptButton = styled.button`
+  background: #7c4dff;
+  color: #fff;
+  border: none;
+  padding: 17px 26px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20px;
+  font-weight: 700;
+  float: right;
+  align-items: center;
+  height: 58px;
+
+  &:hover {
+    background: #d1d1e9;
+    color: #7c4dff;
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+`;
