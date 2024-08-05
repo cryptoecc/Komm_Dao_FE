@@ -9,6 +9,7 @@ import Deal from './pages/mainboard/deal';
 import Discover from './pages/mainboard/discover';
 import Contribution from './pages/mainboard/contribution';
 import Governance from './pages/mainboard/governance';
+import SignupPage from './pages/register/SignupPage';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const Router = () => {
         { path: PATH.GOVERNANCE, element: <Governance /> },
       ],
     },
+    { path: PATH.REGISTER, element: <SignupPage /> },
   ]);
 
   return <RouterProvider router={router} />;
