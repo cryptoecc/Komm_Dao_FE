@@ -1,5 +1,5 @@
+// src/pages/dashboard/ProfileUpdate.tsx
 import React, { useState } from 'react';
-
 import {
   Container,
   Header,
@@ -31,6 +31,7 @@ import {
   BioInputIcon,
   BioInput,
 } from './ProfileUpdate.style';
+import { images } from '../../../../assets/dashboard/images';
 
 // 타입 정의
 interface ProfileData {
@@ -48,7 +49,7 @@ const ProfileUpdate: React.FC = () => {
     name: 'Stella',
     email: 'stella@gmail.com',
     walletAddress: '0x1234567890abcdef',
-    bio: 'I work as an online markerter and my job involves writing blokg articles. ',
+    bio: 'I work as an online marketer and my job involves writing blog articles.',
     expertise: 'marketer', // Default value
     membershipNft: '', // Assuming you will add this data later
     stayUpdated: true, // Dummy value, default is checked
@@ -69,7 +70,7 @@ const ProfileUpdate: React.FC = () => {
       <Header>Edit Profile</Header>
       <MainContent>
         <ProfileImageSection>
-          <ProfileImage src="/assets/images/profile_default.png" alt="Profile" />
+          <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
           <EditImageButton>Edit Image</EditImageButton>
         </ProfileImageSection>
         <InputSection>
@@ -83,12 +84,12 @@ const ProfileUpdate: React.FC = () => {
                 value={profileData.name}
                 onChange={handleInputChange}
               />
-              <InputIcon src="/assets/images/edit.png" alt="Edit" />
+              <InputIcon src={images.editIcon2} alt="Edit" />
             </NameField>
             <MembershipNftField>
               <Label>Membership NFT</Label>
               <MembershipNftInputWrapper>
-                <MembershipNftIcon src="/assets/images/openSea.png" alt="OpenSea Icon" />
+                <MembershipNftIcon src={images.openSeaIcon} alt="OpenSea Icon" />
                 <MembershipNftLink href="https://opensea.io/assets/nft" target="_blank" rel="noopener noreferrer">
                   View on OpenSea
                 </MembershipNftLink>
@@ -110,7 +111,7 @@ const ProfileUpdate: React.FC = () => {
               value={profileData.email}
               onChange={handleInputChange}
             />
-            <InputIcon src="/assets/images/edit.png" alt="Edit" />
+            <InputIcon src={images.editIcon2} alt="Edit" />
           </EmailField>
           <WalletAddressField>
             <Label>Wallet Address</Label>
@@ -125,7 +126,7 @@ const ProfileUpdate: React.FC = () => {
           <BioField>
             <Label>Bio</Label>
             <BioInput name="bio" value={profileData.bio} onChange={handleInputChange} />
-            <BioInputIcon src="/assets/images/edit.png" alt="Edit" />
+            <BioInputIcon src={images.editIcon2} alt="Edit" />
           </BioField>
           <ExpertiseField>
             <Label>Expertise</Label>
