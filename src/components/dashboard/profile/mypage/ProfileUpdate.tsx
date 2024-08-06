@@ -1,5 +1,5 @@
-// src/pages/dashboard/ProfileUpdate.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Container,
   Header,
@@ -41,28 +41,116 @@ interface ProfileData {
   bio: string;
   expertise: string;
   membershipNft: string;
-  stayUpdated: boolean; // Added this field
+  stayUpdated: boolean;
+  profileImage?: File | null;
 }
 
 const ProfileUpdate: React.FC = () => {
   const [profileData, setProfileData] = useState<ProfileData>({
-    name: 'Stella',
-    email: 'stella@gmail.com',
-    walletAddress: '0x1234567890abcdef',
-    bio: 'I work as an online marketer and my job involves writing blog articles.',
-    expertise: 'marketer', // Default value
-    membershipNft: '', // Assuming you will add this data later
-    stayUpdated: true, // Dummy value, default is checked
+    name: '',
+    email: '',
+    walletAddress: '',
+    bio: '',
+    expertise: 'marketer',
+    membershipNft: '',
+    stayUpdated: false,
+    profileImage: null,
   });
+  const [previewImage, setPreviewImage] = useState<string | undefined>(undefined);
+  const walletAddress = '0x7447B0afa966225937dC1EB842afd40bebe1e03F'; // 메타마스크 주소
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
+
+  const fetchProfileData = async () => {
+    try {
+      const response = await axios.get(`/api/user/profile/${walletAddress}`); // URL 경로 수정
+      setProfileData({
+        ...response.data,
+        walletAddress, // Ensure walletAddress is included in the profile data
+      });
+      if (response.data.profileImage) {
+        setPreviewImage(response.data.profileImage);
+      }
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+      alert('Failed to fetch profile data.');
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target as HTMLInputElement;
+    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
-    // 체크박스의 경우, checked 값을 사용
-    setProfileData((prevState) => ({
-      ...prevState,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    if (target instanceof HTMLInputElement && target.type === 'file') {
+      const files = target.files;
+      if (files && files.length > 0) {
+        const file = files[0];
+        setProfileData((prevState) => {
+          const newState = {
+            ...prevState,
+            profileImage: file,
+          };
+
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setPreviewImage(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+
+          console.log('Updated Profile Data:', newState);
+          return newState;
+        });
+      }
+    } else if (target instanceof HTMLInputElement && target.type === 'checkbox') {
+      setProfileData((prevState) => {
+        const newState = {
+          ...prevState,
+          [target.name]: target.checked,
+        };
+
+        console.log('Updated Profile Data:', newState);
+        return newState;
+      });
+    } else {
+      setProfileData((prevState) => {
+        const newState = {
+          ...prevState,
+          [target.name]: target.value,
+        };
+
+        console.log('Updated Profile Data:', newState);
+        return newState;
+      });
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('name', profileData.name);
+      formData.append('email', profileData.email);
+      formData.append('bio', profileData.bio);
+      formData.append('expertise', profileData.expertise);
+      formData.append('membershipNft', profileData.membershipNft);
+      formData.append('stayUpdated', profileData.stayUpdated ? 'Y' : 'N');
+      if (profileData.profileImage) {
+        formData.append('profileImage', profileData.profileImage);
+      }
+
+      const response = await axios.put(`/api/user/profile/${walletAddress}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        alert('Profile updated successfully!');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile. Please try again.');
+    }
   };
 
   return (
@@ -70,8 +158,11 @@ const ProfileUpdate: React.FC = () => {
       <Header>Edit Profile</Header>
       <MainContent>
         <ProfileImageSection>
-          <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
-          <EditImageButton>Edit Image</EditImageButton>
+          <ProfileImage src={previewImage || images.profileDefaultIcon} alt="Profile" />
+          <EditImageButton>
+            <input type="file" name="profileImage" onChange={handleInputChange} />
+            Edit Image
+          </EditImageButton>
         </ProfileImageSection>
         <InputSection>
           <HorizontalGroup>
@@ -119,8 +210,8 @@ const ProfileUpdate: React.FC = () => {
               type="text"
               name="walletAddress"
               placeholder="Enter your wallet address"
-              value={profileData.walletAddress}
-              onChange={handleInputChange}
+              value={walletAddress}
+              readOnly
             />
           </WalletAddressField>
           <BioField>
@@ -147,7 +238,9 @@ const ProfileUpdate: React.FC = () => {
           </CheckboxContainer>
           <ButtonGroup>
             <Button className="cancel">Cancel</Button>
-            <Button className="save">Save</Button>
+            <Button className="save" onClick={handleSave}>
+              Save
+            </Button>
           </ButtonGroup>
         </InputSection>
       </MainContent>
