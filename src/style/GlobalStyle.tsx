@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* 수평 스크롤바 제거 */
   }
 
   body {

@@ -16,6 +16,10 @@ import {
   StatItem,
   StatValue,
   StyledLink,
+  LevelText,
+  PointsAndXPWrap,
+  LinkIcon,
+  StyledLinkWrap,
 } from './ProfileCard.style';
 import { useNavigate } from 'react-router-dom';
 import { formatNumber } from '../../../../src/utils/utils';
@@ -44,14 +48,17 @@ const ProfileCard: React.FC = () => {
         <ProfileJob>Marketer</ProfileJob>
       </ProfileInfo>
       <PointsWrap>
-        <Points>
-          Points
-          <PointsIcon src={images.pointsIcon} alt="Points Icon" />
-          <Tooltip>
-            Earn points through various activities to unlock rewards. Your total XP will be used for rewards.
-          </Tooltip>
-        </Points>
-        <XP>{formatNumber(stats.points)}XP</XP>
+        <LevelText>Level 1</LevelText>
+        <PointsAndXPWrap>
+          <Points>
+            Points
+            <PointsIcon src={images.pointsIcon} alt="Points Icon" />
+            <Tooltip>
+              Earn points through various activities to unlock rewards. Your total XP will be used for rewards.
+            </Tooltip>
+          </Points>
+          <XP>{formatNumber(stats.points)}XP</XP>
+        </PointsAndXPWrap>
       </PointsWrap>
       <StatsWrap>
         <Stat>
@@ -70,8 +77,10 @@ const ProfileCard: React.FC = () => {
           <StatItem>Governance</StatItem>
           <StatValue>{formatNumber(stats.governance)}</StatValue>
         </Stat>
-        {/* 추가된 링크 */}
-        <StyledLink to="/some-path">Go to My Calendar</StyledLink>
+        <StyledLinkWrap>
+          <LinkIcon src={images.pointsIcon} alt="Points Icon" />
+          <StyledLink to="/some-path">Go to My Calendar</StyledLink>
+        </StyledLinkWrap>
       </StatsWrap>
     </ProfileCardContainer>
   );

@@ -5,13 +5,13 @@ import Sidebar from '../../components/dashboard/sidebar/Sidebar';
 import styled from 'styled-components';
 
 const MainBoardContainer = styled.div`
+  width: 100%;
+  min-height: 100vh;
   display: flex;
-  height: auto;
 `;
 
 const ContentArea = styled.div`
   flex: 1;
-  padding: 20px;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
