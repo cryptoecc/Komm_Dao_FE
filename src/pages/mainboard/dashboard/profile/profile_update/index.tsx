@@ -10,10 +10,10 @@ const ProfileUpdate: React.FC = () => {
 };
 
 const ProfileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  padding: 30px;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export default ProfileUpdate;
