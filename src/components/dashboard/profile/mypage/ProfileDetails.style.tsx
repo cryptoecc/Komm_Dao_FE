@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   width: 80%;
@@ -271,4 +271,39 @@ export const EditIcon = styled.img`
   width: 20px;
   height: 20px;
   display: block;
+`;
+
+export const CardContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+`;
+
+export const Card = styled.div<{ index: number }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s, opacity 0.5s;
+  transform: ${(props) => `rotate(${props.index * 10}deg)`};
+  opacity: ${(props) => (props.index === 0 ? 1 : 0)};
+  z-index: ${(props) => 5 - props.index};
+`;
+
+export const CardTitle = styled.h3`
+  margin: 0;
+  font-size: 24px;
+  color: #000;
+`;
+
+export const CardSubtitle = styled.p`
+  margin: 0;
+  font-size: 18px;
+  color: #875cff;
 `;
