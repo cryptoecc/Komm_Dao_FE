@@ -4,6 +4,7 @@ export const PATH = {
   MAINBOARD: '/mainboard',
   DASHBOARD: '/mainboard/dashboard',
   DEAL: '/mainboard/deal',
+  DEAL_DETAILS: '/mainboard/deal/:dealId',
   CONTRIBUTION: '/mainboard/contribution',
   DISCOVER: '/mainboard/discover',
   GOVERNANCE: '/mainboard/governance',

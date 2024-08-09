@@ -12,6 +12,7 @@ import Governance from './pages/mainboard/governance';
 import SignupPage from './pages/register/SignupPage';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
+import DealDtailsPage from './pages/mainboard/deal/dealDtails';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -25,6 +26,7 @@ const Router = () => {
       children: [
         { path: PATH.DASHBOARD, element: <Dashboard /> },
         { path: PATH.DEAL, element: <Deal /> },
+        { path: PATH.DEAL_DETAILS, element: <DealDtailsPage /> },
         { path: PATH.DISCOVER, element: <Discover /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
         { path: PATH.GOVERNANCE, element: <Governance /> },
