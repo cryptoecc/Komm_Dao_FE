@@ -155,7 +155,7 @@ const ProfileUpdate: React.FC = () => {
     profileImage: null,
   });
   const [previewImage, setPreviewImage] = useState<string | undefined>(undefined);
-  const [walletAddress, setWalletAddress] = useState('0x7447B0afa966225937dC1EB842afd40bebe1e03F'); // 메타마스크 지갑연동 추가예정
+  const [walletAddress, setWalletAddress] = useState('0x19df1912977396fbd2CEb8b326adF0847997e2Bf'); // 메타마스크 지갑연동 추가예정
 
   const fetchProfileData = async (address: string) => {
     try {

@@ -15,3 +15,4 @@ export const PATH = {
   USERKOHORTS: '/admin-mainboard/user/kohorts',
   PROFILE: '/mainboard/dashboard/profile',
   PROFILE_UPDATE: '/mainboard/dashboard/profile/profile-update',
+};
