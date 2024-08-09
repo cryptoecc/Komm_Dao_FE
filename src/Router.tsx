@@ -10,8 +10,15 @@ import Discover from './pages/mainboard/discover';
 import Contribution from './pages/mainboard/contribution';
 import Governance from './pages/mainboard/governance';
 import SignupPage from './pages/register/SignupPage';
+import AdminLogin from './pages/admin/admin-login/adminLogin';
+import AdminMainboard from './pages/admin/mainboard/ad_mainboard';
+import UserApplicants from './pages/admin/mainboard/user/applicants/userApplicant';
+import UserCommitte from './pages/admin/mainboard/user/committes/userCommitte';
+import UserKohort from './pages/admin/mainboard/user/kohorts/userKohort';
+import UserMember from './pages/admin/mainboard/user/members/userMember';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
+
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -33,6 +40,17 @@ const Router = () => {
       ],
     },
     { path: PATH.REGISTER, element: <SignupPage /> },
+    { path: PATH.ADMINLOGIN, element: <AdminLogin /> },
+    {
+      path: PATH.ADMINMAINBOARD,
+      element: <AdminMainboard />,
+      children: [
+        { path: PATH.USERAPPLICANTS, element: <UserApplicants /> },
+        { path: PATH.USERMEMBERS, element: <UserMember /> },
+        { path: PATH.USERCOMMITTES, element: <UserCommitte /> },
+        { path: PATH.USERKOHORTS, element: <UserKohort /> },
+      ],
+    },
   ]);
 
   return <RouterProvider router={router} />;

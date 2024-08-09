@@ -7,6 +7,11 @@ export const PATH = {
   CONTRIBUTION: '/mainboard/contribution',
   DISCOVER: '/mainboard/discover',
   GOVERNANCE: '/mainboard/governance',
+  ADMINLOGIN: '/kommdao-admin',
+  ADMINMAINBOARD: '/admin-mainboard',
+  USERAPPLICANTS: '/admin-mainboard/user/applicants',
+  USERMEMBERS: '/admin-mainboard/user/members',
+  USERCOMMITTES: '/admin-mainboard/user/committes',
+  USERKOHORTS: '/admin-mainboard/user/kohorts',
   PROFILE: '/mainboard/dashboard/profile',
   PROFILE_UPDATE: '/mainboard/dashboard/profile/profile-update',
-};
