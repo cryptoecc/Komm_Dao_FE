@@ -13,4 +13,5 @@ export const PATH = {
   USERMEMBERS: '/admin-mainboard/user/members',
   USERCOMMITTES: '/admin-mainboard/user/committes',
   USERKOHORTS: '/admin-mainboard/user/kohorts',
-};
+  PROFILE: '/mainboard/dashboard/profile',
+  PROFILE_UPDATE: '/mainboard/dashboard/profile/profile-update',

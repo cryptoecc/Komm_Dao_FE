@@ -16,6 +16,9 @@ import UserApplicants from './pages/admin/mainboard/user/applicants/userApplican
 import UserCommitte from './pages/admin/mainboard/user/committes/userCommitte';
 import UserKohort from './pages/admin/mainboard/user/kohorts/userKohort';
 import UserMember from './pages/admin/mainboard/user/members/userMember';
+import ProfileMyPage from './pages/mainboard/dashboard/profile';
+import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
+
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -32,6 +35,8 @@ const Router = () => {
         { path: PATH.DISCOVER, element: <Discover /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
         { path: PATH.GOVERNANCE, element: <Governance /> },
+        { path: PATH.PROFILE, element: <ProfileMyPage /> },
+        { path: PATH.PROFILE_UPDATE, element: <ProfileUpdate /> },
       ],
     },
     { path: PATH.REGISTER, element: <SignupPage /> },
