@@ -18,6 +18,7 @@ import UserKohort from './pages/admin/mainboard/user/kohorts/userKohort';
 import UserMember from './pages/admin/mainboard/user/members/userMember';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
+import DealDtailsPage from './pages/mainboard/deal/dealDtails';
 
 
 const Router = () => {
@@ -32,6 +33,7 @@ const Router = () => {
       children: [
         { path: PATH.DASHBOARD, element: <Dashboard /> },
         { path: PATH.DEAL, element: <Deal /> },
+        { path: PATH.DEAL_DETAILS, element: <DealDtailsPage /> },
         { path: PATH.DISCOVER, element: <Discover /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
         { path: PATH.GOVERNANCE, element: <Governance /> },
