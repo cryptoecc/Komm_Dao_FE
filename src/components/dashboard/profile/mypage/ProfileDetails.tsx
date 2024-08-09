@@ -1,5 +1,5 @@
-// src/pages/dashboard/ProfileDetails.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Container,
   ProfileContainer,
@@ -24,38 +24,121 @@ import {
   OpenSeaLink,
   EditButton,
   EditIcon,
+  CardContainer,
+  Card,
+  CardTitle,
+  CardSubtitle,
 } from './ProfileDetails.style';
 import { PATH } from 'src/constants/path';
 import { useNavigate } from 'react-router-dom';
-import CardListsContainer from './card/CardListsContainer';
 import { images } from '../../../../assets/dashboard/images';
 
+// 타입 정의
+interface ProfileData {
+  name: string;
+  email: string;
+  walletAddress: string;
+  bio: string;
+  expertise: string;
+  membershipNft: string;
+  stayUpdated: boolean;
+  profileImage?: string | null;
+}
+
+interface CardData {
+  title: string;
+  subtitle: string;
+  id: number;
+}
+
 const ProfileDetails: React.FC = () => {
+  const walletAddress = '0x19df1912977396fbd2CEb8b326adF0847997e2Bf';
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [cards, setCards] = useState<CardData[]>([
+    {
+      title: 'Kohort',
+      subtitle: 'Nibiru Marketing',
+      id: 0,
+    },
+    {
+      title: 'Kommittee Programs',
+      subtitle: 'KommDAO',
+      id: 1,
+    },
+    {
+      title: 'Event 1',
+      subtitle: 'Details of event 1',
+      id: 2,
+    },
+    {
+      title: 'Event 2',
+      subtitle: 'Details of event 2',
+      id: 3,
+    },
+    {
+      title: 'Event 3',
+      subtitle: 'Details of event 3',
+      id: 4,
+    },
+  ]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/user/profile/${walletAddress}`);
+        setProfileData(response.data);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+        alert('Failed to fetch profile data.');
+      }
+    };
+
+    fetchProfileData();
+  }, [walletAddress]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [cards.length]);
 
   const handleEditClick = () => {
     navigate(PATH.PROFILE_UPDATE);
   };
 
   const handleCopy = () => {
-    const textToCopy = 'Connected WalletAddress';
-    navigator.clipboard.writeText(textToCopy);
+    if (profileData) {
+      navigator.clipboard.writeText(profileData.walletAddress);
+    }
   };
+
+  if (!profileData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container>
       <ProfileContainer>
-        <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
+        <ProfileImage
+          src={
+            profileData.profileImage ? `http://localhost:4000/${profileData.profileImage}` : images.profileDefaultIcon
+          }
+          alt="Profile"
+        />
         <Info>
-          <Name>Stella</Name>
-          <Job>Marketer</Job>
-          <Email>stella@google.com</Email>
+          <Name>{profileData.name}</Name>
+          <Job>{profileData.expertise}</Job>
+          <Email>{profileData.email}</Email>
         </Info>
       </ProfileContainer>
       <WalletAddressWrap>
         <WalletAddress>Wallet Address</WalletAddress>
         <WalletAddressContentsWrap>
-          <WalletContents>0x1234...abcd</WalletContents>
+          <WalletContents>{profileData.walletAddress}</WalletContents>
           <CopyButton onClick={handleCopy}>
             <CopyIcon src={images.copyIcon} alt="Copy Icon" />
           </CopyButton>
@@ -63,22 +146,29 @@ const ProfileDetails: React.FC = () => {
       </WalletAddressWrap>
       <BioWrap>
         <Bio>Bio</Bio>
-        <BioContents>A short bio about John Doe.</BioContents>
+        <BioContents>{profileData.bio}</BioContents>
       </BioWrap>
       <MembershipNftWrap>
         <MembershipNftTitle>Membership NFT</MembershipNftTitle>
         <MembershipNftWrapInner>
           <OpenSeaIcon src={images.openSeaIcon} alt="OpenSea Icon" />
-          <OpenSeaLink href="https://opensea.io/assets/nft" target="_blank" rel="noopener noreferrer">
+          <OpenSeaLink href={profileData.membershipNft} target="_blank" rel="noopener noreferrer">
             View on OpenSea
           </OpenSeaLink>
         </MembershipNftWrapInner>
       </MembershipNftWrap>
+      <CardContainer>
+        {cards.map((card, index) => (
+          <Card key={card.id} index={(index - currentIndex + cards.length) % cards.length}>
+            <CardTitle>{card.title}</CardTitle>
+            <CardSubtitle>{card.subtitle}</CardSubtitle>
+          </Card>
+        ))}
+      </CardContainer>
       <EditButton onClick={handleEditClick}>
         <EditIcon src={images.editIcon} alt="Edit Icon" />
         Edit
       </EditButton>
-      <CardListsContainer />
     </Container>
   );
 };

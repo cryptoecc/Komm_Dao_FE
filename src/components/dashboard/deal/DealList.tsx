@@ -1,4 +1,3 @@
-// components/mainboard/dashboard/DealList.tsx
 import React from 'react';
 import styled from 'styled-components';
 import DealCard from './DealCard';
@@ -8,87 +7,49 @@ interface Deal {
   title: string;
   description: string;
   amount: number;
-  percentage: number; // 게이지의 비율을 나타내는 새로운 필드 추가
+  percentage: number;
+  deal_image_url: string;
+  start_date: string;
+  end_date: string;
 }
 
-const deals: Deal[] = [
-  {
-    id: 1,
-    title: 'Deal 1',
-    description: 'Description for deal 1',
-    amount: 1000,
-    percentage: 50,
-  },
-  {
-    id: 2,
-    title: 'Deal 2',
-    description: 'Description for deal 2',
-    amount: 2000,
-    percentage: 60,
-  },
-  {
-    id: 3,
-    title: 'Deal 3',
-    description: 'Description for deal 3',
-    amount: 3000,
-    percentage: 70,
-  },
-  {
-    id: 4,
-    title: 'Deal 4',
-    description: 'Description for deal 4',
-    amount: 4000,
-    percentage: 80,
-  },
-  {
-    id: 5,
-    title: 'Deal 5',
-    description: 'Description for deal 4',
-    amount: 4000,
-    percentage: 90,
-  },
-  {
-    id: 6,
-    title: 'Deal 6',
-    description: 'Description for deal 4',
-    amount: 4000,
-    percentage: 100,
-  },
-  // Add more deals as needed
-];
-
+interface DealListProps {
+  deals: Deal[];
+  onDealClick: (deal: Deal) => void; // Accept onDealClick as a prop
+}
 const DealListContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 30px; /* Add gap between items */
-  justify-content: center; /* 화면 중앙 정렬 */
+  margin-left: 50px;
+  padding: 10px;
+  flex-wrap: wrap; /* 화면 크기에 따라 카드가 줄을 바꿈 */
+  gap: 40px;
+  justify-content: flex-start; /* 카드들을 왼쪽 정렬 */
 
   @media (max-width: 767px) {
-    gap: 15px; /* 모바일 화면에서 카드들 사이의 간격을 줄임 */
+    gap: 15px;
   }
 `;
 
 const DealWrapper = styled.div`
-  flex: 1 1 auto; /* 카드의 크기가 브라우저 크기에 맞게 자동 조정됨 */
+  flex: 1 1 auto; /* 카드가 가능한 공간만큼 확장될 수 있도록 설정 */
   display: flex;
   justify-content: center;
-  max-width: 500px; /* 카드 최대 너비 고정 */
-  max-height: 400px; /* 카드 최대 높이 고정 */
+  max-width: 500px; /* 카드의 최대 너비를 500px로 제한 */
 
   @media (max-width: 767px) {
-    width: 90vw; /* 모바일 화면에서 카드 너비를 브라우저 너비의 90%로 설정 */
+    width: 90vw; /* 모바일 화면에서 카드 너비를 뷰포트 너비의 90%로 설정 */
   }
 
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 50vw; /* 태블릿 화면에서 카드 너비를 브라우저 너비의 50%로 설정 */
+    width: 70vw; /* 태블릿 화면에서 카드 너비를 뷰포트 너비의 70%로 설정 */
   }
 `;
 
-const DealList: React.FC = () => {
+const DealList: React.FC<DealListProps> = ({ deals, onDealClick }) => {
   return (
     <DealListContainer>
       {deals.map((deal) => (
-        <DealWrapper key={deal.id}>
+        <DealWrapper key={deal.id} onClick={() => onDealClick(deal)}>
           <DealCard deal={deal} />
         </DealWrapper>
       ))}

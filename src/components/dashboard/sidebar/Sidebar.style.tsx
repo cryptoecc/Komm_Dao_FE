@@ -7,15 +7,42 @@ export const DashboardContainer = styled.div`
   min-height: 100vh; /* 최소 높이를 화면 전체 높이로 설정 */
 `;
 
+// export const SidebarContainer = styled.div`
+//   width: 275px;
+//   height: 100%; /* 높이를 부모 컨테이너에 맞춤 */
+//   flex-shrink: 0;
+//   background: #f9f8fe;
+//   display: flex;
+//   flex-direction: column;
+//   padding-left: 20px;
+//   align-items: flex-start;
+//   transition: width 0.3s ease;
+
+//   @media (max-width: 1024px) {
+//     width: 220px; /* 중간 크기의 화면에서 사이드바 크기 조정 */
+//   }
+
+//   @media (max-width: 768px) {
+//     width: 180px; /* 작은 화면에서 사이드바 크기 조정 */
+//   }
+
+//   @media (max-width: 480px) {
+//     width: 60px; /* 모바일 화면에서 사이드바 최소 크기로 축소 */
+//     padding-left: 10px; /* 패딩 줄이기 */
+//   }
+// `;
+
 export const SidebarContainer = styled.div`
   width: 275px;
-  height: 100%; /* 높이를 부모 컨테이너에 맞춤 */
+  height: 100vh; /* 전체 화면 높이로 설정 */
   flex-shrink: 0;
   background: #f9f8fe;
   display: flex;
   flex-direction: column;
   padding-left: 20px;
   align-items: flex-start;
+  position: sticky; /* 스크롤 시 고정 */
+  top: 0; /* 뷰포트의 상단에 고정 */
   transition: width 0.3s ease;
 
   @media (max-width: 1024px) {
