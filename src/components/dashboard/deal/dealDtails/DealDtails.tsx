@@ -1,43 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import { images } from '../../../../assets/deal/images';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 20px;
-  gap: 40px;
-  justify-content: space-between;
+  padding: 10px;
+  justify-content: space-around;
+  width: 90%;
+  max-width: 1200px; /* 최대 너비 설정 */
+  margin: 0 auto; /* 화면 중앙 정렬 */
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 5px;
+  }
 `;
 
 const LeftSection = styled.div`
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  width: 50%;
+  position: relative; /* BackButton과 겹치지 않게 하기 위해 relative 위치 지정 */
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 5px;
+  }
 `;
 
 const RightSection = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-`;
+  padding: 20px;
+  align-items: center; /* 오른쪽 정렬 */
+  width: 50%;
 
-const BackButton = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  color: #875cff;
-  font-weight: 700;
-  margin-bottom: 20px;
+  @media (max-width: 768px) {
+    width: 100%;
+    align-items: flex-start; /* 모바일에서 왼쪽 정렬 */
+    padding: 5px;
+  }
 `;
 
 const DealImage = styled.img`
-  width: 100%;
+  max-width: 450px;
   height: auto;
   border-radius: 10px;
-  margin-bottom: 20px;
+  border: 10px white solid;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    justify-content: center;
+  }
+`;
+
+const Icon = styled.img`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 `;
 
 const DealSummary = styled.div`
@@ -45,26 +85,41 @@ const DealSummary = styled.div`
   color: #555;
   line-height: 1.6;
   overflow-y: auto;
-  max-height: 200px; /* Adjust this height as needed */
-  padding-right: 10px; /* To prevent text from being hidden under scrollbar */
+  width: 100%;
+  max-height: 300px;
+  margin-top: 20px;
+  padding-right: 10px;
+
+  @media (max-width: 768px) {
+    max-height: 200px;
+    margin-top: 10px;
+  }
 `;
 
 const ParticipationCard = styled.div`
   background: #ffffff;
-  border: 1px solid #e0e0e0;
+  border: 7px solid #f9f9f9;
   border-radius: 20px;
-  padding: 20px;
+  padding: 40px;
+
+  width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* 왼쪽 정렬 */
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin-top: 10px;
+  }
 `;
 
 const ProgressText = styled.span`
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
   color: #000;
+  align-self: flex-end; /* 오른쪽 정렬 */
+  margin-bottom: 10px;
 `;
 
 const ProgressBar = styled.div`
@@ -72,7 +127,8 @@ const ProgressBar = styled.div`
   height: 10px;
   background: #e0e0e0;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 5px; /* 간격 조정 */
+  margin-bottom: 5px; /* 간격 조정 */
   position: relative;
 `;
 
@@ -86,25 +142,95 @@ const ProgressFill = styled.div<{ percentage: number }>`
 
 const DealInfoRow = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
-  font-size: 18px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 30px;
+
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
+`;
+
+const DealRoundText = styled.div`
+  font-size: 32px;
   font-weight: 600;
+  margin-bottom: 10px;
+`;
+
+const DealRaisingText = styled.div`
+  color: black;
+  font-size: 25px;
+  font-family: Inter;
+  font-weight: 400;
+  word-wrap: break-word;
 `;
 
 const CountdownContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
   margin-top: 20px;
+  width: 100%;
+  position: relative;
+
+  @media (max-width: 768px) {
+    justify-content: flex-start; /* 모바일에서 왼쪽 정렬 */
+    margin-top: 10px;
+  }
 `;
 
-const CountdownItem = styled.div`
-  text-align: center;
-  margin: 0 10px;
+const CountdownText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 30px;
   font-size: 20px;
+  font-weight: 400;
+  color: #a380f9;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    justify-content: flex-start; /* 모바일에서 왼쪽 정렬 */
+  }
+`;
+
+const CountdownBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 10px;
+  width: 60px;
+  height: 60px;
+  margin: 0 5px;
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+  }
+`;
+
+const CountdownValue = styled.div`
+  font-size: 24px;
   font-weight: 700;
+  background-color: #f8f8fa;
+  color: #000;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`;
+
+const CountdownLabel = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  color: black;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 const ParticipateButton = styled.button`
@@ -116,6 +242,14 @@ const ParticipateButton = styled.button`
   border-radius: 30px;
   font-size: 18px;
   cursor: pointer;
+  align-self: flex-end; /* 오른쪽 정렬 */
+
+  @media (max-width: 768px) {
+    align-self: flex-start; /* 모바일에서 왼쪽 정렬 */
+    width: 100%; /* 버튼 너비를 100%로 설정 */
+    font-size: 16px;
+    padding: 10px 20px;
+  }
 
   &:hover {
     background-color: #774bcc;
@@ -125,10 +259,8 @@ const ParticipateButton = styled.button`
 const DealDetails: React.FC = () => {
   const { dealId } = useParams<{ dealId: string }>();
   const location = useLocation();
-  const navigate = useNavigate();
   const deal = location.state?.deal;
 
-  // Fallback data if the deal is not passed via state
   const fallbackDeal = {
     id: 1,
     title: 'Fallback Deal Title',
@@ -143,16 +275,38 @@ const DealDetails: React.FC = () => {
 
   const selectedDeal = deal || fallbackDeal;
 
-  // Simulate countdown time
-  const remainingTime = '14 Hours 0 Mins 20 Secs';
+  const calculateRemainingTime = (endDate: string) => {
+    const now = dayjs();
+    const end = dayjs(endDate);
+    const duration = dayjs.duration(end.diff(now));
+
+    return {
+      days: duration.days(),
+      hours: duration.hours(),
+      minutes: duration.minutes(),
+      seconds: duration.seconds(),
+    };
+  };
+
+  const [remainingTime, setRemainingTime] = useState(calculateRemainingTime(selectedDeal.end_date));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRemainingTime(calculateRemainingTime(selectedDeal.end_date));
+    }, 1000);
+
+    return () => clearInterval(timer); // Cleanup the interval on component unmount
+  }, [selectedDeal.end_date]);
 
   return (
     <Container>
       <LeftSection>
-        <BackButton onClick={() => navigate(-1)}>
-          <span>&larr;</span> Back to Deal
-        </BackButton>
-        <DealImage src={selectedDeal.deal_image_url} alt="Deal" />
+        <DealImage src={images.deal} alt="Deal" />
+        <IconWrapper>
+          <Icon src={images.language} alt="Language" />
+          <Icon src={images.discord} alt="Discord" />
+          <Icon src={images.twitter} alt="Twitter" />
+        </IconWrapper>
         <DealSummary>{selectedDeal.description}</DealSummary>
       </LeftSection>
 
@@ -163,17 +317,31 @@ const DealDetails: React.FC = () => {
             <ProgressFill percentage={selectedDeal.percentage} />
           </ProgressBar>
           <DealInfoRow>
-            <span>Seed Round</span>
-            <span>Raising $4m at $50m</span>
+            <DealRoundText>Seed Round</DealRoundText>
+            <DealRaisingText>Raising $4m at $50m</DealRaisingText>
           </DealInfoRow>
+          <CountdownText>ENDS IN</CountdownText>
+
           <CountdownContainer>
-            <CountdownItem>
-              <div>ENDS IN</div>
-              <div>{remainingTime}</div>
-            </CountdownItem>
+            <CountdownBox>
+              <CountdownValue>{remainingTime.days}</CountdownValue>
+              <CountdownLabel>Day</CountdownLabel>
+            </CountdownBox>
+            <CountdownBox>
+              <CountdownValue>{remainingTime.hours}</CountdownValue>
+              <CountdownLabel>Hours</CountdownLabel>
+            </CountdownBox>
+            <CountdownBox>
+              <CountdownValue>{remainingTime.minutes}</CountdownValue>
+              <CountdownLabel>Mins</CountdownLabel>
+            </CountdownBox>
+            <CountdownBox>
+              <CountdownValue>{remainingTime.seconds}</CountdownValue>
+              <CountdownLabel>Secs</CountdownLabel>
+            </CountdownBox>
           </CountdownContainer>
-          <ParticipateButton>Participate</ParticipateButton>
         </ParticipationCard>
+        <ParticipateButton>Participate</ParticipateButton>
       </RightSection>
     </Container>
   );

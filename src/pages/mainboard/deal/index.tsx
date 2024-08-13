@@ -24,6 +24,7 @@ const DealPage: React.FC = () => {
         const response = await axios.get('http://localhost:4000/api/deals');
         setDeals(response.data);
         setLoading(false);
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching deals:', error);
         setLoading(false);
