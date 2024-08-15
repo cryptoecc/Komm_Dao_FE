@@ -1,4 +1,4 @@
-import { web3 } from '../utils/web3';
+import web3 from '../utils/web3';
 import { MAP_STR_ABI } from './abi-map';
 
 export async function getAbiStrForFunction(jdata) {
