@@ -19,6 +19,7 @@ import UserMember from './pages/admin/mainboard/user/members/userMember';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
 import DealDtailsPage from './pages/mainboard/deal/dealDtails';
+import Test from './pages/test';
 
 
 const Router = () => {
@@ -53,6 +54,7 @@ const Router = () => {
         { path: PATH.USERKOHORTS, element: <UserKohort /> },
       ],
     },
+    { path: 'test', element: <Test /> },
   ]);
 
   return <RouterProvider router={router} />;
