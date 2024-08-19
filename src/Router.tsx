@@ -7,6 +7,7 @@ import MainBoard from './pages/mainboard/mainBoard';
 import Dashboard from './pages/mainboard/dashboard';
 import Deal from './pages/mainboard/deal';
 import Discover from './pages/mainboard/discover';
+import DiscoverDetails from './pages/mainboard/discover/discoverDtails';
 import Contribution from './pages/mainboard/contribution';
 import Governance from './pages/mainboard/governance';
 import SignupPage from './pages/register/SignupPage';
@@ -36,6 +37,7 @@ const Router = () => {
         { path: PATH.DEAL_DETAILS, element: <DealDtailsPage /> },
         { path: PATH.DEAL_INTEREST, element: <DealInterest /> },
         { path: PATH.DISCOVER, element: <Discover /> },
+        { path: PATH.DISCOVER_DETAILS, element: <DiscoverDetails /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
         { path: PATH.GOVERNANCE, element: <Governance /> },
         { path: PATH.PROFILE, element: <ProfileMyPage /> },
