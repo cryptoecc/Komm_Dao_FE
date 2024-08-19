@@ -1,14 +1,13 @@
+import React from 'react';
 import styled from 'styled-components';
-import DealDetails from 'src/components/dashboard/deal/dealDtails/DealDtails';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import DealInterestCard from '../../../../../components/dashboard/deal/dealInterest/DealInterestCard';
 
 const PageContainer = styled.div`
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  margin-bottom: 20px;
+  height: 100vh;
 `;
 
 const BackButton = styled.div`
@@ -17,7 +16,7 @@ const BackButton = styled.div`
   cursor: pointer;
   color: #875cff;
   font-weight: 700;
-  margin-bottom: 20px; /* Title 아래에 위치하도록 조정 */
+  margin-bottom: 20px;
 `;
 
 const BackLink = styled.div`
@@ -32,20 +31,21 @@ const BackLink = styled.div`
   }
 `;
 
-const DealDtailsPage: React.FC = () => {
+const DealInterestPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const deal = location.state?.deal; // DealDetails에서 넘겨준 deal 데이터를 받아옵니다.
 
   return (
     <PageContainer>
-      <Title>Deals</Title>
       <BackButton onClick={() => navigate(-1)}>
         <BackLink>
           <span>&larr;</span>Back to Deal
         </BackLink>
       </BackButton>
-      <DealDetails />
+      {deal ? <DealInterestCard deal={deal} /> : <div>No deal data available.</div>}
     </PageContainer>
   );
 };
 
-export default DealDtailsPage;
+export default DealInterestPage;

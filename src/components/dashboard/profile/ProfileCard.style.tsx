@@ -35,11 +35,13 @@ export const ProfileImage = styled.img`
   width: 110px;
   height: 95px;
   flex-shrink: 0;
+  border-radius: 50px;
 
   @media (max-width: 768px) {
     width: 90px; /* 작은 화면에서는 이미지 크기 축소 */
     height: 80px;
     margin-top: 10px;
+    border-radius: 50px;
   }
 `;
 
