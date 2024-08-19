@@ -19,7 +19,7 @@ import UserMember from './pages/admin/mainboard/user/members/userMember';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
 import DealDtailsPage from './pages/mainboard/deal/dealDtails';
-
+import DealInterest from './pages/mainboard/deal/dealDtails/dealInterest'; // Correct the path to your new component
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -34,6 +34,7 @@ const Router = () => {
         { path: PATH.DASHBOARD, element: <Dashboard /> },
         { path: PATH.DEAL, element: <Deal /> },
         { path: PATH.DEAL_DETAILS, element: <DealDtailsPage /> },
+        { path: PATH.DEAL_INTEREST, element: <DealInterest /> },
         { path: PATH.DISCOVER, element: <Discover /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
         { path: PATH.GOVERNANCE, element: <Governance /> },
