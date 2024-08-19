@@ -1,5 +1,5 @@
-// src/pages/dashboard/ProfileCard.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   ProfileCardContainer,
   ProfileInfo,
@@ -26,26 +26,37 @@ import { formatNumber } from '../../../../src/utils/utils';
 import { images } from '../../../assets/dashboard/images';
 
 const ProfileCard: React.FC = () => {
+  const [userData, setUserData] = useState<any>(null); // 사용자 데이터를 상태로 관리
   const navigate = useNavigate();
+  const walletAddress = '0x7447B0afa966225937dC1EB842afd40bebe1e03F'; // 실제 사용자의 지갑 주소로 변경
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/user/profile/${walletAddress}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [walletAddress]);
+
   const handleProfileClick = () => {
     navigate('/mainboard/dashboard/profile');
   };
 
-  // 예시 데이터, 실제로는 backend에서 받아온 데이터로 대체됨
-  const stats = {
-    points: 22250,
-    deal: 2,
-    discover: 4,
-    contribution: 2,
-    governance: 4,
-  };
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ProfileCardContainer>
       <ProfileInfo onClick={handleProfileClick}>
-        <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
-        <ProfileName>Stella</ProfileName>
-        <ProfileJob>Marketer</ProfileJob>
+        <ProfileImage src={`http://localhost:4000/${userData.profileImage}`} alt="Profile" />
+        <ProfileName>{userData.name}</ProfileName>
+        <ProfileJob>{userData.expertise || 'Job Title'}</ProfileJob>
       </ProfileInfo>
       <PointsWrap>
         <LevelText>Level 1</LevelText>
@@ -57,25 +68,25 @@ const ProfileCard: React.FC = () => {
               Earn points through various activities to unlock rewards. Your total XP will be used for rewards.
             </Tooltip>
           </Points>
-          <XP>{formatNumber(stats.points)}XP</XP>
+          <XP>{formatNumber(22250)} XP</XP>
         </PointsAndXPWrap>
       </PointsWrap>
       <StatsWrap>
         <Stat>
           <StatItem>Deal</StatItem>
-          <StatValue>{formatNumber(stats.deal)}</StatValue>
+          <StatValue>{formatNumber(2)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Discover</StatItem>
-          <StatValue>{formatNumber(stats.discover)}</StatValue>
+          <StatValue>{formatNumber(4)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Contribution</StatItem>
-          <StatValue>{formatNumber(stats.contribution)}</StatValue>
+          <StatValue>{formatNumber(2)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Governance</StatItem>
-          <StatValue>{formatNumber(stats.governance)}</StatValue>
+          <StatValue>{formatNumber(4)}</StatValue>
         </Stat>
         <StyledLinkWrap>
           <LinkIcon src={images.pointsIcon} alt="Points Icon" />
