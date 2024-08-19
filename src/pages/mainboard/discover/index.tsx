@@ -1,41 +1,47 @@
 // src/pages/mainboard/discover/index.tsx (Example)
 import React from 'react';
+import SearchBar from 'src/components/dashboard/discover/SearchBar';
+import { CalendarButton } from 'src/components/dashboard/discover/SearchBar.style';
+import CalendarIcon from '../../../assets/discover/calendar_btn.png';
 import styled from 'styled-components';
-import ConnectWallet from '../../../components/walletbtn/ConnectWallet';
+import DiscoverList from 'src/components/dashboard/discover/DiscoverList';
 
 const DiscoverContainer = styled.div`
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
-  position: relative; /* For absolute positioning of ConnectWallet */
 `;
 
 const DiscoverTitle = styled.h1`
   color: #1a0737;
-  font-size: 32px;
-  font-style: normal;
+  font-size: 40px;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
-  line-height: normal;
-  margin-bottom: 20px; /* Adjust margin as needed */
+  word-wrap: break-word;
 `;
 
-const DiscoverContent = styled.div`
-  /* Add your styles here */
-`;
+const DiscoverContent = styled.div``;
 
-const ConnectWalletWrapper = styled.div`
-  position: absolute; /* Positioning to place it at the top right */
-  top: 20px; /* Adjust top position */
-  right: 20px; /* Adjust right position */
+const TopContents = styled.div`
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Discover: React.FC = () => {
   return (
     <DiscoverContainer>
       <DiscoverTitle>Discover</DiscoverTitle>
-      <ConnectWalletWrapper>
-        <ConnectWallet />
-      </ConnectWalletWrapper>
-      <DiscoverContent>{/* Add your content here */}</DiscoverContent>
+
+      <DiscoverContent>
+        <TopContents>
+          <SearchBar />
+          <CalendarButton>
+            <img src={CalendarIcon} alt="Calendar icon" />
+            My Calendar
+          </CalendarButton>
+        </TopContents>
+        <DiscoverList />
+      </DiscoverContent>
     </DiscoverContainer>
   );
 };
