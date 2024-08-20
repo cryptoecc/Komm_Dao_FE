@@ -42,3 +42,11 @@ export const proposals = [
     percentage: 12,
   },
 ];
+
+export type Path = 'proposals' | 'delegates' | 'kohort';
+
+export const mapActiveIndexToPath: Record<number, Path> = {
+  0: 'proposals',
+  1: 'delegates',
+  2: 'kohort',
+};
