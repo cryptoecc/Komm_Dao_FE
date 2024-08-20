@@ -7,6 +7,7 @@ import MainBoard from './pages/mainboard/mainBoard';
 import Dashboard from './pages/mainboard/dashboard';
 import Deal from './pages/mainboard/deal';
 import Discover from './pages/mainboard/discover';
+import DiscoverDetails from './pages/mainboard/discover/discoverDtails';
 import Contribution from './pages/mainboard/contribution';
 import Governance from './pages/mainboard/governance';
 import SignupPage from './pages/register/SignupPage';
@@ -19,7 +20,9 @@ import UserMember from './pages/admin/mainboard/user/members/userMember';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
 import DealDtailsPage from './pages/mainboard/deal/dealDtails';
+import Test from './pages/test';
 
+import DealInterest from './pages/mainboard/deal/dealDtails/dealInterest'; // Correct the path to your new component
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -34,7 +37,9 @@ const Router = () => {
         { path: PATH.DASHBOARD, element: <Dashboard /> },
         { path: PATH.DEAL, element: <Deal /> },
         { path: PATH.DEAL_DETAILS, element: <DealDtailsPage /> },
+        { path: PATH.DEAL_INTEREST, element: <DealInterest /> },
         { path: PATH.DISCOVER, element: <Discover /> },
+        { path: PATH.DISCOVER_DETAILS, element: <DiscoverDetails /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
         { path: PATH.GOVERNANCE, element: <Governance /> },
         { path: PATH.PROFILE, element: <ProfileMyPage /> },
@@ -53,6 +58,7 @@ const Router = () => {
         { path: PATH.USERKOHORTS, element: <UserKohort /> },
       ],
     },
+    { path: 'test', element: <Test /> },
   ]);
 
   return <RouterProvider router={router} />;

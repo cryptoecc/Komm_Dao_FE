@@ -22,7 +22,6 @@ export const Logo = styled.img`
 
 export const Text = styled.p`
   color: #1a0737;
-  font-family: Inter;
   font-size: 64px;
   font-style: normal;
   font-weight: 400;
@@ -31,7 +30,6 @@ export const Text = styled.p`
 
 export const SubText = styled.p`
   color: #1a0737;
-  font-family: Inter;
   font-size: 40px;
   font-style: normal;
   font-weight: 400;

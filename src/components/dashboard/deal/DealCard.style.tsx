@@ -1,40 +1,59 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const DealItem = styled.div`
+export const DealItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border: 7px solid #f9f9f9;
+  border-radius: 30px;
   padding: 20px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 512px;
   position: relative;
+
+  &:hover {
+    border-image: linear-gradient(
+        to right bottom,
+        #ffdede 0%,
+        #6100ff 53.5%,
+        #00d7f7 58.61%,
+        #4dff30 64.5%,
+        #ffe03e 75.5%,
+        #ff8730 85.5%,
+        #ff0000 100%
+      )
+      1;
+  }
 `;
 
-const DealTitle = styled.h3`
-  font-size: 24px;
-  font-weight: 700;
+export const DealHeader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  justify-content: space-between;
+`;
+
+export const DealTitle = styled.h3`
+  padding: 5px;
+  font-size: 16px;
+  font-weight: 600;
   margin: 10px 0;
 `;
 
-const DealDescription = styled.p`
+export const DealDescription = styled.p`
   font-size: 16px;
-  font-weight: 700;
+  height: 100px;
   color: #555;
   margin: 10px 0;
+  max-height: 100px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 5px;
 `;
 
-const DealAmount = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-  margin: 10px 0;
-`;
-
-const GaugeWrapper = styled.div`
+export const GaugeWrapper = styled.div`
   width: 100%;
   height: 8px;
   background: #e0e0e0;
@@ -42,16 +61,18 @@ const GaugeWrapper = styled.div`
   overflow: hidden;
   margin: 10px 0;
   position: relative;
+  display: flex;
+  justify-content: flex-end;
 `;
 
-const Gauge = styled.div<{ percentage: number }>`
+export const Gauge = styled.div<{ percentage: number }>`
   width: ${(props) => props.percentage}%;
   height: 100%;
   background: #875cff;
   transition: width 0.3s ease;
 `;
 
-const PercentageLabel = styled.div`
+export const PercentageLabel = styled.div`
   position: absolute;
   right: 0;
   top: -25px;
@@ -60,35 +81,49 @@ const PercentageLabel = styled.div`
   font-weight: 700;
 `;
 
-const IconWrapper = styled.div`
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
+export const IconWrapper = styled.div`
+  display: flex;
+  justify-content: first baseline;
+  align-items: center;
+  width: 200px;
+  height: 120px;
+
+  img {
+    max-width: 200px;
+    max-height: 120px;
+    object-fit: contain;
+  }
 `;
 
-interface Deal {
-  id: number;
-  title: string;
-  description: string;
-  amount: number;
-  percentage: number;
-}
+export const StatusBadge = styled.div<{ status: 'ongoing' | 'finished' }>`
+  background-color: ${(props) => (props.status === 'ongoing' ? '#875cff' : '#cccccc')};
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-left: 10px;
+`;
 
-const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
-  return (
-    <DealItem>
-      <IconWrapper>
-        <img src="/path/to/dealIcon.png" alt="Deal Icon" />
-      </IconWrapper>
-      <GaugeWrapper>
-        <Gauge percentage={deal.percentage} />
-        <PercentageLabel>{deal.percentage}%</PercentageLabel>
-      </GaugeWrapper>
-      <DealTitle>{deal.title}</DealTitle>
-      <DealDescription>{deal.description}</DealDescription>
-      <DealAmount>${deal.amount}</DealAmount>
-    </DealItem>
-  );
-};
+export const PercentageText = styled.div`
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  margin-top: 5px;
+  margin-left: auto;
+`;
 
-export default DealCard;
+export const ArrowIcon = styled.img`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 30px;
+  cursor: pointer;
+
+  @media (max-width: 767px) {
+    width: 18px;
+    height: 18px;
+  }
+`;

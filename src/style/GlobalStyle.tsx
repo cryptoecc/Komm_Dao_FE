@@ -1,11 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: '';
-    src: url('/public/fonts/Montserrat-Regular.ttf') format('truetype');
-  }
-
   * {
     box-sizing: border-box;
   }
@@ -131,7 +126,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
 
     @media (max-width: 768px) {

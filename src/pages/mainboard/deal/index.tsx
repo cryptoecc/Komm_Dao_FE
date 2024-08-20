@@ -32,9 +32,10 @@ const DealPage: React.FC = () => {
 
     fetchDeals();
   }, []);
-
   const handleDealClick = (deal: any) => {
-    navigate(`/mainboard/deal/${deal.id}`, { state: { deal } });
+    console.log(deal);
+
+    navigate(`/mainboard/deal/${deal.deal_id}`, { state: { deal } });
   };
 
   if (loading) {
@@ -44,6 +45,22 @@ const DealPage: React.FC = () => {
   return (
     <PageContainer>
       <Title>Deals</Title>
+      {/* <div>
+        <Button onClick={openModal}>Create New Deal</Button>
+
+        {isModalOpen && <CreateDealModal onClose={closeModal} onConfirm={closeModal} />}
+      </div>
+      <div>
+        <button onClick={() => handleOpenDeleteModal(1)}>Delete Deal 1</button>
+
+        {isDeleteModalOpen && selectedDealId !== null && (
+          <DeleteDealModal
+            dealId={selectedDealId}
+            onClose={handleCloseDeleteModal}
+            onDeleteSuccess={handleDeleteSuccess}
+          />
+        )}
+      </div> */}
       <DealList deals={deals} onDealClick={handleDealClick} />
     </PageContainer>
   );
