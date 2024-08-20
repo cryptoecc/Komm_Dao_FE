@@ -26,9 +26,7 @@ interface Member {
   expertise: string;
   bio: string;
   //   kommitte_role: string;
-  kommittees: {
-    komm_name: string;
-  };
+  kommittees: { komm_name: string }[];
   cur_xp: number;
   grade: string;
   last_login: string;
@@ -69,7 +67,7 @@ const UserMember: React.FC = () => {
         const response = await axios.get('http://localhost:4000/api/admin/member-list');
 
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         if (data.length < 20) {
           const emptyItems = Array.from({ length: 20 - data.length }, (_, index) => ({
             user_id: `empty-${index}`,
@@ -197,10 +195,10 @@ const UserMember: React.FC = () => {
               </TableCell>
               <TableCell
                 $isSelected={selectedRows.has(member.user_id)}
-                onMouseEnter={(e) => handleMouseEnter(member.kommittees.komm_name, e)}
+                onMouseEnter={(e) => handleMouseEnter(member.kommittees[0]?.komm_name || '~~', e)}
                 onMouseLeave={handleMouseLeave}
               >
-                {member.kommittees.komm_name == null ? '~~' : member.kommittees.komm_name}
+                {member.kommittees.length > 0 ? member.kommittees[0].komm_name : '~~'}
               </TableCell>
               <TableCell $isSelected={selectedRows.has(member.user_id)}>{member.cur_xp}</TableCell>
               <TableCell $isSelected={selectedRows.has(member.user_id)}>

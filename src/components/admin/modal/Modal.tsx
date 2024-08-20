@@ -11,11 +11,13 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
+  const isAddMembers = title === 'Add Members';
+
   return (
     <ModalBackdrop onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
+      <ModalContent $isAddMembers={isAddMembers} onClick={(e) => e.stopPropagation()}>
         <ModalHeader>
-          <ModalTitle>{title}</ModalTitle>
+          <ModalTitle $isAddMembers={isAddMembers}>{title}</ModalTitle>
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </ModalHeader>
         <ModalBody>{children}</ModalBody>

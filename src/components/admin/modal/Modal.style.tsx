@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+interface ModalContentProps {
+  $isAddMembers: boolean;
+}
+
+interface ModalTitleProps {
+  $isAddMembers: boolean;
+}
+
 export const ModalBackdrop = styled.div`
   position: fixed;
   top: 0;
@@ -13,7 +21,7 @@ export const ModalBackdrop = styled.div`
   z-index: 1000;
 `;
 
-export const ModalContent = styled.div`
+export const ModalContent = styled.div<ModalContentProps>`
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -29,19 +37,23 @@ export const ModalHeader = styled.div`
   padding-bottom: 10px;
 `;
 
-export const ModalTitle = styled.h2`
+export const ModalTitle = styled.h2<ModalTitleProps>`
   margin: 0;
   font-size: 28px;
+  font-family: Inter;
   font-weight: 700;
   line-height: normal;
   padding: 10px;
-  padding-left: 20px;
+  /* padding-left: 55px; */
+  padding-left: ${(props) => (props.$isAddMembers ? '30px' : '55px')};
+  padding-top: 30px;
 `;
 
 export const CloseButton = styled.button`
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 30px;
+  margin-right: 25px;
   cursor: pointer;
 `;
 
