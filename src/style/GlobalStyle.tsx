@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
     --text-size-primary: 14px;
     --text-size-medium: 16px;
     --text-size-large: 26px;
-    --main-card-color: #ebebeb;
+    --main-card-color: #F8F8FA;
     --main-btn-color: #7C4DFF;
     --main-btn-text-color: #875CFF;
     --main-btn-background-color: #E3D9FF;

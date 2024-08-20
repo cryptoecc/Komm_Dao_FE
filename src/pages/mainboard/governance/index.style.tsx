@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const GovernanceContainer = styled.div`
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
+  background-color: ${({ theme }) => theme.colors.white};
   position: relative; /* For absolute positioning of ConnectWallet */
 `;
 
