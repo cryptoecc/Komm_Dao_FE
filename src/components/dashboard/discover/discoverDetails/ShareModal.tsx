@@ -28,28 +28,28 @@ const ShareModal: React.FC<ShareModalProps> = ({ link, onClose }) => {
         <SocialIconContainer>
           <SocialIconWithLabel>
             <SocialIconWrapper bgColor="#f2f2f2">
-              <img src={images.twitter} alt="Twitter" />
+              <img src={images.x} alt="Twitter" />
             </SocialIconWrapper>
             <SocialIconLabel color="#000">X</SocialIconLabel>
           </SocialIconWithLabel>
 
           <SocialIconWithLabel>
             <SocialIconWrapper bgColor="#eaf4ff">
-              <img src={images.telegram} alt="Telegram" />
+              <img src={images.t} alt="Telegram" />
             </SocialIconWrapper>
             <SocialIconLabel color="#1e88e5">Telegram</SocialIconLabel>
           </SocialIconWithLabel>
 
           <SocialIconWithLabel>
             <SocialIconWrapper bgColor="#fff4d6">
-              <img src={images.katalk} alt="Kakao Talk" />
+              <img src={images.k} alt="Kakao Talk" />
             </SocialIconWrapper>
             <SocialIconLabel color="#ffca28">Kakao Talk</SocialIconLabel>
           </SocialIconWithLabel>
 
           <SocialIconWithLabel>
             <SocialIconWrapper bgColor="#f3f4ff">
-              <img src={images.discord} alt="Discord" />
+              <img src={images.d} alt="Discord" />
             </SocialIconWrapper>
             <SocialIconLabel color="#7289da">Discord</SocialIconLabel>
           </SocialIconWithLabel>

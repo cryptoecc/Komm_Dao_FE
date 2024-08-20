@@ -10,8 +10,10 @@ export const DealItem = styled.div`
   padding: 20px;
   width: 512px;
   position: relative;
+  transition: border-radius 0.3s ease, border-image 0.3s ease; /* Add smooth transition */
 
   &:hover {
+    border-radius: 30px; /* Change border-radius on hover */
     border-image: linear-gradient(
         to right bottom,
         #ffdede 0%,

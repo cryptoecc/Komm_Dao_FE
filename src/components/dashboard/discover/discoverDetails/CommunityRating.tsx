@@ -11,8 +11,8 @@ import {
 import { images } from 'src/assets/discover/images';
 
 interface CommunityRatingProps {
-  rating: number; // Now expecting a rating between 0 and 5, e.g., 4.8
-  percentile: number; // The percentile value, e.g., 100
+  rating: number;
+  percentile: number;
 }
 
 const CommunityRating: React.FC<CommunityRatingProps> = ({ rating, percentile }) => {
@@ -20,7 +20,7 @@ const CommunityRating: React.FC<CommunityRatingProps> = ({ rating, percentile })
     <CommunityRatingContainer>
       <RatingSection>
         <p>Community Rating</p>
-        <RatingValue>{rating.toFixed(1)}</RatingValue> {/* Display rating with one decimal place */}
+        <RatingValue>{rating.toFixed(1)}</RatingValue>
         <StarRating>
           {[...Array(5)].map((_, index) => {
             const filled = index + 1 <= Math.floor(rating);
@@ -40,13 +40,13 @@ const CommunityRating: React.FC<CommunityRatingProps> = ({ rating, percentile })
         <CircularProgressbar
           value={percentile}
           text={`Top ${percentile}%`}
-          circleRatio={0.5} // Makes the progress bar a half-circle
+          circleRatio={0.5}
           styles={buildStyles({
-            rotation: 1 / 4 + 1 / 2, // Rotates the semi-circle so the flat part is at the bottom
+            rotation: 1 / 4 + 1 / 2,
             pathColor: '#875cff',
             textColor: '#000',
             trailColor: '#f0e4ff',
-            textSize: '14px', // Set text size to 15px
+            textSize: '14px',
           })}
         />
       </GraphSection>

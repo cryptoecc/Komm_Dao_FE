@@ -411,7 +411,8 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 `;
 
 export const CheckboxLabel = styled.label`
-  font-size: 16px;
+  width: 220px;
+  font-size: 14px;
   font-weight: normal;
 
   @media (max-width: 600px) {

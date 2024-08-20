@@ -16,6 +16,10 @@ import telegram from './telegram.png';
 import katalk from './katalk.png';
 import closeIcon from './close.png';
 import copyLinkIcon from './copy.png';
+import k from './2087.png';
+import d from './2088.png';
+import x from './2089.png';
+import t from './2090.png';
 
 export const images = {
   calendar_btn,
@@ -36,4 +40,8 @@ export const images = {
   katalk,
   closeIcon,
   copyLinkIcon,
+  k,
+  d,
+  x,
+  t,
 };

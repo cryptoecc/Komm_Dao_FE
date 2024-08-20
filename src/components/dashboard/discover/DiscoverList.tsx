@@ -14,8 +14,7 @@ import {
   DropdownContainer,
   DropdownItem,
   DropdownMenu,
-  TooltipContainer, // Import TooltipContainer
-  Tooltip, // Import Tooltip
+  TooltipContainer,
 } from './DiscoverList.style';
 import { images } from '../../../assets/discover/images';
 import { PATH } from '../../../constants/path';

@@ -6,11 +6,6 @@ const PageContainer = styled.div`
   padding: 20px;
 `;
 
-const Title = styled.h1`
-  font-size: 24px;
-  margin-bottom: 20px;
-`;
-
 const BackButton = styled.div`
   display: flex;
   align-items: center;
@@ -37,7 +32,6 @@ const DealDtailsPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <Title>Deals</Title>
       <BackButton onClick={() => navigate(-1)}>
         <BackLink>
           <span>&larr;</span>Back to Deal
