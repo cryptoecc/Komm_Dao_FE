@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DealList from '../../../components/dashboard/deal/DealList'; // DealList를 가져옵니다.
-import CreateDealModal from 'src/components/dashboard/deal/dealDtails/CreateDeal';
-import DeleteDealModal from 'src/components/dashboard/deal/dealDtails/DeleteDeal';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -15,49 +13,10 @@ const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
-const Button = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
 const DealPage: React.FC = () => {
   const [deals, setDeals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [selectedDealId, setSelectedDealId] = useState<number | null>(null);
-
-  const handleOpenDeleteModal = (dealId: number) => {
-    setSelectedDealId(dealId);
-    setDeleteModalOpen(true);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setDeleteModalOpen(false);
-  };
-
-  const handleDeleteSuccess = () => {
-    // 삭제 후 해야 할 일들 (예: 목록 갱신)
-    console.log('Deal deleted successfully');
-  };
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   useEffect(() => {
     const fetchDeals = async () => {

@@ -1,4 +1,3 @@
-// src/pages/mainboard/discover/index.tsx (Example)
 import React from 'react';
 import SearchBar from 'src/components/dashboard/discover/SearchBar';
 import { CalendarButton } from 'src/components/dashboard/discover/SearchBar.style';
@@ -16,6 +15,7 @@ const DiscoverTitle = styled.h1`
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   word-wrap: break-word;
+  padding: 20px;
 `;
 
 const DiscoverContent = styled.div``;
