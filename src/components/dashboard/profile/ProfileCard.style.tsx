@@ -23,7 +23,7 @@ export const ProfileInfo = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
+  cursor: pointer;
   @media (min-width: 768px) {
     width: 15%;
     align-items: center; /* 넓은 화면에서는 왼쪽 정렬 */
@@ -35,11 +35,13 @@ export const ProfileImage = styled.img`
   width: 110px;
   height: 95px;
   flex-shrink: 0;
+  border-radius: 50px;
 
   @media (max-width: 768px) {
     width: 90px; /* 작은 화면에서는 이미지 크기 축소 */
     height: 80px;
     margin-top: 10px;
+    border-radius: 50px;
   }
 `;
 
@@ -165,7 +167,7 @@ export const Tooltip = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 230px;
-  height: 69px;
+  height: 80px;
   border-radius: 20px;
   padding: 10px;
   text-align: center;

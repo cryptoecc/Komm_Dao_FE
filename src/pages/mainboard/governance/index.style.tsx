@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const GovernanceContainer = styled.div`
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
+  background-color: ${({ theme }) => theme.colors.white};
   position: relative; /* For absolute positioning of ConnectWallet */
 `;
 
@@ -20,7 +20,7 @@ export const GovernanceContent = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;
 
 export const ConnectWalletWrapper = styled.div`
@@ -31,10 +31,12 @@ export const ConnectWalletWrapper = styled.div`
 
 export const MainSection = styled.section`
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     flex-direction: column;
+    gap: 27px;
     margin: 47px 0 0 0;
+    width: 100%;
 `
 export const SubSection = styled.section`
     display: flex;
@@ -45,10 +47,13 @@ export const SubSection = styled.section`
 
 export const NavBar = styled.ul`
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 300px;
     width: 100%;
-    gap: 10px;
+    gap: 26px;
+    border-bottom: 2px solid #D9D9D9;
+    padding: 10px 0;
 `
 export const NavList = styled.li<{ active: boolean }>`
     cursor: pointer;

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { images } from '../../../../assets/deal/images';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import axios from 'axios';
 
 dayjs.extend(duration);
 
@@ -13,8 +14,9 @@ const Container = styled.div`
   padding: 10px;
   justify-content: space-around;
   width: 90%;
-  max-width: 1200px; /* 최대 너비 설정 */
-  margin: 0 auto; /* 화면 중앙 정렬 */
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -27,7 +29,7 @@ const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
-  position: relative; /* BackButton과 겹치지 않게 하기 위해 relative 위치 지정 */
+  position: relative;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -40,31 +42,40 @@ const RightSection = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  align-items: center; /* 오른쪽 정렬 */
+  align-items: center;
   width: 50%;
 
   @media (max-width: 768px) {
     width: 100%;
-    align-items: flex-start; /* 모바일에서 왼쪽 정렬 */
+    align-items: flex-start;
     padding: 5px;
   }
 `;
 
 const DealImage = styled.img`
   max-width: 450px;
-  height: auto;
+  max-height: 200px;
   border-radius: 10px;
   border: 10px white solid;
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    max-width: 80vh;
+    max-height: 50vh;
     margin-bottom: 10px;
   }
 `;
 
+// const DealName = styled.h2`
+//   font-size: 24px;
+//   font-weight: 700;
+//   color: #333;
+//   margin-bottom: 10px;
+// `;
+
 const IconWrapper = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 20px;
 
@@ -82,13 +93,15 @@ const Icon = styled.img`
 
 const DealSummary = styled.div`
   font-size: 16px;
-  color: #555;
+  font-weight: 400;
+  color: black;
   line-height: 1.6;
   overflow-y: auto;
-  width: 100%;
-  max-height: 300px;
+  max-width: 400px;
+  min-height: 200px;
   margin-top: 20px;
   padding-right: 10px;
+  word-wrap: break-word; /* 줄바꿈 기능 추가 */
 
   @media (max-width: 768px) {
     max-height: 200px;
@@ -101,12 +114,11 @@ const ParticipationCard = styled.div`
   border: 7px solid #f9f9f9;
   border-radius: 20px;
   padding: 40px;
-
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* 왼쪽 정렬 */
+  align-items: flex-start;
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -118,7 +130,7 @@ const ProgressText = styled.span`
   font-size: 18px;
   font-weight: 400;
   color: #000;
-  align-self: flex-end; /* 오른쪽 정렬 */
+  align-self: flex-end;
   margin-bottom: 10px;
 `;
 
@@ -127,8 +139,8 @@ const ProgressBar = styled.div`
   height: 10px;
   background: #e0e0e0;
   border-radius: 5px;
-  margin-top: 5px; /* 간격 조정 */
-  margin-bottom: 5px; /* 간격 조정 */
+  margin-top: 5px;
+  margin-bottom: 5px;
   position: relative;
 `;
 
@@ -174,7 +186,7 @@ const CountdownContainer = styled.div`
   position: relative;
 
   @media (max-width: 768px) {
-    justify-content: flex-start; /* 모바일에서 왼쪽 정렬 */
+    justify-content: flex-start;
     margin-top: 10px;
   }
 `;
@@ -190,7 +202,7 @@ const CountdownText = styled.div`
   width: 100%;
 
   @media (max-width: 768px) {
-    justify-content: flex-start; /* 모바일에서 왼쪽 정렬 */
+    justify-content: flex-start;
   }
 `;
 
@@ -202,8 +214,8 @@ const CountdownBox = styled.div`
   background: #f9f9f9;
   padding: 10px;
   border-radius: 10px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   margin: 0 5px;
 
   @media (max-width: 768px) {
@@ -213,8 +225,8 @@ const CountdownBox = styled.div`
 `;
 
 const CountdownValue = styled.div`
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
   background-color: #f8f8fa;
   color: #000;
 
@@ -224,8 +236,8 @@ const CountdownValue = styled.div`
 `;
 
 const CountdownLabel = styled.div`
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 400;
   color: black;
 
   @media (max-width: 768px) {
@@ -242,11 +254,11 @@ const ParticipateButton = styled.button`
   border-radius: 30px;
   font-size: 18px;
   cursor: pointer;
-  align-self: flex-end; /* 오른쪽 정렬 */
+  align-self: flex-end;
 
   @media (max-width: 768px) {
-    align-self: flex-start; /* 모바일에서 왼쪽 정렬 */
-    width: 100%; /* 버튼 너비를 100%로 설정 */
+    align-self: flex-start;
+    width: 100%;
     font-size: 16px;
     padding: 10px 20px;
   }
@@ -259,14 +271,32 @@ const ParticipateButton = styled.button`
 const DealDetails: React.FC = () => {
   const { dealId } = useParams<{ dealId: string }>();
   const location = useLocation();
-  const deal = location.state?.deal;
+  const navigate = useNavigate();
+  const [deal, setDeal] = useState(location.state?.deal || null); // location.state?.deal로 초기화
+
+  useEffect(() => {
+    const fetchDealData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/deals/${dealId}`);
+        setDeal(response.data); // 최신 데이터를 상태로 업데이트
+      } catch (error) {
+        console.error('Error fetching deal data:', error);
+      }
+    };
+
+    fetchDealData(); // 컴포넌트가 마운트될 때 데이터를 요청
+
+    const intervalId = setInterval(fetchDealData, 5000); // 5초마다 데이터 새로 고침
+
+    return () => clearInterval(intervalId); // 컴포넌트가 언마운트될 때 interval을 정리
+  }, [dealId]);
 
   const fallbackDeal = {
-    id: 1,
-    title: 'Fallback Deal Title',
-    description:
+    deal_id: 1,
+    deal_name: 'Fallback Deal Title',
+    deal_desc:
       'This is a fallback description for the deal. The description can be long, and when it is long enough, a scrollbar will appear.',
-    amount: 4000000,
+    final_amount: 4000000,
     percentage: 66,
     start_date: '2024-01-01',
     end_date: '2024-12-31',
@@ -289,7 +319,6 @@ const DealDetails: React.FC = () => {
   };
 
   const [remainingTime, setRemainingTime] = useState(calculateRemainingTime(selectedDeal.end_date));
-
   useEffect(() => {
     const timer = setInterval(() => {
       setRemainingTime(calculateRemainingTime(selectedDeal.end_date));
@@ -297,17 +326,22 @@ const DealDetails: React.FC = () => {
 
     return () => clearInterval(timer); // Cleanup the interval on component unmount
   }, [selectedDeal.end_date]);
-
+  console.log(selectedDeal);
   return (
     <Container>
       <LeftSection>
-        <DealImage src={images.deal} alt="Deal" />
+        <DealImage src={selectedDeal.deal_image_url} alt="Deal" />
+        {/* <DealImage
+          src={selectedDeal.dealImage ? `http://localhost:4000/${selectedDeal.dealImage}` : images.deal}
+          alt="Deal"
+        /> */}
         <IconWrapper>
           <Icon src={images.language} alt="Language" />
           <Icon src={images.discord} alt="Discord" />
           <Icon src={images.twitter} alt="Twitter" />
         </IconWrapper>
-        <DealSummary>{selectedDeal.description}</DealSummary>
+        {/* <DealName>{selectedDeal.deal_name}</DealName> */}
+        <DealSummary>{selectedDeal.deal_desc}</DealSummary>
       </LeftSection>
 
       <RightSection>
@@ -317,8 +351,8 @@ const DealDetails: React.FC = () => {
             <ProgressFill percentage={selectedDeal.percentage} />
           </ProgressBar>
           <DealInfoRow>
-            <DealRoundText>Seed Round</DealRoundText>
-            <DealRaisingText>Raising $4m at $50m</DealRaisingText>
+            <DealRoundText>{selectedDeal.deal_round || 'Seed Round'}</DealRoundText>
+            <DealRaisingText>Raising ${selectedDeal.final_amount.toLocaleString()}</DealRaisingText>
           </DealInfoRow>
           <CountdownText>ENDS IN</CountdownText>
 
@@ -341,7 +375,15 @@ const DealDetails: React.FC = () => {
             </CountdownBox>
           </CountdownContainer>
         </ParticipationCard>
-        <ParticipateButton>Participate</ParticipateButton>
+        <ParticipateButton
+          onClick={() =>
+            navigate(`/mainboard/deal/deal-details/${dealId}/interest`, {
+              state: { deal: selectedDeal }, // 'state' 객체로 'deal' 데이터를 전달
+            })
+          }
+        >
+          Participate
+        </ParticipateButton>
       </RightSection>
     </Container>
   );

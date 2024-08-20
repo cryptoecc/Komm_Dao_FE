@@ -1,5 +1,6 @@
-import web3 from '../utils/web3';
+import Web3 from 'web3';
 import { MAP_STR_ABI } from './abi-map';
+const web3 = new Web3(window.ethereum);
 
 export async function getAbiStrForFunction(jdata) {
   try {
@@ -18,19 +19,24 @@ export async function getAbiStrForFunction(jdata) {
   }
 }
 
-export async function signTransaction(jdata) {
+export async function sendTransaction(jdata) {
   try {
-    let { from, to, data, value, gas } = jdata;
+    let { from, to, data, value } = jdata;
+    const gasPrice = await web3.eth.getGasPrice();
+    const gas = await web3.eth.estimateGas({
+      from,
+      to,
+      data,
+    });
     let txObject = {
       from,
       to,
       data,
+      gas,
+      gasPrice,
       value: value || '0x00',
-      gas: gas || '250000',
     };
-    const accounts = await web3.eth.requestAccounts();
-    const account = accounts[0];
-    const signedTx = await web3.eth.signTransaction(txObject, account);
+    const signedTx = await web3.eth.sendTransaction(txObject);
     return signedTx;
   } catch (err) {
     console.log(err);

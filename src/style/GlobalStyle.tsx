@@ -28,6 +28,13 @@ const GlobalStyle = createGlobalStyle`
     --text-size-primary: 14px;
     --text-size-medium: 16px;
     --text-size-large: 26px;
+    --main-card-color: #F8F8FA;
+    --main-btn-color: #7C4DFF;
+    --main-btn-text-color: #875CFF;
+    --main-btn-background-color: #E3D9FF;
+
+    --status-card-disabled-bg: #d5d5d5;
+    --status-card-disabled-color: #555;
 
     @media (max-width: 768px) {
       --text-size-primary: 12px;
