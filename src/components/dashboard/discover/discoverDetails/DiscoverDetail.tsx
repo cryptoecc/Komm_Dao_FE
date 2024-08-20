@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ShareModal from './ShareModal'; // Import the ShareModal component
+import ShareModal from './ShareModal';
 import {
   DiscoverDetailContainer,
   ProjectHeader,
@@ -16,8 +16,6 @@ import { images } from 'src/assets/discover/images';
 const DiscoverDetail = () => {
   const location = useLocation();
   const projectData = location.state;
-
-  // State to control the visibility of the ShareModal
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   return (
@@ -25,13 +23,9 @@ const DiscoverDetail = () => {
       <ProjectHeader>
         <ProjectNameWrapper>
           <ProjectName>{projectData.project}</ProjectName>
-          <ShareIcon
-            src={images.share}
-            alt="Share"
-            onClick={() => setIsShareModalOpen(true)} // Open the ShareModal on click
-          />
+          <ShareIcon src={images.share} alt="Share" onClick={() => setIsShareModalOpen(true)} />
         </ProjectNameWrapper>
-        <AddWatchlistLink href="#">+ Add Watchlist</AddWatchlistLink>
+        <AddWatchlistLink href="">+ Add Watchlist</AddWatchlistLink>
       </ProjectHeader>
 
       <SocialIcons>
@@ -41,12 +35,7 @@ const DiscoverDetail = () => {
       </SocialIcons>
       <Description>{projectData.description}</Description>
 
-      {isShareModalOpen && (
-        <ShareModal
-          link={window.location.href} // Use the current page URL for sharing
-          onClose={() => setIsShareModalOpen(false)} // Close the ShareModal
-        />
-      )}
+      {isShareModalOpen && <ShareModal link={window.location.href} onClose={() => setIsShareModalOpen(false)} />}
     </DiscoverDetailContainer>
   );
 };
