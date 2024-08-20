@@ -4,7 +4,6 @@ export const ParticipantListContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
   padding: 20px;
 `;
 

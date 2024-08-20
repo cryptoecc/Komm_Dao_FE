@@ -15,6 +15,7 @@ const ProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  margin-top: 30px;
 `;
 
 export default ProfileMyPage;

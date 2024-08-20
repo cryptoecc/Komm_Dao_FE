@@ -23,7 +23,7 @@ export const ProfileInfo = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
+  cursor: pointer;
   @media (min-width: 768px) {
     width: 15%;
     align-items: center; /* 넓은 화면에서는 왼쪽 정렬 */
@@ -167,7 +167,7 @@ export const Tooltip = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 230px;
-  height: 69px;
+  height: 80px;
   border-radius: 20px;
   padding: 10px;
   text-align: center;

@@ -8,6 +8,7 @@ export const PATH = {
   CONTRIBUTION: '/mainboard/contribution',
   DISCOVER: '/mainboard/discover',
   DISCOVER_DETAILS: '/mainboard/discover/:projectId',
+  DISCOVER_CALENDAR: '/mainboard/discover/calendar',
   GOVERNANCE: '/mainboard/governance',
   ADMINLOGIN: '/kommdao-admin',
   ADMINMAINBOARD: '/admin-mainboard',
