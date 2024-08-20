@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Modal from 'src/components/admin/modal/Modal';
 import EditKommit from 'src/components/admin/modal/editKommittee/EditKommittee';
+import AddKommit from 'src/components/admin/modal/addKommittee/addKommittee';
 import {
   UserMemberContainer,
   Title,
@@ -38,7 +39,10 @@ const UserCommitte: React.FC = () => {
   const [filteredKommittees, setFilteredKommittees] = useState<Committee[]>([]);
   const [popupContent, setPopupContent] = useState<string | null>(null);
   const [popupPosition, setPopupPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+
+  // 모달
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 상태 관리
+  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false); // Add Members 모달 상태 관리
 
   // 검색
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -55,10 +59,6 @@ const UserCommitte: React.FC = () => {
       top: rect.top + window.scrollY + 40, // Adjust as needed
       left: rect.left + window.scrollX + rect.width / 2,
     });
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setPopupContent(null);
   }, []);
 
   useEffect(() => {
@@ -144,7 +144,11 @@ const UserCommitte: React.FC = () => {
   return (
     <UserMemberContainer>
       <Title>User Mgmt {'>'} K-ommittees</Title>
-      <TopBar onSearchChange={setSearchTerm} onEditClick={() => setIsModalOpen(true)} />
+      <TopBar
+        onSearchChange={setSearchTerm}
+        onEditClick={() => setIsModalOpen(true)}
+        onAddClick={() => setIsAddModalOpen(true)}
+      />
       <Table>
         <thead>
           <TableRow>
@@ -191,6 +195,11 @@ const UserCommitte: React.FC = () => {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Members">
         {/* 여기에 모달 내부 내용을 추가하면 됩니다. */}
         <EditKommit onSearchChange={setSearchTerm} />
+      </Modal>
+
+      <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Kommittees">
+        {/* 여기에 Add 모달 내부 내용을 추가하면 됩니다. */}
+        <AddKommit onClose={() => setIsAddModalOpen(false)} />
       </Modal>
     </UserMemberContainer>
   );

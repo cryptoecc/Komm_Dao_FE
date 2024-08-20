@@ -11,9 +11,10 @@ import sendMessageIcon from 'src/assets/admin/forward_to_inbox.svg';
 interface TopBarProps {
   onSearchChange: (value: string) => void;
   onEditClick?: () => void;
+  onAddClick?: () => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ onSearchChange, onEditClick }) => {
+const TopBar: React.FC<TopBarProps> = ({ onSearchChange, onAddClick, onEditClick }) => {
   return (
     <TopBarContainer>
       <Search>
@@ -21,7 +22,7 @@ const TopBar: React.FC<TopBarProps> = ({ onSearchChange, onEditClick }) => {
         <Icon src={searchIcon} alt="search" />
       </Search>
       <IconWrapper>
-        <Icon src={addIcon} alt="add" />
+        <Icon src={addIcon} alt="add" onClick={onAddClick} />
         <Icon src={editIcon} alt="edit" onClick={onEditClick} />
         <Icon src={deleteIcon} alt="delete" />
         <Icon src={saveIcon} alt="save" />

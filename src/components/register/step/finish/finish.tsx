@@ -20,7 +20,7 @@ const Finish: React.FC<StepProps> = ({ onComplete, selectedImage }) => {
   const handleSubmit = async () => {
     try {
       const currentDate = new Date().toISOString();
-      dispatch(setUserData({ reg_date: currentDate }));
+      // dispatch(setUserData({ reg_date: currentDate }));
 
       const formData = new FormData();
 
@@ -30,7 +30,7 @@ const Finish: React.FC<StepProps> = ({ onComplete, selectedImage }) => {
       formData.append('expertise', user.expertise);
       formData.append('bio', user.bio);
       formData.append('value_add', user.value_add || '');
-      formData.append('reg_date', user.reg_date || '');
+      formData.append('reg_date', currentDate || '');
       formData.append('appr_status', 'PENDING');
       formData.append('cur_xp', user.cur_xp.toString());
       formData.append('last_login_date', user.last_login_date || '');
