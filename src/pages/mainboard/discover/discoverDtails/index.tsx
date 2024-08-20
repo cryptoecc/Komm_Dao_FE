@@ -1,11 +1,23 @@
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import DiscoverDetail from 'src/components/dashboard/discover/discoverDetails/DiscoverDetail';
+import DiscoverParticipantList from 'src/components/dashboard/discover/discoverDetails/DiscoverParticipantList';
+import CommunityRating from 'src/components/dashboard/discover/discoverDetails/CommunityRating';
 import styled from 'styled-components';
+import { images } from 'src/assets/discover/images';
+
+interface Participant {
+  id: number;
+  user: string;
+}
 
 const DiscoverContainer = styled.div`
   padding: 20px;
 `;
 
-const DiscoverContent = styled.div``;
+const DiscoverContent = styled.div`
+  padding: 20px;
+`;
 
 const BackButton = styled.div`
   display: flex;
@@ -27,12 +39,36 @@ const BackLink = styled.div`
     margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 */
   }
 `;
+
 const DiscoverDetails: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const projectData = location.state; // Access the passed data
+  const projectData = location.state;
 
-  console.log('Received project data:', projectData);
+  const participants: Participant[] = projectData?.participants?.map((participant: Participant, index: number) => ({
+    id: participant.id ?? index + 1,
+    user: participant.user || images.user, // Use images.user as the default image
+  })) || [
+    { id: 1, user: images.profile },
+    { id: 2, user: images.profile },
+    { id: 3, user: images.profile },
+    { id: 4, user: images.profile },
+    { id: 5, user: images.profile },
+    { id: 6, user: images.profile },
+    { id: 7, user: images.profile },
+    { id: 8, user: images.profile },
+    { id: 9, user: images.profile },
+    { id: 10, user: images.profile },
+    { id: 11, user: images.profile },
+    { id: 12, user: images.profile },
+    { id: 13, user: images.profile },
+    // Add more participants as needed
+  ];
+
+  // Ensure rating and percentile have default values if not present
+  const rating = projectData?.rating ?? 4.8; // Default to 0 if undefined
+  const percentile = projectData?.percentile ?? 50; // Default to 100% if undefined
+
   return (
     <DiscoverContainer>
       <BackButton onClick={() => navigate(-1)}>
@@ -41,18 +77,11 @@ const DiscoverDetails: React.FC = () => {
         </BackLink>
       </BackButton>
       <DiscoverContent>
-        <h1>Project Details</h1>
-        {projectData ? (
-          <div>
-            <h2>{projectData.project}</h2>
-            <p>Category: {projectData.category}</p>
-            <p>Description: {projectData.description}</p>
-            <p>Grade: {projectData.grade}</p>
-            {/* Display more project details as needed */}
-          </div>
-        ) : (
-          <p>No project data found.</p>
-        )}
+        <DiscoverDetail />
+
+        <CommunityRating rating={rating} percentile={percentile} />
+
+        <DiscoverParticipantList participants={participants} />
       </DiscoverContent>
     </DiscoverContainer>
   );
