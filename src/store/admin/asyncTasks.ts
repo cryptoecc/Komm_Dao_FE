@@ -4,6 +4,7 @@ import { requestFail, requestPending, requestSuccess } from './actions';
 export const safeMint = createAsyncThunk('admin/safeMint', async (_, { dispatch, rejectWithValue }) => {
   try {
     dispatch(requestPending());
+
     // ...
     dispatch(requestSuccess());
   } catch (err) {
