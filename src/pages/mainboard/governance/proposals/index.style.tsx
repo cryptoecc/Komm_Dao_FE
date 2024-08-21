@@ -200,6 +200,7 @@ export const IMG = styled.img`
   height: 51px;
   flex-shrink: 0;
   object-fit: contain;
+  border-radius: 50px;
 `
 export const StatusBtn = styled.div<{ status: number }>`
   display: flex;
