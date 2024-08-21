@@ -45,6 +45,7 @@ export const LoadMoreBlock = styled.div`
     width: 100%;
     border-radius: 10px;
     background-color: var(--main-card-color);
+    cursor: pointer;
 `
 
 export const SearchInputWrap = styled.div`
