@@ -1,3 +1,9 @@
+import ProfileImage0 from 'src/assets/governance/profile-image.png';
+import ProfileImage1 from 'src/assets/governance/2035.png';
+import ProfileImage2 from 'src/assets/governance/2036.png';
+import ProfileImage3 from 'src/assets/governance/2037.png';
+import ProfileImage4 from 'src/assets/governance/2038.png';
+
 export const sections = ['Proposal', 'Delegates', 'Kohort'];
 
 export const statusCard = [
@@ -50,3 +56,96 @@ export const mapActiveIndexToPath: Record<number, Path> = {
   1: 'delegates',
   2: 'kohort',
 };
+
+export const delegateProfiles = [
+  {
+    profileImg: ProfileImage0,
+    name: 'Alex',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: "I'm a marketer & designer",
+    trustAccounts: 4,
+    votedProps: 6,
+  },
+  {
+    profileImg: ProfileImage1,
+    name: 'Bella',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: 'Web3 enthusiast',
+    trustAccounts: 2,
+    votedProps: 3,
+  },
+  {
+    profileImg: ProfileImage2,
+    name: 'Josh',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: '',
+    trustAccounts: 0,
+    votedProps: 4,
+  },
+  {
+    profileImg: ProfileImage3,
+    name: 'Simon',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: 'Researcher who is interested in crypto',
+    trustAccounts: 1,
+    votedProps: 7,
+  },
+  {
+    profileImg: ProfileImage4,
+    name: 'Tim',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: 'Researcher who is interested in crypto',
+    trustAccounts: 0,
+    votedProps: 1,
+  },
+  {
+    profileImg: ProfileImage1,
+    name: 'Bella',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: 'Web3 enthusiast',
+    trustAccounts: 2,
+    votedProps: 3,
+  },
+  {
+    profileImg: ProfileImage2,
+    name: 'Josh',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: '',
+    trustAccounts: 0,
+    votedProps: 4,
+  },
+  {
+    profileImg: ProfileImage0,
+    name: 'Alex',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: "I'm a marketer & designer",
+    trustAccounts: 4,
+    votedProps: 6,
+  },
+  {
+    profileImg: ProfileImage1,
+    name: 'Bella',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: 'Web3 enthusiast',
+    trustAccounts: 2,
+    votedProps: 3,
+  },
+  {
+    profileImg: ProfileImage2,
+    name: 'Josh',
+    address: '0x210706cbd9D26c26c727f4d3007D819390934375',
+    votingPower: 2,
+    description: '',
+    trustAccounts: 0,
+    votedProps: 4,
+  },
+];
