@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // `localStorage`에 상태를 저장합니다.
 import userReducer from './user/UserSlice';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist/es/constants';
+import AdminSlice from './admin/AdminSlice';
 
 // `redux-persist` 설정
 const persistConfig = {
@@ -15,6 +16,7 @@ const persistedReducer = persistReducer(persistConfig, userReducer);
 const store = configureStore({
   reducer: {
     user: persistedReducer,
+    admin: AdminSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

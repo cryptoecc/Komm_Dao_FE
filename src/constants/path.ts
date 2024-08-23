@@ -7,6 +7,7 @@ export const PATH = {
   DEAL_DETAILS: '/mainboard/deal/:dealId',
   CONTRIBUTION: '/mainboard/contribution',
   DISCOVER: '/mainboard/discover',
+  DISCOVER_DETAILS: '/mainboard/discover/:projectId',
   GOVERNANCE: '/mainboard/governance',
   ADMINLOGIN: '/kommdao-admin',
   ADMINMAINBOARD: '/admin-mainboard',
@@ -16,4 +17,5 @@ export const PATH = {
   USERKOHORTS: '/admin-mainboard/user/kohorts',
   PROFILE: '/mainboard/dashboard/profile',
   PROFILE_UPDATE: '/mainboard/dashboard/profile/profile-update',
+  DEAL_INTEREST: '/mainboard/deal/deal-details/:dealId/interest',
 };

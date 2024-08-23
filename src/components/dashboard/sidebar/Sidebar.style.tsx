@@ -116,7 +116,6 @@ export const Icon = styled.div<{ imageUrl: string }>`
 
 export const Name = styled.div`
   color: #1a0737;
-  font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
