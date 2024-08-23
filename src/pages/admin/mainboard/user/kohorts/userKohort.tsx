@@ -38,7 +38,24 @@ const UserKohort = () => {
     const fetchKohorts = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/admin/kohort-list');
-        setKohorts(response.data);
+        const data = response.data;
+
+        console.log(response.data);
+        // setKohorts(response.data);
+        if (data.length < 20) {
+          const emptyItems = Array.from({ length: 20 - data.length }, (_, index) => ({
+            kohort_name: '~~',
+            start_date: '~~',
+            end_date: '~~',
+            description: '~~',
+            leader_user_id: '~~',
+            appr_status: '~~',
+            approval_date: '~~',
+          }));
+          setKohorts([...data, ...emptyItems]);
+        } else {
+          setKohorts(data);
+        }
       } catch (error) {
         console.error('Error fetching kohorts:', error);
       }
@@ -90,6 +107,27 @@ const UserKohort = () => {
     setIsModalOpen(false);
   };
 
+  // Approve/Deny 기능
+  const handleApproval = async (kohort_id: number, status: string) => {
+    try {
+      const response = await axios.post('http://localhost:4000/api/admin/kohort-status-update', { kohort_id, status });
+      if (response.status === 200) {
+        setKohorts((prevKohorts) =>
+          prevKohorts.map((kohort) =>
+            kohort.kohort_id === kohort_id
+              ? {
+                  ...kohort,
+                  appr_status: status,
+                }
+              : kohort
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+  };
+
   return (
     <UserKohortContainer>
       <Title>User Mgmt {'>'} K-ohorts</Title>
@@ -111,7 +149,7 @@ const UserKohort = () => {
             <TableHeader>Start Date</TableHeader>
             <TableHeader>End Date</TableHeader>
             <TableHeader>Description</TableHeader>
-            <TableHeader>Leader Name</TableHeader>
+            <TableHeader>User Name</TableHeader>
             <TableHeader>Kohort Role</TableHeader>
             <TableHeader>Approval</TableHeader>
             <TableHeader>Approval Date</TableHeader>
@@ -119,25 +157,62 @@ const UserKohort = () => {
         </thead>
         <tbody>
           {filteredKohorts.map((kohort) => (
-            <TableRow key={kohort.kohort_id} $isSelected={selectedRows.has(kohort.kohort_id)}>
-              <TableCell
-                $isSelected={selectedRows.has(kohort.kohort_id)}
-                onClick={() => handleCheckboxChange(kohort.kohort_id)}
-              >
-                <CheckboxContainer>
-                  <Checkbox src={checkbox} alt="checkbox" />
-                  {selectedRows.has(kohort.kohort_id) && <Checkmark src={checkmark} alt="checkmark" />}
-                </CheckboxContainer>
-              </TableCell>
-              <TableCell>{kohort.kohort_name}</TableCell>
-              <TableCell>{kohort.start_date}</TableCell>
-              <TableCell>{kohort.end_date}</TableCell>
-              <TableCell>{kohort.description}</TableCell>
-              <TableCell>{kohort.leader.user_name}</TableCell>
-              <TableCell>{kohort.kohort_role}</TableCell>
-              <TableCell>{kohort.activate_yn === 'Y' ? 'Approved' : 'Pending'}</TableCell>
-              <TableCell>{kohort.approval_date || 'N/A'}</TableCell>
-            </TableRow>
+            <React.Fragment key={kohort.kohort_id}>
+              {/* Kohort 정보 행 */}
+              <TableRow $isSelected={selectedRows.has(kohort.kohort_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(kohort.kohort_id)}
+                  onClick={() => handleCheckboxChange(kohort.kohort_id)}
+                >
+                  <CheckboxContainer>
+                    <Checkbox src={checkbox} alt="checkbox" />
+                    {selectedRows.has(kohort.kohort_id) && <Checkmark src={checkmark} alt="checkmark" />}
+                  </CheckboxContainer>
+                </TableCell>
+                <TableCell>{kohort.kohort_name}</TableCell>
+                <TableCell>{kohort.start_date}</TableCell>
+                <TableCell>{kohort.end_date}</TableCell>
+                <TableCell>{kohort.description}</TableCell>
+                <TableCell>{kohort.leader?.user_name || '~~'}</TableCell>
+                <TableCell>{kohort.leader?.user_name ? 'Leader' : '~~'}</TableCell>
+                <TableCell>
+                  {kohort.appr_status === 'PENDING' && kohort.leader ? (
+                    <>
+                      <button onClick={() => handleApproval(kohort.kohort_id, 'APPLIED')}>Add</button>
+                      <button className="deny" onClick={() => handleApproval(kohort.kohort_id, 'DENIED')}>
+                        Deny
+                      </button>
+                    </>
+                  ) : (
+                    kohort.appr_status
+                  )}
+                </TableCell>
+                <TableCell>{kohort.approval_date || '~~'}</TableCell>
+              </TableRow>
+
+              {/* Kohort에 속한 멤버 정보 행 */}
+              {(kohort.members || []).map((member: any) => (
+                <TableRow key={member.user_id} $isSelected={selectedRows.has(member.user_id)}>
+                  <TableCell
+                    $isSelected={selectedRows.has(kohort.kohort_id)}
+                    onClick={() => handleCheckboxChange(kohort.kohort_id)}
+                  >
+                    <CheckboxContainer>
+                      <Checkbox src={checkbox} alt="checkbox" />
+                      {selectedRows.has(kohort.kohort_id) && <Checkmark src={checkmark} alt="checkmark" />}
+                    </CheckboxContainer>
+                  </TableCell>
+                  <TableCell>{kohort.kohort_name}</TableCell>
+                  <TableCell>{kohort.start_date}</TableCell>
+                  <TableCell>{kohort.end_date}</TableCell>
+                  <TableCell>{kohort.description}</TableCell>
+                  <TableCell>{member.user_name}</TableCell>
+                  <TableCell>{'Member'}</TableCell>
+                  <TableCell>{kohort.appr_status}</TableCell>
+                  <TableCell>{kohort.approval_date || '~~'}</TableCell>
+                </TableRow>
+              ))}
+            </React.Fragment>
           ))}
         </tbody>
       </Table>

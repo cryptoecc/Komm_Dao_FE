@@ -312,3 +312,30 @@ export const TeamInput = styled.input`
   font-size: 16px;
   border: 1px solid #ccc;
 `;
+
+export const SelectedMembersContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-right: auto;
+  margin-bottom: 20px;
+`;
+
+export const MemberName = styled.span`
+  background-color: #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 5px;
+`;
+
+export const HiddenFileInput = styled.input`
+  display: none;
+`;
+
+export const PreviewImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+`;
