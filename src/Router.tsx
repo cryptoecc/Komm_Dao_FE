@@ -20,8 +20,8 @@ import UserMember from './pages/admin/mainboard/user/members/userMember';
 import ProfileMyPage from './pages/mainboard/dashboard/profile';
 import ProfileUpdate from './pages/mainboard/dashboard/profile/profile_update';
 import DealDtailsPage from './pages/mainboard/deal/dealDtails';
+import PrivateRoute from './constants/PrivateRoute';
 import Test from './pages/test';
-
 import DealInterest from './pages/mainboard/deal/dealDtails/dealInterest'; // Correct the path to your new component
 import DiscoverCalendar from './pages/mainboard/discover/discoverCalendar';
 import Proposals from './pages/mainboard/governance/proposals';
@@ -63,7 +63,11 @@ const Router = () => {
     { path: PATH.ADMINLOGIN, element: <AdminLogin /> },
     {
       path: PATH.ADMINMAINBOARD,
-      element: <AdminMainboard />,
+      element: (
+        <PrivateRoute>
+          <AdminMainboard />
+        </PrivateRoute>
+      ),
       children: [
         { path: PATH.USERAPPLICANTS, element: <UserApplicants /> },
         { path: PATH.USERMEMBERS, element: <UserMember /> },

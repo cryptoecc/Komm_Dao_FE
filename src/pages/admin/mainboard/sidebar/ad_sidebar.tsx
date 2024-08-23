@@ -32,8 +32,8 @@ const Sidebar: React.FC = () => {
         <SubMenu>
           <SubMenuItem to={PATH.USERAPPLICANTS}>Applicants</SubMenuItem>
           <SubMenuItem to={PATH.USERMEMBERS}>Members</SubMenuItem>
-          <SubMenuItem to={PATH.USERCOMMITTES}>K-ommittees</SubMenuItem>
-          <SubMenuItem to={PATH.USERKOHORTS}>K-ohorts</SubMenuItem>
+          <SubMenuItem to={PATH.USERCOMMITTES}>Kommittees</SubMenuItem>
+          <SubMenuItem to={PATH.USERKOHORTS}>Kohorts</SubMenuItem>
         </SubMenu>
       )}
       <NotificationItem>{/* <Icon imageUrl="/assets/images/notifications.png" /> */}</NotificationItem>
