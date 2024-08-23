@@ -34,7 +34,7 @@ const Proposals = () => {
                     <SearchBar>
                         {/* Input wrap */}
                         <SearchInputWrap>
-                            <SearchIcon />
+                            <SearchIcon width='24' height="24" />
                             <Input placeholder='Search proposals...' />
                         </SearchInputWrap>
                         {/* Input wrap */}

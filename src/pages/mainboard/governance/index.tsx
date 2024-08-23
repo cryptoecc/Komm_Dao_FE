@@ -40,7 +40,7 @@ const Governance: React.FC = () => {
               </NavList>
             ))}
           </NavBar>
-          {/* <Outlet /> */}
+          {/* Navbar */}
           {returnContent()}
         </MainSection>
         <SubSection>

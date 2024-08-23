@@ -12,7 +12,7 @@ const Delegates = () => {
             <FirstBlockWrap>
                 {/* Search bar */}
                 <SearchInputWrap>
-                    <SearchIcon />
+                    <SearchIcon width="24" height="24" />
                     <Input placeholder='Name or Wallet Address' />
                     <XBtn />
                 </SearchInputWrap>
