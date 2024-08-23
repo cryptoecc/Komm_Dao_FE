@@ -14,12 +14,18 @@ import {
 } from './adminLogin.style';
 import eyeIcon from 'src/assets/admin/eye-off.svg';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUserData } from 'src/store/user/UserSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -45,7 +51,16 @@ const AdminLogin: React.FC = () => {
         // 토큰 저장 (예: localStorage 또는 Redux)
         localStorage.setItem('token', response.data.token);
         // 로그인 성공 후 리다이렉트
-        window.location.href = '/admin-dashboard';
+        // `user_id`를 사용해서 사용자 정보 가져오기
+        const userResponse = await axios.get(`http://localhost:4000/api/admin/user-info/${response.data.user_id}`, {
+          headers: {
+            Authorization: `Bearer ${response.data.token}`,
+          },
+        });
+
+        dispatch(setUserData(userResponse.data));
+
+        navigate('/admin-mainboard');
       } else {
         setErrorMessage('Invalid email or password');
       }
