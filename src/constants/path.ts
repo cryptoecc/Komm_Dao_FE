@@ -10,6 +10,7 @@ export const PATH = {
   DISCOVER_DETAILS: '/mainboard/discover/:projectId',
   DISCOVER_CALENDAR: '/mainboard/discover/calendar',
   GOVERNANCE: '/mainboard/governance',
+  PROPOSAL: '/mainboard/governance/proposal/:id',
   KOHORT: '/mainboard/governance/kohort',
   ADMINLOGIN: '/kommdao-admin',
   ADMINMAINBOARD: '/admin-mainboard',

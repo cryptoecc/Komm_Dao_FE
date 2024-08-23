@@ -19,6 +19,7 @@ export const ModalBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  cursor: pointer;
 `;
 
 export const ModalContent = styled.div<ModalContentProps>`

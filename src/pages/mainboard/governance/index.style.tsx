@@ -49,7 +49,7 @@ export const NavBar = styled.ul`
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    max-width: 300px;
+    max-width: 310px;
     width: 100%;
     gap: 26px;
     border-bottom: 2px solid #D9D9D9;

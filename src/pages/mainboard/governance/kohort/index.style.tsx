@@ -55,6 +55,7 @@ export const Button = styled.button`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    cursor: pointer;
 `
 
 export const SecondBlockWrap = styled.section`

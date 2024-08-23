@@ -109,7 +109,7 @@ export const VoterBlock = styled.div`
 export const IMG = styled.img`
     width: 50px;
     height: 51px;
-    object-fit: contain;
+    object-fit: fit;
     border-radius: 50px;
 `
 export const NameWrap = styled.div`

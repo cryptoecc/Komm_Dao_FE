@@ -38,6 +38,8 @@ const GlobalStyle = createGlobalStyle`
     --status-card-disabled-bg: #d5d5d5;
     --status-card-disabled-color: #555;
 
+    --main-vote-btn-color: #F8F5FF;
+
     --main-border-color: #F2EEFF;
     --sub-border-color: #F2EEFF;
 

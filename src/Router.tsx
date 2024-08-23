@@ -27,6 +27,7 @@ import DiscoverCalendar from './pages/mainboard/discover/discoverCalendar';
 import Proposals from './pages/mainboard/governance/proposals';
 import Delegates from './pages/mainboard/governance/delegates';
 import Kohort from './pages/mainboard/governance/kohort';
+import SpecProposal from './pages/mainboard/governance/proposals/SpecProposal';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -43,15 +44,8 @@ const Router = () => {
         { path: PATH.DEAL_DETAILS, element: <DealDtailsPage /> },
         { path: PATH.DEAL_INTEREST, element: <DealInterest /> },
         { path: PATH.DISCOVER, element: <Discover /> },
-        {
-          path: PATH.GOVERNANCE,
-          element: <Governance />,
-          // children: [
-          //   { path: PATH.PROPOSALS, element: <Proposals /> },
-          //   { path: PATH.DELEGATES, element: <Delegates /> },
-          //   { path: PATH.KOHORT, element: <Kohort /> }
-          // ]
-        },
+        { path: PATH.GOVERNANCE, element: <Governance />, },
+        { path: PATH.PROPOSAL, element: <SpecProposal />, },
         { path: PATH.DISCOVER_DETAILS, element: <DiscoverDetails /> },
         { path: PATH.DISCOVER_CALENDAR, element: <DiscoverCalendar /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
