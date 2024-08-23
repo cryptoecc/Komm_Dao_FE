@@ -56,6 +56,11 @@ export const mapActiveIndexToPath: Record<number, Path> = {
   1: 'delegates',
   2: 'kohort',
 };
+export const mapPathToActiveIndex: Record<Path, number> = {
+  proposals: 0,
+  delegates: 1,
+  kohort: 2,
+};
 
 export const delegateProfiles = [
   {

@@ -46,11 +46,11 @@ const Router = () => {
         {
           path: PATH.GOVERNANCE,
           element: <Governance />,
-          children: [
-            { path: PATH.PROPOSALS, element: <Proposals /> },
-            { path: PATH.DELEGATES, element: <Delegates /> },
-            { path: PATH.KOHORT, element: <Kohort /> }
-          ]
+          // children: [
+          //   { path: PATH.PROPOSALS, element: <Proposals /> },
+          //   { path: PATH.DELEGATES, element: <Delegates /> },
+          //   { path: PATH.KOHORT, element: <Kohort /> }
+          // ]
         },
         { path: PATH.DISCOVER_DETAILS, element: <DiscoverDetails /> },
         { path: PATH.DISCOVER_CALENDAR, element: <DiscoverCalendar /> },

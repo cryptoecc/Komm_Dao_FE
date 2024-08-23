@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import ConnectWallet from '../../../components/walletbtn/ConnectWallet';
 import { GovernanceContainer, GovernanceTitle, GovernanceContent, ConnectWalletWrapper, MainSection, SubSection, NavBar, NavList, } from './index.style';
-import { mapActiveIndexToPath, sections } from './variables';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { sections } from './variables';
+import Proposals from './proposals';
+import Delegates from './delegates';
+import Kohort from './kohort';
 
 const Governance: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const navigate = useNavigate();
 
   function handleNavigate(index: number) {
     setActiveIndex(index);
-    navigate(`${mapActiveIndexToPath[index]}`);
+  }
+
+  function returnContent() {
+    switch (activeIndex) {
+      case 0:
+        return <Proposals />
+      case 1:
+        return <Delegates />
+      case 2:
+        return <Kohort />
+    }
   }
 
   return (
@@ -29,7 +40,8 @@ const Governance: React.FC = () => {
               </NavList>
             ))}
           </NavBar>
-          <Outlet />
+          {/* <Outlet /> */}
+          {returnContent()}
         </MainSection>
         <SubSection>
         </SubSection>
