@@ -6,6 +6,7 @@ export const Container = styled.section`
     justify-content: center;
     flex-direction: column;
     width: 100%;
+    gap: 57px;
 `
 export const FirstBlockWrap = styled.section`
     display: flex;
@@ -72,6 +73,9 @@ export const KohortBlock = styled.div`
     width: 301px;
     height: 243px;
     border: 10px solid var(--main-border-color);
+    flex-direction: column;
+    gap: 25px;
+    cursor: pointer;
 `
 
 export const LogoWrap = styled.div`
@@ -79,6 +83,8 @@ export const LogoWrap = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 20px;
+    width: 100px;
+    height: 100px;
     background-color: var(--sub-border-color);
 `
 export const Logo = styled.img`
@@ -92,4 +98,23 @@ export const Header = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 19px;
+`
+
+export const H3 = styled.h3`
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    color: ${({ theme }) => theme.colors.black};
+`
+export const P = styled.p<{ fontSize: number; whiteSpace?: string }>`
+    color: rgba(0, 0, 0, 0.50);
+    -webkit-text-stroke-width: 1;
+    -webkit-text-stroke-color: #F3EFFF;
+    font-size: ${({ fontSize }) => `${fontSize}px`};
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    white-space: ${({ whiteSpace }) => `${whiteSpace ? whiteSpace : "normal"}`};
 `

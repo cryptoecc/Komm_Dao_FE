@@ -1,5 +1,6 @@
 import SearchIcon from 'src/assets/governance/SearchIcon'
-import { Button, Container, FirstBlockWrap, Input, SearchInputWrap, SecondBlockWrap } from './index.style'
+import { Button, Container, FirstBlockWrap, H3, Header, Input, KohortBlock, Logo, LogoWrap, P, SearchInputWrap, SecondBlockWrap } from './index.style'
+import { kohorts } from '../variables'
 
 const Kohort = () => {
     return (
@@ -12,7 +13,17 @@ const Kohort = () => {
                 <Button>+ Create Team</Button>
             </FirstBlockWrap>
             <SecondBlockWrap>
-
+                {kohorts.map((el, i) => (
+                    <KohortBlock key={i}>
+                        <Header>
+                            <LogoWrap>
+                                <Logo src={el.img} alt="profile-pic" />
+                            </LogoWrap>
+                            <H3>{el.header}</H3>
+                        </Header>
+                        <P fontSize={20}>{el.content}</P>
+                    </KohortBlock>
+                ))}
             </SecondBlockWrap>
         </Container>
     )

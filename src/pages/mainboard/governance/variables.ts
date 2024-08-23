@@ -4,6 +4,10 @@ import ProfileImage2 from 'src/assets/governance/2036.png';
 import ProfileImage3 from 'src/assets/governance/2037.png';
 import ProfileImage4 from 'src/assets/governance/2038.png';
 
+import KohortLogo0 from 'src/assets/governance/kohort0.png';
+import KohortLogo1 from 'src/assets/governance/kohort1.png';
+import KohortLogo2 from 'src/assets/governance/kohort2.png';
+
 export const sections = ['Proposal', 'Delegates', 'Kohort'];
 
 export const statusCard = [
@@ -153,4 +157,10 @@ export const delegateProfiles = [
     trustAccounts: 0,
     votedProps: 4,
   },
+];
+
+export const kohorts = [
+  { img: KohortLogo0, header: 'Nibiru Marketing', content: 'Programs - 3 members' },
+  { img: KohortLogo1, header: 'MYX Research', content: 'Governance - 1 member' },
+  { img: KohortLogo2, header: 'Airstack Validator', content: 'Treasury - 2 members' },
 ];
