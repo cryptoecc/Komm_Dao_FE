@@ -48,9 +48,9 @@ export const TableHeader = styled.th<{ isActive?: boolean; width?: string }>`
 
   img {
     text-align: left;
-    width: 15px;
-    height: 15px;
-    margin-left: 10px;
+    width: 12px;
+    height: 12px;
+    margin-left: 5px;
     cursor: pointer;
   }
 
@@ -76,8 +76,8 @@ export const TooltipContainer = styled.div`
   position: relative;
 
   img {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     margin-right: 5px;
     cursor: pointer;
   }
@@ -85,10 +85,10 @@ export const TooltipContainer = styled.div`
   .tooltip {
     display: none;
     position: absolute;
-    background-color: #f9f8fe;
+    background-color: #f3ecff;
     color: #333;
     text-align: left;
-    padding: 10px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
