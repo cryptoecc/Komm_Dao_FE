@@ -13,15 +13,32 @@ export const FirstBlockWrap = styled.section`
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 43px;
+    gap: 155px;
     max-width: 700px;
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    ::-webkit-scollbar-thumb {
-        background-color: #D0D0E6;
-        border-radius: 10px;
-    }
+    &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #EFEFEF;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #D0D0E6;
+    border-radius: 10px;
+    border: none;
+  }
+`
+export const FirstBlockInnerContent = styled.section`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 100%;
+    gap: 43px;
 `
 export const Row = styled.div`
     display: flex;
@@ -77,6 +94,7 @@ export const ProfileHeader = styled.div`
     align-items: center;
     justify-content: center;
     gap: 18px;
+    flex-shrink: 0;
 `
 export const IMG = styled.img`
     width: 50px;
@@ -235,12 +253,48 @@ export const CommentsHeaderWrap = styled.div<{ gap: number, borderBottom?: boole
     align-items: center;
     justify-content: center;
     gap: ${({ gap }) => `${gap}px`};
-    border-bottom: ${({ borderBottom }) => borderBottom ? '1px solid #D9D9D9' : 'none'}
+    border-bottom: ${({ borderBottom }) => borderBottom ? '1px solid #D9D9D9' : 'none'};
+`
+export const CommentsContainer = styled.section`
+display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+flex-direction: column;
+width: 100%;
 `
 export const CommentsContent = styled.section`
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 240px;
+    overflow-y: scroll;
+    width: 100%;
+    padding: 13px 0;
+    &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #EFEFEF;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #D0D0E6;
+    border-radius: 10px;
+    border: none;
+  }
+`
+export const ProfileRow = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 87px;
+    flex-shrink: 0;
+    width: 95%;
+    border-bottom: 1px solid #D9D9D9;
+    padding: 8px 0;
 `
 export const ActiveButton = styled.button<{ active: boolean }>`
     padding: 5px 10px;

@@ -1,5 +1,5 @@
 import ArrowBack from 'src/assets/governance/ArrowBack'
-import { Container, FirstBlockWrap, Row, P, H1, CardWrap, ProfileWrap, ProfileHeader, IMG, StatusBtn, StatusBtnText, Content, BtnBlock, VoteBtn, SecondBlockWrap, Header, VotesBlock, Column, RowSpaceBetween, LinearProgressContainer, LinearProgress, InnerBlockWrap, CommentsSection, CommentsHeader, CommentsHeaderWrap, ActiveButton, CommentsActiveNavigation, ActiveTab } from './index.style'
+import { Container, FirstBlockWrap, Row, P, H1, CardWrap, ProfileWrap, ProfileHeader, IMG, StatusBtn, StatusBtnText, Content, BtnBlock, VoteBtn, SecondBlockWrap, Header, VotesBlock, Column, RowSpaceBetween, LinearProgressContainer, LinearProgress, InnerBlockWrap, CommentsSection, CommentsHeader, CommentsHeaderWrap, ActiveButton, CommentsActiveNavigation, ActiveTab, FirstBlockInnerContent, CommentsContent, ProfileRow, CommentsContainer } from './index.style'
 import { useParams, useNavigate } from "react-router-dom";
 import { proposals } from '../../variables';
 import DownloadIcon from 'src/assets/governance/DownloadIcon';
@@ -14,37 +14,39 @@ const SpecProposal = () => {
     return (
         <Container>
             <FirstBlockWrap>
-                <Row onClick={() => navigate(-1)}>
-                    <ArrowBack width="24px" height="24px" />
-                    <P fontSize={18} color="#A380F9" fontWeight={500}>Back to Proposals</P>
-                </Row>
-                <H1>{proposals[id as Path].header}</H1>
-                <CardWrap>
-                    <ProfileWrap>
-                        <ProfileHeader>
-                            <IMG src={proposals[id as Path].profileImg} alt="profile-pic" />
-                            <P fontSize={18} fontWeight={400}>{proposals[id as Path].name}</P>
-                            <StatusBtn status={0}>
-                                <StatusBtnText status={0}>Ongoing</StatusBtnText>
-                            </StatusBtn>
-                        </ProfileHeader>
-                        <P fontSize={26} color="#9A9898" fontWeight={700}>...</P>
-                    </ProfileWrap>
+                <FirstBlockInnerContent>
+                    <Row onClick={() => navigate(-1)}>
+                        <ArrowBack width="24px" height="24px" />
+                        <P fontSize={18} color="#A380F9" fontWeight={500}>Back to Proposals</P>
+                    </Row>
+                    <H1>{proposals[id as Path].header}</H1>
+                    <CardWrap>
+                        <ProfileWrap>
+                            <ProfileHeader>
+                                <IMG src={proposals[id as Path].profileImg} alt="profile-pic" />
+                                <P fontSize={18} fontWeight={400}>{proposals[id as Path].name}</P>
+                                <StatusBtn status={0}>
+                                    <StatusBtnText status={0}>Ongoing</StatusBtnText>
+                                </StatusBtn>
+                            </ProfileHeader>
+                            <P fontSize={26} color="#9A9898" fontWeight={700}>...</P>
+                        </ProfileWrap>
 
-                    <Content>
-                        <P fontSize={18} fontWeight={700}>Objective</P>
-                        <P fontSize={18} fontWeight={400}>{proposals[id as Path].objective}</P>
-                    </Content>
-                    <Content>
-                        <P fontSize={18} fontWeight={700}>Description</P>
-                        <P fontSize={18} fontWeight={400}>{proposals[id as Path].description}</P>
-                    </Content>
-                </CardWrap>
-                <BtnBlock>
-                    <VoteBtn>Yes</VoteBtn>
-                    <VoteBtn>No</VoteBtn>
-                    <VoteBtn>Abstain</VoteBtn>
-                </BtnBlock>
+                        <Content>
+                            <P fontSize={18} fontWeight={700}>Objective</P>
+                            <P fontSize={18} fontWeight={400}>{proposals[id as Path].objective}</P>
+                        </Content>
+                        <Content>
+                            <P fontSize={18} fontWeight={700}>Description</P>
+                            <P fontSize={18} fontWeight={400}>{proposals[id as Path].description}</P>
+                        </Content>
+                    </CardWrap>
+                    <BtnBlock>
+                        <VoteBtn>Yes</VoteBtn>
+                        <VoteBtn>No</VoteBtn>
+                        <VoteBtn>Abstain</VoteBtn>
+                    </BtnBlock>
+                </FirstBlockInnerContent>
                 <CommentsSection>
                     <CommentsHeader>
                         <CommentsHeaderWrap gap={16}>
@@ -56,13 +58,27 @@ const SpecProposal = () => {
                             <P fontSize={16} fontWeight={400} color='#6D6D6D'>Download CSV</P>
                         </CommentsHeaderWrap>
                     </CommentsHeader>
-                    <CommentsActiveNavigation>
-                        <CommentsHeaderWrap gap={30} borderBottom={true}>
-                            <ActiveTab active={false}>Yes</ActiveTab>
-                            <ActiveTab active={false}>No</ActiveTab>
-                            <ActiveTab active={true} margin={25}>Abstain</ActiveTab>
-                        </CommentsHeaderWrap>
-                    </CommentsActiveNavigation>
+                    <CommentsContainer>
+                        <CommentsActiveNavigation>
+                            <CommentsHeaderWrap gap={30} borderBottom={true}>
+                                <ActiveTab active={true}>Yes</ActiveTab>
+                                <ActiveTab active={false}>No</ActiveTab>
+                                <ActiveTab active={false} margin={25}>Abstain</ActiveTab>
+                            </CommentsHeaderWrap>
+                        </CommentsActiveNavigation>
+                        <CommentsContent>
+                            {proposals.map(((el, i) => (
+                                <ProfileRow key={i}>
+                                    <ProfileHeader>
+                                        <IMG src={el.profileImg} alt='profile-pic' />
+                                        <P fontSize={18} fontWeight={400}>{el.name}</P>
+                                    </ProfileHeader>
+                                    <P fontSize={18} fontWeight={400} color="#6B6B6B">100% Yes</P>
+                                    <P fontSize={18} fontWeight={400} color="#6B6B6B">1 Vote</P>
+                                </ProfileRow>
+                            )))}
+                        </CommentsContent>
+                    </CommentsContainer>
                 </CommentsSection>
             </FirstBlockWrap>
             <SecondBlockWrap>
