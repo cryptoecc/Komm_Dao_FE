@@ -7,53 +7,66 @@ export const DashboardContainer = styled.div`
   min-height: 100vh; /* 최소 높이를 화면 전체 높이로 설정 */
 `;
 
+export const Logo = styled.div`
+  width: 80px; /* Fixed size */
+  height: 80px; /* Fixed size */
+  background: url('/assets/images/sidebarLogo.png') no-repeat center center;
+  background-size: contain;
+  margin: 20px 0;
+  flex-shrink: 0; /* Prevent the logo from shrinking */
+
+  /* Ensure the size stays consistent across all screen sizes */
+  @media (max-width: 1024px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  @media (max-width: 480px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Disable the logo from being affected by zoom or any potential container resizing */
+  @media (max-width: 320px) {
+    width: 80px;
+    height: 80px;
+  }
+`;
+
 export const SidebarContainer = styled.div`
   width: 275px;
-  height: 100vh; /* 전체 화면 높이로 설정 */
+  height: 100vh;
   flex-shrink: 0;
   background: #f9f8fe;
   display: flex;
   flex-direction: column;
   padding-left: 20px;
   align-items: flex-start;
-  position: sticky; /* 스크롤 시 고정 */
-  top: 0; /* 뷰포트의 상단에 고정 */
+  position: sticky;
+  top: 0;
   transition: width 0.3s ease;
 
   @media (max-width: 1024px) {
-    width: 220px; /* 중간 크기의 화면에서 사이드바 크기 조정 */
+    width: 220px;
   }
 
   @media (max-width: 768px) {
-    width: 180px; /* 작은 화면에서 사이드바 크기 조정 */
+    width: 180px;
   }
 
   @media (max-width: 480px) {
-    width: 60px; /* 모바일 화면에서 사이드바 최소 크기로 축소 */
-    padding-left: 10px; /* 패딩 줄이기 */
-  }
-`;
-
-export const Logo = styled.div`
-  width: 80px; /* 기본 크기 */
-  height: 80px; /* 기본 크기 */
-  background: url('/assets/images/sidebarLogo.png') no-repeat center center;
-  background-size: contain;
-  margin: 20px 0;
-
-  @media (max-width: 1024px) {
-    width: 70px;
-    height: 70px;
-  }
-
-  @media (max-width: 768px) {
     width: 60px;
-    height: 60px;
+    padding-left: 10px;
   }
 
-  @media (max-width: 480px) {
-    width: 50px;
-    height: 50px;
+  /* Ensure the logo size is not constrained */
+  & > ${Logo} {
+    flex-shrink: 0; /* Prevent the logo from shrinking */
   }
 `;
 
@@ -76,16 +89,15 @@ export const NavItem = styled(NavLink)`
     padding: 10px 15px;
   }
 `;
-
 export const Icon = styled.div<{ imageUrl: string }>`
   width: 24px;
   height: 24px;
   background: url(${(props) => props.imageUrl}) no-repeat center center;
   background-size: contain;
 
-  @media (max-width: 480px) {
-    width: 20px;
-    height: 20px;
+  @media (max-width: 768px) {
+    width: 15px;
+    height: 15px;
   }
 `;
 
@@ -97,15 +109,28 @@ export const Name = styled.div`
   line-height: normal;
   transition: font-size 0.3s ease;
 
+  @media (max-width: 1024px) {
+    color: #1a0737;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    transition: font-size 0.3s ease;
+  }
+
   @media (max-width: 768px) {
-    font-size: 18px;
+    color: #1a0737;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    transition: font-size 0.3s ease;
   }
 
   @media (max-width: 480px) {
-    display: none; /* 모바일 화면에서 텍스트 숨기기 */
+    display: none; /* Hide icon on smaller screens or when zoomed in */
   }
 `;
-
 export const NotificationItem = styled.div`
   padding: 20px;
   display: flex;
@@ -116,15 +141,14 @@ export const NotificationItem = styled.div`
   bottom: 10%;
 
   @media (max-width: 1024px) {
-    bottom: 15%;
+    display: none; /* Hide the notification icon on smaller screens */
   }
 
   @media (max-width: 768px) {
-    bottom: 20%;
+    display: none; /* Hide the notification icon on smaller screens */
   }
 
   @media (max-width: 480px) {
-    padding: 10px;
-    bottom: 30%;
+    display: none; /* Hide the notification icon on smaller screens */
   }
 `;

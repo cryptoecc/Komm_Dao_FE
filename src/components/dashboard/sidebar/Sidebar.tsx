@@ -24,7 +24,7 @@ const Sidebar: React.FC = () => {
         <Icon imageUrl={images.contributionIcon} />
         <Name>Contribution</Name>
       </NavItem>
-      <NavItem to={PATH.GOVERNANCE_ABS}>
+      <NavItem to={PATH.GOVERNANCE}>
         <Icon imageUrl={images.governanceIcon} />
         <Name>Governance</Name>
       </NavItem>

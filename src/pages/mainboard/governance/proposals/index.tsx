@@ -4,9 +4,10 @@ import { proposals, statusCard } from '../variables';
 import SearchIcon from 'src/assets/governance/SearchIcon';
 import ArrowDownIcon from 'src/assets/governance/ArrowDown';
 import ProfileImage from 'src/assets/governance/profile-image.png';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Proposals = () => {
+    const navigate = useNavigate();
     return (
         <GovernanceContent>
             <MainSection>
@@ -34,7 +35,7 @@ const Proposals = () => {
                     <SearchBar>
                         {/* Input wrap */}
                         <SearchInputWrap>
-                            <SearchIcon />
+                            <SearchIcon width='24' height="24" />
                             <Input placeholder='Search proposals...' />
                         </SearchInputWrap>
                         {/* Input wrap */}
@@ -54,7 +55,7 @@ const Proposals = () => {
                     {/* Search bar wrap */}
                     {/* Proposal Cards */}
                     <ProposalCardWrap>
-                        {proposals.map((el, i) => (<ProposalCard key={i}>
+                        {proposals.map((el, i) => (<ProposalCard onClick={() => navigate(`proposal/${el.id}`)} key={i}>
                             {/* Proposal Card Content */}
                             {/* Header Wrap */}
                             <ProposalCardHeader>

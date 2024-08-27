@@ -16,6 +16,7 @@ import {
   SaveButton,
   CancelButton,
 } from './AddMembersModal.style';
+import axios from 'axios';
 
 interface Member {
   user_id: string;
@@ -28,19 +29,44 @@ interface Member {
 interface AddMemberModalProps {
   onClose: () => void;
   onSave: (members: Member[]) => void;
+  selectedCommittee: string;
 }
 
-const AddMemberModal: React.FC<AddMemberModalProps> = ({ onClose, onSave }) => {
+const AddMemberModal: React.FC<AddMemberModalProps> = ({ onClose, onSave, selectedCommittee }) => {
   const [members, setMembers] = useState<Member[]>([]);
   const [membersToAdd, setMembersToAdd] = useState<Member[]>([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    // 여기서 초기 멤버 데이터를 받아올 수 있습니다. 예시로서 하드코딩된 데이터를 사용합니다.
-    setMembers([
-      { user_id: '1', name: 'Stella', wallet: '0xf6595...e835c', avatar: '/path/to/avatar1.png', added: false },
-      { user_id: '2', name: 'Allex', wallet: '0xf1231...c232c', avatar: '/path/to/avatar2.png', added: false },
-      // 더 많은 멤버 추가...
-    ]);
-  }, []);
+    // selectedCommittee에 따라 멤버 리스트를 가져옴
+    const fetchMembers = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/admin/addmemberlist?selectedCommittee=${selectedCommittee}`
+        );
+
+        if (Array.isArray(response.data)) {
+          setMembers(
+            response.data.map((member: any) => ({
+              user_id: member.user_id,
+              name: member.user_name,
+              wallet: `${member.wallet_addr.slice(0, 7)}...${member.wallet_addr.slice(-5)}`, // Wallet Address 형식 조정,
+              avatar: `http://localhost:4000/${member.user_image_link}`,
+              added: member.added, // 백엔드에서 추가된 상태로 제공되는 added 값을 그대로 사용
+            }))
+          );
+        } else {
+          throw new Error('Unexpected response format');
+        }
+      } catch (error) {
+        console.error('Error fetching members', error);
+      }
+    };
+
+    fetchMembers();
+  }, [selectedCommittee]);
 
   const toggleMember = (index: number) => {
     const updatedMembers = [...members];

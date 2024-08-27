@@ -19,6 +19,7 @@ export const ModalBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  cursor: pointer;
 `;
 
 export const ModalContent = styled.div<ModalContentProps>`
@@ -44,7 +45,6 @@ export const ModalTitle = styled.h2<ModalTitleProps>`
   font-weight: 700;
   line-height: normal;
   padding: 10px;
-  /* padding-left: 55px; */
   padding-left: ${(props) => (props.$isAddMembers ? '30px' : '55px')};
   padding-top: 30px;
 `;

@@ -133,16 +133,17 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   button {
     background: none;
     border: none;
-    font-family: Roboto;
-    color: var(--Light-Dark, #343a40);
-    font-feature-settings: 'clig' off, 'liga' off;
-    text-decoration-line: underline;
+    color: #0087ff;
     cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
+    font-weight: 700;
+    margin-right: 5px;
 
     &:hover {
       text-decoration: underline;
+    }
+
+    &.deny {
+      color: #ff3d3d;
     }
   }
 `;
