@@ -267,11 +267,11 @@ export const CommentsContent = styled.section`
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 10px;
+    gap: 4px;
     max-height: 240px;
     overflow-y: scroll;
     width: 100%;
-    padding: 13px 0;
+    padding: 10px 0;
     &::-webkit-scrollbar {
     width: 12px;
   }
