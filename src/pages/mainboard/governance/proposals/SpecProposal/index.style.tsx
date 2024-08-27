@@ -5,7 +5,7 @@ export const Container = styled.section`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 60px 66px;
+    padding: 60px;
 `
 
 export const FirstBlockWrap = styled.section`
@@ -16,6 +16,12 @@ export const FirstBlockWrap = styled.section`
     gap: 43px;
     max-width: 700px;
     width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    ::-webkit-scollbar-thumb {
+        background-color: #D0D0E6;
+        border-radius: 10px;
+    }
 `
 export const Row = styled.div`
     display: flex;
@@ -117,4 +123,131 @@ export const VoteBtn = styled.button`
     cursor: pointer;
 `
 
-export const SecondBlockWrap = styled.section``
+export const Footer = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+`
+
+export const SecondBlockWrap = styled.section`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    max-width: 350px;
+    padding: 5px;
+    gap: 90px;
+`
+export const InnerBlockWrap = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-direction: column;
+    width: 100%;
+`
+export const Header = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+`
+export const VotesBlock = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--main-card-color);
+    border-radius: 10px;
+    flex-shrink: 0;
+    padding: 17px 27px;
+    gap: 11px;
+`
+export const Column = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+`
+export const RowSpaceBetween = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 7px;
+`
+export const LinearProgressContainer = styled.div`
+  height: 13px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #fff;
+  overflow: hidden;
+`
+
+export const LinearProgress = styled.div<{ width: number }>`
+  height: 100%;
+  width: ${({ width }) => width + '%'};
+  background-color: #A380F9;
+  border-radius: 10px;
+  `
+export const CommentsSection = styled.section`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 26px;
+    width: 100%;
+    padding: 0 24px;
+    margin: 0 0 70px 0;
+`
+export const CommentsHeader = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+`
+export const CommentsActiveNavigation = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 270px;
+`
+export const ActiveTab = styled.p<{ active: boolean, margin?: number }>`
+    color: ${({ active }) => active ? 'var(--main-btn-text-color)' : "#6D6D6D"};
+    border-bottom: ${({ active }) => active ? '3px solid var(--main-btn-text-color)' : 'none'};
+    padding: 10px;
+    font-size: 20px;
+    font-weight: ${({ active }) => active ? 700 : 400};
+    margin-left: ${({ margin }) => `${margin}px`};
+    cursor: pointer;
+`
+
+export const CommentsHeaderWrap = styled.div<{ gap: number, borderBottom?: boolean }>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${({ gap }) => `${gap}px`};
+    border-bottom: ${({ borderBottom }) => borderBottom ? '1px solid #D9D9D9' : 'none'}
+`
+export const CommentsContent = styled.section`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+`
+export const ActiveButton = styled.button<{ active: boolean }>`
+    padding: 5px 10px;
+    border: none;
+    background-color: ${({ active }) => active ? 'var(--main-btn-background-color)' : 'transparent'};
+    color: ${({ active, theme }) => active ? 'var(--main-btn-text-color)' : theme.colors.black};
+    border-radius: 10px;
+    font-weight: ${({ active }) => active ? 700 : 400};
+    font-size: 22px;
+`
