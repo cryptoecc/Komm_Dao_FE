@@ -45,7 +45,6 @@ export const ModalTitle = styled.h2<ModalTitleProps>`
   font-weight: 700;
   line-height: normal;
   padding: 10px;
-  /* padding-left: 55px; */
   padding-left: ${(props) => (props.$isAddMembers ? '30px' : '55px')};
   padding-top: 30px;
 `;

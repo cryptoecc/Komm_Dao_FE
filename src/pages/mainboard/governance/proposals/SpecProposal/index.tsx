@@ -3,6 +3,9 @@ import { Container, FirstBlockWrap, Row, P, H1, CardWrap, ProfileWrap, ProfileHe
 import { useParams, useNavigate } from "react-router-dom";
 import { proposals } from '../../variables';
 import DownloadIcon from 'src/assets/governance/DownloadIcon';
+import { useState } from 'react';
+import Backdrop from 'src/components/governance/Backdrop';
+import DefaultModal from 'src/components/governance/DefaultModal';
 
 
 type Path = "0" | "1" | "2" | "3";
@@ -10,6 +13,7 @@ type Path = "0" | "1" | "2" | "3";
 const SpecProposal = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [modal, setModal] = useState<boolean>(true)
 
     return (
         <Container>
@@ -153,6 +157,11 @@ const SpecProposal = () => {
 
                 </InnerBlockWrap>
             </SecondBlockWrap>
+            {modal && (
+                <Backdrop close={() => setModal(false)}>
+                    <DefaultModal />
+                </Backdrop>
+            )}
         </Container>
     )
 }

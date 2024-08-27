@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.section`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     padding: 60px;
@@ -15,6 +15,7 @@ export const FirstBlockWrap = styled.section`
     flex-direction: column;
     gap: 155px;
     max-width: 700px;
+    height: 100vh;
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -139,6 +140,10 @@ export const VoteBtn = styled.button`
     font-weight: 500;
     line-height: normal;
     cursor: pointer;
+
+    &:hover {
+        background-color: var(--main-vote-active-color);
+    }
 `
 
 export const Footer = styled.section`
@@ -151,7 +156,7 @@ export const Footer = styled.section`
 export const SecondBlockWrap = styled.section`
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: column;
     width: 100%;
     height: 100%;
@@ -161,11 +166,12 @@ export const SecondBlockWrap = styled.section`
 `
 export const InnerBlockWrap = styled.section`
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: flex-end;
     gap: 18px;
     flex-direction: column;
     width: 100%;
+    height: 100%;
 `
 export const Header = styled.div`
     display: flex;

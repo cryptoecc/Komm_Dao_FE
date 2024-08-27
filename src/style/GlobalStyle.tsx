@@ -39,6 +39,7 @@ const GlobalStyle = createGlobalStyle`
     --status-card-disabled-color: #555;
 
     --main-vote-btn-color: #F8F5FF;
+    --main-vote-active-color: #CCB7FF;
 
     --main-border-color: #F2EEFF;
     --sub-border-color: #F2EEFF;
