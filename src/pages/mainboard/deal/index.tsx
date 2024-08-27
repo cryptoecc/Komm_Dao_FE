@@ -5,7 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import DealList from '../../../components/dashboard/deal/DealList'; // DealList를 가져옵니다.
 
 const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
   padding: 20px;
+  width: 1440px;
+  max-width: 1440px; /* Ensures the container doesn’t exceed this width */
+  margin: 0 auto; /* Centers the container on the page */
+`;
+
+const TitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* Aligns the title to the left */
 `;
 
 const Title = styled.h1`
@@ -32,6 +44,7 @@ const DealPage: React.FC = () => {
 
     fetchDeals();
   }, []);
+
   const handleDealClick = (deal: any) => {
     console.log(deal);
 
@@ -44,23 +57,9 @@ const DealPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <Title>Deals</Title>
-      {/* <div>
-        <Button onClick={openModal}>Create New Deal</Button>
-
-        {isModalOpen && <CreateDealModal onClose={closeModal} onConfirm={closeModal} />}
-      </div>
-      <div>
-        <button onClick={() => handleOpenDeleteModal(1)}>Delete Deal 1</button>
-
-        {isDeleteModalOpen && selectedDealId !== null && (
-          <DeleteDealModal
-            dealId={selectedDealId}
-            onClose={handleCloseDeleteModal}
-            onDeleteSuccess={handleDeleteSuccess}
-          />
-        )}
-      </div> */}
+      <TitleContainer>
+        <Title>Deals</Title>
+      </TitleContainer>
       <DealList deals={deals} onDealClick={handleDealClick} />
     </PageContainer>
   );
