@@ -12,6 +12,7 @@ export const Container = styled.section`
     border-radius: 20px;
     padding: 70px 57px 57px;
     gap: 101px;
+    z-index: 7;
 `
 
 export const P = styled.p`
@@ -20,6 +21,7 @@ export const P = styled.p`
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    cursor: text;
 `
 
 export const VoteContainer = styled.section`
@@ -47,4 +49,5 @@ export const Btn = styled.button<{ active?: boolean }>`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    cursor: pointer;
 `

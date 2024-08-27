@@ -10,10 +10,10 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
   cursor: pointer;
 `;
 
 export const Content = styled.section`
   z-index: 6;
+  cursor: default;
 `

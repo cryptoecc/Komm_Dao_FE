@@ -7,6 +7,7 @@ import ProfileImage4 from 'src/assets/governance/2038.png';
 import KohortLogo0 from 'src/assets/governance/kohort0.png';
 import KohortLogo1 from 'src/assets/governance/kohort1.png';
 import KohortLogo2 from 'src/assets/governance/kohort2.png';
+import { VOTE } from './proposals/SpecProposal/types';
 
 export const sections = ['Proposal', 'Delegates', 'K-ohort'];
 
@@ -188,3 +189,5 @@ export const kohorts = [
   { img: KohortLogo1, header: 'MYX Research', content: 'Governance - 1 member' },
   { img: KohortLogo2, header: 'Airstack Validator', content: 'Treasury - 2 members' },
 ];
+
+export const VOTES: VOTE[] = ['Yes', 'No', 'Abstain'];

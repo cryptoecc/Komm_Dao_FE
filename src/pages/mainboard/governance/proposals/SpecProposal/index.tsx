@@ -1,11 +1,12 @@
 import ArrowBack from 'src/assets/governance/ArrowBack'
 import { Container, FirstBlockWrap, Row, P, H1, CardWrap, ProfileWrap, ProfileHeader, IMG, StatusBtn, StatusBtnText, Content, BtnBlock, VoteBtn, SecondBlockWrap, Header, VotesBlock, Column, RowSpaceBetween, LinearProgressContainer, LinearProgress, InnerBlockWrap, CommentsSection, CommentsHeader, CommentsHeaderWrap, ActiveButton, CommentsActiveNavigation, ActiveTab, FirstBlockInnerContent, CommentsContent, ProfileRow, CommentsContainer } from './index.style'
 import { useParams, useNavigate } from "react-router-dom";
-import { proposals } from '../../variables';
+import { proposals, VOTES } from '../../variables';
 import DownloadIcon from 'src/assets/governance/DownloadIcon';
 import { useState } from 'react';
 import Backdrop from 'src/components/governance/Backdrop';
 import DefaultModal from 'src/components/governance/DefaultModal';
+import { VOTE } from './types';
 
 
 type Path = "0" | "1" | "2" | "3";
@@ -13,7 +14,13 @@ type Path = "0" | "1" | "2" | "3";
 const SpecProposal = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [modal, setModal] = useState<boolean>(true)
+    const [modal, setModal] = useState<boolean>(false);
+    const [currentVote, setCurrentVote] = useState<VOTE>('');
+
+    function handleVote(type: VOTE) {
+        setCurrentVote(type);
+        setModal(true);
+    }
 
     return (
         <Container>
@@ -46,9 +53,7 @@ const SpecProposal = () => {
                         </Content>
                     </CardWrap>
                     <BtnBlock>
-                        <VoteBtn>Yes</VoteBtn>
-                        <VoteBtn>No</VoteBtn>
-                        <VoteBtn>Abstain</VoteBtn>
+                        {VOTES.map((el, i) => (<VoteBtn onClick={() => handleVote(el)} key={i}>{el}</VoteBtn>))}
                     </BtnBlock>
                 </FirstBlockInnerContent>
                 <CommentsSection>
@@ -159,7 +164,7 @@ const SpecProposal = () => {
             </SecondBlockWrap>
             {modal && (
                 <Backdrop close={() => setModal(false)}>
-                    <DefaultModal />
+                    <DefaultModal voteType={currentVote} close={setModal} />
                 </Backdrop>
             )}
         </Container>
