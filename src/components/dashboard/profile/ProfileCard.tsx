@@ -37,6 +37,19 @@ const ProfileCard: React.FC = () => {
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        setUserData({
+          profileImage: 'default-profile.png',
+          name: 'Stella',
+          expertise: 'Developer',
+          points: 0,
+          xp: 0,
+          stats: {
+            deal: 0,
+            discover: 0,
+            contribution: 0,
+            governance: 0,
+          },
+        });
       }
     };
 
@@ -54,7 +67,8 @@ const ProfileCard: React.FC = () => {
   return (
     <ProfileCardContainer>
       <ProfileInfo onClick={handleProfileClick}>
-        <ProfileImage src={`http://localhost:4000/${userData.profileImage}`} alt="Profile" />
+        <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
+        {/* <ProfileImage src={`http://localhost:4000/${userData.profileImage}`} alt="Profile" /> */}
         <ProfileName>{userData.name}</ProfileName>
         <ProfileJob>{userData.expertise || 'Job Title'}</ProfileJob>
       </ProfileInfo>
@@ -68,29 +82,30 @@ const ProfileCard: React.FC = () => {
               Earn points through various activities to unlock rewards. Your total XP will be used for rewards.
             </Tooltip>
           </Points>
-          <XP>{formatNumber(22250)} XP</XP>
+          <XP>{formatNumber(userData.xp)} XP</XP>
         </PointsAndXPWrap>
       </PointsWrap>
       <StatsWrap>
         <Stat>
           <StatItem>Deal</StatItem>
-          <StatValue>{formatNumber(2)}</StatValue>
+          {/* Optional chaining으로 userData.stats가 존재하는지 확인 후 값 접근 */}
+          <StatValue>{formatNumber(userData.stats?.deal ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Discover</StatItem>
-          <StatValue>{formatNumber(4)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.discover ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Contribution</StatItem>
-          <StatValue>{formatNumber(2)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.contribution ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Governance</StatItem>
-          <StatValue>{formatNumber(4)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.governance ?? 0)}</StatValue>
         </Stat>
         <StyledLinkWrap>
           <LinkIcon src={images.pointsIcon} alt="Points Icon" />
-          <StyledLink to="/some-path">Go to My Calendar</StyledLink>
+          <StyledLink to="/mainboard/discover/calendar">Go to My Calendar</StyledLink>
         </StyledLinkWrap>
       </StatsWrap>
     </ProfileCardContainer>

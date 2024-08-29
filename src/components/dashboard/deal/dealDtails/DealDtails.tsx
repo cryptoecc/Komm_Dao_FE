@@ -214,8 +214,8 @@ const CountdownBox = styled.div`
   background: #f9f9f9;
   padding: 10px;
   border-radius: 10px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   margin: 0 5px;
 
   @media (max-width: 768px) {
@@ -225,7 +225,7 @@ const CountdownBox = styled.div`
 `;
 
 const CountdownValue = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   background-color: #f8f8fa;
   color: #000;
@@ -236,7 +236,7 @@ const CountdownValue = styled.div`
 `;
 
 const CountdownLabel = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: black;
 

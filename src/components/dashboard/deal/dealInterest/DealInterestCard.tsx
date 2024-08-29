@@ -14,7 +14,8 @@ import {
   AllocationValue,
   ContinueButton,
 } from './DealInterestCard.style';
-import Modal from './InterestModal'; // 모달 컴포넌트 추가
+import InterestModal from './InterestModal'; // Import the InterestModal component
+import InvalidModal from './InvalidModal'; // Import the InvalidModal component
 
 interface Deal {
   deal_id: number;
@@ -25,10 +26,10 @@ interface Deal {
 }
 
 const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
-  const navigate = useNavigate();
   const { dealId } = useParams<{ dealId: string }>();
   const [inputValue, setInputValue] = useState<string>('');
-  const [isModalOpen, setModalOpen] = useState<boolean>(false); // 모달 상태 관리
+  const [isInterestModalOpen, setInterestModalOpen] = useState<boolean>(false);
+  const [isInvalidModalOpen, setInvalidModalOpen] = useState<boolean>(false);
   const userId = 5;
 
   const handleMaxClick = () => {
@@ -41,29 +42,42 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
   };
 
   const handleContinue = async () => {
+    if (parseFloat(inputValue) < deal.min_allocation || parseFloat(inputValue) > deal.max_allocation) {
+      setInvalidModalOpen(true);
+      return;
+    }
+
     try {
       await axios.put(`http://localhost:4000/api/deals/${dealId}/user/${userId}/interest`, {
         intAmount: parseFloat(inputValue),
       });
-      //   navigate('/next-page');
+      // You can navigate to the next page or show a success message here
     } catch (error) {
       console.error('Error updating interest amount:', error);
     }
   };
 
-  const openModal = () => {
-    setModalOpen(true);
+  const openInterestModal = () => {
+    if (parseFloat(inputValue) < deal.min_allocation || parseFloat(inputValue) > deal.max_allocation) {
+      setInvalidModalOpen(true);
+    } else {
+      setInterestModalOpen(true);
+    }
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeInterestModal = () => {
+    setInterestModalOpen(false);
+  };
+
+  const closeInvalidModal = () => {
+    setInvalidModalOpen(false);
   };
 
   useEffect(() => {
     const fetchUserDealInterest = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/api/deals/${dealId}/user/${userId}/interest`);
-        console.log('User deal interest data:', response.data); // 응답 데이터가 잘 들어오는지 확인
+        console.log('User deal interest data:', response.data); // Check if the response data is correct
       } catch (error) {
         console.error('Error fetching user deal interest:', error);
       }
@@ -71,18 +85,14 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
 
     fetchUserDealInterest();
   }, [dealId, userId]);
+
   const isNumeric = !isNaN(Number(inputValue));
+
   return (
     <Container>
       <Title>SUBMIT YOUR INTEREST</Title>
       <InputContainer>
-        <Input
-          type="text" // type="number" 대신 type="text" 사용
-          value={inputValue}
-          onChange={handleInputChange}
-          isNumeric={isNumeric} // isNumeric 속성 전달
-          placeholder="0"
-        />
+        <Input type="text" value={inputValue} onChange={handleInputChange} isNumeric={isNumeric} placeholder="0" />
         <USDTText>USDT</USDTText>
         <MaxButton onClick={handleMaxClick}>Max</MaxButton>
       </InputContainer>
@@ -97,13 +107,26 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
           <AllocationValue>{deal.max_allocation} USDT</AllocationValue>
         </div>
       </AllocationInfo>
-      <ContinueButton onClick={openModal}>Continue</ContinueButton>
+      <ContinueButton onClick={openInterestModal}>Continue</ContinueButton>
 
-      {/* 모달 추가 */}
-      {isModalOpen && (
-        <Modal onClose={closeModal} onConfirm={handleContinue}>
-          Are you sure you want to submit this interest?
-        </Modal>
+      {isInterestModalOpen && (
+        <InterestModal
+          amount={parseFloat(inputValue)}
+          date={new Date().toLocaleString()}
+          onEdit={closeInterestModal}
+          onConfirm={() => {
+            handleContinue();
+            closeInterestModal();
+          }}
+        />
+      )}
+      {isInvalidModalOpen && (
+        <InvalidModal
+          message="The amount you entered is invalid."
+          minAmount={deal.min_allocation}
+          maxAmount={deal.max_allocation}
+          onClose={closeInvalidModal}
+        />
       )}
     </Container>
   );

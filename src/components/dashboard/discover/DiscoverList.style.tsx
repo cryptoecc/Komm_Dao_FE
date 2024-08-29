@@ -48,10 +48,26 @@ export const TableHeader = styled.th<{ isActive?: boolean; width?: string }>`
 
   img {
     text-align: left;
-    width: 15px;
-    height: 15px;
-    margin-left: 10px;
+    width: 12px;
+    height: 12px;
+    margin-left: 5px;
     cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    img {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+    img {
+      width: 10px;
+      height: 10px;
+    }
   }
 `;
 
@@ -60,50 +76,55 @@ export const TooltipContainer = styled.div`
   position: relative;
 
   img {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     margin-right: 5px;
     cursor: pointer;
   }
 
-  /* Initially hide the tooltip */
   .tooltip {
     display: none;
     position: absolute;
-    background-color: #f9f8fe;
+    background-color: #f3ecff;
     color: #333;
     text-align: left;
-    padding: 10px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
-    top: 20px; /* Adjusts the position of the tooltip */
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    white-space: nowrap; /* Prevents text from wrapping */
+    white-space: nowrap;
   }
 
-  /* Show the tooltip when hovering over the img */
   img:hover + .tooltip {
     display: block;
   }
-`;
 
-export const Tooltip = styled.div`
-  display: none;
-  position: absolute;
-  text-align: left;
-  top: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #f3ecff;
-  font-weight: 500;
-  padding: 20px;
-  border-radius: 20px;
-  font-size: 14px;
-  color: #000;
-  z-index: 5;
-  white-space: nowrap;
+  @media (max-width: 768px) {
+    img {
+      width: 10px;
+      height: 10px;
+    }
+
+    .tooltip {
+      font-size: 12px;
+      padding: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    img {
+      width: 8px;
+      height: 8px;
+    }
+
+    .tooltip {
+      font-size: 10px;
+      padding: 6px;
+    }
+  }
 `;
 
 export const TableCell = styled.td<{ width?: string }>`
@@ -127,11 +148,29 @@ export const TableCell = styled.td<{ width?: string }>`
     text-align: left;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 export const StarIcon = styled.img`
   width: 20px;
   height: 20px;
+
+  @media (max-width: 768px) {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 480px) {
+    width: 15px;
+    height: 15px;
+  }
 `;
 
 export const ProjectLink = styled.a`
@@ -142,11 +181,27 @@ export const ProjectLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 export const GradeBadge = styled.span<{ grade: string }>`
   font-weight: bold;
   color: ${(props) => (props.grade === 'AAA' ? '#00c853' : props.grade === 'AA' ? '#ffeb3b' : '#ff7043')};
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 export const DropdownContainer = styled.div`
@@ -169,6 +224,16 @@ export const DropdownMenu = styled.div`
   z-index: 1;
   top: 100%;
   left: 0;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+    font-size: 10px;
+  }
 `;
 
 export const DropdownItem = styled.label`
@@ -180,5 +245,23 @@ export const DropdownItem = styled.label`
 
   input {
     margin-right: 8px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 4px 0;
+
+    input {
+      margin-right: 6px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+    padding: 3px 0;
+
+    input {
+      margin-right: 4px;
+    }
   }
 `;
