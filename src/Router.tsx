@@ -23,6 +23,7 @@ import DealDtailsPage from './pages/mainboard/deal/dealDtails';
 import PrivateRoute from './constants/PrivateRoute';
 import Test from './pages/test';
 import DealInterest from './pages/mainboard/deal/dealDtails/dealInterest'; // Correct the path to your new component
+import AdminDiscover from './pages/admin/mainboard/discover/adminDiscover';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -60,6 +61,7 @@ const Router = () => {
         { path: PATH.USERMEMBERS, element: <UserMember /> },
         { path: PATH.USERCOMMITTES, element: <UserCommitte /> },
         { path: PATH.USERKOHORTS, element: <UserKohort /> },
+        { path: PATH.ADMINDISCOVER, element: <AdminDiscover /> },
       ],
     },
     { path: 'test', element: <Test /> },
