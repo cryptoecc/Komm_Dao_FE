@@ -2,8 +2,16 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import CustomCalendar from 'src/components/dashboard/discover/discoverCalendar/Calendar';
 
-const PageContainer = styled.div`
+export const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   padding: 20px;
+  box-sizing: border-box;
+  overflow: visible;
 `;
 
 const BackButton = styled.div`
@@ -12,7 +20,8 @@ const BackButton = styled.div`
   cursor: pointer;
   color: #875cff;
   font-weight: 700;
-  margin-bottom: 20px; /* Title 아래에 위치하도록 조정 */
+  margin-top: 20px;
+  margin-left: 20px;
 `;
 
 const BackLink = styled.div`
@@ -23,7 +32,7 @@ const BackLink = styled.div`
   font-weight: 700;
 
   span {
-    margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 */
+    margin-right: 10px;
   }
 `;
 
@@ -106,14 +115,16 @@ const DiscoverCalendar: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <PageContainer>
+    <>
       <BackButton onClick={() => navigate(-1)}>
         <BackLink>
           <span>&larr;</span>Back to Discover
         </BackLink>
       </BackButton>
-      <CustomCalendar events={events} />
-    </PageContainer>
+      <PageContainer>
+        <CustomCalendar events={events} />
+      </PageContainer>
+    </>
   );
 };
 

@@ -40,15 +40,15 @@ const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
           <StatusBadge status={status}>{status === 'ongoing' ? 'Ongoing' : 'Finished'}</StatusBadge>
         </IconWrapper>
 
-        <PercentageText>{deal.percentage}%</PercentageText>
+        <PercentageText>{deal.percentage || 0}%</PercentageText>
 
         <GaugeWrapper>
-          <Gauge percentage={deal.percentage} />
-          <PercentageLabel>{deal.percentage}%</PercentageLabel>
+          <Gauge percentage={deal.percentage || 0} />
+          <PercentageLabel>{deal.percentage || 0}%</PercentageLabel>
         </GaugeWrapper>
-        <DealTitle>{deal.deal_name}</DealTitle>
+        <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
 
-        <DealDescription>{deal.deal_desc}</DealDescription>
+        <DealDescription>{deal.deal_desc || 'No Description Available'}</DealDescription>
         <ArrowIcon src={arrowIcon} alt="Arrow Icon" />
       </DealItem>
     </DealCardContainer>

@@ -227,7 +227,7 @@ interface CardData {
 }
 
 const ProfileDetails: React.FC = () => {
-  const walletAddress = '0x6c5A2...9Bc945';
+  const walletAddress = '0x7447B0afa966225937dC1EB842afd40bebe1e03F';
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [cards, setCards] = useState<CardData[]>([
     {
