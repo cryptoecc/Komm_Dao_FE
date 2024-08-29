@@ -88,19 +88,20 @@ const ProfileCard: React.FC = () => {
       <StatsWrap>
         <Stat>
           <StatItem>Deal</StatItem>
-          <StatValue>{formatNumber(userData.stats.deal)}</StatValue>
+          {/* Optional chaining으로 userData.stats가 존재하는지 확인 후 값 접근 */}
+          <StatValue>{formatNumber(userData.stats?.deal ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Discover</StatItem>
-          <StatValue>{formatNumber(userData.stats.discover)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.discover ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Contribution</StatItem>
-          <StatValue>{formatNumber(userData.stats.contribution)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.contribution ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Governance</StatItem>
-          <StatValue>{formatNumber(userData.stats.governance)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.governance ?? 0)}</StatValue>
         </Stat>
         <StyledLinkWrap>
           <LinkIcon src={images.pointsIcon} alt="Points Icon" />
