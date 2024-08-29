@@ -33,33 +33,25 @@ export const Icon = styled.img`
   height: 7.4px;
 `;
 
-export const NavItem = styled.div`
+export const NavItem = styled.div<{ $isSelected?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 20px 25px; /* 패딩을 조정하여 메뉴 항목 간의 간격을 늘림 */
   gap: 100px; /* 아이콘과 텍스트 간의 간격을 조정 */
   width: 100%;
-  color: #1a0737;
+  color: ${(props) => (props.$isSelected ? '#7A23FF' : '#1a0737')}; /* 선택된 경우 색상 변경 */
+  font-weight: ${(props) => (props.$isSelected ? 700 : 400)};
   text-decoration: none;
   cursor: pointer;
-
-  /* &.active {
-    background-color: #a4a4a4;
-  }
-
-  &:hover {
-    background-color: #555;
-  } */
 `;
 
 export const Name = styled.div`
-  color: #1a0737;
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: Roboto;
   font-size: 20px;
   font-style: normal;
-  font-weight: 400;
+  /* font-weight: 400; */
   line-height: 50px; /* 250% */
 `;
 
@@ -90,4 +82,17 @@ export const SubMenuItem = styled(NavLink)`
     font-style: normal;
     font-weight: 400;
   }
+`;
+
+export const Discover = styled.div<{ $isSelected?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 25px; /* 패딩을 조정하여 메뉴 항목 간의 간격을 늘림 */
+  gap: 62px; /* 아이콘과 텍스트 간의 간격을 조정 */
+  width: 100%;
+  color: ${(props) => (props.$isSelected ? '#7A23FF' : '#1a0737')}; /* 선택된 경우 색상 변경 */
+  font-weight: ${(props) => (props.$isSelected ? 700 : 400)};
+  text-decoration: none;
+  cursor: pointer;
 `;
