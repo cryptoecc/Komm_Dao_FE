@@ -11,6 +11,7 @@ import {
   SubMenu,
   SubMenuItem,
   Discover,
+  Contribution,
 } from './ad_sidebar.style';
 import { PATH } from 'src/constants/path';
 import ArrowDown from 'src/assets/admin/keyboard_arrow_down.svg';
@@ -20,10 +21,12 @@ const Sidebar: React.FC = () => {
   const [isUserMgmtOpen, setIsUserMgmtOpen] = useState<boolean>(false);
   const [isDealMgmtOpen, setIsDealMgmtOpen] = useState<boolean>(false);
   const [isDiscoverMgmtOpen, setIsDiscoverMgmtOpen] = useState<boolean>(false);
+  const [isContributionMgmtOpen, setIsContributionMgmtOpen] = useState<boolean>(false);
 
   const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
   const [isDealSelected, setIsDealSelected] = useState<boolean>(false);
   const [isDiscoverSelected, setIsDiscoverSelected] = useState<boolean>(false);
+  const [isContributionSelected, setIsContributionSelected] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -33,6 +36,8 @@ const Sidebar: React.FC = () => {
     setIsDealSelected(false);
     setIsDiscoverSelected(false);
     setIsDealMgmtOpen(false);
+    setIsContributionMgmtOpen(false);
+    setIsContributionSelected(false);
   };
 
   const toggleDealMgmt = () => {
@@ -41,6 +46,8 @@ const Sidebar: React.FC = () => {
     setIsDealSelected(!isDealSelected);
     setIsUserSelected(false);
     setIsDiscoverSelected(false);
+    setIsContributionMgmtOpen(false);
+    setIsContributionSelected(false);
   };
 
   const toggleDiscoverMgmt = () => {
@@ -50,7 +57,21 @@ const Sidebar: React.FC = () => {
     setIsDiscoverSelected(!isDiscoverSelected);
     setIsDealSelected(false);
     setIsUserSelected(false);
+    setIsContributionMgmtOpen(false);
+    setIsContributionSelected(false);
     navigate(PATH.ADMINDISCOVER);
+  };
+
+  const toggleContributionMgmt = () => {
+    setIsUserMgmtOpen(false);
+    setIsDealMgmtOpen(false);
+    setIsContributionMgmtOpen(!isContributionMgmtOpen);
+    setIsContributionSelected(!isContributionSelected);
+    setIsDiscoverSelected(false);
+    setIsDiscoverMgmtOpen(false);
+    setIsDealSelected(false);
+    setIsUserSelected(false);
+    navigate(PATH.ADMINCONTRIBUTION);
   };
 
   return (
@@ -82,6 +103,10 @@ const Sidebar: React.FC = () => {
         <Name>Discover Mgmt</Name>
         <Icon src={isDiscoverMgmtOpen ? ArrowUp : ArrowDown} />
       </Discover>
+      <Contribution $isSelected={isContributionSelected} onClick={toggleContributionMgmt}>
+        <Name>Contribution Mgmt</Name>
+        <Icon src={isContributionMgmtOpen ? ArrowUp : ArrowDown} />
+      </Contribution>
       <NotificationItem>{/* <Icon imageUrl="/assets/images/notifications.png" /> */}</NotificationItem>
     </SidebarContainer>
   );

@@ -354,8 +354,8 @@ const DiscoverList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/admin/project-list');
-        const filteredData = response.data.filter((item: any) => item.apply_yn === 'N');
-        const formattedData = filteredData.map((item: any, index: number) => ({
+        const filteredData = response.data.filter((item: any) => item.apply_yn === 'Y');
+        const formattedData = filteredData.map((item: any) => ({
           ...item,
           pinned: false,
           checked: false, // 처음에는 모든 항목의 checked 상태는 false

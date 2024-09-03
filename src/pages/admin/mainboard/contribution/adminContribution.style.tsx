@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
-export const DiscoverContainer = styled.div`
+export const UserMemberContainer = styled.div`
   padding: 20px;
   background: #fff;
   border-radius: 8px;
-  overflow-x: auto;
 `;
 
 export const Title = styled.h1`
@@ -25,12 +24,72 @@ export const TopBar = styled.div`
   flex-wrap: wrap;
 `;
 
-export const TableWrapper = styled.div`
-  overflow-x: auto; /* 가로 스크롤 추가 */
+export const Search = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  margin-left: 110px;
+`;
+
+export const SearchInput = styled.input`
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  width: 350px;
+  background: var(--Light-Light, #f8f9fa);
+  margin-right: 10px;
+
+  &::placeholder {
+    color: var(--Dark-Secondary, #9fa2ab);
+    font-weight: 400;
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* Base/Body */
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 22px;
+  }
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* flex-grow: -1; */
+  justify-content: flex-end;
+`;
+
+export const Icon = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`;
+
+export const SendMessageButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--Purple-900, #7c4dff);
+  color: #fff;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  /* gap: 10px; */
+  margin-left: 20px;
+
+  img {
+    margin-right: 10px;
+    /* color: #fff; */
+  }
 `;
 
 export const Table = styled.table`
-  width: 100%;
+  /* width: 1078px; */
   border-collapse: collapse;
   overflow-y: auto; /* 세로 스크롤이 생기게 합니다 */
   max-height: 600px; /* 테이블 최대 높이 설정 */
@@ -46,6 +105,7 @@ export const TableHeader = styled.th`
   text-align: left;
   font-weight: 500;
   font-size: 14px;
+  overflow: hidden;
   white-space: nowrap;
   width: 150px;
   padding: 10px;
@@ -81,7 +141,7 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   height: 50px;
   border-bottom: 1px solid #ddd;
   overflow: hidden;
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis; */
   white-space: nowrap;
   background: ${(props) => (props.$isSelected ? 'rgba(217, 217, 217, 0.50)' : '#fff')}; /* 선택된 셀의 배경 변경 */
   color: #6c757d;
@@ -133,6 +193,22 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   @media (max-width: 767px) {
     max-width: 100px;
   }
+
+  button {
+    background: none;
+    border: none;
+    font-family: Roboto;
+    color: var(--Light-Dark, #343a40);
+    font-feature-settings: 'clig' off, 'liga' off;
+    text-decoration-line: underline;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export const CheckboxContainer = styled.div`
@@ -151,6 +227,13 @@ export const Checkbox = styled.img`
   left: 0;
   cursor: pointer;
 `;
+
+// export const CheckboxHeader = styled.img`
+//   width: 28px;
+//   height: 28px;
+//   vertical-align: middle;
+//   cursor: pointer;
+// `;
 
 export const CheckboxHeader = styled(CheckboxContainer)`
   vertical-align: middle;
@@ -183,30 +266,4 @@ export const Popup = styled.div`
   font-weight: 400;
   line-height: 22px;
   /* transform: translateX(-50%); */
-`;
-
-export const ApplyBtn = styled.button`
-  background: var(--Miscellaneous-Sidebar-Text---Selected, #007aff);
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  font-weight: 500;
-  border-radius: 20px;
-  font-family: Roboto;
-  font-size: 14px;
-  font-style: normal;
-  cursor: pointer;
-`;
-
-export const EditBtn = styled.button`
-  background: #8c63ff;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  font-weight: 500;
-  border-radius: 20px;
-  font-family: Roboto;
-  font-size: 14px;
-  font-style: normal;
-  cursor: pointer;
 `;
