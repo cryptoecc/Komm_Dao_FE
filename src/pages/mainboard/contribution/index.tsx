@@ -1,41 +1,38 @@
 import React from 'react';
+import ContributionMain from 'src/components/dashboard/contribution/ContributionMain';
 import styled from 'styled-components';
-import ConnectWallet from '../../../components/walletbtn/ConnectWallet';
 
 const ContributionContainer = styled.div`
   padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white10};
-  position: relative; /* For absolute positioning of ConnectWallet */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ContributionTitle = styled.h1`
   color: #1a0737;
-  font-size: 32px;
-  font-style: normal;
+  font-size: 40px;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
-  line-height: normal;
-  margin-bottom: 20px; /* Adjust margin as needed */
+  word-wrap: break-word;
+  padding: 20px;
 `;
 
 const ContributionContent = styled.div`
-  /* Add your styles here */
-`;
-
-const ConnectWalletWrapper = styled.div`
-  position: absolute; /* Positioning to place it at the top right */
-  top: 20px; /* Adjust top position */
-  right: 20px; /* Adjust right position */
+  padding: 20px;
 `;
 
 const Contribution: React.FC = () => {
   return (
-    <ContributionContainer>
+    <>
       <ContributionTitle>Contribution</ContributionTitle>
-      <ConnectWalletWrapper>
-        <ConnectWallet />
-      </ConnectWalletWrapper>
-      <ContributionContent>{/* Add your content here */}</ContributionContent>
-    </ContributionContainer>
+
+      <ContributionContainer>
+        <ContributionContent>
+          <ContributionMain />
+        </ContributionContent>
+      </ContributionContainer>
+    </>
   );
 };
 
