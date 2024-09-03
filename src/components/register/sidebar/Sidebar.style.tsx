@@ -51,7 +51,7 @@ export const Text = styled.div<StepProps>`
   align-items: center;
   text-align: center;
   gap: 4px;
-  font-size: 20px;
+  font-size: 19px;
   color: ${({ $active, $completed }) => ($active ? '#8E63FF' : $completed ? '#010000' : '#8e8e93')};
   font-weight: ${({ $active, $completed }) => ($active || $completed ? 700 : 500)};
   line-height: 20px; /* 100% */
@@ -59,8 +59,8 @@ export const Text = styled.div<StepProps>`
 
 export const Number = styled.div<StepProps>`
   display: flex;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   padding: 15px 20px;
   font-size: 20px;
   /* flex-direction: column; */
@@ -88,4 +88,5 @@ export const Logo = styled.img`
   height: 88px;
   margin: 40px 30px 60px 30px;
   /* margin-bottom: 20px; */
+  cursor: pointer;
 `;

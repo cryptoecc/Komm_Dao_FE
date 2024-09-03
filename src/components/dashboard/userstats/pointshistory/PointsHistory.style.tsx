@@ -82,3 +82,13 @@ export const DataItem = styled.div`
     font-size: 10px; /* 더 좁은 화면에서는 텍스트 크기 추가로 줄이기 */
   }
 `;
+
+export const NoDataMessage = styled.div`
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+`;

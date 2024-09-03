@@ -2,22 +2,24 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import DealList from '../../../components/dashboard/deal/DealList'; // DealList를 가져옵니다.
+import DealList from '../../../components/dashboard/deal/DealList';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centers content horizontally */
+  align-items: center;
   padding: 20px;
-  width: 1440px;
-  max-width: 1440px; /* Ensures the container doesn’t exceed this width */
-  margin: 0 auto; /* Centers the container on the page */
+  max-width: 1440px;
+  width: 1200px;
+  margin: 0 auto;
 `;
 
 const TitleContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-start; /* Aligns the title to the left */
+  margin-top: 20px;
+  margin-left: 20px;
+  justify-content: flex-start;
 `;
 
 const Title = styled.h1`
@@ -46,8 +48,6 @@ const DealPage: React.FC = () => {
   }, []);
 
   const handleDealClick = (deal: any) => {
-    console.log(deal);
-
     navigate(`/mainboard/deal/${deal.deal_id}`, { state: { deal } });
   };
 
@@ -56,12 +56,14 @@ const DealPage: React.FC = () => {
   }
 
   return (
-    <PageContainer>
+    <>
       <TitleContainer>
         <Title>Deals</Title>
       </TitleContainer>
-      <DealList deals={deals} onDealClick={handleDealClick} />
-    </PageContainer>
+      <PageContainer>
+        <DealList deals={deals} onDealClick={handleDealClick} />
+      </PageContainer>
+    </>
   );
 };
 
