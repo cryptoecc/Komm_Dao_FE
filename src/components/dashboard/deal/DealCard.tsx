@@ -1,19 +1,18 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import defaultDealIcon from '../../../assets/deal/Deal.png';
-import arrowIcon from '../../../assets/deal/arrow.png';
+import defaultDealIcon from '../../../assets/deal/MYX.png';
 import {
-  DealCardContainer, // Import the new container
+  DealCardContainer,
   DealItem,
   DealTitle,
-  IconWrapper,
   StatusBadge,
   GaugeWrapper,
   Gauge,
-  PercentageLabel,
   DealDescription,
-  ArrowIcon,
   PercentageText,
+  BannerContainer,
+  BannerImage,
+  LogoImage,
 } from './DealCard.style';
 
 interface Deal {
@@ -25,31 +24,30 @@ interface Deal {
   start_date: string;
   end_date: string;
   deal_image_url: string;
+  banner_image_url: string;
 }
 
 const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
   const currentDate = dayjs();
   const endDate = dayjs(deal.end_date);
-  const status = currentDate.isBefore(endDate) ? 'ongoing' : 'finished';
+  const status = currentDate.isBefore(endDate) ? 'Open' : 'Closed';
 
   return (
     <DealCardContainer>
       <DealItem>
-        <IconWrapper>
-          <img src={deal.deal_image_url || defaultDealIcon} alt="Deal Icon" />
-          <StatusBadge status={status}>{status === 'ongoing' ? 'Ongoing' : 'Finished'}</StatusBadge>
-        </IconWrapper>
-
-        <PercentageText>{deal.percentage || 0}%</PercentageText>
+        <BannerContainer>
+          <BannerImage src={deal.banner_image_url} alt="Banner Image" />
+          <LogoImage src={deal.deal_image_url || defaultDealIcon} alt="Deal Logo" />
+          <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
+          <StatusBadge status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
+          <PercentageText>{deal.percentage || 0}%</PercentageText>
+        </BannerContainer>
 
         <GaugeWrapper>
           <Gauge percentage={deal.percentage || 0} />
-          <PercentageLabel>{deal.percentage || 0}%</PercentageLabel>
         </GaugeWrapper>
-        <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
 
         <DealDescription>{deal.deal_desc || 'No Description Available'}</DealDescription>
-        <ArrowIcon src={arrowIcon} alt="Arrow Icon" />
       </DealItem>
     </DealCardContainer>
   );

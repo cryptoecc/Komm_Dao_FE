@@ -19,6 +19,11 @@ export const Table = styled.table`
     top: 0;
     z-index: 2;
     background-color: #f9f8fe;
+    min-height: 50px; /* 테이블 헤더 최소 높이 */
+  }
+
+  tbody {
+    min-height: 100px; /* 데이터가 없을 때 테이블 몸체 최소 높이 */
   }
 `;
 
@@ -32,7 +37,7 @@ export const TableRow = styled.tr`
 `;
 
 export const TableHeader = styled.th<{ isActive?: boolean; width?: string }>`
-  padding: 5px 10px;
+  padding: 10px; /* Padding을 고정하여 크기 변화 방지 */
   text-align: center;
   font-weight: 700;
   font-size: 14px;
@@ -45,6 +50,10 @@ export const TableHeader = styled.th<{ isActive?: boolean; width?: string }>`
   border-radius: ${({ isActive }) => (isActive ? '10px' : '0')};
   width: ${({ width }) => width || 'auto'};
   z-index: 3;
+
+  /* min-height 추가하여 최소 크기 유지 */
+  min-height: 50px;
+  line-height: 1.2;
 
   img {
     text-align: left;
@@ -70,6 +79,46 @@ export const TableHeader = styled.th<{ isActive?: boolean; width?: string }>`
     }
   }
 `;
+
+// export const TableHeader = styled.th<{ isActive?: boolean; width?: string }>`
+//   padding: 5px 10px;
+//   text-align: center;
+//   font-weight: 700;
+//   font-size: 14px;
+//   color: ${({ isActive }) => (isActive ? 'black' : '#1a0737')};
+//   border-bottom: 1px solid #ddd;
+//   vertical-align: middle;
+//   position: relative;
+//   cursor: pointer;
+//   background-color: ${({ isActive }) => (isActive ? '#E4D9FF' : '#f9f8fe')};
+//   border-radius: ${({ isActive }) => (isActive ? '10px' : '0')};
+//   width: ${({ width }) => width || 'auto'};
+//   z-index: 3;
+
+//   img {
+//     text-align: left;
+//     width: 12px;
+//     height: 12px;
+//     margin-left: 5px;
+//     cursor: pointer;
+//   }
+
+//   @media (max-width: 768px) {
+//     font-size: 12px;
+//     img {
+//       width: 12px;
+//       height: 12px;
+//     }
+//   }
+
+//   @media (max-width: 480px) {
+//     font-size: 10px;
+//     img {
+//       width: 10px;
+//       height: 10px;
+//     }
+//   }
+// `;
 
 export const TooltipContainer = styled.div`
   display: inline-block;
