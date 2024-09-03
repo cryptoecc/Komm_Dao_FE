@@ -4,6 +4,7 @@ import { images } from '../../../../assets/deal/images';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
 import {
   Container,
   LeftSection,
@@ -41,7 +42,7 @@ const DealDetails: React.FC = () => {
   useEffect(() => {
     const fetchDealData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/deals/${dealId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}`);
         setDeal(response.data); // 최신 데이터를 상태로 업데이트
       } catch (error) {
         console.error('Error fetching deal data:', error);

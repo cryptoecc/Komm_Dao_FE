@@ -15,3 +15,5 @@ export const formatNumber = (value) => {
   // Intl.NumberFormat을 사용하여 숫자 포맷팅
   return new Intl.NumberFormat('en-US').format(numberValue);
 };
+
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000';

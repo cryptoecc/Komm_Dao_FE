@@ -11,7 +11,7 @@ import {
   Checkmark,
 } from './userKohort.style';
 import React, { useState, useEffect } from 'react';
-
+import { API_BASE_URL } from 'src/utils/utils';
 import headerbox from 'src/assets/admin/headerbox.svg';
 import checkbox from 'src/assets/admin/cellbox.svg';
 import TopBar from 'src/components/admin/topbar/Topbar';
@@ -37,7 +37,7 @@ const UserKohort = () => {
     // 데이터 가져오기
     const fetchKohorts = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/admin/kohort-list');
+        const response = await axios.get(`${API_BASE_URL}/api/admin/kohort-list`);
         const data = response.data;
 
         console.log(response.data);
@@ -110,7 +110,7 @@ const UserKohort = () => {
   // Approve/Deny 기능
   const handleApproval = async (kohort_id: number, status: string) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/kohort-status-update', { kohort_id, status });
+      const response = await axios.post(`${API_BASE_URL}/api/admin/kohort-status-update`, { kohort_id, status });
       if (response.status === 200) {
         setKohorts((prevKohorts) =>
           prevKohorts.map((kohort) =>

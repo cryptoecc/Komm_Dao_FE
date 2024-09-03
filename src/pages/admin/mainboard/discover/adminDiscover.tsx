@@ -16,7 +16,7 @@ import {
 } from './adminDiscover.style';
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-
+import { API_BASE_URL } from 'src/utils/utils';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import headerbox from 'src/assets/admin/headerbox.svg';
 import checkbox from 'src/assets/admin/cellbox.svg';
@@ -61,7 +61,7 @@ const AdminDiscover = () => {
     // 백엔드에서 Discover 데이터를 가져오기
     const fetchDiscovers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/admin/project-list');
+        const response = await axios.get(`${API_BASE_URL}/api/admin/project-list`);
         const data = response.data;
 
         if (data.length < 20) {
@@ -136,7 +136,7 @@ const AdminDiscover = () => {
 
   const handleApply = async (pjt_id: number) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/apply-project', { pjt_id });
+      const response = await axios.post(`${API_BASE_URL}/api/admin/apply-project`, { pjt_id });
       if (response.status === 200) {
         setDiscovers((prevDiscovers) =>
           prevDiscovers.map((discover) => (discover.pjt_id === pjt_id ? { ...discover, apply_yn: 'Y' } : discover))
@@ -173,7 +173,7 @@ const AdminDiscover = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/update-project', {
+      const response = await axios.post(`${API_BASE_URL}/api/admin/update-project`, {
         pjt_id,
         ...updatedFields,
       });

@@ -9,7 +9,7 @@ import {
   DataItem,
   NoDataMessage,
 } from './PointsHistory.style';
-
+import { API_BASE_URL } from 'src/utils/utils';
 interface PointsData {
   date: string;
   participation: string;
@@ -30,7 +30,7 @@ const PointsHistory: React.FC = () => {
           const parsedData = JSON.parse(persistedRoot);
           const walletAddress = JSON.parse(parsedData.wallet_addr);
 
-          const response = await axios.get<PointsData[]>(`http://localhost:4000/api/points-history/${walletAddress}`);
+          const response = await axios.get<PointsData[]>(`${API_BASE_URL}/api/points-history/${walletAddress}`);
           setPointsData(response.data);
         } catch (error) {
           console.error('Error fetching points history:', error);

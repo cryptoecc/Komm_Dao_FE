@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { setEmail } from 'src/store/user/UserSlice';
 import { AppDispatch } from 'src/store/store';
 import { ReactComponent as MailIcon } from 'src/assets/register/mail.svg';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface StepProps {
   onComplete: () => void;
@@ -51,7 +52,7 @@ const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
       console.log('Email is valid');
       setIsLoading(true);
       try {
-        const response = await axios.post('http://localhost:4000/api/user/send-email', {
+        const response = await axios.post(`${API_BASE_URL}/api/user/send-email`, {
           email: email,
         });
 
@@ -79,7 +80,7 @@ const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:4000/api/user/verify-pin', {
+      const response = await axios.post(`${API_BASE_URL}/api/user/verify-pin`, {
         email: email,
         pin: verificationCode,
       });

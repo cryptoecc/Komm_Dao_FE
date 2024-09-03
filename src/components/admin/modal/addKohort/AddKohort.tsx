@@ -37,6 +37,7 @@ import AddMemberModal from './addMember/AddMembersModal';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store'; // Redux 스토어의 RootState 타입을 가져옵니다.
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Member {
   user_id: string;
@@ -120,7 +121,7 @@ const AddKohort: React.FC = () => {
     formData.append('members', JSON.stringify(selectedMembers));
 
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/create-kohort', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/admin/create-kohort`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

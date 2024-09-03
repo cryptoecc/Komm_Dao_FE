@@ -17,6 +17,7 @@ import headerbox from 'src/assets/admin/headerbox.svg';
 import checkbox from 'src/assets/admin/cellbox.svg';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Member {
   user_id: number;
@@ -64,7 +65,7 @@ const UserMember: React.FC = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/admin/member-list');
+        const response = await axios.get(`${API_BASE_URL}/api/admin/member-list`);
 
         const data = response.data;
         // console.log(data);
@@ -108,7 +109,7 @@ const UserMember: React.FC = () => {
   // Approve 기능
   const handleRevoke = async (user_id: number, status: string) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/update-status', { user_id, status });
+      const response = await axios.post(`${API_BASE_URL}/api/admin/update-status`, { user_id, status });
       if (response.status === 200) {
         setMembers((prevMembers) =>
           prevMembers.map((member) => (member.user_id === user_id ? { ...member, appr_status: status } : member))

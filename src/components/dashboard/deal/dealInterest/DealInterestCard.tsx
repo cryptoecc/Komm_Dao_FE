@@ -16,6 +16,7 @@ import {
 } from './DealInterestCard.style';
 import InterestModal from './InterestModal'; // Import the InterestModal component
 import InvalidModal from './InvalidModal'; // Import the InvalidModal component
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Deal {
   deal_id: number;
@@ -48,7 +49,7 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
     }
 
     try {
-      await axios.put(`http://localhost:4000/api/deals/${dealId}/user/${userId}/interest`, {
+      await axios.put(`${API_BASE_URL}/api/deals/${dealId}/user/${userId}/interest`, {
         intAmount: parseFloat(inputValue),
       });
       // You can navigate to the next page or show a success message here
@@ -76,7 +77,7 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
   useEffect(() => {
     const fetchUserDealInterest = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/deals/${dealId}/user/${userId}/interest`);
+        const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}/user/${userId}/interest`);
         console.log('User deal interest data:', response.data); // Check if the response data is correct
       } catch (error) {
         console.error('Error fetching user deal interest:', error);

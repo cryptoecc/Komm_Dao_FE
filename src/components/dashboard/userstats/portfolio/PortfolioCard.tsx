@@ -9,6 +9,7 @@ import {
   DataItem,
   NoDataMessage,
 } from './PortfolioCard.style';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface PortfolioData {
   date: string;
@@ -30,7 +31,7 @@ const PortfolioCard: React.FC = () => {
           const parsedData = JSON.parse(persistedRoot);
           const walletAddress = JSON.parse(parsedData.wallet_addr);
 
-          const response = await axios.get<PortfolioData[]>(`http://localhost:4000/api/portfolio/${walletAddress}`);
+          const response = await axios.get<PortfolioData[]>(`${API_BASE_URL}/api/portfolio/${walletAddress}`);
           setPortfolioData(response.data);
         } catch (error) {
           console.error('Error fetching portfolio data:', error);

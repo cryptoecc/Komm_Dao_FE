@@ -34,6 +34,7 @@ import {
 import ArrowDown from 'src/assets/register/arrow_drop_down.svg';
 import ArrowUp from 'src/assets/register/arrow_drop_up.svg';
 import { images } from '../../../../assets/dashboard/images';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface ProfileData {
   name: string;
@@ -178,13 +179,13 @@ const ProfileUpdate: React.FC = () => {
 
   const fetchProfileData = async (address: string) => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/user/profile/${address}`);
+      const response = await axios.get(`${API_BASE_URL}/api/user/profile/${address}`);
       setProfileData({
         ...response.data,
         walletAddress: address,
       });
       if (response.data.profileImage) {
-        setPreviewImage(`http://localhost:4000/${response.data.profileImage}`);
+        setPreviewImage(`${API_BASE_URL}/${response.data.profileImage}`);
       }
     } catch (error) {
       console.error('Error fetching profile data:', error);
@@ -253,20 +254,16 @@ const ProfileUpdate: React.FC = () => {
         formData.append('profileImage', profileData.profileImage);
       }
 
-      const response = await axios.put(
-        `http://localhost:4000/api/user/profile/${profileData.walletAddress}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      const response = await axios.put(`${API_BASE_URL}/api/user/profile/${profileData.walletAddress}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       if (response.status === 200) {
         alert('Profile updated successfully!');
         if (response.data.profileImage) {
-          setPreviewImage(`http://localhost:4000/${response.data.profileImage}`);
+          setPreviewImage(`${API_BASE_URL}/${response.data.profileImage}`);
         }
       }
     } catch (error) {

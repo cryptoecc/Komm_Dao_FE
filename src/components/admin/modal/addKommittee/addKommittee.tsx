@@ -28,6 +28,7 @@ import AddMember from '../addMember/AddMember';
 import calenderIcon from 'src/assets/admin/calendar_month.svg';
 import addIcon from 'src/assets/admin/add.svg';
 import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Member {
   user_id: string;
@@ -112,7 +113,7 @@ const AddKommit: React.FC<KommitProps> = ({ onClose }) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/create-kommittee', data);
+      const response = await axios.post(`${API_BASE_URL}/api/admin/create-kommittee`, data);
 
       if (response.status === 200) {
         alert('Kommittee가 성공적으로 생성되었습니다!');

@@ -18,6 +18,7 @@ import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
 import Modal from 'src/components/admin/modal/Modal';
 import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Contribution {
   cont_id: number;
@@ -53,7 +54,7 @@ const AdminContribution = () => {
     // 백엔드에서 Contribution 데이터를 가져오기
     const fetchContributions = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/admin/contribution-list');
+        const response = await axios.get(`${API_BASE_URL}/api/admin/contribution-list`);
         const data = response.data;
 
         if (data.length < 20) {

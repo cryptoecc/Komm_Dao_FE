@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DealList from '../../../components/dashboard/deal/DealList';
+import { API_BASE_URL } from 'src/utils/utils';
 
 const PageContainer = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ const DealPage: React.FC = () => {
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/deals');
+        const response = await axios.get(`${API_BASE_URL}/api/deals`);
         setDeals(response.data);
         setLoading(false);
       } catch (error) {

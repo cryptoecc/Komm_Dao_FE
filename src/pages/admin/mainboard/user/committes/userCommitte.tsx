@@ -20,6 +20,7 @@ import headerbox from 'src/assets/admin/headerbox.svg';
 import checkbox from 'src/assets/admin/cellbox.svg';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Committee {
   komm_ver: string;
@@ -64,7 +65,7 @@ const UserCommitte: React.FC = () => {
   useEffect(() => {
     const fetchKommittees = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/admin/kommittee-list');
+        const response = await axios.get(`${API_BASE_URL}/api/admin/kommittee-list`);
         const data = response.data;
 
         if (data.length < 20) {
@@ -99,22 +100,6 @@ const UserCommitte: React.FC = () => {
     );
     setFilteredKommittees(filteredData);
   }, [searchTerm, Kommittees]);
-
-  // Approve 기능
-  //   const handleRevoke = async (user_id: number, status: string) => {
-  //     try {
-  //       const response = await axios.post('http://localhost:4000/api/admin/update-status', { user_id, status });
-  //       if (response.status === 200) {
-  //         setKommittees((prevCommittees) =>
-  //           prevCommittees.map((kommittee) =>
-  //             kommittee.user_id === user_id ? { ...kommittee, appr_status: status } : kommittee
-  //           )
-  //         );
-  //       }
-  //     } catch (error) {
-  //       console.error('Error updating status:', error);
-  //     }
-  //   };
 
   // 체크박스 기능
   const handleCheckboxChange = (user_id: number) => {

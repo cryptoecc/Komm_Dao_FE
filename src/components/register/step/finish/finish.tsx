@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from 'src/store/user/UserSlice';
 import { RootState } from 'src/store/store';
 import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface StepProps {
   onComplete: () => void;
@@ -44,7 +45,7 @@ const Finish: React.FC<StepProps> = ({ onComplete, selectedImage }) => {
       formData.append('voting_power', user.voting_power.toString());
       formData.append('activate_yn', user.activate_yn);
 
-      const response = await axios.post('http://localhost:4000/api/user/submit', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/user/submit`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

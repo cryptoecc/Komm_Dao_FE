@@ -21,6 +21,7 @@ import ErrorMessage from '../errormsg/ErrorMessage'; // 추가된 부분
 import { useDispatch } from 'react-redux';
 import { setUserData } from 'src/store/user/UserSlice';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface ConnectedWalletProps {
   walletAddress: string;
@@ -45,7 +46,7 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
 
       // 서명 검증
       setLoadingMessage('Verifying Wallet');
-      const response = await axios.post('http://localhost:4000/api/wallet/verify-address', {
+      const response = await axios.post(`${API_BASE_URL}/api/wallet/verify-address`, {
         address: walletAddress,
         message,
         signature,
