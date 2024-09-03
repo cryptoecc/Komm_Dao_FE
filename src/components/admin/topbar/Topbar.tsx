@@ -7,17 +7,31 @@ import deleteIcon from 'src/assets/admin/delete.svg';
 import saveIcon from 'src/assets/admin/save.svg';
 import downloadIcon from 'src/assets/admin/download.svg';
 import sendMessageIcon from 'src/assets/admin/forward_to_inbox.svg';
+import ToggleSwitch from 'src/components/toggle/Toggle';
 
 interface TopBarProps {
   onSearchChange: (value: string) => void;
   onEditClick?: () => void;
   onAddClick?: () => void;
+  showToggle?: boolean;
+  onToggleChange?: (checked: boolean) => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ onSearchChange, onAddClick, onEditClick }) => {
+const TopBar: React.FC<TopBarProps> = ({ onSearchChange, onAddClick, onEditClick, showToggle, onToggleChange }) => {
+  const [isChecked, setIsChecked] = React.useState(false);
+
+  const handleToggleChange = () => {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    if (onToggleChange) {
+      onToggleChange(newCheckedState); // 토글 상태 변경 시 콜백 호출
+    }
+  };
+
   return (
     <TopBarContainer>
       <Search>
+        {showToggle && <ToggleSwitch isChecked={isChecked} onToggle={handleToggleChange} />}
         <SearchInput placeholder="Search" onChange={(e) => onSearchChange(e.target.value)} />
         <Icon src={searchIcon} alt="search" />
       </Search>

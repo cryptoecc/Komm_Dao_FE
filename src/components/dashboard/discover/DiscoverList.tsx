@@ -292,7 +292,7 @@ const DiscoverList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/admin/project-list');
-        const filteredData = response.data.filter((item: any) => item.apply_yn === 'N');
+        const filteredData = response.data.filter((item: any) => item.apply_yn === 'Y');
         const formattedData = filteredData.map((item: any) => ({
           ...item,
           pinned: false,
