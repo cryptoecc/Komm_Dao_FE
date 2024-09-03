@@ -4,13 +4,13 @@ import KommLogo from '../../../assets/register/LOGO_Komm DAO_3.png';
 import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
+  steps: string[];
   currentStep: number;
   completedSteps: number[];
 }
 
-const steps = ['Add wallet', 'Add email', 'Create profile', 'Accept Charter', 'Add Value', 'Finish'];
 
-const Sidebar: React.FC<SidebarProps> = ({ currentStep, completedSteps }) => {
+const Sidebar: React.FC<SidebarProps> = ({ steps, currentStep, completedSteps }) => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate('/'); // 메인 페이지 경로로 이동

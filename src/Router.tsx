@@ -29,6 +29,7 @@ import Proposals from './pages/mainboard/governance/proposals';
 import Delegates from './pages/mainboard/governance/delegates';
 import Kohort from './pages/mainboard/governance/kohort';
 import SpecProposal from './pages/mainboard/governance/proposals/SpecProposal';
+import Proposal from './pages/proposal';
 
 
 const Router = () => {
@@ -72,6 +73,7 @@ const Router = () => {
         { path: PATH.ADMINDISCOVER, element: <AdminDiscover /> },
       ],
     },
+    { path: PATH.CREATE_PROPOSAL, element: <Proposal /> },
     { path: 'test', element: <Test /> },
   ]);
 

@@ -191,3 +191,7 @@ export const kohorts = [
 ];
 
 export const VOTES: VOTE[] = ['Yes', 'No', 'Abstain'];
+
+export const registrationSteps = ['Add wallet', 'Add email', 'Create profile', 'Accept Charter', 'Add Value', 'Finish'];
+
+export const proposalSteps = ['Info', 'Voting', 'Transactions', 'Preview', 'Finish'];
