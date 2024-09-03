@@ -24,5 +24,6 @@ export const PATH = {
   PROFILE: '/mainboard/dashboard/profile',
   PROFILE_UPDATE: '/mainboard/dashboard/profile/profile-update',
   DEAL_INTEREST: '/mainboard/deal/deal-details/:dealId/interest',
+  CREATE_PROPOSAL: '/create-proposal',
   ADMINCONTRIBUTION: '/admin-mainboard/contribution',
 };

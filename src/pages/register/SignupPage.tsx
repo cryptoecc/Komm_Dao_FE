@@ -7,6 +7,7 @@ import AcceptCharter from 'src/components/register/step/acceptCharter/acceptChar
 import CreateProfile from 'src/components/register/step/createProfile/createProfile';
 import Finish from 'src/components/register/step/finish/finish';
 import AddWallet from 'src/components/register/step/addWallet/addWallet';
+import { registrationSteps } from '../mainboard/governance/variables';
 
 const SignUpPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -24,7 +25,7 @@ const SignUpPage: React.FC = () => {
 
   return (
     <MainContainer>
-      <Sidebar currentStep={currentStep} completedSteps={completedSteps} />
+      <Sidebar steps={registrationSteps} currentStep={currentStep} completedSteps={completedSteps} />
       <Content>
         {currentStep === 1 && <AddWallet onComplete={handleNextStep} />}
         {currentStep === 2 && <AddEmail onComplete={handleNextStep} />}

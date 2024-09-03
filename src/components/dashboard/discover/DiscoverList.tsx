@@ -67,7 +67,7 @@ const DiscoverList = () => {
           ...item,
           pinned: false,
           checked: false, // 처음에는 모든 항목의 checked 상태는 false
-          originalIndex: index,
+          // originalIndex: index,
         }));
         setData(formattedData);
       } catch (error) {
