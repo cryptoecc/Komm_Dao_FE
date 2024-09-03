@@ -30,7 +30,7 @@ export const DealWrapper = styled.div`
 
 export const DealItem = styled.div`
   width: 40vw;
-  height: 30vh;
+  height: auto;
   max-width: 500px;
   max-height: 400px;
   flex-shrink: 0;
@@ -64,18 +64,34 @@ export const DealItem = styled.div`
   }
 `;
 
-export const IconWrapper = styled.div`
+export const BannerImage = styled.img`
+  width: 100%;
+  border-radius: 10px;
   margin-bottom: 15px;
+  position: relative;
+`;
+
+export const IconWrapper = styled.div`
   display: flex;
-  justify-content: space-between; /* 아이콘과 상태 배지를 양쪽에 배치 */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  padding: 0 10px;
+`;
 
-  img {
-    max-width: 100px;
-    max-height: 100px;
-    object-fit: contain;
-  }
+export const LogoImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: white;
+  object-fit: contain;
+  position: absolute;
+  bottom: -25px;
+  left: 20px;
 `;
 
 export const StatusBadge = styled.div<{ status: 'ongoing' | 'finished' }>`
@@ -85,7 +101,7 @@ export const StatusBadge = styled.div<{ status: 'ongoing' | 'finished' }>`
   border-radius: 12px;
   font-size: 14px;
   font-weight: 700;
-  margin-left: 10px;
+  margin-left: auto;
   align-self: flex-start;
 `;
 
@@ -96,6 +112,7 @@ export const GaugeWrapper = styled.div`
   border-radius: 5px;
   margin-bottom: 15px;
   position: relative;
+  margin-top: 40px;
 `;
 
 export const Gauge = styled.div<{ percentage: number }>`
