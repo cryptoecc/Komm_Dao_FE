@@ -17,7 +17,7 @@ const ProposalInfo = ({ onComplete }: { onComplete: () => void }) => {
                 <Column gap={23}>
                     <NavBar>
                         {['Write', 'preview'].map((el, i) => (
-                            <NavList key={i} active={i === activeIndex}>
+                            <NavList onClick={() => setActiveIndex(i)} key={i} active={i === activeIndex}>
                                 {el}
                             </NavList>
                         ))}
@@ -31,7 +31,7 @@ const ProposalInfo = ({ onComplete }: { onComplete: () => void }) => {
             <Content gap={13}>
                 <P fontSize={25} fontWeight={400}>Discussion (Optional)</P>
                 <InputContainer>
-                    <Input placeholder='What is your proposal about?' />
+                    <Input placeholder='http://link on discussion about this proposal' />
                 </InputContainer>
             </Content>
         </Container>
