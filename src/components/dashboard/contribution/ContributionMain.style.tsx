@@ -13,12 +13,12 @@ export const MainContainer = styled.div`
 export const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%; /* Left section takes 70% of the width */
+  width: 60%; /* Left section takes 70% of the width */
   margin-right: 20px; /* Space between LeftSection and RightSection */
 `;
 
 export const RightSection = styled.div`
-  width: 30%; /* Right section takes 30% of the width */
+  width: 40%; /* Right section takes 30% of the width */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +129,7 @@ export const ProgressText = styled.div`
 
 export const BannerWrapper = styled.div`
   width: 420px;
-  height: 220px;
+  height: 250px;
   padding: 5px;
   background-color: #f2efff;
   border-radius: 20px;
@@ -138,12 +138,12 @@ export const BannerWrapper = styled.div`
   align-items: center;
   box-sizing: border-box;
   margin-top: 30px;
-  object-fit: contain;
+  object-fit: cover;
 `;
 
 export const BannerImage = styled.img`
   width: 400px;
-  height: 200px;
+  height: 220px;
   border-radius: 20px;
   object-fit: cover;
 `;
