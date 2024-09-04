@@ -1,0 +1,32 @@
+/* Custom Slick Dots */
+.slick-dots {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 20px 0 0;
+  list-style: none;
+}
+
+.slick-dots li {
+  width: 12px; /* 원의 너비 */
+  height: 12px; /* 원의 높이 */
+  margin: 0 6px; /* 원 사이 간격 */
+}
+
+.slick-dots li button {
+  font-size: 0; /* 기본 점 텍스트 숨김 */
+  width: 12px; /* 원의 너비 */
+  height: 12px; /* 원의 높이 */
+  border-radius: 6px; /* 원형으로 만들기 */
+  background-color: #e6d4ff; /* 기본 색상 */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.slick-dots li.slick-active button {
+  background-color: #875cff; /* 활성화된 슬라이더의 점 색상 */
+  width: 20px; /* 활성화된 슬라이더의 점 너비 */
+  border-radius: 10px; /* 활성화된 슬라이더의 점을 타원형으로 만들기 */
+}
