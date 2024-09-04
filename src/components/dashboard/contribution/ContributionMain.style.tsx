@@ -8,32 +8,57 @@ export const MainContainer = styled.div`
   background-color: #fff;
   box-sizing: border-box;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 15px;
+  }
 `;
 
 export const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%; /* Left section takes 70% of the width */
-  margin-right: 20px; /* Space between LeftSection and RightSection */
+  width: 60%;
+  margin-right: 20px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
 export const RightSection = styled.div`
-  width: 40%; /* Right section takes 30% of the width */
+  width: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-top: 20px;
+  }
 `;
 
 export const ProjectTitleWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+  }
 `;
 
 export const ProjectLogo = styled.img`
   width: 80px;
   height: 80px;
   margin-right: 15px;
+
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+  }
 `;
 
 export const ProjectTitle = styled.div`
@@ -43,8 +68,16 @@ export const ProjectTitle = styled.div`
   font-weight: 500;
   word-wrap: break-word;
   text-align: left;
-  overflow: hidden; /* 넘치는 부분을 숨김 */
-  text-overflow: ellipsis; /* 넘치는 부분을 "..."로 표시 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
 
 export const KohortLabel = styled.div`
@@ -53,6 +86,10 @@ export const KohortLabel = styled.div`
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
 `;
 
 export const XPInfoWrapper = styled.div`
@@ -68,6 +105,10 @@ export const XPInfoWrapper = styled.div`
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     margin-right: 5px;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
   }
 
   .xp-value {
@@ -77,6 +118,10 @@ export const XPInfoWrapper = styled.div`
     font-weight: 700;
     text-decoration: underline;
     margin-left: 20px;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
   }
 `;
 
@@ -93,6 +138,11 @@ export const Dates = styled.div`
   font-weight: 500;
   word-wrap: break-word;
   margin: 30px 0;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin: 20px 0;
+  }
 `;
 
 export const ProgressContainer = styled.div`
@@ -115,6 +165,10 @@ export const ProgressBar = styled.div`
     background-color: #875cff;
     border-radius: 20px;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const ProgressText = styled.div`
@@ -125,6 +179,11 @@ export const ProgressText = styled.div`
   text-align: center;
   margin-top: 5px;
   width: 80%;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    width: 100%;
+  }
 `;
 
 export const BannerWrapper = styled.div`
@@ -138,7 +197,11 @@ export const BannerWrapper = styled.div`
   align-items: center;
   box-sizing: border-box;
   margin-top: 30px;
-  object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 export const BannerImage = styled.img`
@@ -146,4 +209,9 @@ export const BannerImage = styled.img`
   height: 220px;
   border-radius: 20px;
   object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+  }
 `;

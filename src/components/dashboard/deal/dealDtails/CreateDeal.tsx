@@ -159,7 +159,7 @@ const CreateDealModal: React.FC<ModalProps> = ({ onClose, onConfirm }) => {
             name="min_allocation"
             value={formData.min_allocation}
             onChange={handleInputChange}
-            placeholder="Minimum Allocation"
+            placeholder="Min Interest"
             required
             type="number"
           />
@@ -167,7 +167,7 @@ const CreateDealModal: React.FC<ModalProps> = ({ onClose, onConfirm }) => {
             name="max_allocation"
             value={formData.max_allocation}
             onChange={handleInputChange}
-            placeholder="Maximum Allocation"
+            placeholder="Max Interest"
             required
             type="number"
           />
