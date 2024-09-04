@@ -1,6 +1,5 @@
-// src/pages/mainboard/mainBoard.tsx
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import Sidebar from '../../components/dashboard/sidebar/Sidebar';
 import styled from 'styled-components';
 
@@ -17,6 +16,14 @@ const ContentArea = styled.div`
 `;
 
 const MainBoard: React.FC = () => {
+  const location = useLocation();
+
+  // Check if the current path is exactly '/mainboard'
+  if (location.pathname === '/mainboard') {
+    // Redirect only if the user is on /mainboard
+    return <Navigate to="/mainboard/dashboard" replace />;
+  }
+
   return (
     <MainBoardContainer>
       <Sidebar />

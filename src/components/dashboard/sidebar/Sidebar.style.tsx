@@ -14,6 +14,7 @@ export const Logo = styled.div`
   background-size: contain;
   margin: 20px 0;
   flex-shrink: 0; /* Prevent the logo from shrinking */
+  cursor: pointer;
 
   /* Ensure the size stays consistent across all screen sizes */
   @media (max-width: 1024px) {

@@ -9,7 +9,7 @@ const ProfileUpdate: React.FC = () => {
     <>
       <BackButton onClick={() => navigate(-1)}>
         <BackLink>
-          <span>&larr;</span>Back to Deal
+          <span>&larr;</span>Back to Profile
         </BackLink>
       </BackButton>
       <ProfileContainer>

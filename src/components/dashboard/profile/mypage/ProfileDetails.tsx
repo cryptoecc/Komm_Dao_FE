@@ -24,10 +24,6 @@ import {
   OpenSeaLink,
   EditButton,
   EditIcon,
-  CardContainer,
-  Card,
-  CardTitle,
-  CardSubtitle,
 } from './ProfileDetails.style';
 import { PATH } from 'src/constants/path';
 import { useNavigate } from 'react-router-dom';
@@ -155,7 +151,7 @@ const ProfileDetails: React.FC = () => {
         </MembershipNftWrapInner>
       </MembershipNftWrap>
       <EditButton onClick={handleEditClick}>
-        <EditIcon src={images.editIcon} alt="Edit Icon" />
+        <EditIcon src={images.editIcon2} alt="Edit Icon" />
         Edit
       </EditButton>
     </Container>
