@@ -25,18 +25,18 @@ import { useNavigate } from 'react-router-dom';
 import { formatNumber } from '../../../../src/utils/utils';
 import { images } from '../../../assets/dashboard/images';
 import { API_BASE_URL } from '../../../../src/utils/utils';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 
 const ProfileCard: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
-
+  const user = useSelector((state: RootState) => state.user);
   useEffect(() => {
-    const persistedRoot = localStorage.getItem('persist:root');
-
-    if (persistedRoot) {
+    if (user) {
       try {
-        const parsedData = JSON.parse(persistedRoot);
-        const walletAddress = JSON.parse(parsedData.wallet_addr);
+        // const parsedData = JSON.parse(persistedRoot);
+        const walletAddress = user.wallet_addr;
 
         const fetchUserData = async () => {
           try {

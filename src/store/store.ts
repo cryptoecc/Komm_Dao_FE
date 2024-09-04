@@ -11,12 +11,19 @@ const persistConfig = {
   storage, // `localStorage`에 상태를 저장
 };
 
+const adminPersistConfig = {
+  key: 'admin',
+  storage, // admin 상태도 localStorage에 저장
+};
+
+const persistedAdminReducer = persistReducer(adminPersistConfig, AdminSlice);
+
 const persistedReducer = persistReducer(persistConfig, userReducer);
 
 const store = configureStore({
   reducer: {
     user: persistedReducer,
-    admin: AdminSlice,
+    admin: persistedAdminReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
