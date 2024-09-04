@@ -2,50 +2,54 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   display: flex;
-  flex-direction: column;
   padding: 20px;
-  background-color: #fff;
-  box-sizing: border-box;
-  width: 1080px;
-`;
-
-export const HeaderSection = styled.div`
-  display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 100%;
 `;
 
-export const ProjectInfo = styled.div`
+export const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 20px; /* Add space between ProjectInfo and BannerWrapper */
+  width: 70%; /* Left section takes 70% of the width */
+  margin-right: 20px; /* Space between LeftSection and RightSection */
+`;
+
+export const RightSection = styled.div`
+  width: 30%; /* Right section takes 30% of the width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ProjectTitleWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 15px; /* Space below the project title section */
+  margin-bottom: 15px;
 `;
 
 export const ProjectLogo = styled.img`
   width: 80px;
   height: 80px;
-  margin-right: 15px; /* Space between logo and title */
+  margin-right: 15px;
 `;
 
 export const ProjectTitle = styled.div`
-  width: 100%;
   color: black;
-  font-size: 29px;
+  font-size: 40px;
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   word-wrap: break-word;
-  text-align: left; /* Changed to left-align */
+  text-align: left;
+  overflow: hidden; /* 넘치는 부분을 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 "..."로 표시 */
 `;
 
 export const KohortLabel = styled.div`
   color: black;
-  font-size: 28px;
+  font-size: 32px;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
@@ -54,6 +58,7 @@ export const KohortLabel = styled.div`
 export const XPInfoWrapper = styled.div`
   display: flex;
   align-items: baseline;
+  width: 80%;
   margin-top: 10px;
   justify-content: space-between;
 
@@ -71,6 +76,7 @@ export const XPInfoWrapper = styled.div`
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     text-decoration: underline;
+    margin-left: 20px;
   }
 `;
 
@@ -86,23 +92,23 @@ export const Dates = styled.div`
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   word-wrap: break-word;
-  margin: 10px 0;
+  margin: 30px 0;
 `;
 
 export const ProgressContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 15px;
   width: 100%;
 `;
 
 export const ProgressBar = styled.div`
-  width: 460px;
+  width: 80%;
   height: 22px;
   background-color: #e0e0e0;
   border-radius: 20px;
-  margin-bottom: 8px; /* Increased margin for better spacing */
+  margin-bottom: 8px;
 
   .progress {
     height: 100%;
@@ -118,7 +124,7 @@ export const ProgressText = styled.div`
   font-weight: 500;
   text-align: center;
   margin-top: 5px;
-  width: 100%;
+  width: 80%;
 `;
 
 export const BannerWrapper = styled.div`
@@ -126,16 +132,18 @@ export const BannerWrapper = styled.div`
   height: 220px;
   padding: 5px;
   background-color: #f2efff;
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  margin-top: 30px;
+  object-fit: contain;
 `;
 
 export const BannerImage = styled.img`
   width: 400px;
   height: 200px;
-  border-radius: 10px;
+  border-radius: 20px;
   object-fit: cover;
 `;
