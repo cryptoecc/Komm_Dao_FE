@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledCalendar, EventBlock, CustomCalendarProps, CalendarEvent } from './Calendar.style';
+import { StyledCalendar, EventBlock, CustomCalendarProps } from './Calendar.style';
 
 const CustomCalendar: React.FC<CustomCalendarProps> = ({ events }) => {
   const tileContent = ({ date, view }: { date: Date; view: string }) => {
