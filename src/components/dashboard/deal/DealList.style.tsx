@@ -1,33 +1,5 @@
 import styled from 'styled-components';
 
-export const DealListContainer = styled.div`
-  display: flex;
-  margin-left: 50px;
-  padding: 10px;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: flex-start;
-
-  @media (max-width: 767px) {
-    gap: 15px;
-  }
-`;
-
-export const DealWrapper = styled.div`
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  max-width: 500px;
-
-  @media (max-width: 767px) {
-    width: 90vw;
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 70vw;
-  }
-`;
-
 export const DealItem = styled.div`
   width: 40vw;
   height: auto;

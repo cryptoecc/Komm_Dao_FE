@@ -22,11 +22,10 @@ interface DealListProps {
 
 const DealListContainer = styled.div`
   display: flex;
-  margin-left: 50px;
-  padding: 10px;
   flex-wrap: wrap;
   gap: 40px;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 767px) {
     gap: 15px;

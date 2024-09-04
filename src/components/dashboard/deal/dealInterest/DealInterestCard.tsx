@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Container,
   Title,
@@ -100,11 +100,11 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
       <Divider />
       <AllocationInfo>
         <div>
-          <AllocationText>Minimum Allocation</AllocationText>
+          <AllocationText>Min Interest</AllocationText>
           <AllocationValue>{deal.min_allocation} USDT</AllocationValue>
         </div>
         <div>
-          <AllocationText>Maximum Allocation</AllocationText>
+          <AllocationText>Max Interest</AllocationText>
           <AllocationValue>{deal.max_allocation} USDT</AllocationValue>
         </div>
       </AllocationInfo>

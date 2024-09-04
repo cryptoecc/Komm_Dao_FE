@@ -9,9 +9,9 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
   max-width: 1440px;
   width: 1200px;
+  padding: 20px;
   margin: 0 auto;
 `;
 
@@ -19,13 +19,16 @@ const TitleContainer = styled.div`
   width: 100%;
   display: flex;
   margin-top: 20px;
-  margin-left: 20px;
   justify-content: flex-start;
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
-  margin-bottom: 20px;
+  color: #1a0737;
+  font-size: 40px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+  padding: 20px;
 `;
 
 const DealPage: React.FC = () => {
@@ -59,7 +62,7 @@ const DealPage: React.FC = () => {
   return (
     <>
       <TitleContainer>
-        <Title>Deals</Title>
+        <Title>Deal</Title>
       </TitleContainer>
       <PageContainer>
         <DealList deals={deals} onDealClick={handleDealClick} />
