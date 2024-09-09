@@ -213,7 +213,7 @@ const DiscoverList = () => {
                   style={{ width: '16px', height: '16px' }}
                 />
               </TableHeader>
-              <TableHeader width="15%" onClick={toggleDropdown} isActive={isDropdownVisible}>
+              <TableHeader width="15%" onClick={toggleDropdown} $isActive={isDropdownVisible}>
                 <DropdownContainer ref={categoryDropdownRef}>
                   Category
                   <img
@@ -240,7 +240,7 @@ const DiscoverList = () => {
                 </DropdownContainer>
               </TableHeader>
               <TableHeader width="35%">Description</TableHeader>
-              <TableHeader width="20%" onClick={toggleGradeDropdown} isActive={isGradeDropdownVisible}>
+              <TableHeader width="15%" onClick={toggleDropdown} $isActive={isDropdownVisible}>
                 <DropdownContainer ref={gradeDropdownRef}>
                   <TooltipContainer>
                     <img src={images.exclamationIcon} alt="Info Icon" style={{ width: '16px', height: '16px' }} />
@@ -308,10 +308,14 @@ const DiscoverList = () => {
                 </TableRow>
               ))
             ) : (
-              <NoDataContainer>
-                <NoDataImage src={images.user} alt="No Data" />
-                <NoDataText>No projects found.</NoDataText>
-              </NoDataContainer>
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <NoDataContainer>
+                    <NoDataImage src={images.user} alt="No Data" />
+                    <NoDataText>No projects found.</NoDataText>
+                  </NoDataContainer>
+                </TableCell>
+              </TableRow>
             )}
           </tbody>
         </Table>

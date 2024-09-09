@@ -90,10 +90,10 @@ export const NavItem = styled(NavLink)`
     padding: 10px 15px;
   }
 `;
-export const Icon = styled.div<{ imageUrl: string }>`
+export const Icon = styled.div<{ $imageUrl: string }>`
   width: 24px;
   height: 24px;
-  background: url(${(props) => props.imageUrl}) no-repeat center center;
+  background: url(${(props) => props.$imageUrl}) no-repeat center center;
   background-size: contain;
 
   @media (max-width: 768px) {

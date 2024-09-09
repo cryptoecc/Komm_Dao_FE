@@ -68,7 +68,7 @@ export const LogoImage = styled.img`
   background-color: #fff;
 `;
 
-export const StatusBadge = styled.div<{ status: 'Open' | 'Closed' }>`
+export const StatusBadge = styled.div<{ $status: 'Open' | 'Closed' }>`
   position: absolute;
   top: 10px;
   right: 10px;
@@ -83,10 +83,10 @@ export const StatusBadge = styled.div<{ status: 'Open' | 'Closed' }>`
   font-weight: 700;
   font-family: 'Inter', sans-serif;
   background: ${(props) =>
-    props.status === 'Open'
+    props.$status === 'Open'
       ? 'linear-gradient(0deg, #F1ECFF 0%, #F1ECFF 100%)'
       : 'linear-gradient(0deg, #DADADB 0%, #DADADB 100%)'};
-  color: ${(props) => (props.status === 'Open' ? '#875CFF' : '#555555')};
+  color: ${(props) => (props.$status === 'Open' ? '#875CFF' : '#555555')};
 `;
 
 export const DealTitle = styled.h3`
@@ -118,8 +118,8 @@ export const GaugeWrapper = styled.div`
   margin-top: 120px;
 `;
 
-export const Gauge = styled.div<{ percentage: number }>`
-  width: ${(props) => props.percentage}%;
+export const Gauge = styled.div<{ $percentage: number }>`
+  width: ${(props) => props.$percentage}%;
   height: 100%;
   background: #875cff;
   transition: width 0.3s ease;

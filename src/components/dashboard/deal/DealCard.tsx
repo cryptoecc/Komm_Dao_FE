@@ -39,12 +39,12 @@ const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
           <BannerImage src={deal.banner_image_url} alt="Banner Image" />
           <LogoImage src={deal.deal_image_url || defaultDealIcon} alt="Deal Logo" />
           <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
-          <StatusBadge status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
+          <StatusBadge $status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
           <PercentageText>{deal.percentage || 0}%</PercentageText>
         </BannerContainer>
 
         <GaugeWrapper>
-          <Gauge percentage={deal.percentage || 0} />
+          <Gauge $percentage={deal.percentage || 0} />
         </GaugeWrapper>
 
         <DealDescription>{deal.deal_desc || 'No Description Available'}</DealDescription>
