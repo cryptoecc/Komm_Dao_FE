@@ -6,6 +6,7 @@ export const PATH = {
   DEAL: '/mainboard/deal',
   DEAL_DETAILS: '/mainboard/deal/:dealId',
   CONTRIBUTION: '/mainboard/contribution',
+  CONTRIBUTION_DETAIL: '/mainboard/contribution/contribution-detail/:contributionId',
   DISCOVER: '/mainboard/discover',
   DISCOVER_DETAILS: '/mainboard/discover/:projectId',
   DISCOVER_CALENDAR: '/mainboard/discover/calendar',

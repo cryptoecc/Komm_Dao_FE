@@ -1,5 +1,4 @@
 import React from 'react';
-import { images } from 'src/assets/contribution/images';
 import {
   MainContainer,
   LeftSection,
@@ -42,33 +41,35 @@ const ContributionMain: React.FC<ContributionMainProps> = ({
   bannerImage,
 }) => {
   return (
-    <MainContainer>
-      <LeftSection>
-        <ProjectTitleWrapper>
-          <ProjectLogo src={projectLogo} alt="Project Logo" />
-          <ProjectTitle>{projectTitle}</ProjectTitle>
-        </ProjectTitleWrapper>
-        <XPInfoWrapper>
-          <KohortLabel>{kohortLabel}</KohortLabel>
-          <div>
-            <span className="total-avg">Total Avg </span>
-            <span className="xp-value">{xpValue}</span>
-          </div>
-        </XPInfoWrapper>
-        <Dates>{dates}</Dates>
-        <ProgressContainer>
-          <ProgressBar>
-            <div className="progress" style={{ width: progress }}></div>
-          </ProgressBar>
-          <ProgressText>{progressText}</ProgressText>
-        </ProgressContainer>
-      </LeftSection>
-      <RightSection>
-        <BannerWrapper>
-          <BannerImage src={bannerImage} alt="Banner" />
-        </BannerWrapper>
-      </RightSection>
-    </MainContainer>
+    <>
+      <ProjectTitleWrapper>
+        <ProjectLogo src={projectLogo} alt="Project Logo" />
+        <ProjectTitle>{projectTitle}</ProjectTitle>
+      </ProjectTitleWrapper>
+      <MainContainer>
+        <LeftSection>
+          <XPInfoWrapper>
+            <KohortLabel>{kohortLabel}</KohortLabel>
+            <div>
+              <span className="total-avg">Total Avg </span>
+              <span className="xp-value">{xpValue}</span>
+            </div>
+          </XPInfoWrapper>
+          <Dates>{dates}</Dates>
+          <ProgressContainer>
+            <ProgressBar>
+              <div className="progress" style={{ width: progress }}></div>
+            </ProgressBar>
+            <ProgressText>{progressText}</ProgressText>
+          </ProgressContainer>
+        </LeftSection>
+        <RightSection>
+          <BannerWrapper>
+            <BannerImage src={bannerImage} alt="Banner" />
+          </BannerWrapper>
+        </RightSection>
+      </MainContainer>
+    </>
   );
 };
 
