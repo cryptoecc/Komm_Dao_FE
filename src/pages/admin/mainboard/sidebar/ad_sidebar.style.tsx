@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 export const SidebarContainer = styled.div`
   width: 300px;
-  height: 100%;
+  height: 100vh;
+
   flex-shrink: 0;
   background: #f9f8fe;
   display: flex;
@@ -102,7 +103,7 @@ export const Contribution = styled.div<{ $isSelected?: boolean }>`
   align-items: center;
   justify-content: flex-start;
   padding: 20px 25px; /* 패딩을 조정하여 메뉴 항목 간의 간격을 늘림 */
-  gap: 29px; /* 아이콘과 텍스트 간의 간격을 조정 */
+  gap: 31px; /* 아이콘과 텍스트 간의 간격을 조정 */
   width: 100%;
   color: ${(props) => (props.$isSelected ? '#7A23FF' : '#1a0737')}; /* 선택된 경우 색상 변경 */
   font-weight: ${(props) => (props.$isSelected ? 700 : 400)};

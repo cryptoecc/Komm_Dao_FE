@@ -10,6 +10,7 @@ import {
   Popup,
   CheckboxContainer,
   Checkmark,
+  ConfirmBtn,
 } from './adminContribution.style';
 import React, { useState, useEffect } from 'react';
 import headerbox from 'src/assets/admin/headerbox.svg';
@@ -18,17 +19,20 @@ import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
 import Modal from 'src/components/admin/modal/Modal';
 import axios from 'axios';
+import AddContribution from 'src/components/admin/modal/addContribution/AddContribution';
 import { API_BASE_URL } from 'src/utils/utils';
 
 interface Contribution {
   cont_id: number;
   pjt_name: string;
   cont_type: string;
+  cont_category: string;
   cont_summary: string;
   cont_desc: string;
   cont_reward: number;
   start_date: string; // 'YYYY-MM-DD' 형식으로 가정
   end_date: string; // 'YYYY-MM-DD' 형식으로 가정
+  max_participant: number;
   cont_xp: number;
   cont_status: string;
 }
@@ -56,7 +60,7 @@ const AdminContribution = () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/admin/contribution-list`);
         const data = response.data;
-
+        console.log(data);
         if (data.length < 20) {
           const emptyItems = Array.from({ length: 20 - data.length }, (_, index) => ({
             cont_id: `empty-${index}`, // 고유한 ID를 제공하기 위해 'empty' 접두사 추가
@@ -118,6 +122,12 @@ const AdminContribution = () => {
     setIsAllSelected(!isAllSelected);
   };
 
+  // Handle confirm button click
+  const handleConfirmClick = (cont_id: number) => {
+    // 서버로 확인 요청 전송 (이 부분은 서버와 연동 필요)
+    console.log(`Confirmed contribution with ID: ${cont_id}`);
+  };
+
   return (
     <UserMemberContainer>
       <Title>Contribution Mgmt</Title>
@@ -161,27 +171,35 @@ const AdminContribution = () => {
                 </CheckboxContainer>
               </TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.pjt_name}</TableCell>
+              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_category}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_type}</TableCell>
-              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_summary}</TableCell>
-              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_desc}</TableCell>
-              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_reward}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.start_date}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.end_date}</TableCell>
+              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.max_participant}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_xp}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_status}</TableCell>
+              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{'~~'}</TableCell>
+              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{'~~'}</TableCell>
+              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>
+                {contribution.cont_status === 'PENDING' ? (
+                  <ConfirmBtn onClick={() => handleConfirmClick(contribution.cont_id)}>Confirm</ConfirmBtn>
+                ) : (
+                  contribution.cont_status
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </tbody>
       </Table>
 
-      {/* {popupContent && <Popup style={{ top: popupPosition.top, left: popupPosition.left }}>{popupContent}</Popup>}
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Contribution">
+      {popupContent && <Popup style={{ top: popupPosition.top, left: popupPosition.left }}>{popupContent}</Popup>}
+      {/* <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Contribution">
 
-        </Modal>
-  
-        <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Contribution">
-   
         </Modal> */}
+
+      <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Contribution">
+        <AddContribution />
+      </Modal>
     </UserMemberContainer>
   );
 };
