@@ -14,27 +14,27 @@ const Sidebar: React.FC = () => {
     <SidebarContainer>
       <Logo style={{ backgroundImage: `url(${images.sidebarLogo})` }} onClick={handleLogoClick} />
       <NavItem to={PATH.DASHBOARD}>
-        <Icon imageUrl={images.dashboardIcon} />
+        <Icon $imageUrl={images.dashboardIcon} />
         <Name>Dashboard</Name>
       </NavItem>
       <NavItem to={PATH.DEAL}>
-        <Icon imageUrl={images.dealIcon} />
+        <Icon $imageUrl={images.dealIcon} />
         <Name>Deal</Name>
       </NavItem>
       <NavItem to={PATH.DISCOVER}>
-        <Icon imageUrl={images.discoverIcon} />
+        <Icon $imageUrl={images.discoverIcon} />
         <Name>Discover</Name>
       </NavItem>
       <NavItem to={PATH.CONTRIBUTION}>
-        <Icon imageUrl={images.contributionIcon} />
+        <Icon $imageUrl={images.contributionIcon} />
         <Name>Contribution</Name>
       </NavItem>
       <NavItem to={PATH.GOVERNANCE}>
-        <Icon imageUrl={images.governanceIcon} />
+        <Icon $imageUrl={images.governanceIcon} />
         <Name>Governance</Name>
       </NavItem>
       <NotificationItem>
-        <Icon imageUrl={images.notificationsIcon} />
+        <Icon $imageUrl={images.notificationsIcon} />
       </NotificationItem>
     </SidebarContainer>
   );

@@ -187,8 +187,8 @@ export const ProgressText = styled.div`
 `;
 
 export const BannerWrapper = styled.div`
-  width: 420px;
-  height: 250px;
+  width: 100%;
+  height: 250px; // 높이를 250px로 고정
   padding: 5px;
   background-color: #f2efff;
   border-radius: 20px;
@@ -205,13 +205,14 @@ export const BannerWrapper = styled.div`
 `;
 
 export const BannerImage = styled.img`
-  width: 400px;
-  height: 220px;
+  width: 100%;
+  height: 250px; // 높이를 250px로 고정
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: contain; // 이미지 비율을 유지하면서 짤림 없이 표시
+  display: block;
 
   @media (max-width: 768px) {
     width: 100%;
-    height: auto;
+    height: 250px; // 작은 화면에서도 높이를 고정
   }
 `;

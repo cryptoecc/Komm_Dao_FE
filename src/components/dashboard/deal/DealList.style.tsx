@@ -66,8 +66,8 @@ export const LogoImage = styled.img`
   left: 20px;
 `;
 
-export const StatusBadge = styled.div<{ status: 'ongoing' | 'finished' }>`
-  background-color: ${(props) => (props.status === 'ongoing' ? '#875cff' : '#cccccc')};
+export const StatusBadge = styled.div<{ $status: 'ongoing' | 'finished' }>`
+  background-color: ${(props) => (props.$status === 'ongoing' ? '#875cff' : '#cccccc')};
   color: white;
   padding: 5px 10px;
   border-radius: 12px;

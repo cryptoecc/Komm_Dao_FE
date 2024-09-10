@@ -77,16 +77,16 @@ export const TableRow = styled.tr`
   height: 50px;
 `;
 
-export const TableHeader = styled.th<TableHeaderProps>`
+export const TableHeader = styled.th<TableHeaderProps & { $isActive?: boolean }>`
   padding: 10px;
   text-align: center;
   font-weight: 700;
   font-size: 14px;
-  color: ${({ isActive }) => (isActive ? 'black' : '#1a0737')};
+  color: ${({ $isActive }) => ($isActive ? 'black' : '#1a0737')};
   border-bottom: 1px solid #ddd;
   vertical-align: middle;
-  background-color: ${({ isActive }) => (isActive ? '#E4D9FF' : '#f9f8fe')};
-  border-radius: ${({ isActive }) => (isActive ? '10px' : '0')};
+  background-color: ${({ $isActive }) => ($isActive ? '#E4D9FF' : '#f9f8fe')};
+  border-radius: ${({ $isActive }) => ($isActive ? '10px' : '0')};
   width: ${({ width }) => width || '10%'};
   box-sizing: border-box;
   z-index: 3;
