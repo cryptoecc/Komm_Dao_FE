@@ -102,6 +102,7 @@ export const EditImageButton = styled.label`
   img {
     width: 20px;
     height: 20px;
+    color: black;
   }
 `;
 
@@ -232,7 +233,7 @@ export const Input = styled.input`
   width: 100%; /* Ensure input takes up available space */
   padding-left: 20px; /* Space for icon/link on the left */
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -250,7 +251,7 @@ export const BioInput = styled.textarea`
   width: 100%; /* Ensure input takes up available space */
   padding-left: 20px; /* Space for icon/link on the left */
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -297,7 +298,7 @@ export const MembershipNftLink = styled.a`
   left: 40px;
   color: #875cff;
   font-family: Inter;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   text-decoration: underline;
   display: flex;
@@ -307,24 +308,6 @@ export const MembershipNftLink = styled.a`
   @media (max-width: 600px) {
     font-size: 14px;
     left: 30px;
-  }
-`;
-
-export const SelectField = styled.select`
-  padding: 10px 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 830px;
-  background: url('../../../../assets/profile/arrow_down.png') no-repeat right 10px center;
-  background-size: 24px 24px;
-  appearance: none;
-
-  @media (max-width: 600px) {
-    padding: 8px 16px;
-    font-size: 14px;
-    background-size: 20px 20px;
   }
 `;
 

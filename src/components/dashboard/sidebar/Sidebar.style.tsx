@@ -80,7 +80,16 @@ export const NavItem = styled(NavLink)`
   width: 100%;
   color: #1a0737;
   text-decoration: none;
-  transition: padding 0.3s ease;
+  transition: padding 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(135, 92, 255, 0.1); /* Hover 배경색 */
+  }
+
+  &.active {
+    background-color: #875cff; /* 활성화된 항목의 배경색 */
+    color: white; /* 활성화된 항목의 텍스트 색상 */
+  }
 
   @media (max-width: 768px) {
     padding: 15px 20px;
@@ -90,6 +99,7 @@ export const NavItem = styled(NavLink)`
     padding: 10px 15px;
   }
 `;
+
 export const Icon = styled.div<{ $imageUrl: string }>`
   width: 24px;
   height: 24px;
@@ -132,6 +142,7 @@ export const Name = styled.div`
     display: none; /* Hide icon on smaller screens or when zoomed in */
   }
 `;
+
 export const NotificationItem = styled.div`
   padding: 20px;
   display: flex;
