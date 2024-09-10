@@ -193,22 +193,6 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   @media (max-width: 767px) {
     max-width: 100px;
   }
-
-  button {
-    background: none;
-    border: none;
-    font-family: Roboto;
-    color: var(--Light-Dark, #343a40);
-    font-feature-settings: 'clig' off, 'liga' off;
-    text-decoration-line: underline;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
 
 export const CheckboxContainer = styled.div`
@@ -266,4 +250,13 @@ export const Popup = styled.div`
   font-weight: 400;
   line-height: 22px;
   /* transform: translateX(-50%); */
+`;
+
+export const ConfirmBtn = styled.button`
+  color: var(--Light-White, #fff);
+  padding: 5px 10px;
+  font-size: 14px;
+  background: #8c63ff;
+  font-weight: 500;
+  border-radius: 25px;
 `;

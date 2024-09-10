@@ -31,6 +31,7 @@ import Kohort from './pages/mainboard/governance/kohort';
 import SpecProposal from './pages/mainboard/governance/proposals/SpecProposal';
 import Proposal from './pages/proposal';
 import AdminContribution from './pages/admin/mainboard/contribution/adminContribution';
+import AdminDeal from './pages/admin/mainboard/deal/adminDeal';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -72,6 +73,7 @@ const Router = () => {
         { path: PATH.USERKOHORTS, element: <UserKohort /> },
         { path: PATH.ADMINDISCOVER, element: <AdminDiscover /> },
         { path: PATH.ADMINCONTRIBUTION, element: <AdminContribution /> },
+        { path: PATH.ADMINDEAL, element: <AdminDeal /> },
       ],
     },
     { path: PATH.CREATE_PROPOSAL, element: <Proposal /> },

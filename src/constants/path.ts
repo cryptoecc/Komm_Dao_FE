@@ -26,4 +26,5 @@ export const PATH = {
   DEAL_INTEREST: '/mainboard/deal/deal-details/:dealId/interest',
   CREATE_PROPOSAL: '/create-proposal',
   ADMINCONTRIBUTION: '/admin-mainboard/contribution',
+  ADMINDEAL: '/admin-mainboard/deal/dealroom',
 };
