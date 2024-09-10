@@ -34,7 +34,6 @@ export const ProfileImage = styled.img`
   height: 167px;
   border-radius: 50%;
   border: 5px solid #875cff;
-  background: lightgray;
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -186,7 +185,13 @@ export const BioContents = styled.div`
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
+  line-height: 1.5;
+  width: 100%; /* 부모 요소의 너비를 따름 */
+  max-width: 100%; /* 최대 너비를 설정 */
+  word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
+  overflow-wrap: break-word; /* 단어가 넘칠 경우 줄 바꿈 */
+  word-break: break-word; /* 긴 단어를 강제로 줄 바꿈 */
+  white-space: normal; /* 텍스트를 일반적인 줄 바꿈 방식으로 설정 */
 `;
 
 export const MembershipNftWrap = styled.div`

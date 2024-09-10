@@ -62,13 +62,10 @@ const ProfileDetails: React.FC = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        // Local Storage에서 저장된 데이터를 가져옵니다.
         const persistedRoot = localStorage.getItem('persist:root');
         if (persistedRoot) {
           const parsedData = JSON.parse(persistedRoot);
           const walletAddress = JSON.parse(parsedData.wallet_addr);
-
-          // 가져온 지갑 주소를 이용해 사용자 정보를 백엔드에서 조회합니다.
           const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
           setProfileData(response.data);
         } else {
@@ -76,7 +73,6 @@ const ProfileDetails: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching profile data:', error);
-        // 기본 데이터를 설정합니다.
         setProfileData({
           name: 'Stella',
           email: 'johndoe@example.com',
@@ -111,6 +107,10 @@ const ProfileDetails: React.FC = () => {
     }
   };
 
+  const shortenWalletAddress = (address: string) => {
+    return `${address.slice(0, 7)}...${address.slice(-6)}`;
+  };
+
   if (!profileData) {
     return <div>Loading...</div>;
   }
@@ -131,7 +131,7 @@ const ProfileDetails: React.FC = () => {
       <WalletAddressWrap>
         <WalletAddress>Wallet Address</WalletAddress>
         <WalletAddressContentsWrap>
-          <WalletContents>{profileData.walletAddress}</WalletContents>
+          <WalletContents>{shortenWalletAddress(profileData.walletAddress)}</WalletContents>
           <CopyButton onClick={handleCopy}>
             <CopyIcon src={images.copyIcon} alt="Copy Icon" />
           </CopyButton>

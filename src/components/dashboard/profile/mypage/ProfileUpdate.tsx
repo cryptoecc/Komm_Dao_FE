@@ -67,7 +67,7 @@ const customStyles = (isFocused: boolean) => ({
     ...provided,
     width: '100%',
     height: '100%',
-    borderRadius: state.menuIsOpen ? '10px 10px 0 0' : '10px',
+    borderRadius: state.menuIsOpen ? '20px 20px 0 0' : '20px',
     border: '1px solid #858585',
     fontSize: '14px',
     fontWeight: 500,
@@ -280,7 +280,7 @@ const ProfileUpdate: React.FC = () => {
           <ProfileImage src={previewImage || images.profileDefaultIcon} alt="Profile" />
           <EditImageButton>
             <input type="file" name="profileImage" onChange={handleInputChange} />
-            <img src={images.editIcon2} alt="Edit" />
+            <img src={images.edit_black} alt="Edit" />
           </EditImageButton>
         </ProfileImageSection>
         <InputSection>
@@ -294,7 +294,7 @@ const ProfileUpdate: React.FC = () => {
                 value={profileData.name}
                 onChange={handleInputChange}
               />
-              <InputIcon src={images.editIcon2} alt="Edit" />
+              <InputIcon src={images.edit_black} alt="Edit" />
             </NameField>
             <MembershipNftField>
               <Label>Membership NFT</Label>
@@ -321,7 +321,7 @@ const ProfileUpdate: React.FC = () => {
               value={profileData.email}
               onChange={handleInputChange}
             />
-            <InputIcon src={images.editIcon2} alt="Edit" />
+            <InputIcon src={images.edit_black} alt="Edit" />
           </EmailField>
           <WalletAddressField>
             <Label>Wallet Address</Label>
@@ -336,7 +336,7 @@ const ProfileUpdate: React.FC = () => {
           <BioField>
             <Label>Bio</Label>
             <BioInput name="bio" value={profileData.bio} onChange={handleInputChange} />
-            <BioInputIcon src={images.editIcon2} alt="Edit" />
+            <BioInputIcon src={images.edit_black} alt="Edit" />
           </BioField>
           <HorizontalGroup>
             <ExpertiseField>
@@ -357,12 +357,7 @@ const ProfileUpdate: React.FC = () => {
               />
             </ExpertiseField>
             <CheckboxContainer>
-              <Checkbox
-                type="checkbox"
-                name="stayUpdated"
-                checked={profileData.stayUpdated}
-                onChange={handleInputChange}
-              />
+              <Checkbox type="checkbox" name="stayUpdated" checked={true} disabled={true} />
               <CheckboxLabel>Stay up to date with Komm DAO</CheckboxLabel>
             </CheckboxContainer>
           </HorizontalGroup>
