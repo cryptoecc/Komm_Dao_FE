@@ -31,6 +31,7 @@ import Kohort from './pages/mainboard/governance/kohort';
 import SpecProposal from './pages/mainboard/governance/proposals/SpecProposal';
 import Proposal from './pages/proposal';
 import AdminContribution from './pages/admin/mainboard/contribution/adminContribution';
+import ContributionDetails from './pages/mainboard/contribution/contributionDetails';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -52,6 +53,7 @@ const Router = () => {
         { path: PATH.DISCOVER_DETAILS, element: <DiscoverDetails /> },
         { path: PATH.DISCOVER_CALENDAR, element: <DiscoverCalendar /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
+        { path: PATH.CONTRIBUTION_DETAIL, element: <ContributionDetails /> },
         { path: PATH.PROFILE, element: <ProfileMyPage /> },
         { path: PATH.PROFILE_UPDATE, element: <ProfileUpdate /> },
       ],

@@ -1,17 +1,23 @@
 import React from 'react';
 import Slider from 'react-slick';
 import ContributionMain from 'src/components/dashboard/contribution/ContributionMain';
+import ContributionCard from 'src/components/dashboard/contribution/ContributionCard'; // ContributionCard 임포트
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'src/components/dashboard/contribution/CustomSlider.css'; // 스타일 파일
 import { images } from 'src/assets/contribution/images';
+import dayjs from 'dayjs'; // 날짜 비교를 위한 dayjs 사용
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 
 const ContributionContainer = styled.div`
   padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 const ContributionTitle = styled.h1`
@@ -21,13 +27,56 @@ const ContributionTitle = styled.h1`
   font-weight: 400;
   word-wrap: break-word;
   padding: 20px;
+  text-align: left;
+`;
+
+const ContributionTabs = styled.div`
+  display: flex;
+  justify-content: flex-start; // 왼쪽 정렬
+  align-items: center;
+  gap: 20px;
+  margin: 30px 0; // 위, 아래에 여백 추가
+  width: 100%; // 탭이 컨테이너의 전체 너비를 차지하도록 설정
+`;
+
+const TabButton = styled.button<{ $active: boolean }>`
+  font-size: 20px;
+  font-weight: ${({ $active }) => ($active ? 'bold' : 'normal')};
+  color: ${({ $active }) => ($active ? '#875cff' : '#ccc')};
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: ${({ $active }) => ($active ? '2px solid #875cff' : 'none')};
+  padding: 5px 10px;
+
+  &:hover {
+    color: #875cff;
+  }
 `;
 
 const ContributionContent = styled.div`
-  width: 80%;
+  padding: 20px;
+  width: 90%;
+`;
+
+const CardGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Contribution: React.FC = () => {
+  const [activeTab, setActiveTab] = React.useState<'Ongoing' | 'Finished'>('Ongoing');
+
   const settings = {
     dots: true,
     infinite: true,
@@ -37,7 +86,6 @@ const Contribution: React.FC = () => {
     autoplay: true,
     autoplaySpeed: 3000,
   };
-
   const slidesData = [
     {
       pjt_id: 1,
@@ -75,7 +123,6 @@ const Contribution: React.FC = () => {
       progressText: '10 / 14',
       bannerImage: `${images.Exocore_banner}`,
     },
-
     {
       pjt_id: 4,
       projectLogo: `${images.OG}`,
@@ -95,7 +142,7 @@ const Contribution: React.FC = () => {
       kohortLabel: 'Kohort only',
       totalAvg: '',
       xpValue: '100 XP',
-      dates: '24/08/08 ~ 24/09/27',
+      dates: '24/08/08 ~ 24/09/09',
       progress: '40%',
       progressText: '6 / 15',
       bannerImage: `${images.Airstack_banner}`,
@@ -104,7 +151,7 @@ const Contribution: React.FC = () => {
       pjt_id: 6,
       projectLogo: `${images.Airstack}`,
       projectTitle: 'Airstack Research',
-      kohortLabel: 'Kohort only',
+      kohortLabel: '',
       totalAvg: '',
       xpValue: '200 XP',
       dates: '24/08/08 ~ 24/09/27',
@@ -113,6 +160,19 @@ const Contribution: React.FC = () => {
       bannerImage: `${images.Airstack_banner2}`,
     },
   ];
+
+  const currentDate = dayjs();
+
+  // 날짜 파싱 및 카드 필터링
+  const ongoingCards = slidesData.filter((slide) => {
+    const endDate = dayjs(slide.dates.split(' ~ ')[1], 'YY/MM/DD'); // 종료 날짜 파싱
+    return endDate.isAfter(currentDate); // 현재 날짜와 비교
+  });
+
+  const finishedCards = slidesData.filter((slide) => {
+    const endDate = dayjs(slide.dates.split(' ~ ')[1], 'YY/MM/DD'); // 종료 날짜 파싱
+    return endDate.isBefore(currentDate); // 현재 날짜와 비교
+  });
 
   return (
     <>
@@ -136,6 +196,47 @@ const Contribution: React.FC = () => {
               />
             ))}
           </Slider>
+          <ContributionTabs>
+            <TabButton $active={activeTab === 'Ongoing'} onClick={() => setActiveTab('Ongoing')}>
+              Ongoing
+            </TabButton>
+            <TabButton $active={activeTab === 'Finished'} onClick={() => setActiveTab('Finished')}>
+              Finished
+            </TabButton>
+          </ContributionTabs>
+          <CardGrid>
+            {activeTab === 'Ongoing'
+              ? ongoingCards.map((card) => (
+                  <ContributionCard
+                    key={card.pjt_id}
+                    id={card.pjt_id} // id를 추가하여 넘김
+                    title={card.projectTitle}
+                    xp={parseInt(card.xpValue.split(' ')[0], 10)}
+                    imageUrl={card.bannerImage}
+                    logoUrl={card.projectLogo}
+                    startDate={card.dates.split(' ~ ')[0]}
+                    endDate={card.dates.split(' ~ ')[1]}
+                    progress={parseInt(card.progressText.split(' / ')[0], 10)}
+                    maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
+                    statusText={card.kohortLabel} // Kohort only 값을 넘김
+                  />
+                ))
+              : finishedCards.map((card) => (
+                  <ContributionCard
+                    key={card.pjt_id}
+                    id={card.pjt_id} // id를 추가하여 넘김
+                    title={card.projectTitle}
+                    xp={parseInt(card.xpValue.split(' ')[0], 10)}
+                    imageUrl={card.bannerImage}
+                    logoUrl={card.projectLogo}
+                    startDate={card.dates.split(' ~ ')[0]}
+                    endDate={card.dates.split(' ~ ')[1]}
+                    progress={parseInt(card.progressText.split(' / ')[0], 10)}
+                    maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
+                    statusText={card.kohortLabel} // Kohort only 값을 넘김
+                  />
+                ))}
+          </CardGrid>
         </ContributionContent>
       </ContributionContainer>
     </>
