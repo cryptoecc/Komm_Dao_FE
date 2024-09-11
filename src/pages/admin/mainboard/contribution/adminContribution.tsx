@@ -198,7 +198,7 @@ const AdminContribution = () => {
         </Modal> */}
 
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Contribution">
-        <AddContribution />
+        <AddContribution onCancel={() => setIsAddModalOpen(false)} />
       </Modal>
     </UserMemberContainer>
   );

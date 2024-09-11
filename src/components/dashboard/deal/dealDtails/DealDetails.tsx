@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { images } from '../../../../assets/deal/images';
+import defaultDealImg from 'src/assets/deal/MYX.png';
+import defaultBannerImg from 'src/assets/deal/MYX_bannerr.png';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import axios from 'axios';
@@ -43,6 +45,7 @@ const DealDetails: React.FC = () => {
     const fetchDealData = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}`);
+        console.log(response.data);
         setDeal(response.data); // 최신 데이터를 상태로 업데이트
       } catch (error) {
         console.error('Error fetching deal data:', error);
@@ -63,7 +66,6 @@ const DealDetails: React.FC = () => {
       'This is a fallback description for the deal. The description can be long, and when it is long enough, a scrollbar will appear.',
     final_amount: 4000000,
     percentage: 66,
-    start_date: '2024-01-01',
     end_date: '2024-12-31',
     deal_image_url: 'https://via.placeholder.com/500',
     banner_image_url: 'https://via.placeholder.com/800x300', // 예시 배너 이미지 URL 추가
@@ -77,10 +79,10 @@ const DealDetails: React.FC = () => {
     const duration = dayjs.duration(end.diff(now));
 
     return {
-      days: duration.days(),
-      hours: duration.hours(),
-      minutes: duration.minutes(),
-      seconds: duration.seconds(),
+      days: Math.max(duration.days(), 0),
+      hours: Math.max(duration.hours(), 0),
+      minutes: Math.max(duration.minutes(), 0),
+      seconds: Math.max(duration.seconds(), 0),
     };
   };
 
@@ -97,10 +99,16 @@ const DealDetails: React.FC = () => {
     <Container>
       <LeftSection>
         <DealNameRow>
-          <LogoImage src={selectedDeal.deal_image_url} alt="Deal Logo" />
+          <LogoImage
+            src={selectedDeal.deal_image_url ? `${API_BASE_URL}/${selectedDeal.deal_image_url}` : defaultDealImg}
+            alt="Deal Logo"
+          />
           <DealNameText>{selectedDeal.deal_name}</DealNameText>
         </DealNameRow>
-        <BannerImage src={selectedDeal.banner_image_url} alt="Banner Image" />
+        <BannerImage
+          src={selectedDeal.banner_image_url ? `${API_BASE_URL}/${selectedDeal.banner_image_url}` : defaultBannerImg}
+          alt="Banner Image"
+        />
         <IconWrapper>
           <Icon src={images.twitter} alt="Twitter" />
           <Icon src={images.discord} alt="Discord" />
@@ -117,7 +125,9 @@ const DealDetails: React.FC = () => {
           </ProgressBar>
           <DealInfoRow>
             <DealRoundText>{selectedDeal.deal_round || 'Seed Round'}</DealRoundText>
-            <DealRaisingText>Raising ${selectedDeal.final_amount.toLocaleString()}</DealRaisingText>
+            <DealRaisingText>
+              Raising ${selectedDeal.final_amount ? selectedDeal.final_amount.toLocaleString() : 'N/A'}
+            </DealRaisingText>
           </DealInfoRow>
           <CountdownText>ENDS IN</CountdownText>
 

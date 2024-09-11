@@ -288,7 +288,7 @@ export const ButtonWrap = styled.div`
 `;
 
 export const RoundSelect = styled.select`
-  width: 660px;
+  width: 325px;
   height: 50px;
   padding: 10px;
   font-size: 16px;
