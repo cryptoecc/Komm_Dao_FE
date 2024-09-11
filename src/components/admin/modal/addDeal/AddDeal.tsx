@@ -40,6 +40,10 @@ interface Project {
   // 다른 필요한 속성들도 여기에 추가할 수 있습니다.
 }
 
+interface AddDealProps {
+  onCancel: () => void; // 모달을 닫기 위한 prop
+}
+
 const CustomDateInput = forwardRef(({ value, onClick, placeholder }: any, ref: any) => (
   <DateInputWrapper onClick={onClick} ref={ref}>
     <DateInput value={value} placeholder={placeholder} readOnly />
@@ -47,11 +51,10 @@ const CustomDateInput = forwardRef(({ value, onClick, placeholder }: any, ref: a
   </DateInputWrapper>
 ));
 
-const AddDeal: React.FC = () => {
+const AddDeal: React.FC<AddDealProps> = ({ onCancel }) => {
   const [dealRound, setDealRound] = useState('');
   const [minAlloc, setMinAlloc] = useState('');
   const [maxAlloc, setMaxAlloc] = useState('');
-  const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [dealSummary, setDealSummary] = useState('');
   const [dealDesc, setDealDesc] = useState('');
@@ -65,6 +68,8 @@ const AddDeal: React.FC = () => {
 
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
   const [bannerImagePreview, setBannerImagePreview] = useState<string | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
   useEffect(() => {
     // 백엔드에서 프로젝트 정보를 가져오기
@@ -114,7 +119,6 @@ const AddDeal: React.FC = () => {
       formData.append('pjt_id', String(selectedProjectId));
       formData.append('pjt_name', selectedProjectName);
       formData.append('deal_round', dealRound);
-      formData.append('start_date', startDate ? startDate.toISOString() : '');
       formData.append('end_date', endDate ? endDate.toISOString() : '');
       formData.append('min_interest', minAlloc);
       formData.append('max_interest', maxAlloc);
@@ -129,6 +133,8 @@ const AddDeal: React.FC = () => {
       });
 
       console.log('Deal created successfully', response.data);
+
+      onCancel();
     } catch (error) {
       console.error('Error creating deal', error);
     }
@@ -191,29 +197,16 @@ const AddDeal: React.FC = () => {
             <option value="Series B round">Series B</option>
             <option value="Series C round">Series C</option>
           </RoundSelect>
-        </TeamGroup>
-
-        <TeamGroup>
-          <Date>
-            <DatePicker
-              selected={startDate}
-              onChange={(date: Date | null) => setStartDate(date)}
-              dateFormat="yyyy-MM-dd"
-              placeholderText="Start Date"
-              customInput={<CustomDateInput />}
-            />
-          </Date>
           <Date>
             <DatePicker
               selected={endDate}
               onChange={(date: Date | null) => setEndDate(date)}
               dateFormat="yyyy-MM-dd"
-              placeholderText="End Date"
+              placeholderText="Due Date"
               customInput={<CustomDateInput />}
             />
           </Date>
         </TeamGroup>
-
         <TeamGroup>
           <Input
             type="number"
@@ -233,7 +226,7 @@ const AddDeal: React.FC = () => {
         <TextArea placeholder="Deal Description" value={dealDesc} onChange={(e) => setDealDesc(e.target.value)} />
       </Form>
       <ButtonContainer>
-        <CancelButton>Cancel</CancelButton>
+        <CancelButton onClick={onCancel}>Cancel</CancelButton>
         <CreateButton onClick={handleCreate}>Create</CreateButton>
       </ButtonContainer>
     </Container>

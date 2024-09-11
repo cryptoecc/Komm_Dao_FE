@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import defaultDealIcon from '../../../assets/deal/MYX.png';
+import defaultBannerImg from 'src/assets/deal/DELEGATE_banner.png';
 import {
   DealCardContainer,
   DealItem,
@@ -14,30 +15,38 @@ import {
   BannerImage,
   LogoImage,
 } from './DealCard.style';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Deal {
   deal_id: number;
   deal_name: string;
-  deal_desc: string;
+  description: string;
+  summary: string;
   final_amount: number;
   percentage: number;
-  start_date: string;
   end_date: string;
-  deal_image_url: string;
-  banner_image_url: string;
+  deal_logo_url: string;
+  deal_banner_url: string;
 }
 
 const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
   const currentDate = dayjs();
   const endDate = dayjs(deal.end_date);
+  console.log(endDate);
   const status = currentDate.isBefore(endDate) ? 'Open' : 'Closed';
-
+  console.log(deal);
   return (
     <DealCardContainer>
       <DealItem>
         <BannerContainer>
-          <BannerImage src={deal.banner_image_url} alt="Banner Image" />
-          <LogoImage src={deal.deal_image_url || defaultDealIcon} alt="Deal Logo" />
+          <BannerImage
+            src={deal.deal_banner_url ? `${API_BASE_URL}/${deal.deal_banner_url}` : defaultBannerImg}
+            alt="Banner Image"
+          />
+          <LogoImage
+            src={deal.deal_logo_url ? `${API_BASE_URL}/${deal.deal_logo_url}` : defaultDealIcon}
+            alt="Deal Logo"
+          />
           <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
           <StatusBadge $status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
           <PercentageText>{deal.percentage || 0}%</PercentageText>
@@ -47,7 +56,7 @@ const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
           <Gauge $percentage={deal.percentage || 0} />
         </GaugeWrapper>
 
-        <DealDescription>{deal.deal_desc || 'No Description Available'}</DealDescription>
+        <DealDescription>{deal.summary || 'No Description Available'}</DealDescription>
       </DealItem>
     </DealCardContainer>
   );

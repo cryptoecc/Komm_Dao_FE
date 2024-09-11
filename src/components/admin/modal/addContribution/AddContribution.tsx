@@ -56,6 +56,10 @@ interface Project {
   // 다른 필요한 속성들도 여기에 추가할 수 있습니다.
 }
 
+interface AddContributionProps {
+  onCancel: () => void; // 모달을 닫기 위한 prop
+}
+
 const CustomDateInput = forwardRef(({ value, onClick, placeholder }: any, ref: any) => (
   <DateInputWrapper onClick={onClick} ref={ref}>
     <DateInput value={value} placeholder={placeholder} readOnly />
@@ -63,7 +67,7 @@ const CustomDateInput = forwardRef(({ value, onClick, placeholder }: any, ref: a
   </DateInputWrapper>
 ));
 
-const AddContribution: React.FC = () => {
+const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
   const [teamName, setTeamName] = useState('');
   const [maxParticipants, setMaxParticipants] = useState('');
   const [contributionCategory, setContributionCategory] = useState('');
@@ -172,6 +176,7 @@ const AddContribution: React.FC = () => {
       });
 
       console.log('Contribution created successfully', response.data);
+      onCancel();
     } catch (error) {
       console.error('Error creating contribution', error);
     }
@@ -320,7 +325,7 @@ const AddContribution: React.FC = () => {
         </ButtonWrap>
       </Form>
       <ButtonContainer>
-        <CancelButton>Cancel</CancelButton>
+        <CancelButton onClick={onCancel}>Cancel</CancelButton>
         <CreateButton onClick={handleCreate}>Create</CreateButton>
       </ButtonContainer>
     </Container>

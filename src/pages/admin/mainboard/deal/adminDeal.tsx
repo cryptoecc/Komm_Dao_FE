@@ -23,87 +23,21 @@ import {
   Container,
   Popup,
 } from './adminDeal.style';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Deal {
   deal_id: number;
   deal_name: string;
   deal_desc: string;
-  final_amount: number;
+  deal_summary: string;
+  total_interest: number;
   percentage: number;
-  start_date: string;
   end_date: string;
-  deal_image_url: string;
-  banner_image_url: string;
+  deal_logo_url: string;
+  deal_banner_url: string;
+  deal_status: string;
+  deal_round: string;
 }
-
-const fakeDeals: Deal[] = [
-  {
-    deal_id: 1,
-    deal_name: 'Amazing Deal 1',
-    deal_desc: 'This is a great deal for early bird investors.',
-    final_amount: 1000000,
-    percentage: 75,
-    start_date: '2023-09-01',
-    end_date: '2023-12-01',
-    deal_image_url: '',
-    banner_image_url: '',
-  },
-  {
-    deal_id: 2,
-    deal_name: 'Exclusive Offer 2',
-    deal_desc: 'Exclusive offer for premium users.',
-    final_amount: 2000000,
-    percentage: 60,
-    start_date: '2023-08-01',
-    end_date: '2023-11-01',
-    deal_image_url: '',
-    banner_image_url: '',
-  },
-  {
-    deal_id: 3,
-    deal_name: 'Limited Time Deal 3',
-    deal_desc: 'Limited time offer, don’t miss out!',
-    final_amount: 500000,
-    percentage: 90,
-    start_date: '2023-07-15',
-    end_date: '2023-10-15',
-    deal_image_url: '',
-    banner_image_url: '',
-  },
-  {
-    deal_id: 4,
-    deal_name: 'Limited Time Deal 3',
-    deal_desc: 'Limited time offer, don’t miss out!',
-    final_amount: 500000,
-    percentage: 90,
-    start_date: '2023-07-15',
-    end_date: '2023-10-15',
-    deal_image_url: '',
-    banner_image_url: '',
-  },
-  {
-    deal_id: 5,
-    deal_name: 'Limited Time Deal 3',
-    deal_desc: 'Limited time offer, don’t miss out!',
-    final_amount: 500000,
-    percentage: 90,
-    start_date: '2023-07-15',
-    end_date: '2023-10-15',
-    deal_image_url: '',
-    banner_image_url: '',
-  },
-  {
-    deal_id: 6,
-    deal_name: 'Limited Time Deal 3',
-    deal_desc: 'Limited time offer, don’t miss out!',
-    final_amount: 500000,
-    percentage: 90,
-    start_date: '2023-07-15',
-    end_date: '2023-10-15',
-    deal_image_url: '',
-    banner_image_url: '',
-  },
-];
 
 const AdminDeal: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -119,6 +53,24 @@ const AdminDeal: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // 백엔드 API에서 deal 데이터 가져오기
+    const fetchDeals = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${API_BASE_URL}/api/admin/deal-list`); // 실제 API 엔드포인트로 대체
+        setDeals(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching deals:', err);
+        setError('Failed to fetch deals');
+        setLoading(false);
+      }
+    };
+
+    fetchDeals();
+  }, []);
+
+  useEffect(() => {
     // 검색어로 필터링
     const filteredData = deals.filter((deal) =>
       Object.values(deal).some(
@@ -127,26 +79,6 @@ const AdminDeal: React.FC = () => {
     );
     setFilteredDeals(filteredData);
   }, [searchTerm, deals]);
-
-  //   useEffect(() => {
-  //     // 거래 데이터를 API로부터 가져옴
-  //     const fetchDeal = async () => {
-  //       try {
-  //         const response = await axios.get(`/api/admin/deal/`); // 거래 ID에 따라 데이터를 가져옴
-  //         setDeal(response.data);
-  //         setLoading(false);
-  //       } catch (error) {
-  //         setError('Failed to fetch deal data');
-  //         setLoading(false);
-  //       }
-  //     };
-
-  //     fetchDeal();
-  //   }, []);
-
-  //   if (loading) return <div>Loading...</div>;
-  //   if (error) return <div>{error}</div>;
-  //   if (!deal) return <div>No deal found</div>;
 
   const currentDate = dayjs();
   //   const endDate = dayjs(deal.end_date);
@@ -163,15 +95,21 @@ const AdminDeal: React.FC = () => {
       />
       <Container>
         <DealCardContainer>
-          {fakeDeals.map((deal) => {
+          {filteredDeals.map((deal) => {
             const endDate = dayjs(deal.end_date);
             const status = currentDate.isBefore(endDate) ? 'Open' : 'Closed';
 
             return (
               <DealItem key={deal.deal_id}>
                 <BannerContainer>
-                  <BannerImage src={deal.banner_image_url || defaultBannerImg} alt="Banner Image" />
-                  <LogoImage src={deal.deal_image_url || defaultDealIcon} alt="Deal Logo" />
+                  <BannerImage
+                    src={deal.deal_banner_url ? `${API_BASE_URL}/${deal.deal_banner_url}` : defaultBannerImg}
+                    alt="Banner Image"
+                  />
+                  <LogoImage
+                    src={deal.deal_logo_url ? `${API_BASE_URL}/${deal.deal_logo_url}` : defaultDealIcon}
+                    alt="Deal Logo"
+                  />
                   <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
                   <StatusBadge status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
                   <PercentageText>{deal.percentage || 0}%</PercentageText>
@@ -181,14 +119,14 @@ const AdminDeal: React.FC = () => {
                   <Gauge percentage={deal.percentage || 0} />
                 </GaugeWrapper>
 
-                <DealDescription>{deal.deal_desc || 'No Description Available'}</DealDescription>
+                <DealDescription>{deal.deal_summary || 'No Summary Available'}</DealDescription>
               </DealItem>
             );
           })}
         </DealCardContainer>
       </Container>
-      <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Contribution">
-        <AddDeal />
+      <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Deal">
+        <AddDeal onCancel={() => setIsAddModalOpen(false)} />
       </Modal>
     </PageWrapper>
   );
