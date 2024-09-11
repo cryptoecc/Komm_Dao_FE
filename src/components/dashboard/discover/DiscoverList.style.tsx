@@ -18,20 +18,19 @@ export const TableContainer = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* 테이블 셀 크기 고정 */
 
   thead {
     position: sticky;
     top: 0;
     z-index: 2;
     background-color: #f9f8fe;
-    min-height: 50px;
+    height: 50px;
   }
 
   tbody {
-    display: block;
     max-height: 500px;
     overflow-y: auto;
-    width: 100%;
   }
 
   thead th {
@@ -42,12 +41,8 @@ export const Table = styled.table`
 
   tbody td,
   tbody th {
-    display: table-cell;
     text-align: center;
-  }
-
-  tbody {
-    width: 100%;
+    vertical-align: middle;
   }
 
   tbody::-webkit-scrollbar {
@@ -66,14 +61,12 @@ export const Table = styled.table`
 
 export const TableHead = styled.thead`
   background-color: #f9f8fe;
-  display: table;
-  width: calc(100% - 8px);
+  width: 100%;
   table-layout: fixed;
   white-space: nowrap;
 `;
 
 export const TableRow = styled.tr`
-  max-height: 50px;
   height: 50px;
 `;
 
@@ -86,22 +79,12 @@ export const TableHeader = styled.th<TableHeaderProps & { $isActive?: boolean }>
   border-bottom: 1px solid #ddd;
   vertical-align: middle;
   background-color: ${({ $isActive }) => ($isActive ? '#E4D9FF' : '#f9f8fe')};
-  border-radius: ${({ $isActive }) => ($isActive ? '10px' : '0')};
   width: ${({ width }) => width || '10%'};
-  box-sizing: border-box;
   z-index: 3;
 
   img {
     margin-left: 5px;
     cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 10px;
   }
 `;
 

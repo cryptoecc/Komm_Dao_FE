@@ -19,10 +19,12 @@ import {
   NoDataContainer,
   NoDataImage,
   NoDataText,
-} from './DiscoverList.style';
-import { images } from '../../../assets/discover/images';
-import { PATH } from '../../../constants/path';
-import { API_BASE_URL } from 'src/utils/utils';
+} from './DiscoverList.style'; // 스타일 파일 경로
+import { images } from '../../../assets/discover/images'; // 이미지 경로
+import { PATH } from '../../../constants/path'; // 경로 상수
+import { API_BASE_URL } from 'src/utils/utils'; // API 베이스 URL
+import { useSelector } from 'react-redux'; // Redux
+import { RootState } from 'src/store/store'; // 스토어 경로
 
 interface DataItem {
   pjt_id: number;
@@ -52,16 +54,20 @@ const DiscoverList = () => {
   const [isCategoryDropdownVisible, setIsCategoryDropdownVisible] = useState<boolean>(false);
   const [isGradeDropdownVisible, setIsGradeDropdownVisible] = useState<boolean>(false);
 
-  const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI'];
-  const grades = ['AAA (Exceptional)', 'AA (Excellent)', 'A (Good)', 'BBB (Fair)', 'BB and Below (Poor)'];
+  const user = useSelector((state: RootState) => state.user); // Redux에서 유저 정보 가져오기
+
+  const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI']; // 카테고리
+  const grades = ['AAA (Exceptional)', 'AA (Excellent)', 'A (Good)', 'BBB (Fair)', 'BB and Below (Poor)']; // 등급
 
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const gradeDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    console.log('API_BASE_URL:', API_BASE_URL);
+
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/admin/project-list`);
+        const response = await axios.get(`${API_BASE_URL}/api/admin/project-list`); // 프로젝트 리스트 API 호출
         const filteredData = response.data.filter((item: any) => item.apply_yn === 'N');
         const formattedData = filteredData.map((item: any, index: number) => ({
           ...item,
@@ -70,13 +76,14 @@ const DiscoverList = () => {
         }));
         setData(formattedData);
       } catch (error) {
-        console.error('Error fetching project data:', error);
+        console.error('프로젝트 데이터를 가져오는 중 에러:', error);
       }
     };
 
     fetchData();
   }, []);
 
+  // 정렬 함수
   const handleSort = (key: SortKey) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -85,24 +92,47 @@ const DiscoverList = () => {
     setSortConfig({ key, direction });
   };
 
-  const handleStarClick = (id: number) => {
-    const newData = data.map((item) => {
-      if (item.pjt_id === id) {
-        if (item.pinned) {
-          return { ...item, pinned: false, checked: true };
-        } else {
-          return { ...item, pinned: true, checked: true };
-        }
-      }
-      return item;
-    });
+  // 즐겨찾기 기능
+  const handleStarClick = async (id: number) => {
+    if (!user) {
+      console.error('User is not logged in');
+      return;
+    }
 
-    const pinnedItems = newData.filter((item) => item.pinned);
-    const unpinnedItems = newData.filter((item) => !item.pinned);
-    unpinnedItems.sort((a, b) => a.originalIndex - b.originalIndex);
-    setData([...pinnedItems, ...unpinnedItems]);
+    const project = data.find((item) => item.pjt_id === id);
+    if (!project) return;
+
+    try {
+      if (project.pinned) {
+        // 즐겨찾기 삭제
+        console.log('Removing from watchlist:', { user_id: user.user_id, pjt_id: id });
+        await axios.delete(`${API_BASE_URL}/api/user/watchlist/remove`, {
+          data: { user_id: user.user_id, pjt_id: id }, // Ensure user_id and pjt_id are valid
+        });
+      } else {
+        // 즐겨찾기 추가
+        console.log('Adding to watchlist:', { user_id: user.user_id, pjt_id: id });
+        await axios.post(`${API_BASE_URL}/api/user/watchlist/add`, {
+          user_id: user.user_id, // Ensure this value is correct
+          pjt_id: id,
+        });
+      }
+
+      // UI 업데이트
+      const updatedData = data.map((item) => {
+        if (item.pjt_id === id) {
+          return { ...item, pinned: !item.pinned, checked: true };
+        }
+        return item;
+      });
+
+      setData(updatedData);
+    } catch (error) {
+      console.error('Error toggling watchlist:', error);
+    }
   };
 
+  // Watchlist에 추가된 항목만 보기
   const handleWatchlistClick = () => {
     const newData = data.map((item) => {
       if (item.pinned) {
@@ -115,30 +145,39 @@ const DiscoverList = () => {
     setData(newData);
   };
 
+  // 카테고리 필터링
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prevSelected) =>
       prevSelected.includes(category) ? prevSelected.filter((c) => c !== category) : [...prevSelected, category]
     );
   };
 
+  // 등급 필터링
   const handleGradeChange = (grade: string) => {
     setSelectedGrades((prevSelected) =>
       prevSelected.includes(grade) ? prevSelected.filter((g) => g !== grade) : [...prevSelected, grade]
     );
   };
 
+  // 프로젝트 클릭 시 상세 페이지로 이동
   const handleProjectClick = (projectData: DataItem) => {
     navigate(PATH.DISCOVER_DETAILS.replace(':projectId', projectData.pjt_id.toString()), {
       state: projectData,
     });
   };
 
+  // 필터링된 데이터
   const filteredData = data.filter((item) => {
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(item.category);
-    const matchesGrade = selectedGrades.length === 0 || selectedGrades.includes(item.pjt_grade);
+    const matchesGrade =
+      selectedGrades.length === 0 ||
+      selectedGrades.some(
+        (selectedGrade) => item.pjt_grade.split(' ')[0].trim().toUpperCase() === selectedGrade.trim().toUpperCase()
+      );
     return matchesCategory && matchesGrade;
   });
 
+  // 정렬된 데이터
   const sortedData = [...filteredData].sort((a, b) => {
     if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
     if (sortConfig) {
@@ -155,16 +194,19 @@ const DiscoverList = () => {
     return 0;
   });
 
+  // 카테고리 드롭다운 토글
   const toggleCategoryDropdown = () => {
     setIsCategoryDropdownVisible(!isCategoryDropdownVisible);
-    setIsGradeDropdownVisible(false); // 다른 드롭다운을 닫음
+    setIsGradeDropdownVisible(false);
   };
 
+  // 등급 드롭다운 토글
   const toggleGradeDropdown = () => {
     setIsGradeDropdownVisible(!isGradeDropdownVisible);
-    setIsCategoryDropdownVisible(false); // 다른 드롭다운을 닫음
+    setIsCategoryDropdownVisible(false);
   };
 
+  // 드롭다운 외부 클릭 감지
   const handleClickOutside = (event: MouseEvent) => {
     if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
       setIsCategoryDropdownVisible(false);
@@ -282,7 +324,7 @@ const DiscoverList = () => {
                     <StarIcon
                       src={row.checked ? `${images.checked_star}` : `${images.star}`}
                       alt={row.pinned ? 'Pinned' : 'Not pinned'}
-                      onClick={() => handleStarClick(row.pjt_id)}
+                      onClick={() => handleStarClick(row.pjt_id)} // 즐겨찾기 클릭 시
                     />
                   </TableCell>
                   <TableCell width="20%">
