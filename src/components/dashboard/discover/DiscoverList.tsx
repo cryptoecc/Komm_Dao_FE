@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for react-toastify
 import {
   DiscoverPageContainer,
   TableContainer,
@@ -25,6 +27,7 @@ import { PATH } from '../../../constants/path'; // 경로 상수
 import { API_BASE_URL } from 'src/utils/utils'; // API 베이스 URL
 import { useSelector } from 'react-redux'; // Redux
 import { RootState } from 'src/store/store'; // 스토어 경로
+import { legacy_createStore } from '@reduxjs/toolkit';
 
 interface DataItem {
   pjt_id: number;
@@ -34,7 +37,6 @@ interface DataItem {
   pjt_grade: string;
   pinned: boolean;
   checked: boolean;
-  originalIndex: number;
   apply_yn: string;
 }
 
@@ -55,7 +57,6 @@ const DiscoverList = () => {
   const [isGradeDropdownVisible, setIsGradeDropdownVisible] = useState<boolean>(false);
 
   const user = useSelector((state: RootState) => state.user); // Redux에서 유저 정보 가져오기
-
   const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI']; // 카테고리
   const grades = ['AAA (Exceptional)', 'AA (Excellent)', 'A (Good)', 'BBB (Fair)', 'BB and Below (Poor)']; // 등급
 
@@ -63,25 +64,31 @@ const DiscoverList = () => {
   const gradeDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log('API_BASE_URL:', API_BASE_URL);
-
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/admin/project-list`); // 프로젝트 리스트 API 호출
-        const filteredData = response.data.filter((item: any) => item.apply_yn === 'N');
-        const formattedData = filteredData.map((item: any, index: number) => ({
+        // 1. 프로젝트 리스트 불러오기
+        const projectResponse = await axios.get(`${API_BASE_URL}/api/admin/project-list`);
+        const filteredProjects = projectResponse.data.filter((item: any) => item.apply_yn === 'N');
+
+        // 2. 유저의 Watchlist 불러오기
+        const watchlistResponse = await axios.get(`${API_BASE_URL}/api/user/watchlist/${user.user_id}`);
+        const userWatchlist = watchlistResponse.data.data.map((item: any) => item.pjt_id);
+
+        // 3. 프로젝트 데이터와 Watchlist 매칭
+        const formattedData = filteredProjects.map((item: any) => ({
           ...item,
-          pinned: false,
-          checked: false,
+          pinned: userWatchlist.includes(item.pjt_id), // Watchlist에 있는지 확인
+          checked: userWatchlist.includes(item.pjt_id), // UI에서 반영할 상태
         }));
+
+        console.log('Formatted Data:', formattedData); // 데이터가 올바르게 로드되었는지 확인
         setData(formattedData);
       } catch (error) {
         console.error('프로젝트 데이터를 가져오는 중 에러:', error);
       }
     };
-
     fetchData();
-  }, []);
+  }, [user.user_id]);
 
   // 정렬 함수
   const handleSort = (key: SortKey) => {
@@ -104,24 +111,26 @@ const DiscoverList = () => {
 
     try {
       if (project.pinned) {
-        // 즐겨찾기 삭제
+        // Remove from watchlist
         console.log('Removing from watchlist:', { user_id: user.user_id, pjt_id: id });
         await axios.delete(`${API_BASE_URL}/api/user/watchlist/remove`, {
-          data: { user_id: user.user_id, pjt_id: id }, // Ensure user_id and pjt_id are valid
+          data: { user_id: user.user_id, pjt_id: id },
         });
+        toast.error('Item removed from watchlist');
       } else {
-        // 즐겨찾기 추가
+        // Add to watchlist
         console.log('Adding to watchlist:', { user_id: user.user_id, pjt_id: id });
         await axios.post(`${API_BASE_URL}/api/user/watchlist/add`, {
-          user_id: user.user_id, // Ensure this value is correct
+          user_id: user.user_id,
           pjt_id: id,
         });
+        toast.success('Successfully added to watchlist!'); // Success message
       }
 
-      // UI 업데이트
+      // UI 업데이트: pinned 상태와 checked 상태를 반영하여 아이콘 변경
       const updatedData = data.map((item) => {
         if (item.pjt_id === id) {
-          return { ...item, pinned: !item.pinned, checked: true };
+          return { ...item, pinned: !item.pinned, checked: !item.checked };
         }
         return item;
       });
@@ -132,18 +141,22 @@ const DiscoverList = () => {
     }
   };
 
-  // Watchlist에 추가된 항목만 보기
-  const handleWatchlistClick = () => {
-    const newData = data.map((item) => {
-      if (item.pinned) {
-        return { ...item, pinned: false };
-      }
-      return item;
-    });
+  // Watchlist에 추가된 항목을 상단으로 이동, 다시 누르면 원래 위치로 복원
+  // const handleWatchlistClick = () => {
+  //   // 현재 Watchlist 상태에 따라 다른 동작 수행
+  //   if (isWatchlistSorted) {
+  //     // pinned 상태를 해제하고, pjt_id 기준으로 정렬
+  //     const updatedData = [...data].map((item) => ({ ...item, pinned: false })).sort((a, b) => a.pjt_id - b.pjt_id);
+  //     setData(updatedData);
+  //   } else {
+  //     // 핀된 항목을 상단으로 이동
+  //     const sortedData = [...data].sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1));
+  //     setData(sortedData);
+  //   }
 
-    newData.sort((a, b) => a.originalIndex - b.originalIndex);
-    setData(newData);
-  };
+  //   // 상태 토글을 바로 업데이트
+  //   setIsWatchlistSorted(!isWatchlistSorted);
+  // };
 
   // 카테고리 필터링
   const handleCategoryChange = (category: string) => {
@@ -231,12 +244,12 @@ const DiscoverList = () => {
             <TableRow>
               <TableHeader width="10%">
                 Watchlist
-                <img
+                {/* <img
                   src={images.sorticon}
                   alt=""
                   onClick={handleWatchlistClick}
                   style={{ width: '16px', height: '16px' }}
-                />
+                /> */}
               </TableHeader>
               <TableHeader width="20%">
                 Project
@@ -273,7 +286,7 @@ const DiscoverList = () => {
                   )}
                 </DropdownContainer>
               </TableHeader>
-              <TableHeader width="35%">Description</TableHeader>
+              <TableHeader width="25%">Description</TableHeader>
               <TableHeader width="20%" onClick={toggleGradeDropdown} $isActive={isGradeDropdownVisible}>
                 <DropdownContainer ref={gradeDropdownRef}>
                   <TooltipContainer>
@@ -324,7 +337,7 @@ const DiscoverList = () => {
                     <StarIcon
                       src={row.checked ? `${images.checked_star}` : `${images.star}`}
                       alt={row.pinned ? 'Pinned' : 'Not pinned'}
-                      onClick={() => handleStarClick(row.pjt_id)} // 즐겨찾기 클릭 시
+                      onClick={() => handleStarClick(row.pjt_id)}
                     />
                   </TableCell>
                   <TableCell width="20%">
@@ -332,12 +345,14 @@ const DiscoverList = () => {
                       {row.pjt_name}
                     </ProjectLink>
                   </TableCell>
-                  <TableCell width="15%">{row.category}</TableCell>
-                  <TableCell className="description" width="35%">
-                    {row.pjt_summary}
+                  <TableCell width="15%">{row.category || 'N/A'}</TableCell>
+                  <TableCell className="description" width="25%">
+                    {row.pjt_summary || 'No summary available'}
                   </TableCell>
                   <TableCell width="20%">
-                    <GradeBadge grade={row.pjt_grade.split(' ')[0]}>{row.pjt_grade}</GradeBadge>
+                    <GradeBadge grade={row.pjt_grade ? row.pjt_grade.split(' ')[0] : 'N/A'}>
+                      {row.pjt_grade || 'No grade'}
+                    </GradeBadge>
                   </TableCell>
                 </TableRow>
               ))
@@ -354,6 +369,7 @@ const DiscoverList = () => {
           </tbody>
         </Table>
       </TableContainer>
+      <ToastContainer /> {/* Add ToastContainer to the component */}
     </DiscoverPageContainer>
   );
 };
