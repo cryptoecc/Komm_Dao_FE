@@ -31,7 +31,7 @@ interface DataItem {
   pjt_summary: string;
   pjt_grade: string;
   pinned: boolean;
-  checked: boolean; // 추가된 상태
+  checked: boolean;
   originalIndex: number;
   apply_yn: string;
 }
@@ -49,7 +49,7 @@ const DiscoverList = () => {
   const [data, setData] = useState<DataItem[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedGrades, setSelectedGrades] = useState<string[]>([]);
-  const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
+  const [isCategoryDropdownVisible, setIsCategoryDropdownVisible] = useState<boolean>(false);
   const [isGradeDropdownVisible, setIsGradeDropdownVisible] = useState<boolean>(false);
 
   const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI'];
@@ -66,8 +66,7 @@ const DiscoverList = () => {
         const formattedData = filteredData.map((item: any, index: number) => ({
           ...item,
           pinned: false,
-          checked: false, // 처음에는 모든 항목의 checked 상태는 false
-          // originalIndex: index,
+          checked: false,
         }));
         setData(formattedData);
       } catch (error) {
@@ -90,10 +89,8 @@ const DiscoverList = () => {
     const newData = data.map((item) => {
       if (item.pjt_id === id) {
         if (item.pinned) {
-          // 상단 고정을 해제하되 checked 상태를 유지
           return { ...item, pinned: false, checked: true };
         } else {
-          // 상단 고정 및 checked 상태로 변경
           return { ...item, pinned: true, checked: true };
         }
       }
@@ -102,24 +99,19 @@ const DiscoverList = () => {
 
     const pinnedItems = newData.filter((item) => item.pinned);
     const unpinnedItems = newData.filter((item) => !item.pinned);
-
-    // unpinned 항목들은 원래 자리로 돌아가도록 originalIndex로 정렬
     unpinnedItems.sort((a, b) => a.originalIndex - b.originalIndex);
-
     setData([...pinnedItems, ...unpinnedItems]);
   };
 
   const handleWatchlistClick = () => {
     const newData = data.map((item) => {
       if (item.pinned) {
-        return { ...item, pinned: false }; // 상단 고정 해제
+        return { ...item, pinned: false };
       }
       return item;
     });
 
-    // 모든 항목을 originalIndex에 따라 정렬
     newData.sort((a, b) => a.originalIndex - b.originalIndex);
-
     setData(newData);
   };
 
@@ -127,14 +119,12 @@ const DiscoverList = () => {
     setSelectedCategories((prevSelected) =>
       prevSelected.includes(category) ? prevSelected.filter((c) => c !== category) : [...prevSelected, category]
     );
-    setIsDropdownVisible(true);
   };
 
   const handleGradeChange = (grade: string) => {
     setSelectedGrades((prevSelected) =>
       prevSelected.includes(grade) ? prevSelected.filter((g) => g !== grade) : [...prevSelected, grade]
     );
-    setIsGradeDropdownVisible(true);
   };
 
   const handleProjectClick = (projectData: DataItem) => {
@@ -165,17 +155,19 @@ const DiscoverList = () => {
     return 0;
   });
 
-  const toggleDropdown = () => {
-    setIsDropdownVisible(!isDropdownVisible);
+  const toggleCategoryDropdown = () => {
+    setIsCategoryDropdownVisible(!isCategoryDropdownVisible);
+    setIsGradeDropdownVisible(false); // 다른 드롭다운을 닫음
   };
 
   const toggleGradeDropdown = () => {
     setIsGradeDropdownVisible(!isGradeDropdownVisible);
+    setIsCategoryDropdownVisible(false); // 다른 드롭다운을 닫음
   };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
-      setIsDropdownVisible(false);
+      setIsCategoryDropdownVisible(false);
     }
     if (gradeDropdownRef.current && !gradeDropdownRef.current.contains(event.target as Node)) {
       setIsGradeDropdownVisible(false);
@@ -200,7 +192,7 @@ const DiscoverList = () => {
                 <img
                   src={images.sorticon}
                   alt=""
-                  onClick={handleWatchlistClick} // Watchlist 아이콘 클릭 시 handleWatchlistClick 호출
+                  onClick={handleWatchlistClick}
                   style={{ width: '16px', height: '16px' }}
                 />
               </TableHeader>
@@ -213,15 +205,15 @@ const DiscoverList = () => {
                   style={{ width: '16px', height: '16px' }}
                 />
               </TableHeader>
-              <TableHeader width="15%" onClick={toggleDropdown} $isActive={isDropdownVisible}>
+              <TableHeader width="15%" onClick={toggleCategoryDropdown} $isActive={isCategoryDropdownVisible}>
                 <DropdownContainer ref={categoryDropdownRef}>
                   Category
                   <img
-                    src={isDropdownVisible ? images.downicon : images.sorticon}
+                    src={isCategoryDropdownVisible ? images.downicon : images.sorticon}
                     alt=""
                     style={{ width: '16px', height: '16px' }}
                   />
-                  {isDropdownVisible && (
+                  {isCategoryDropdownVisible && (
                     <DropdownMenu>
                       {categories.map((category) => (
                         <DropdownItem key={category} onClick={(e) => e.stopPropagation()}>
@@ -240,7 +232,7 @@ const DiscoverList = () => {
                 </DropdownContainer>
               </TableHeader>
               <TableHeader width="35%">Description</TableHeader>
-              <TableHeader width="15%" onClick={toggleDropdown} $isActive={isDropdownVisible}>
+              <TableHeader width="20%" onClick={toggleGradeDropdown} $isActive={isGradeDropdownVisible}>
                 <DropdownContainer ref={gradeDropdownRef}>
                   <TooltipContainer>
                     <img src={images.exclamationIcon} alt="Info Icon" style={{ width: '16px', height: '16px' }} />
@@ -288,7 +280,7 @@ const DiscoverList = () => {
                 <TableRow key={row.pjt_id}>
                   <TableCell width="10%">
                     <StarIcon
-                      src={row.checked ? `${images.checked_star}` : `${images.star}`} // checked 상태에 따라 아이콘 표시
+                      src={row.checked ? `${images.checked_star}` : `${images.star}`}
                       alt={row.pinned ? 'Pinned' : 'Not pinned'}
                       onClick={() => handleStarClick(row.pjt_id)}
                     />
