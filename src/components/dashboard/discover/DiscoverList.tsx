@@ -99,6 +99,14 @@ const DiscoverList = () => {
     setSortConfig({ key, direction });
   };
 
+  // const handleSort = (key: SortKey) => {
+  //   let direction: 'ascending' | 'descending' = 'ascending';
+  //   if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+  //     direction = 'descending';
+  //   }
+  //   setSortConfig({ key, direction });
+  // };
+
   // 즐겨찾기 기능
   const handleStarClick = async (id: number) => {
     if (!user) {
@@ -190,22 +198,66 @@ const DiscoverList = () => {
     return matchesCategory && matchesGrade;
   });
 
-  // 정렬된 데이터
+  // const filteredData = data.filter((item) => {
+  //   const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(item.category);
+  //   const matchesGrade =
+  //     selectedGrades.length === 0 ||
+  //     selectedGrades.some(
+  //       (selectedGrade) => item.pjt_grade.split(' ')[0].trim().toUpperCase() === selectedGrade.trim().toUpperCase()
+  //     );
+  //   return matchesCategory && matchesGrade;
+  // });
+
+  const gradePriority: { [key: string]: number } = {
+    AAA: 1,
+    AA: 2,
+    A: 3,
+    BBB: 4,
+    BB: 5,
+    B: 6,
+    C: 7, // 추가적인 등급도 필요한 경우 추가
+  };
+
+  // 등급을 숫자로 변환하여 우선순위를 반환하는 함수
+  const getGradePriority = (grade: string) => {
+    // 등급의 첫 번째 부분만 추출하여 우선순위 반환
+    const gradeKey = grade.split(' ')[0].trim();
+    return gradePriority[gradeKey] || Number.MAX_VALUE; // 매핑되지 않은 등급은 최하위로 처리
+  };
+
   const sortedData = [...filteredData].sort((a, b) => {
     if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-    if (sortConfig) {
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
 
-      if (aValue < bValue) {
-        return sortConfig.direction === 'ascending' ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortConfig.direction === 'ascending' ? 1 : -1;
-      }
+    // 현재 정렬 기준에 따른 값을 가져옵니다.
+    const aValue = sortConfig.key === 'pjt_grade' ? getGradePriority(a.pjt_grade) : a[sortConfig.key];
+    const bValue = sortConfig.key === 'pjt_grade' ? getGradePriority(b.pjt_grade) : b[sortConfig.key];
+
+    if (aValue < bValue) {
+      return sortConfig.direction === 'ascending' ? -1 : 1;
     }
+    if (aValue > bValue) {
+      return sortConfig.direction === 'ascending' ? 1 : -1;
+    }
+
     return 0;
   });
+
+  // 정렬된 데이터
+  // const sortedData = [...filteredData].sort((a, b) => {
+  //   if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+  //   if (sortConfig) {
+  //     const aValue = a[sortConfig.key];
+  //     const bValue = b[sortConfig.key];
+
+  //     if (aValue < bValue) {
+  //       return sortConfig.direction === 'ascending' ? -1 : 1;
+  //     }
+  //     if (aValue > bValue) {
+  //       return sortConfig.direction === 'ascending' ? 1 : -1;
+  //     }
+  //   }
+  //   return 0;
+  // });
 
   // 카테고리 드롭다운 토글
   const toggleCategoryDropdown = () => {

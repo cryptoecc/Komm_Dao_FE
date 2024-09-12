@@ -78,17 +78,17 @@ export const NavItem = styled(NavLink)`
   padding: 20px 25px;
   gap: 20px;
   width: 100%;
-  color: #1a0737;
+  color: #1a0737; /* 기본 텍스트 색상 */
   text-decoration: none;
   transition: padding 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 
-  &:hover {
-    background-color: rgba(135, 92, 255, 0.1); /* Hover 배경색 */
+  &.active {
+    background-color: transparent;
+    color: #7a23ff !important; /* 활성화된 항목의 텍스트 색상 (보라색) */
   }
 
-  &.active {
-    background-color: #875cff; /* 활성화된 항목의 배경색 */
-    color: white; /* 활성화된 항목의 텍스트 색상 */
+  &:hover {
+    background-color: rgba(135, 92, 255, 0.1); /* Hover 배경색 */
   }
 
   @media (max-width: 768px) {
