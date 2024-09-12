@@ -58,8 +58,12 @@ const userSlice = createSlice({
     setEmail: (state, action: PayloadAction<string>) => {
       state.email_addr = action.payload;
     },
+    // 로그아웃 액션 추가
+    logoutUser: (state) => {
+      return { ...initialState }; // 초기 상태로 되돌림
+    },
   },
 });
 
-export const { connectWallet, disconnectWallet, setEmail, setUserData } = userSlice.actions;
+export const { connectWallet, disconnectWallet, setEmail, setUserData, logoutUser } = userSlice.actions;
 export default userSlice.reducer;

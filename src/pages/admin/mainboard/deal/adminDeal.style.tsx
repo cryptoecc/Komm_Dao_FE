@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const DealCardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, 250px);
   gap: 20px;
   justify-content: center;
   align-items: flex-start;
@@ -55,6 +55,7 @@ export const BannerImage = styled.img`
   height: 100%;
   object-fit: contain;
   border-radius: 20px;
+  /* background-color: #f0f0f0; */
 `;
 
 export const LogoImage = styled.img`
@@ -115,7 +116,8 @@ export const GaugeWrapper = styled.div`
   border-radius: 4px;
   overflow: hidden;
   position: relative;
-  margin-top: 120px;
+  margin-top: 100px;
+  margin-bottom: 20px;
 `;
 
 export const Gauge = styled.div<{ percentage: number }>`
@@ -126,13 +128,15 @@ export const Gauge = styled.div<{ percentage: number }>`
   border-radius: 8px;
 `;
 
-export const PercentageText = styled.span`
+export const PercentageText = styled.div`
+  position: absolute;
   font-size: 16px;
   font-weight: 600;
   color: #000;
-  text-align: right;
-  display: block;
-  width: 100%;
+  right: 40px;
+  bottom: -80px;
+  /* float: right; */
+  /* width: 100%; */
 `;
 
 export const Title = styled.h1`
@@ -187,4 +191,34 @@ export const Popup = styled.div`
   font-weight: 400;
   line-height: 22px;
   /* transform: translateX(-50%); */
+`;
+
+export const IconContainer = styled.div`
+  position: absolute;
+  bottom: -40px;
+  right: 30px;
+  display: flex;
+  gap: 10px;
+`;
+
+export const EditIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const DeleteIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

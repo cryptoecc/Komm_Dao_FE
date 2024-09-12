@@ -6,6 +6,11 @@ import defaultBannerImg from 'src/assets/deal/MYX_bannerr.png';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import Modal from 'src/components/admin/modal/Modal';
 import AddDeal from 'src/components/admin/modal/addDeal/AddDeal';
+import editIcon from 'src/assets/admin/edituser.svg';
+import deleteIcon from 'src/assets/admin/delete.svg';
+import EditDeal from 'src/components/admin/modal/editDeal/EditDeal';
+import ConfirmDeleteModal from 'src/components/admin/modal/deleteModal/DeleteModal';
+
 import {
   DealCardContainer,
   DealItem,
@@ -21,11 +26,15 @@ import {
   Title,
   PageWrapper,
   Container,
+  IconContainer,
+  EditIcon,
+  DeleteIcon,
   Popup,
 } from './adminDeal.style';
 import { API_BASE_URL } from 'src/utils/utils';
 
 interface Deal {
+  pjt_id: number;
   deal_id: number;
   deal_name: string;
   deal_desc: string;
@@ -47,8 +56,13 @@ const AdminDeal: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
 
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState<boolean>(false); // 삭제 확인 모달 상태
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+
   const [filteredDeals, setFilteredDeals] = useState<any[]>([]);
-  const [deal, setDeal] = useState<Deal | null>(null);
+  const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null);
+  const [dealToDelete, setDealToDelete] = useState<number | null>(null); // 삭제할 dealId 저장
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,7 +71,7 @@ const AdminDeal: React.FC = () => {
     const fetchDeals = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API_BASE_URL}/api/admin/deal-list`); // 실제 API 엔드포인트로 대체
+        const response = await axios.get(`${API_BASE_URL}/api/admin/deal-list`);
         setDeals(response.data);
         setLoading(false);
       } catch (err) {
@@ -69,6 +83,35 @@ const AdminDeal: React.FC = () => {
 
     fetchDeals();
   }, []);
+
+  const handleEdit = (deal: Deal) => {
+    setSelectedDeal(deal); // 수정할 deal 정보를 설정
+    setIsEditModalOpen(true); // 편집 모달 열기
+  };
+
+  const handleDelete = (dealId: number) => {
+    console.log('Deleting deal:', dealId);
+    // 삭제 확인 모달을 띄우거나 삭제 API 요청
+    setDealToDelete(dealId); // 삭제할 dealId 설정
+    setIsConfirmDeleteOpen(true); // 삭제 모달 열기
+  };
+
+  const confirmDelete = () => {
+    if (dealToDelete !== null) {
+      axios
+        .delete(`${API_BASE_URL}/api/admin/deals/${dealToDelete}`)
+        .then(() => {
+          alert('Deal deleted successfully');
+          setDeals(deals.filter((deal) => deal.deal_id !== dealToDelete));
+          setIsConfirmDeleteOpen(false); // 삭제 후 모달 닫기
+        })
+        .catch((err) => {
+          console.error('Failed to delete deal', err);
+          alert('Failed to delete deal');
+          setIsConfirmDeleteOpen(false); // 에러 발생 시에도 모달 닫기
+        });
+    }
+  };
 
   useEffect(() => {
     // 검색어로 필터링
@@ -113,6 +156,10 @@ const AdminDeal: React.FC = () => {
                   <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
                   <StatusBadge status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
                   <PercentageText>{deal.percentage || 0}%</PercentageText>
+                  <IconContainer>
+                    <EditIcon src={editIcon} alt="Edit Deal" onClick={() => handleEdit(deal)} />
+                    <DeleteIcon src={deleteIcon} alt="Delete Deal" onClick={() => handleDelete(deal.deal_id)} />
+                  </IconContainer>
                 </BannerContainer>
 
                 <GaugeWrapper>
@@ -128,6 +175,19 @@ const AdminDeal: React.FC = () => {
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Deal">
         <AddDeal onCancel={() => setIsAddModalOpen(false)} />
       </Modal>
+
+      {/* Edit 모달 */}
+      {selectedDeal && (
+        <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Edit Deal">
+          <EditDeal deal={selectedDeal} onCancel={() => setIsEditModalOpen(false)} />
+        </Modal>
+      )}
+      {/* 삭제 확인 모달 */}
+      <ConfirmDeleteModal
+        isOpen={isConfirmDeleteOpen}
+        onClose={() => setIsConfirmDeleteOpen(false)}
+        onConfirm={confirmDelete}
+      />
     </PageWrapper>
   );
 };

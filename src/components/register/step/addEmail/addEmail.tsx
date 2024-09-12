@@ -21,9 +21,11 @@ import { API_BASE_URL } from 'src/utils/utils';
 
 interface StepProps {
   onComplete: () => void;
+  fromProfileUpdate?: boolean;
+  onUpdateEmail?: (newEmail: string) => void;
 }
 
-const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
+const AddEmail: React.FC<StepProps> = ({ onComplete, fromProfileUpdate, onUpdateEmail }) => {
   const [email, setEmailInput] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,6 +90,11 @@ const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
       if (response.data.success) {
         alert('Verification successful');
         dispatch(setEmail(email));
+
+        if (fromProfileUpdate && onUpdateEmail) {
+          onUpdateEmail(email); // ProfileUpdate의 이메일 상태 업데이트
+        }
+
         onComplete();
       } else {
         setVerificationError(response.data.message);
