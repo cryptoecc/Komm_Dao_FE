@@ -35,6 +35,10 @@ import ArrowDown from 'src/assets/register/arrow_drop_down.svg';
 import ArrowUp from 'src/assets/register/arrow_drop_up.svg';
 import { images } from '../../../../assets/dashboard/images';
 import { API_BASE_URL } from 'src/utils/utils';
+import Modal from 'src/components/admin/modal/common/Modal';
+import AddEmail from 'src/components/register/step/addEmail/addEmail';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 
 interface ProfileData {
   name: string;
@@ -145,6 +149,8 @@ const CustomOption = (props: OptionProps<any>) => (
 const CustomInput = (props: InputProps<any, false, GroupBase<any>>) => <components.Input {...props} isHidden />;
 
 const ProfileUpdate: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user);
+
   const [profileData, setProfileData] = useState<ProfileData>({
     name: '',
     email: '',
@@ -156,17 +162,21 @@ const ProfileUpdate: React.FC = () => {
     profileImage: null,
   });
   const [previewImage, setPreviewImage] = useState<string | undefined>(undefined);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
 
   useEffect(() => {
     // Local Storage에서 저장된 지갑 주소를 가져옴
     const persistedRoot = localStorage.getItem('persist:root');
+    console.log(persistedRoot);
     if (persistedRoot) {
       try {
         const parsedData = JSON.parse(persistedRoot);
         const walletAddress = JSON.parse(parsedData.wallet_addr);
+        const email = parsedData?.email_addr || ''; // 이메일 값 가져오기
         setProfileData((prevState) => ({
           ...prevState,
           walletAddress,
+          email,
         }));
         fetchProfileData(walletAddress);
       } catch (error) {
@@ -245,7 +255,7 @@ const ProfileUpdate: React.FC = () => {
     try {
       const formData = new FormData();
       formData.append('name', profileData.name);
-      formData.append('email', profileData.email);
+      formData.append('email', user.email_addr);
       formData.append('bio', profileData.bio);
       formData.append('expertise', profileData.expertise);
       formData.append('membershipNft', profileData.membershipNft);
@@ -270,6 +280,21 @@ const ProfileUpdate: React.FC = () => {
       console.error('Error updating profile:', error);
       alert('Failed to update profile. Please try again.');
     }
+  };
+
+  const handleEmailClick = () => {
+    setIsEmailModalOpen(true); // 이메일 필드 클릭 시 모달 오픈
+  };
+
+  const handleCloseEmailModal = () => {
+    setIsEmailModalOpen(false); // 모달 닫기
+  };
+
+  const updateEmail = (newEmail: string) => {
+    setProfileData((prevState) => ({
+      ...prevState,
+      email: newEmail, // 이메일 업데이트
+    }));
   };
 
   return (
@@ -318,11 +343,18 @@ const ProfileUpdate: React.FC = () => {
               type="email"
               name="email"
               placeholder="Enter your email"
-              value={profileData.email}
-              onChange={handleInputChange}
+              value={user.email_addr}
+              // onChange={handleInputChange}
+              onClick={handleEmailClick}
+              readOnly
             />
             <InputIcon src={images.edit_black} alt="Edit" />
           </EmailField>
+          {/* 모달 추가 */}
+          <Modal isOpen={isEmailModalOpen} onClose={handleCloseEmailModal}>
+            <AddEmail onComplete={handleCloseEmailModal} fromProfileUpdate={true} onUpdateEmail={updateEmail} />{' '}
+            {/* 모달에 AddEmail 컴포넌트 렌더링 */}
+          </Modal>
           <WalletAddressField>
             <Label>Wallet Address</Label>
             <Input
