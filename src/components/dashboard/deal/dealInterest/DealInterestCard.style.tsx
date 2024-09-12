@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface InputProps {
+  isNumeric?: boolean;
+}
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -71,7 +75,7 @@ export const InputContainer = styled.div`
   }
 `;
 
-export const Input = styled.input<{ isNumeric: boolean }>`
+export const Input = styled.input.attrs<InputProps>({ type: 'text' })`
   flex: 1;
   border: none;
   padding: 10px;

@@ -14,8 +14,8 @@ import {
   AllocationValue,
   ContinueButton,
 } from './DealInterestCard.style';
-import InterestModal from './InterestModal'; // Import the InterestModal component
-import InvalidModal from './InvalidModal'; // Import the InvalidModal component
+import InterestModal from './InterestModal';
+import InvalidModal from './InvalidModal';
 import { API_BASE_URL } from 'src/utils/utils';
 
 interface Deal {
@@ -78,7 +78,7 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
     const fetchUserDealInterest = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}/user/${userId}/interest`);
-        console.log('User deal interest data:', response.data); // Check if the response data is correct
+        console.log('User deal interest data:', response.data);
       } catch (error) {
         console.error('Error fetching user deal interest:', error);
       }
@@ -93,7 +93,7 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
     <Container>
       <Title>SUBMIT YOUR INTEREST</Title>
       <InputContainer>
-        <Input type="text" value={inputValue} onChange={handleInputChange} isNumeric={isNumeric} placeholder="0" />
+        <Input value={inputValue} onChange={handleInputChange} isNumeric={isNumeric} placeholder="0" />
         <USDTText>USDT</USDTText>
         <MaxButton onClick={handleMaxClick}>Max</MaxButton>
       </InputContainer>

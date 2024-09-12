@@ -1,5 +1,7 @@
 import React from 'react';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux'; // Import useSelector
+import { RootState } from 'src/store/store'; // Adjust the import path as necessary
 import Sidebar from '../../components/dashboard/sidebar/Sidebar';
 import styled from 'styled-components';
 
@@ -17,10 +19,15 @@ const ContentArea = styled.div`
 
 const MainBoard: React.FC = () => {
   const location = useLocation();
+  const user = useSelector((state: RootState) => state.user); // Get user info from Redux store
 
-  // Check if the current path is exactly '/mainboard'
+  // Redirect to the main page if user info is not available
+  if (!user || user.user_id === 0) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Redirect to /mainboard/dashboard if on /mainboard
   if (location.pathname === '/mainboard') {
-    // Redirect only if the user is on /mainboard
     return <Navigate to="/mainboard/dashboard" replace />;
   }
 

@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DealList from '../../../components/dashboard/deal/DealList';
 import { API_BASE_URL } from 'src/utils/utils';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store'; // RootState 경로는 프로젝트에 따라 조정 필요
 
 const PageContainer = styled.div`
   display: flex;
@@ -35,8 +37,15 @@ const DealPage: React.FC = () => {
   const [deals, setDeals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user); // 사용자 정보 가져오기
 
   useEffect(() => {
+    if (!user || !user.user_id) {
+      // 사용자가 인증되지 않은 경우 로그인 페이지로 리다이렉트
+      navigate('/'); // 로그인 페이지의 경로를 조정하세요
+      return;
+    }
+
     const fetchDeals = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/deals`);
@@ -49,7 +58,7 @@ const DealPage: React.FC = () => {
     };
 
     fetchDeals();
-  }, []);
+  }, [user, navigate]);
 
   const handleDealClick = (deal: any) => {
     navigate(`/mainboard/deal/${deal.deal_id}`, { state: { deal } });
