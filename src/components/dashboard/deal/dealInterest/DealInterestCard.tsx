@@ -133,10 +133,6 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
           <AllocationText>Max Interest</AllocationText>
           <AllocationValue>{deal.max_interest} USDT</AllocationValue>
         </div>
-        <div>
-          <AllocationText>Raising</AllocationText>
-          <AllocationValue>{deal.total_interest} USDT</AllocationValue> {/* Display total_interest */}
-        </div>
       </AllocationInfo>
       <ContinueButton onClick={openInterestModal}>Continue</ContinueButton>
 
