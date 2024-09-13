@@ -4,11 +4,30 @@ import { ModalContainer, ModalContent, ButtonGroup, ConfirmButton, EditButton, D
 interface InterestModalProps {
   amount: number;
   date: string;
+  minInterest: number; // Added minInterest
+  maxInterest: number; // Added maxInterest
   onEdit: () => void;
   onConfirm: () => void;
+  onInvalid: () => void; // Added onInvalid for handling invalid amounts
 }
 
-const InterestModal: React.FC<InterestModalProps> = ({ amount, date, onEdit, onConfirm }) => {
+const InterestModal: React.FC<InterestModalProps> = ({
+  amount,
+  date,
+  minInterest,
+  maxInterest,
+  onEdit,
+  onConfirm,
+  onInvalid,
+}) => {
+  const handleConfirm = () => {
+    if (amount < minInterest || amount > maxInterest) {
+      onInvalid(); // Call the function to show InvalidModal
+    } else {
+      onConfirm(); // Call the function to confirm the submission
+    }
+  };
+
   return (
     <ModalContainer>
       <ModalContent>
@@ -17,7 +36,7 @@ const InterestModal: React.FC<InterestModalProps> = ({ amount, date, onEdit, onC
         <DateText>{date}</DateText>
         <ButtonGroup>
           <EditButton onClick={onEdit}>Edit Amount</EditButton>
-          <ConfirmButton onClick={onConfirm}>Confirm</ConfirmButton>
+          <ConfirmButton onClick={handleConfirm}>Confirm</ConfirmButton>
         </ButtonGroup>
       </ModalContent>
     </ModalContainer>

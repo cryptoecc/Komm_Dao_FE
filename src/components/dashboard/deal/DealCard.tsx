@@ -17,6 +17,7 @@ import {
 } from './DealCard.style';
 import { API_BASE_URL } from 'src/utils/utils';
 
+// Deal 타입 정의
 interface Deal {
   deal_id: number;
   deal_name: string;
@@ -25,16 +26,30 @@ interface Deal {
   final_amount: number;
   percentage: number;
   end_date: string;
+  create_date: string; // 시작 날짜 추가
   deal_logo_url: string;
   deal_banner_url: string;
 }
 
 const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
+  // 현재 날짜와 종료 날짜 설정
   const currentDate = dayjs();
   const endDate = dayjs(deal.end_date);
-  console.log(endDate);
+  const startDate = dayjs(deal.create_date); // 시작 날짜 설정
+
+  // 상태 계산
   const status = currentDate.isBefore(endDate) ? 'Open' : 'Closed';
-  console.log(deal);
+
+  // 진행 상황 계산 함수
+  const calculateProgress = (startDate: dayjs.Dayjs, endDate: dayjs.Dayjs) => {
+    const totalDuration = endDate.diff(startDate);
+    const elapsedDuration = currentDate.diff(startDate);
+    const progressPercentage = Math.min((elapsedDuration / totalDuration) * 100, 100);
+    return progressPercentage.toFixed(2);
+  };
+
+  const progressPercentage = calculateProgress(startDate, endDate);
+
   return (
     <DealCardContainer>
       <DealItem>
@@ -49,11 +64,11 @@ const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
           />
           <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
           <StatusBadge $status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
-          <PercentageText>{deal.percentage || 0}%</PercentageText>
+          <PercentageText>{progressPercentage}%</PercentageText> {/* 수정된 퍼센트 표시 */}
         </BannerContainer>
 
         <GaugeWrapper>
-          <Gauge $percentage={deal.percentage || 0} />
+          <Gauge $percentage={parseFloat(progressPercentage)} />
         </GaugeWrapper>
 
         <DealDescription>{deal.summary || 'No Description Available'}</DealDescription>
@@ -63,60 +78,3 @@ const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
 };
 
 export default DealCard;
-
-// import React from 'react';
-// import dayjs from 'dayjs';
-// import defaultDealIcon from '../../../assets/deal/MYX.png';
-// import {
-//   DealCardContainer,
-//   DealItem,
-//   DealTitle,
-//   StatusBadge,
-//   GaugeWrapper,
-//   Gauge,
-//   DealDescription,
-//   PercentageText,
-//   BannerContainer,
-//   BannerImage,
-//   LogoImage,
-// } from './DealCard.style';
-
-// interface Deal {
-//   deal_id: number;
-//   deal_name: string;
-//   deal_desc: string;
-//   final_amount: number;
-//   percentage: number;
-//   start_date: string;
-//   end_date: string;
-//   deal_image_url: string;
-//   banner_image_url: string;
-// }
-
-// const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
-//   const currentDate = dayjs();
-//   const endDate = dayjs(deal.end_date);
-//   const status = currentDate.isBefore(endDate) ? 'Open' : 'Closed';
-
-//   return (
-//     <DealCardContainer>
-//       <DealItem>
-//         <BannerContainer>
-//           <BannerImage src={deal.banner_image_url} alt="Banner Image" />
-//           <LogoImage src={deal.deal_image_url || defaultDealIcon} alt="Deal Logo" />
-//           <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
-//           <StatusBadge $status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
-//           <PercentageText>{deal.percentage || 0}%</PercentageText>
-//         </BannerContainer>
-
-//         <GaugeWrapper>
-//           <Gauge $percentage={deal.percentage || 0} />
-//         </GaugeWrapper>
-
-//         <DealDescription>{deal.deal_desc || 'No Description Available'}</DealDescription>
-//       </DealItem>
-//     </DealCardContainer>
-//   );
-// };
-
-// export default DealCard;

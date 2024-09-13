@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   Container,
   Title,
@@ -18,48 +19,78 @@ import InterestModal from './InterestModal';
 import InvalidModal from './InvalidModal';
 import { API_BASE_URL } from 'src/utils/utils';
 
+// Define Deal interface
 interface Deal {
   deal_id: number;
-  min_allocation: number;
-  max_allocation: number;
+  deal_name: string;
+  deal_desc: string;
+  final_amount: number;
+  end_date: string;
+  deal_image_url: string;
+  banner_image_url: string;
+  deal_status: string;
+  deal_round: string;
+  create_date: string | null;
+  min_interest: number;
+  max_interest: number;
+  total_interest: number; // Ensure total_interest is included
   current_interest: number;
-  total_interest: number;
 }
 
-const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
+// Define props interface
+interface DealInterestCardProps {
+  deal: Deal;
+}
+
+const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
   const { dealId } = useParams<{ dealId: string }>();
+  const userId = useSelector((state: any) => state.user.user_id); // Get user ID from Redux store
   const [inputValue, setInputValue] = useState<string>('');
   const [isInterestModalOpen, setInterestModalOpen] = useState<boolean>(false);
   const [isInvalidModalOpen, setInvalidModalOpen] = useState<boolean>(false);
-  const userId = 5;
+
+  // Log min and max interest when the component mounts
+  useEffect(() => {
+    console.log('Min Interest:', deal.min_interest);
+    console.log('Max Interest:', deal.max_interest);
+  }, [deal]);
 
   const handleMaxClick = () => {
-    const maxPossibleAmount = Math.min(deal.max_allocation, deal.total_interest - deal.current_interest);
-    setInputValue(maxPossibleAmount.toString());
+    // Ensure that max_interest is a number
+    const maxInterest = Number(deal.max_interest); // Convert to number
+
+    // Set maxInterest as the input value
+    setInputValue(maxInterest.toString());
+
+    // Debugging log
+    console.log('Selected Max Amount:', maxInterest);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    console.log('Input Value Changed:', e.target.value);
   };
 
   const handleContinue = async () => {
-    if (parseFloat(inputValue) < deal.min_allocation || parseFloat(inputValue) > deal.max_allocation) {
+    const inputAmount = parseFloat(inputValue);
+    if (inputAmount < deal.min_interest || inputAmount > deal.max_interest) {
       setInvalidModalOpen(true);
       return;
     }
 
     try {
       await axios.put(`${API_BASE_URL}/api/deals/${dealId}/user/${userId}/interest`, {
-        intAmount: parseFloat(inputValue),
+        intAmount: inputAmount,
       });
-      // You can navigate to the next page or show a success message here
+      console.log('Interest Amount Updated:', inputAmount);
     } catch (error) {
       console.error('Error updating interest amount:', error);
     }
   };
 
   const openInterestModal = () => {
-    if (parseFloat(inputValue) < deal.min_allocation || parseFloat(inputValue) > deal.max_allocation) {
+    const inputAmount = parseFloat(inputValue);
+    if (inputAmount < deal.min_interest || inputAmount > deal.max_interest) {
       setInvalidModalOpen(true);
     } else {
       setInterestModalOpen(true);
@@ -74,26 +105,21 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
     setInvalidModalOpen(false);
   };
 
-  useEffect(() => {
-    const fetchUserDealInterest = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}/user/${userId}/interest`);
-        console.log('User deal interest data:', response.data);
-      } catch (error) {
-        console.error('Error fetching user deal interest:', error);
-      }
-    };
-
-    fetchUserDealInterest();
-  }, [dealId, userId]);
-
   const isNumeric = !isNaN(Number(inputValue));
 
   return (
     <Container>
       <Title>SUBMIT YOUR INTEREST</Title>
       <InputContainer>
-        <Input value={inputValue} onChange={handleInputChange} isNumeric={isNumeric} placeholder="0" />
+        <Input
+          value={inputValue}
+          onChange={handleInputChange}
+          isNumeric={isNumeric}
+          placeholder="0"
+          type="number"
+          min={deal.min_interest}
+          max={deal.max_interest}
+        />
         <USDTText>USDT</USDTText>
         <MaxButton onClick={handleMaxClick}>Max</MaxButton>
       </InputContainer>
@@ -101,11 +127,15 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
       <AllocationInfo>
         <div>
           <AllocationText>Min Interest</AllocationText>
-          <AllocationValue>{deal.min_allocation} USDT</AllocationValue>
+          <AllocationValue>{deal.min_interest} USDT</AllocationValue>
         </div>
         <div>
           <AllocationText>Max Interest</AllocationText>
-          <AllocationValue>{deal.max_allocation} USDT</AllocationValue>
+          <AllocationValue>{deal.max_interest} USDT</AllocationValue>
+        </div>
+        <div>
+          <AllocationText>Raising</AllocationText>
+          <AllocationValue>{deal.total_interest} USDT</AllocationValue> {/* Display total_interest */}
         </div>
       </AllocationInfo>
       <ContinueButton onClick={openInterestModal}>Continue</ContinueButton>
@@ -114,18 +144,21 @@ const DealInterestCard: React.FC<{ deal: Deal }> = ({ deal }) => {
         <InterestModal
           amount={parseFloat(inputValue)}
           date={new Date().toLocaleString()}
+          minInterest={deal.min_interest}
+          maxInterest={deal.max_interest}
           onEdit={closeInterestModal}
           onConfirm={() => {
             handleContinue();
             closeInterestModal();
           }}
+          onInvalid={closeInvalidModal} // Added onInvalid
         />
       )}
       {isInvalidModalOpen && (
         <InvalidModal
           message="The amount you entered is invalid."
-          minAmount={deal.min_allocation}
-          maxAmount={deal.max_allocation}
+          minAmount={deal.min_interest}
+          maxAmount={deal.max_interest}
           onClose={closeInvalidModal}
         />
       )}

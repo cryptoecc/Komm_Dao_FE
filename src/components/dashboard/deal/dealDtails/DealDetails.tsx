@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // useSelector 임포트
-import { RootState } from 'src/store/store'; // RootState 타입 임포트
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 import { images } from '../../../../assets/deal/images';
 import defaultDealImg from 'src/assets/deal/MYX.png';
 import defaultBannerImg from 'src/assets/deal/MYX_bannerr.png';
@@ -41,10 +41,9 @@ const DealDetails: React.FC = () => {
   const { dealId } = useParams<{ dealId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user); // 유저 정보 가져오기
-  const [deal, setDeal] = useState(location.state?.deal || null); // location.state?.deal로 초기화
+  const user = useSelector((state: RootState) => state.user);
+  const [deal, setDeal] = useState(location.state?.deal || null);
 
-  // 유저 정보가 없으면 홈으로 리디렉션
   if (!user || !user.user_id) {
     return <Navigate to="/" replace />;
   }
@@ -56,17 +55,17 @@ const DealDetails: React.FC = () => {
         const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}`);
         console.log(response.data);
         console.log(user);
-        setDeal(response.data); // 최신 데이터를 상태로 업데이트
+        setDeal(response.data);
       } catch (error) {
         console.error('Error fetching deal data:', error);
       }
     };
 
-    fetchDealData(); // 컴포넌트가 마운트될 때 데이터를 요청
+    fetchDealData();
 
-    const intervalId = setInterval(fetchDealData, 5000); // 5초마다 데이터 새로 고침
+    const intervalId = setInterval(fetchDealData, 5000);
 
-    return () => clearInterval(intervalId); // 컴포넌트가 언마운트될 때 interval을 정리
+    return () => clearInterval(intervalId);
   }, [dealId]);
 
   const fallbackDeal = {
@@ -76,9 +75,10 @@ const DealDetails: React.FC = () => {
       'This is a fallback description for the deal. The description can be long, and when it is long enough, a scrollbar will appear.',
     final_amount: 4000000,
     end_date: '2024-12-31',
-    create_date: '2024-01-01', // 예시 create_date 추가
+    create_date: '2024-01-01',
+    total_interest: 0, // 기본값 추가
     deal_image_url: 'https://via.placeholder.com/500',
-    banner_image_url: 'https://via.placeholder.com/800x300', // 예시 배너 이미지 URL 추가
+    banner_image_url: 'https://via.placeholder.com/800x300',
   };
 
   const selectedDeal = deal || fallbackDeal;
@@ -123,7 +123,7 @@ const DealDetails: React.FC = () => {
       setProgressPercentage(calculateProgress(selectedDeal.create_date, selectedDeal.end_date));
     }, 1000);
 
-    return () => clearInterval(timer); // Cleanup the interval on component unmount
+    return () => clearInterval(timer);
   }, [selectedDeal.end_date, selectedDeal.create_date]);
 
   return (
@@ -157,7 +157,7 @@ const DealDetails: React.FC = () => {
           <DealInfoRow>
             <DealRoundText>{selectedDeal.deal_round || 'Seed Round'}</DealRoundText>
             <DealRaisingText>
-              Raising ${selectedDeal.final_amount ? selectedDeal.final_amount.toLocaleString() : '0'}
+              Raising ${selectedDeal.total_interest ? selectedDeal.total_interest.toLocaleString() : '0'}
             </DealRaisingText>
           </DealInfoRow>
           <CountdownText>ENDS IN</CountdownText>
