@@ -28,6 +28,8 @@ import {
   ClaimButtonText,
 } from './ContributionDetail.style';
 import ContributionModal from './ContributionModal'; // 모달 컴포넌트 추가
+import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
 
 dayjs.extend(customParseFormat);
 
@@ -72,6 +74,20 @@ const ContributionDetail: React.FC = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false); // 모달 닫기
+  };
+
+  // 트위터 Connect 버튼 클릭 핸들러
+  const handleTwitterConnect = async (task: any) => {
+    try {
+      // 백엔드로 OAuth 인증 요청을 보냄
+      const response = await axios.get(`${API_BASE_URL}/api/user/twitter/auth`);
+      const { authenticateUrl } = response.data;
+
+      // 트위터 인증 URL로 리디렉션
+      window.location.href = authenticateUrl;
+    } catch (error) {
+      console.error('Error during Twitter OAuth:', error);
+    }
   };
 
   return (
@@ -124,12 +140,12 @@ const ContributionDetail: React.FC = () => {
                 <li>
                   <img src={logoUrl} alt="Task Icon" />
                   MYX Twitter Followers
-                  <ActionButton>Connect</ActionButton>
+                  <ActionButton onClick={() => handleTwitterConnect('followers')}>Connect</ActionButton>
                 </li>
                 <li>
                   <img src={logoUrl} alt="Task Icon" />
                   MYX Retweet
-                  <ActionButton>Connect</ActionButton>
+                  <ActionButton onClick={() => handleTwitterConnect('retweet')}>Connect</ActionButton>
                 </li>
                 <li>
                   <img src={logoUrl} alt="Task Icon" />
