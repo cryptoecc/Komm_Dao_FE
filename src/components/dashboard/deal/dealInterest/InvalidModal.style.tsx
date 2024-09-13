@@ -13,7 +13,7 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  width: 400px; /* Slightly smaller width */
+  width: 450px; /* Slightly smaller width */
   background: white;
   padding: 30px;
   border-radius: 8px;

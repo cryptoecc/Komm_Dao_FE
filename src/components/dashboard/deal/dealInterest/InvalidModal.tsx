@@ -13,10 +13,7 @@ const InvalidModal: React.FC<InvalidModalProps> = ({ message, minAmount, maxAmou
     <ModalContainer>
       <ModalContent>
         <h2>Invalid Amount</h2>
-        <p>{message}</p>
-        <p>
-          Please enter an amount between {minAmount} and {maxAmount} USDT to proceed.
-        </p>
+        <p>Please enter an amount between [Minimum Amount] and [Maximum Amount] USDT to proceed.</p>
         <div style={{ textAlign: 'right' }}>
           <ConfirmButton onClick={onClose}>OK</ConfirmButton>
         </div>
