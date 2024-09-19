@@ -1,14 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { ModalContainer, ModalContent, ButtonGroup, ConfirmButton, EditButton, DateText } from './InterestModal.style';
 
 interface InterestModalProps {
   amount: number;
   date: string;
-  minInterest: number; // Added minInterest
-  maxInterest: number; // Added maxInterest
+  minInterest: number;
+  maxInterest: number;
   onEdit: () => void;
   onConfirm: () => void;
-  onInvalid: () => void; // Added onInvalid for handling invalid amounts
+  onInvalid: () => void;
 }
 
 const InterestModal: React.FC<InterestModalProps> = ({
@@ -20,11 +22,15 @@ const InterestModal: React.FC<InterestModalProps> = ({
   onConfirm,
   onInvalid,
 }) => {
+  const navigate = useNavigate();
+
   const handleConfirm = () => {
     if (amount < minInterest || amount > maxInterest) {
-      onInvalid(); // Call the function to show InvalidModal
+      onInvalid();
     } else {
-      onConfirm(); // Call the function to confirm the submission
+      onConfirm();
+      toast.success('Submission successful!'); // 성공 알림 표시
+      navigate(-1);
     }
   };
 

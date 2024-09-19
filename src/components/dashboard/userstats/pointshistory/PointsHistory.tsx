@@ -59,7 +59,7 @@ const PointsHistory: React.FC = () => {
         {isLoading ? (
           <NoDataMessage>Loading...</NoDataMessage>
         ) : pointsData.length === 0 ? (
-          <NoDataMessage>No data available</NoDataMessage>
+          <NoDataMessage />
         ) : (
           pointsData.map((item, index) => (
             <DataRow key={index}>

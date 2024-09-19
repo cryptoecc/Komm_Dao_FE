@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 80%;
@@ -251,11 +251,11 @@ export const EditButton = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
-  position: absolute;
   border-radius: 20px;
   background: var(--Purple-900, #7c4dff);
-  top: 20px; /* 상단에서 20px 위치 */
-  right: 20px; /* 우측에서 20px 위치 */
+  position: absolute; /* 절대 위치로 설정 */
+  top: -100px; /* 상단에서 20px 위치 */
+  right: -100px; /* 우측에서 20px 위치 */
   &:hover {
     background: #d1d1e9;
     color: var(--Purple-900, #7c4dff);

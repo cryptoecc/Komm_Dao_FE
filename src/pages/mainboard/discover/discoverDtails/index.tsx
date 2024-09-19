@@ -13,6 +13,7 @@ interface Participant {
 
 const DiscoverContainer = styled.div`
   padding: 20px;
+  max-width: 1440px;
 `;
 
 const DiscoverContent = styled.div`
