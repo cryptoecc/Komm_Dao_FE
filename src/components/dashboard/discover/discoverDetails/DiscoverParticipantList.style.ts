@@ -64,6 +64,8 @@ export const BtnWrap = styled.div`
 `;
 
 export const RatingContainer = styled.div`
+  display: flex; /* Flexbox를 사용하여 별과 숫자를 가로로 정렬 */
+  align-items: center; /* 별과 숫자를 수직 가운데 정렬 */
   margin-bottom: 10px; /* Increase margin to add space between stars and the text below */
 
   img {

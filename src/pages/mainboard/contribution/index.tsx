@@ -15,6 +15,7 @@ dayjs.extend(customParseFormat);
 const ContributionContainer = styled.div`
   padding: 20px;
   display: flex;
+  max-width: 1440px;
   justify-content: center;
   align-items: center;
   flex-direction: column;

@@ -4,7 +4,7 @@ import { ModalContainer, ModalContent, ModalTitle, ModalText, CloseButton } from
 interface ClaimModalProps {
   isOpen: boolean;
   onClose: () => void;
-  points: number;
+  points: number; // Points from the rating
 }
 
 const ClaimModal: React.FC<ClaimModalProps> = ({ isOpen, onClose, points }) => {

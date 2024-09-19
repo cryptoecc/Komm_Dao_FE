@@ -82,8 +82,9 @@ export const Input = styled.input.attrs<InputProps>({ type: 'text' })`
   width: 60%;
   text-align: center;
   outline: none;
+
   font-size: ${(props) => (props.isNumeric ? '28px' : '16px')};
-  margin-left: 25px;
+  margin-left: 70px;
 
   &::placeholder {
     font-size: 28px;

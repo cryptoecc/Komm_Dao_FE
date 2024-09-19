@@ -67,8 +67,14 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    console.log('Input Value Changed:', e.target.value);
+    const value = e.target.value;
+
+    // 숫자만 허용
+    if (/^\d*\.?\d*$/.test(value)) {
+      // 정규 표현식: 숫자와 소수점만 허용
+      setInputValue(value);
+    }
+    console.log('Input Value Changed:', value);
   };
 
   const handleContinue = async () => {

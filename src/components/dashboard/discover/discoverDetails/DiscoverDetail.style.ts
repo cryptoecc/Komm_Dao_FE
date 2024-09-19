@@ -22,6 +22,12 @@ export const ProjectName = styled.h1`
   font-weight: bold;
   margin-bottom: 5px; /* Adjust margin as needed */
   margin-right: 10px; /* Space between project name and share icon */
+
+  /* 텍스트가 너무 길 경우 생략 표시 */
+  white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+  overflow: hidden; /* 넘친 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘친 부분을 '...'으로 표시 */
+  max-width: 100%; /* 최대 너비 설정 (상황에 따라 조정 가능) */
 `;
 
 export const ShareIcon = styled.img`

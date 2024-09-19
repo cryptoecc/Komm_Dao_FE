@@ -27,7 +27,6 @@ import { PATH } from '../../../constants/path'; // 경로 상수
 import { API_BASE_URL } from 'src/utils/utils'; // API 베이스 URL
 import { useSelector } from 'react-redux'; // Redux
 import { RootState } from 'src/store/store'; // 스토어 경로
-import { legacy_createStore } from '@reduxjs/toolkit';
 
 interface DataItem {
   pjt_id: number;
@@ -98,14 +97,6 @@ const DiscoverList = () => {
     }
     setSortConfig({ key, direction });
   };
-
-  // const handleSort = (key: SortKey) => {
-  //   let direction: 'ascending' | 'descending' = 'ascending';
-  //   if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-  //     direction = 'descending';
-  //   }
-  //   setSortConfig({ key, direction });
-  // };
 
   // 즐겨찾기 기능
   const handleStarClick = async (id: number) => {

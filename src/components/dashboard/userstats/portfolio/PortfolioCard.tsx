@@ -60,7 +60,7 @@ const PortfolioCard: React.FC = () => {
         {isLoading ? (
           <NoDataMessage>Loading...</NoDataMessage>
         ) : portfolioData.length === 0 ? (
-          <NoDataMessage>No data available</NoDataMessage>
+          <NoDataMessage />
         ) : (
           portfolioData.map((item, index) => (
             <DataRow key={index}>

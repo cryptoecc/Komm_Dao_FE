@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
-    navigate('/'); // 메인 페이지 경로로 이동
+    navigate('/mainboard/dashboard'); // 메인 페이지 경로로 이동
   };
   return (
     <SidebarContainer>
