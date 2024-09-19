@@ -27,7 +27,7 @@ export const ProjectName = styled.h1`
   white-space: nowrap; /* 텍스트를 한 줄로 유지 */
   overflow: hidden; /* 넘친 텍스트 숨기기 */
   text-overflow: ellipsis; /* 넘친 부분을 '...'으로 표시 */
-  max-width: 100%; /* 최대 너비 설정 (상황에 따라 조정 가능) */
+  max-width: 600px; /* 최대 너비를 600px로 설정 */
 `;
 
 export const ShareIcon = styled.img`
