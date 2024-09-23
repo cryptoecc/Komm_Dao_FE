@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   display: flex;
-  padding: 20px;
+  padding: 50px;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
@@ -18,8 +18,7 @@ export const MainContainer = styled.div`
 export const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin-right: 20px;
+  width: 50%;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -28,7 +27,7 @@ export const LeftSection = styled.div`
 `;
 
 export const RightSection = styled.div`
-  width: 40%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,8 +41,8 @@ export const RightSection = styled.div`
 export const ProjectTitleWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
 
+  margin-left: 50px;
   @media (max-width: 768px) {
     margin-bottom: 10px;
   }
@@ -63,6 +62,7 @@ export const ProjectLogo = styled.img`
 
 export const ProjectTitle = styled.div`
   color: black;
+  height: 80px;
   font-size: 40px;
   font-family: 'Inter', sans-serif;
   font-weight: 500;
@@ -187,9 +187,8 @@ export const ProgressText = styled.div`
 `;
 
 export const BannerWrapper = styled.div`
-  width: 100%;
+  max-width: 500px;
   height: 250px; // 높이를 250px로 고정
-  padding: 5px;
   background-color: #f2efff;
   border-radius: 20px;
   display: flex;
@@ -205,7 +204,7 @@ export const BannerWrapper = styled.div`
 `;
 
 export const BannerImage = styled.img`
-  width: 100%;
+  width: 95%;
   height: 250px; // 높이를 250px로 고정
   border-radius: 20px;
   object-fit: contain; // 이미지 비율을 유지하면서 짤림 없이 표시

@@ -21,7 +21,7 @@ const ProfileMyPage: React.FC = () => {
 
 const Container = styled.div`
   background-color: #f9f8fe; /* 전체 배경색 설정 */
-  height: 30%;
+  max-height: 23%;
   padding: 20px; /* 여백 추가 (선택 사항) */
 `;
 
@@ -40,10 +40,7 @@ const BackButton = styled.div`
   cursor: pointer;
   color: #875cff; /* 텍스트 색상 설정 */
   font-weight: 700;
-  margin-top: 20px; /* Title 아래에 위치하도록 조정 */
-  margin-left: 20px;
   background-color: #f9f8fe; /* 배경색 설정 */
-  padding: 10px; /* 여백 추가 (선택 사항) */
 `;
 
 const BackLink = styled.div`

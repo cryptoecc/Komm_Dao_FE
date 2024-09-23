@@ -7,8 +7,14 @@ export const CardContainer = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: 280px;
+  width: 350px;
   margin: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 트랜지션 추가 */
+  cursor: pointer;
+  &:hover {
+    background-color: #e0dcf9; /* hover 시 배경색을 약간 어둡게 변경 */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* 그림자를 더 깊게 변경 */
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -20,8 +26,9 @@ export const ImageContainer = styled.div`
 export const CardImage = styled.img`
   width: 100%;
   height: 100%;
-  padding: 15px; /* 패딩을 20px에서 15px로 줄임 */
+  padding: 10px; /* 패딩을 20px에서 15px로 줄임 */
   object-fit: contain;
+  margin-top: 5px;
 `;
 
 export const CardContent = styled.div`

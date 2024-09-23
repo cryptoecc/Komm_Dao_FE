@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useSpring, animated } from '@react-spring/web';
 import { RootState } from 'src/store/store';
 import { images } from '../../../../assets/deal/images';
 import defaultDealImg from 'src/assets/deal/MYX.png';
@@ -44,17 +45,18 @@ const DealDetails: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const [deal, setDeal] = useState(location.state?.deal || null);
 
-  if (!user || !user.user_id) {
-    return <Navigate to="/" replace />;
-  }
+  // 이 부분에서 조건 없이 훅을 사용하기 위해 early return을 제거
+  useEffect(() => {
+    if (!user || !user.user_id) {
+      navigate('/');
+      return;
+    }
+  }, [user, navigate]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const fetchDealData = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}`);
-        console.log(response.data);
-        console.log(user);
         setDeal(response.data);
       } catch (error) {
         console.error('Error fetching deal data:', error);
@@ -76,7 +78,7 @@ const DealDetails: React.FC = () => {
     final_amount: 4000000,
     end_date: '2024-12-31',
     create_date: '2024-01-01',
-    total_interest: 0, // 기본값 추가
+    total_interest: 0,
     deal_image_url: 'https://via.placeholder.com/500',
     banner_image_url: 'https://via.placeholder.com/800x300',
   };
@@ -109,14 +111,11 @@ const DealDetails: React.FC = () => {
     return progressPercentage.toFixed(2);
   };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [remainingTime, setRemainingTime] = useState(calculateRemainingTime(selectedDeal.end_date));
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [progressPercentage, setProgressPercentage] = useState(
     calculateProgress(selectedDeal.create_date, selectedDeal.end_date)
   );
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const timer = setInterval(() => {
       setRemainingTime(calculateRemainingTime(selectedDeal.end_date));
@@ -125,6 +124,13 @@ const DealDetails: React.FC = () => {
 
     return () => clearInterval(timer);
   }, [selectedDeal.end_date, selectedDeal.create_date]);
+
+  // Raising amount 애니메이션 설정 - 항상 훅을 사용하게 함
+  const springs = useSpring({
+    from: { totalInterest: 0 },
+    to: { totalInterest: selectedDeal.total_interest || 0 },
+    config: { duration: 100 },
+  });
 
   return (
     <Container>
@@ -157,7 +163,7 @@ const DealDetails: React.FC = () => {
           <DealInfoRow>
             <DealRoundText>{selectedDeal.deal_round || 'Seed Round'}</DealRoundText>
             <DealRaisingText>
-              Raising ${selectedDeal.total_interest ? selectedDeal.total_interest.toLocaleString() : '0'}
+              Raising $<animated.span>{springs.totalInterest.to((x) => Math.floor(x).toLocaleString())}</animated.span>
             </DealRaisingText>
           </DealInfoRow>
           <CountdownText>ENDS IN</CountdownText>

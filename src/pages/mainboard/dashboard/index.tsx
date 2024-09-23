@@ -13,10 +13,19 @@ const DashboardContainer = styled.div`
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   position: relative;
+  max-width: 1920px;
+  max-height: 1080px;
   /* min-height: 100vh;
   width: 100%;
   padding: 30px;
   background-color: ${({ theme }) => theme.colors.white}; */
+`;
+
+const DashboardHeader = styled.div`
+  display: flex;
+  justify-content: space-between; /* 양 끝으로 배치 */
+  align-items: center; /* 수직 중앙 정렬 */
+  margin-bottom: 20px;
 `;
 
 const DashboardTitle = styled.h1`
@@ -25,13 +34,6 @@ const DashboardTitle = styled.h1`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-bottom: 20px;
-`;
-
-const DashboardHeader = styled.div`
-  display: flex;
-  justify-content: space-between; /* 양 끝으로 배치 */
-  align-items: center; /* 수직 중앙 정렬 */
   margin-bottom: 20px;
 `;
 

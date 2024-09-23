@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const TitleWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   margin-bottom: 40px;
@@ -37,18 +37,18 @@ export const RightSection = styled.div`
 `;
 
 export const ActiveBadge = styled.div`
-  width: 100px;
-  height: 26px;
+  width: 150px;
+  height: 50px;
   padding: 17px;
   background: linear-gradient(0deg, #7c4dff 0%, #7c4dff 100%);
-  border-radius: 20px;
+  border-radius: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  margin-left: 20px;
   div {
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     word-wrap: break-word;
