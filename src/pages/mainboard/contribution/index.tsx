@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import ContributionMain from 'src/components/dashboard/contribution/ContributionMain';
 import ContributionCard from 'src/components/dashboard/contribution/ContributionCard'; // ContributionCard 임포트
@@ -9,16 +9,31 @@ import 'src/components/dashboard/contribution/CustomSlider.css'; // 스타일 �
 import { images } from 'src/assets/contribution/images';
 import dayjs from 'dayjs'; // 날짜 비교를 위한 dayjs 사용
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
+import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
+import Wallet from 'src/components/walletbtn/WalletComponent';
 
 dayjs.extend(customParseFormat);
 
 const ContributionContainer = styled.div`
   padding: 20px;
+  background-color: ${({ theme }) => theme.colors.white};
+  position: relative;
+  max-width: 1920px;
+`;
+
+const ContributionHeader = styled.div`
   display: flex;
-  max-width: 1440px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  justify-content: space-between; /* 양 끝으로 배치 */
+  align-items: center; /* 수직 중앙 정렬 */
+  margin-bottom: 20px;
+  margin-right: 60px;
+`;
+
+const WalletWrap = styled.div`
+  margin-right: 60px;
 `;
 
 const ContributionTitle = styled.h1`
@@ -27,9 +42,7 @@ const ContributionTitle = styled.h1`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-bottom: 0px;
-  margin-top: 20px;
-  margin-left: 20px;
+  margin-bottom: 20px;
 `;
 
 const ContributionTabs = styled.div`
@@ -57,8 +70,8 @@ const TabButton = styled.button<{ $active: boolean }>`
 `;
 
 const ContributionContent = styled.div`
-  padding: 20px;
-  width: 90%;
+  max-width: 1920px;
+  min-width: 1080px;
 `;
 
 const CardGrid = styled.div`
@@ -78,7 +91,44 @@ const CardGrid = styled.div`
 
 const Contribution: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState<'Ongoing' | 'Finished'>('Ongoing');
+  const [userData, setUserData] = useState<any>(null);
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user && user.wallet_addr) {
+        // user와 wallet_addr이 있는지 확인
+        try {
+          const walletAddress = user.wallet_addr;
+          console.log(walletAddress);
+          const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
+          setUserData(response.data);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          setUserData({
+            profileImage: 'default-profile.png',
+            name: 'Default User',
+            expertise: 'Unknown',
+            points: 0,
+            xp: 0,
+            stats: {
+              deal: 0,
+              discover: 0,
+              contribution: 0,
+              governance: 0,
+            },
+          });
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [user]); // user 값이 변경될 때마다 useEffect 실행
+
+  if (!user || !userData) {
+    return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
+  }
   const settings = {
     dots: true,
     infinite: true,
@@ -86,7 +136,7 @@ const Contribution: React.FC = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
   };
   const slidesData = [
     {
@@ -177,71 +227,79 @@ const Contribution: React.FC = () => {
   });
 
   return (
-    <>
-      <ContributionTitle>Contribution</ContributionTitle>
+    <ContributionContainer>
+      <ContributionHeader>
+        <ContributionTitle>Contribution</ContributionTitle>
+        <WalletWrap>
+          <Wallet
+            address={userData.walletAddress}
+            username={userData.name}
+            profileImage={userData.profileImage}
+            expertise={userData.expertise}
+          />
+        </WalletWrap>
+      </ContributionHeader>
 
-      <ContributionContainer>
-        <ContributionContent>
-          <Slider {...settings}>
-            {slidesData.map((slide) => (
-              <ContributionMain
-                key={slide.pjt_id}
-                projectLogo={slide.projectLogo}
-                projectTitle={slide.projectTitle}
-                kohortLabel={slide.kohortLabel}
-                totalAvg={slide.totalAvg}
-                xpValue={slide.xpValue}
-                dates={slide.dates}
-                progress={slide.progress}
-                progressText={slide.progressText}
-                bannerImage={slide.bannerImage}
-              />
-            ))}
-          </Slider>
-          <ContributionTabs>
-            <TabButton $active={activeTab === 'Ongoing'} onClick={() => setActiveTab('Ongoing')}>
-              Ongoing
-            </TabButton>
-            <TabButton $active={activeTab === 'Finished'} onClick={() => setActiveTab('Finished')}>
-              Finished
-            </TabButton>
-          </ContributionTabs>
-          <CardGrid>
-            {activeTab === 'Ongoing'
-              ? ongoingCards.map((card) => (
-                  <ContributionCard
-                    key={card.pjt_id}
-                    id={card.pjt_id} // id를 추가하여 넘김
-                    title={card.projectTitle}
-                    xp={parseInt(card.xpValue.split(' ')[0], 10)}
-                    imageUrl={card.bannerImage}
-                    logoUrl={card.projectLogo}
-                    startDate={card.dates.split(' ~ ')[0]}
-                    endDate={card.dates.split(' ~ ')[1]}
-                    progress={parseInt(card.progressText.split(' / ')[0], 10)}
-                    maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
-                    statusText={card.kohortLabel} // Kohort only 값을 넘김
-                  />
-                ))
-              : finishedCards.map((card) => (
-                  <ContributionCard
-                    key={card.pjt_id}
-                    id={card.pjt_id} // id를 추가하여 넘김
-                    title={card.projectTitle}
-                    xp={parseInt(card.xpValue.split(' ')[0], 10)}
-                    imageUrl={card.bannerImage}
-                    logoUrl={card.projectLogo}
-                    startDate={card.dates.split(' ~ ')[0]}
-                    endDate={card.dates.split(' ~ ')[1]}
-                    progress={parseInt(card.progressText.split(' / ')[0], 10)}
-                    maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
-                    statusText={card.kohortLabel} // Kohort only 값을 넘김
-                  />
-                ))}
-          </CardGrid>
-        </ContributionContent>
-      </ContributionContainer>
-    </>
+      <ContributionContent>
+        <Slider {...settings}>
+          {slidesData.map((slide) => (
+            <ContributionMain
+              key={slide.pjt_id}
+              projectLogo={slide.projectLogo}
+              projectTitle={slide.projectTitle}
+              kohortLabel={slide.kohortLabel}
+              totalAvg={slide.totalAvg}
+              xpValue={slide.xpValue}
+              dates={slide.dates}
+              progress={slide.progress}
+              progressText={slide.progressText}
+              bannerImage={slide.bannerImage}
+            />
+          ))}
+        </Slider>
+        <ContributionTabs>
+          <TabButton $active={activeTab === 'Ongoing'} onClick={() => setActiveTab('Ongoing')}>
+            Ongoing
+          </TabButton>
+          <TabButton $active={activeTab === 'Finished'} onClick={() => setActiveTab('Finished')}>
+            Finished
+          </TabButton>
+        </ContributionTabs>
+        <CardGrid>
+          {activeTab === 'Ongoing'
+            ? ongoingCards.map((card) => (
+                <ContributionCard
+                  key={card.pjt_id}
+                  id={card.pjt_id} // id를 추가하여 넘김
+                  title={card.projectTitle}
+                  xp={parseInt(card.xpValue.split(' ')[0], 10)}
+                  imageUrl={card.bannerImage}
+                  logoUrl={card.projectLogo}
+                  startDate={card.dates.split(' ~ ')[0]}
+                  endDate={card.dates.split(' ~ ')[1]}
+                  progress={parseInt(card.progressText.split(' / ')[0], 10)}
+                  maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
+                  statusText={card.kohortLabel} // Kohort only 값을 넘김
+                />
+              ))
+            : finishedCards.map((card) => (
+                <ContributionCard
+                  key={card.pjt_id}
+                  id={card.pjt_id} // id를 추가하여 넘김
+                  title={card.projectTitle}
+                  xp={parseInt(card.xpValue.split(' ')[0], 10)}
+                  imageUrl={card.bannerImage}
+                  logoUrl={card.projectLogo}
+                  startDate={card.dates.split(' ~ ')[0]}
+                  endDate={card.dates.split(' ~ ')[1]}
+                  progress={parseInt(card.progressText.split(' / ')[0], 10)}
+                  maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
+                  statusText={card.kohortLabel} // Kohort only 값을 넘김
+                />
+              ))}
+        </CardGrid>
+      </ContributionContent>
+    </ContributionContainer>
   );
 };
 
