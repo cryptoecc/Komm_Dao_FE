@@ -4,10 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   padding: 10px;
-  justify-content: space-around;
-  width: 100%;
+  justify-content: space-between;
   min-height: 100vh;
-  max-width: 1200px;
+  max-width: 1920px;
   margin: 0 auto;
   gap: 20px;
   @media (max-width: 768px) {
@@ -22,6 +21,8 @@ export const LeftSection = styled.div`
   flex-direction: column;
   width: 50%;
   position: relative;
+  margin-top: 10px;
+  padding: 30px;
 
   @media (max-width: 768px) {
     width: 100%;
