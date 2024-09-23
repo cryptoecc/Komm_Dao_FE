@@ -8,29 +8,18 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store'; // RootState 경로는 프로젝트에 따라 조정 필요
 
 const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 1440px;
-  width: 1200px;
   padding: 20px;
-  margin: 0 auto;
-`;
-
-const TitleContainer = styled.div`
-  width: 100%;
-  display: flex;
-  margin-top: 20px;
-  justify-content: flex-start;
+  background-color: ${({ theme }) => theme.colors.white};
+  position: relative;
 `;
 
 const Title = styled.h1`
   color: #1a0737;
-  font-size: 40px;
-  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-style: normal;
   font-weight: 400;
-  word-wrap: break-word;
-  padding: 20px;
+  line-height: normal;
+  margin-bottom: 20px;
 `;
 
 const DealPage: React.FC = () => {
@@ -70,10 +59,8 @@ const DealPage: React.FC = () => {
 
   return (
     <>
-      <TitleContainer>
-        <Title>Deal</Title>
-      </TitleContainer>
       <PageContainer>
+        <Title>Deal</Title>
         <DealList deals={deals} onDealClick={handleDealClick} />
       </PageContainer>
     </>

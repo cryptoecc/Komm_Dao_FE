@@ -23,12 +23,13 @@ const ContributionContainer = styled.div`
 
 const ContributionTitle = styled.h1`
   color: #1a0737;
-  font-size: 40px;
-  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-style: normal;
   font-weight: 400;
-  word-wrap: break-word;
-  padding: 20px;
-  text-align: left;
+  line-height: normal;
+  margin-bottom: 0px;
+  margin-top: 20px;
+  margin-left: 20px;
 `;
 
 const ContributionTabs = styled.div`
