@@ -9,15 +9,17 @@ import { PATH } from 'src/constants/path'; // Import the PATH constants
 
 const DiscoverContainer = styled.div`
   padding: 20px;
+  background-color: ${({ theme }) => theme.colors.white};
+  position: relative;
 `;
 
 const DiscoverTitle = styled.h1`
   color: #1a0737;
-  font-size: 40px;
-  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-style: normal;
   font-weight: 400;
-  word-wrap: break-word;
-  padding: 20px;
+  line-height: normal;
+  margin-bottom: 20px;
 `;
 
 const DiscoverContent = styled.div``;

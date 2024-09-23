@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const GovernanceContainer = styled.div`
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.white};
-  position: relative; /* For absolute positioning of ConnectWallet */
+  position: relative;
 `;
 
 export const GovernanceTitle = styled.h1`
@@ -12,7 +12,7 @@ export const GovernanceTitle = styled.h1`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-bottom: 20px; /* Adjust margin as needed */
+  margin-bottom: 20px;
 `;
 
 export const GovernanceContent = styled.div`
@@ -30,38 +30,38 @@ export const ConnectWalletWrapper = styled.div`
 `;
 
 export const MainSection = styled.section`
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 27px;
-    margin: 47px 0 0 0;
-    width: 100%;
-`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 27px;
+  margin: 47px 0 0 0;
+  width: 100%;
+`;
 export const SubSection = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
 
 export const NavBar = styled.ul`
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    max-width: 310px;
-    width: 100%;
-    gap: 26px;
-    border-bottom: 2px solid #D9D9D9;
-    padding: 10px 0;
-`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 310px;
+  width: 100%;
+  gap: 26px;
+  border-bottom: 2px solid #d9d9d9;
+  padding: 10px 0;
+`;
 export const NavList = styled.li<{ active: boolean }>`
-    cursor: pointer;
-    list-style-type: none;
-    text-decoration: none;
-    color: #875CFF;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: ${({ active }) => active ? '700' : '400'};
-    line-height: normal;
-`
+  cursor: pointer;
+  list-style-type: none;
+  text-decoration: none;
+  color: #875cff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: ${({ active }) => (active ? '700' : '400')};
+  line-height: normal;
+`;
