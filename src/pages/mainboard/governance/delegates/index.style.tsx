@@ -4,7 +4,8 @@ import styled from 'styled-components';
 export const Container = styled.section`
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 28px;
     width: 100%;
 `
 export const FirstBlockWrap = styled.section`
