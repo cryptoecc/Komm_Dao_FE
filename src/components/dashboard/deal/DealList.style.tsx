@@ -1,36 +1,8 @@
 import styled from 'styled-components';
 
-export const DealListContainer = styled.div`
-  display: flex;
-  margin-left: 50px;
-  padding: 10px;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: flex-start;
-
-  @media (max-width: 767px) {
-    gap: 15px;
-  }
-`;
-
-export const DealWrapper = styled.div`
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  max-width: 500px;
-
-  @media (max-width: 767px) {
-    width: 90vw;
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 70vw;
-  }
-`;
-
 export const DealItem = styled.div`
   width: 40vw;
-  height: 30vh;
+  height: auto;
   max-width: 500px;
   max-height: 400px;
   flex-shrink: 0;
@@ -64,28 +36,44 @@ export const DealItem = styled.div`
   }
 `;
 
-export const IconWrapper = styled.div`
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between; /* 아이콘과 상태 배지를 양쪽에 배치 */
-  align-items: center;
+export const BannerImage = styled.img`
   width: 100%;
-
-  img {
-    max-width: 100px;
-    max-height: 100px;
-    object-fit: contain;
-  }
+  border-radius: 10px;
+  margin-bottom: 15px;
+  position: relative;
 `;
 
-export const StatusBadge = styled.div<{ status: 'ongoing' | 'finished' }>`
-  background-color: ${(props) => (props.status === 'ongoing' ? '#875cff' : '#cccccc')};
+export const IconWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  padding: 0 10px;
+`;
+
+export const LogoImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: white;
+  object-fit: contain;
+  position: absolute;
+  bottom: -25px;
+  left: 20px;
+`;
+
+export const StatusBadge = styled.div<{ $status: 'ongoing' | 'finished' }>`
+  background-color: ${(props) => (props.$status === 'ongoing' ? '#875cff' : '#cccccc')};
   color: white;
   padding: 5px 10px;
   border-radius: 12px;
   font-size: 14px;
   font-weight: 700;
-  margin-left: 10px;
+  margin-left: auto;
   align-self: flex-start;
 `;
 
@@ -96,6 +84,7 @@ export const GaugeWrapper = styled.div`
   border-radius: 5px;
   margin-bottom: 15px;
   position: relative;
+  margin-top: 40px;
 `;
 
 export const Gauge = styled.div<{ percentage: number }>`

@@ -17,6 +17,7 @@ import headerbox from 'src/assets/admin/headerbox.svg';
 import checkbox from 'src/assets/admin/cellbox.svg';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface Applicant {
   user_id: number;
@@ -61,7 +62,7 @@ const UserApplicants: React.FC = () => {
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/admin/user-list');
+        const response = await axios.get(`${API_BASE_URL}/api/admin/user-list`);
         console.log(response.data);
 
         const data = response.data;
@@ -102,7 +103,7 @@ const UserApplicants: React.FC = () => {
   // Approve 기능
   const handleApproval = async (user_id: number, status: string) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/update-status', { user_id, status });
+      const response = await axios.post(`${API_BASE_URL}/api/admin/update-status`, { user_id, status });
       if (response.status === 200) {
         setApplicants((prevApplicants) =>
           prevApplicants.map((applicant) =>

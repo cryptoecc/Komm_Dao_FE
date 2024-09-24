@@ -17,6 +17,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserData } from 'src/store/user/UserSlice';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from 'src/utils/utils';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -42,7 +43,7 @@ const AdminLogin: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/admin/admin-login', {
+      const response = await axios.post(`${API_BASE_URL}/api/admin/admin-login`, {
         email,
         password,
       });
@@ -52,7 +53,7 @@ const AdminLogin: React.FC = () => {
         localStorage.setItem('token', response.data.token);
         // 로그인 성공 후 리다이렉트
         // `user_id`를 사용해서 사용자 정보 가져오기
-        const userResponse = await axios.get(`http://localhost:4000/api/admin/user-info/${response.data.user_id}`, {
+        const userResponse = await axios.get(`${API_BASE_URL}/api/admin/user-info/${response.data.user_id}`, {
           headers: {
             Authorization: `Bearer ${response.data.token}`,
           },

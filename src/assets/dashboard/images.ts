@@ -13,6 +13,7 @@ import copyIcon from './copy_icon.png';
 import openSeaIcon from './openSea.png';
 import editIcon2 from './edit.png';
 import default_profile from './default_image.png';
+import edit_black from './edit_black.png';
 
 export const images = {
   dashboardIcon,
@@ -29,4 +30,5 @@ export const images = {
   copyIcon,
   openSeaIcon,
   default_profile,
+  edit_black,
 };

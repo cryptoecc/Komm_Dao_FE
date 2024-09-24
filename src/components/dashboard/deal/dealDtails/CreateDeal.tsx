@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { API_BASE_URL } from 'src/utils/utils';
 
 const ModalContainer = styled.div`
   /* 스타일 설정 */
@@ -64,7 +65,7 @@ const CreateDealModal: React.FC<ModalProps> = ({ onClose, onConfirm }) => {
         formDataToSend.append('deal_image', dealImage);
       }
 
-      const response = await axios.post('http://localhost:4000/api/deals', formDataToSend, {
+      const response = await axios.post(`${API_BASE_URL}/api/deals`, formDataToSend, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       console.log('Deal created:', response.data);
@@ -158,7 +159,7 @@ const CreateDealModal: React.FC<ModalProps> = ({ onClose, onConfirm }) => {
             name="min_allocation"
             value={formData.min_allocation}
             onChange={handleInputChange}
-            placeholder="Minimum Allocation"
+            placeholder="Min Interest"
             required
             type="number"
           />
@@ -166,7 +167,7 @@ const CreateDealModal: React.FC<ModalProps> = ({ onClose, onConfirm }) => {
             name="max_allocation"
             value={formData.max_allocation}
             onChange={handleInputChange}
-            placeholder="Maximum Allocation"
+            placeholder="Max Interest"
             required
             type="number"
           />

@@ -20,6 +20,7 @@ import { ReactComponent as CheckIcon } from 'src/assets/modal/check.svg';
 import { shortenAddress } from 'src/utils/utils';
 import { signMessage } from 'src/utils/web3';
 import ErrorMessage from '../../../../errormsg/ErrorMessage'; // 추가된 부분
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface ConnectedWalletProps {
   walletAddress: string;
@@ -42,7 +43,7 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
 
       // 서명 검증
       setLoadingMessage('Verifying Wallet');
-      const response = await axios.post('http://localhost:4000/api/wallet/check-wallet', {
+      const response = await axios.post(`${API_BASE_URL}/api/wallet/check-wallet`, {
         address: walletAddress,
         message,
         signature,

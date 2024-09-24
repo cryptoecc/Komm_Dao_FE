@@ -23,11 +23,16 @@ import DealDtailsPage from './pages/mainboard/deal/dealDtails';
 import PrivateRoute from './constants/PrivateRoute';
 import Test from './pages/test';
 import DealInterest from './pages/mainboard/deal/dealDtails/dealInterest'; // Correct the path to your new component
+import AdminDiscover from './pages/admin/mainboard/discover/adminDiscover';
 import DiscoverCalendar from './pages/mainboard/discover/discoverCalendar';
 import Proposals from './pages/mainboard/governance/proposals';
 import Delegates from './pages/mainboard/governance/delegates';
 import Kohort from './pages/mainboard/governance/kohort';
 import SpecProposal from './pages/mainboard/governance/proposals/SpecProposal';
+import Proposal from './pages/proposal';
+import AdminContribution from './pages/admin/mainboard/contribution/adminContribution';
+import AdminDeal from './pages/admin/mainboard/deal/adminDeal';
+import ContributionDetails from './pages/mainboard/contribution/contributionDetails';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -44,11 +49,12 @@ const Router = () => {
         { path: PATH.DEAL_DETAILS, element: <DealDtailsPage /> },
         { path: PATH.DEAL_INTEREST, element: <DealInterest /> },
         { path: PATH.DISCOVER, element: <Discover /> },
-        { path: PATH.GOVERNANCE, element: <Governance />, },
-        { path: PATH.PROPOSAL, element: <SpecProposal />, },
+        { path: PATH.GOVERNANCE, element: <Governance /> },
+        { path: PATH.PROPOSAL, element: <SpecProposal /> },
         { path: PATH.DISCOVER_DETAILS, element: <DiscoverDetails /> },
         { path: PATH.DISCOVER_CALENDAR, element: <DiscoverCalendar /> },
         { path: PATH.CONTRIBUTION, element: <Contribution /> },
+        { path: PATH.CONTRIBUTION_DETAIL, element: <ContributionDetails /> },
         { path: PATH.PROFILE, element: <ProfileMyPage /> },
         { path: PATH.PROFILE_UPDATE, element: <ProfileUpdate /> },
       ],
@@ -67,8 +73,12 @@ const Router = () => {
         { path: PATH.USERMEMBERS, element: <UserMember /> },
         { path: PATH.USERCOMMITTES, element: <UserCommitte /> },
         { path: PATH.USERKOHORTS, element: <UserKohort /> },
+        { path: PATH.ADMINDISCOVER, element: <AdminDiscover /> },
+        { path: PATH.ADMINCONTRIBUTION, element: <AdminContribution /> },
+        { path: PATH.ADMINDEAL, element: <AdminDeal /> },
       ],
     },
+    { path: PATH.CREATE_PROPOSAL, element: <Proposal /> },
     { path: 'test', element: <Test /> },
   ]);
 

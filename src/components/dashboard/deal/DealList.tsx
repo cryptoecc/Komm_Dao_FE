@@ -6,12 +6,14 @@ import { images } from '../../../assets/deal/images';
 interface Deal {
   deal_id: number;
   deal_name: string;
-  deal_desc: string;
+  description: string;
+  summary: string;
   final_amount: number;
   percentage: number;
-  deal_image_url: string;
-  start_date: string;
   end_date: string;
+  create_date: string; // 시작 날짜 추가
+  deal_logo_url: string;
+  deal_banner_url: string;
 }
 
 interface DealListProps {
@@ -21,11 +23,12 @@ interface DealListProps {
 
 const DealListContainer = styled.div`
   display: flex;
-  margin-left: 50px;
-  padding: 10px;
   flex-wrap: wrap;
   gap: 40px;
+  margin-left: 50px;
+  /* justify-content: center; */
   justify-content: flex-start;
+  align-items: center;
 
   @media (max-width: 767px) {
     gap: 15px;
@@ -51,63 +54,42 @@ const fakeDeals: Deal[] = [
   {
     deal_id: 1,
     deal_name: 'Sample Deal 1',
-    deal_desc: 'This is a description for Sample Deal 1.',
+    description: '기업 소개 MYX Finance는...',
+    summary: 'asdasdasdasd',
     final_amount: 100000,
     percentage: 50,
-    deal_image_url: `${images.deal}`,
-    start_date: '2024-08-01',
     end_date: '2024-08-31',
+    create_date: '2024-01-01', // 시작 날짜 추가
+    deal_logo_url: `${images.MYX}`,
+    deal_banner_url: `${images.MYX_bannerr}`,
   },
   {
     deal_id: 2,
     deal_name: 'Sample Deal 2',
-    deal_desc: 'This is a description for Sample Deal 2.',
+    description: 'This is a description for Sample Deal 2.',
+    summary: 'asdasdasdasd',
     final_amount: 200000,
     percentage: 75,
-    deal_image_url: `${images.labs}`,
-    start_date: '2024-09-01',
     end_date: '2024-09-30',
+    create_date: '2024-02-01', // 시작 날짜 추가
+    deal_logo_url: `${images.OG}`,
+    deal_banner_url: `${images.OG_banner}`,
   },
-  {
-    deal_id: 3,
-    deal_name: 'Sample Deal 3',
-    deal_desc: 'This is a description for Sample Deal 3.',
-    final_amount: 300000,
-    percentage: 90,
-    deal_image_url: `${images.delegate}`,
-    start_date: '2024-10-01',
-    end_date: '2024-10-31',
-  },
-  {
-    deal_id: 4,
-    deal_name: 'Sample Deal 4',
-    deal_desc: 'This is a description for Sample Deal 3.',
-    final_amount: 300000,
-    percentage: 90,
-    deal_image_url: `${images.exocore}`,
-    start_date: '2024-10-01',
-    end_date: '2024-10-31',
-  },
+  // 추가 데이터...
 ];
 
-const DealList: React.FC<DealListProps> = ({ deals, onDealClick }) => {
+const DealList: React.FC<DealListProps> = ({ deals = fakeDeals, onDealClick }) => {
   const [dealData, setDealData] = useState<Deal[]>(deals);
-
+  console.log(deals);
   useEffect(() => {
-    // 가짜 데이터를 설정
-    if (dealData.length === 0) {
+    // 만약 deals가 비어있거나 undefined라면 fakeDeals로 설정
+    if (!deals || deals.length === 0) {
       setDealData(fakeDeals);
+    } else {
+      setDealData(deals);
     }
-  }, [dealData]);
-  // return (
-  //   <DealListContainer>
-  //     {deals.map((deal) => (
-  //       <DealWrapper key={deal.deal_id} onClick={() => onDealClick(deal)}>
-  //         <DealCard deal={deal} />
-  //       </DealWrapper>
-  //     ))}
-  //   </DealListContainer>
-  // );
+  }, [deals]);
+
   return (
     <DealListContainer>
       {dealData.map((deal) => (
@@ -118,5 +100,4 @@ const DealList: React.FC<DealListProps> = ({ deals, onDealClick }) => {
     </DealListContainer>
   );
 };
-
 export default DealList;

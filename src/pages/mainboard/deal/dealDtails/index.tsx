@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import DealDetails from 'src/components/dashboard/deal/dealDtails/DealDtails';
+import DealDetails from 'src/components/dashboard/deal/dealDtails/DealDetails';
 import { useNavigate } from 'react-router-dom';
 
 const PageContainer = styled.div`

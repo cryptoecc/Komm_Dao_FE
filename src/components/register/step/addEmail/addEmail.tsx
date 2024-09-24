@@ -17,12 +17,15 @@ import { useDispatch } from 'react-redux';
 import { setEmail } from 'src/store/user/UserSlice';
 import { AppDispatch } from 'src/store/store';
 import { ReactComponent as MailIcon } from 'src/assets/register/mail.svg';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface StepProps {
   onComplete: () => void;
+  fromProfileUpdate?: boolean;
+  onUpdateEmail?: (newEmail: string) => void;
 }
 
-const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
+const AddEmail: React.FC<StepProps> = ({ onComplete, fromProfileUpdate, onUpdateEmail }) => {
   const [email, setEmailInput] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +54,7 @@ const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
       console.log('Email is valid');
       setIsLoading(true);
       try {
-        const response = await axios.post('http://localhost:4000/api/user/send-email', {
+        const response = await axios.post(`${API_BASE_URL}/api/user/send-email`, {
           email: email,
         });
 
@@ -79,7 +82,7 @@ const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:4000/api/user/verify-pin', {
+      const response = await axios.post(`${API_BASE_URL}/api/user/verify-pin`, {
         email: email,
         pin: verificationCode,
       });
@@ -87,6 +90,11 @@ const AddEmail: React.FC<StepProps> = ({ onComplete }) => {
       if (response.data.success) {
         alert('Verification successful');
         dispatch(setEmail(email));
+
+        if (fromProfileUpdate && onUpdateEmail) {
+          onUpdateEmail(email); // ProfileUpdate의 이메일 상태 업데이트
+        }
+
         onComplete();
       } else {
         setVerificationError(response.data.message);

@@ -24,37 +24,50 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { formatNumber } from '../../../../src/utils/utils';
 import { images } from '../../../assets/dashboard/images';
+import { API_BASE_URL } from '../../../../src/utils/utils';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 
 const ProfileCard: React.FC = () => {
-  const [userData, setUserData] = useState<any>(null); // 사용자 데이터를 상태로 관리
+  const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
-  const walletAddress = '0x7447B0afa966225937dC1EB842afd40bebe1e03F'; // 실제 사용자의 지갑 주소로 변경
-
+  const user = useSelector((state: RootState) => state.user);
   useEffect(() => {
-    const fetchUserData = async () => {
+    if (user) {
       try {
-        const response = await axios.get(`http://localhost:4000/api/user/profile/${walletAddress}`);
-        setUserData(response.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        setUserData({
-          profileImage: 'default-profile.png',
-          name: 'Stella',
-          expertise: 'Developer',
-          points: 0,
-          xp: 0,
-          stats: {
-            deal: 0,
-            discover: 0,
-            contribution: 0,
-            governance: 0,
-          },
-        });
-      }
-    };
+        // const parsedData = JSON.parse(persistedRoot);
+        const walletAddress = user.wallet_addr;
 
-    fetchUserData();
-  }, [walletAddress]);
+        const fetchUserData = async () => {
+          try {
+            const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
+            setUserData(response.data);
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+            setUserData({
+              profileImage: 'default-profile.png',
+              name: 'Default User',
+              expertise: 'Unknown',
+              points: 0,
+              xp: 0,
+              stats: {
+                deal: 0,
+                discover: 0,
+                contribution: 0,
+                governance: 0,
+              },
+            });
+          }
+        };
+
+        fetchUserData();
+      } catch (error) {
+        console.error('Error parsing persisted root data:', error);
+      }
+    } else {
+      console.error('persist:root not found in localStorage');
+    }
+  }, []);
 
   const handleProfileClick = () => {
     navigate('/mainboard/dashboard/profile');
@@ -67,10 +80,12 @@ const ProfileCard: React.FC = () => {
   return (
     <ProfileCardContainer>
       <ProfileInfo onClick={handleProfileClick}>
-        <ProfileImage src={images.profileDefaultIcon} alt="Profile" />
-        {/* <ProfileImage src={`http://localhost:4000/${userData.profileImage}`} alt="Profile" /> */}
-        <ProfileName>{userData.name}</ProfileName>
-        <ProfileJob>{userData.expertise || 'Job Title'}</ProfileJob>
+        <ProfileImage
+          src={userData.profileImage ? `${API_BASE_URL}/${userData.profileImage}` : images.profileDefaultIcon}
+          alt="Profile"
+        />
+        <ProfileName>{userData.name || 'Default User'}</ProfileName>
+        <ProfileJob>{userData.expertise || 'Unknown'}</ProfileJob>
       </ProfileInfo>
       <PointsWrap>
         <LevelText>Level 1</LevelText>
@@ -82,25 +97,25 @@ const ProfileCard: React.FC = () => {
               Earn points through various activities to unlock rewards. Your total XP will be used for rewards.
             </Tooltip>
           </Points>
-          <XP>{formatNumber(userData.xp)} XP</XP>
+          <XP>{formatNumber(userData.xp ?? 0)} XP</XP>
         </PointsAndXPWrap>
       </PointsWrap>
       <StatsWrap>
         <Stat>
           <StatItem>Deal</StatItem>
-          <StatValue>{formatNumber(userData.stats.deal)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.deal ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Discover</StatItem>
-          <StatValue>{formatNumber(userData.stats.discover)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.discover ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Contribution</StatItem>
-          <StatValue>{formatNumber(userData.stats.contribution)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.contribution ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Governance</StatItem>
-          <StatValue>{formatNumber(userData.stats.governance)}</StatValue>
+          <StatValue>{formatNumber(userData.stats?.governance ?? 0)}</StatValue>
         </Stat>
         <StyledLinkWrap>
           <LinkIcon src={images.pointsIcon} alt="Points Icon" />

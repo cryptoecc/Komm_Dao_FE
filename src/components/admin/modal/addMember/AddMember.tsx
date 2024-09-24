@@ -17,6 +17,7 @@ import {
   CancelButton,
 } from './AddMember.style';
 import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface KommitProps {
   selectedCommittee: string;
@@ -43,7 +44,7 @@ const AddMember: React.FC<KommitProps> = ({ selectedCommittee, onSave, onClose }
     const fetchMembers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/admin/add-kommittee?selectedCommittee=${selectedCommittee}`
+          `${API_BASE_URL}/api/admin/add-kommittee?selectedCommittee=${selectedCommittee}`
         );
 
         console.log(response.data);
@@ -53,7 +54,7 @@ const AddMember: React.FC<KommitProps> = ({ selectedCommittee, onSave, onClose }
               user_id: member.user_id,
               name: member.user_name,
               wallet: `${member.wallet_addr.slice(0, 7)}...${member.wallet_addr.slice(-5)}`, // Wallet Address 형식 조정,
-              avatar: `http://localhost:4000/${member.user_image_link}`,
+              avatar: `${API_BASE_URL}/${member.user_image_link}`,
               added: member.added, // 백엔드에서 추가된 상태로 제공되는 added 값을 그대로 사용
             }))
           );

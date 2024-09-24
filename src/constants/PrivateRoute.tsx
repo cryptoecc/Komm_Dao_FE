@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
+import { API_BASE_URL } from 'src/utils/utils';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null); // 토큰의 유효성을 저장
@@ -12,7 +13,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const verifyToken = async () => {
       try {
         const response = await axios.post(
-          'http://localhost:4000/api/admin/verify-token', // 토큰 검증을 위한 백엔드 엔드포인트
+          `${API_BASE_URL}/api/admin/verify-token`, // 토큰 검증을 위한 백엔드 엔드포인트
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

@@ -1,55 +1,77 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import defaultDealIcon from '../../../assets/deal/Deal.png';
-import arrowIcon from '../../../assets/deal/arrow.png';
+import defaultDealIcon from '../../../assets/deal/MYX.png';
+import defaultBannerImg from 'src/assets/deal/DELEGATE_banner.png';
 import {
-  DealCardContainer, // Import the new container
+  DealCardContainer,
   DealItem,
   DealTitle,
-  IconWrapper,
   StatusBadge,
   GaugeWrapper,
   Gauge,
-  PercentageLabel,
   DealDescription,
-  ArrowIcon,
   PercentageText,
+  BannerContainer,
+  BannerImage,
+  LogoImage,
 } from './DealCard.style';
+import { API_BASE_URL } from 'src/utils/utils';
 
+// Deal 타입 정의
 interface Deal {
   deal_id: number;
   deal_name: string;
-  deal_desc: string;
+  description: string;
+  summary: string;
   final_amount: number;
   percentage: number;
-  start_date: string;
   end_date: string;
-  deal_image_url: string;
+  create_date: string; // 시작 날짜 추가
+  deal_logo_url: string;
+  deal_banner_url: string;
 }
 
 const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
+  // 현재 날짜와 종료 날짜 설정
   const currentDate = dayjs();
   const endDate = dayjs(deal.end_date);
-  const status = currentDate.isBefore(endDate) ? 'ongoing' : 'finished';
+  const startDate = dayjs(deal.create_date); // 시작 날짜 설정
+
+  // 상태 계산
+  const status = currentDate.isBefore(endDate) ? 'Open' : 'Closed';
+
+  // 진행 상황 계산 함수
+  const calculateProgress = (startDate: dayjs.Dayjs, endDate: dayjs.Dayjs) => {
+    const totalDuration = endDate.diff(startDate);
+    const elapsedDuration = currentDate.diff(startDate);
+    const progressPercentage = Math.min((elapsedDuration / totalDuration) * 100, 100);
+    return progressPercentage.toFixed(2);
+  };
+
+  const progressPercentage = calculateProgress(startDate, endDate);
 
   return (
     <DealCardContainer>
       <DealItem>
-        <IconWrapper>
-          <img src={deal.deal_image_url || defaultDealIcon} alt="Deal Icon" />
-          <StatusBadge status={status}>{status === 'ongoing' ? 'Ongoing' : 'Finished'}</StatusBadge>
-        </IconWrapper>
-
-        <PercentageText>{deal.percentage}%</PercentageText>
+        <BannerContainer>
+          <BannerImage
+            src={deal.deal_banner_url ? `${API_BASE_URL}/${deal.deal_banner_url}` : defaultBannerImg}
+            alt="Banner Image"
+          />
+          <LogoImage
+            src={deal.deal_logo_url ? `${API_BASE_URL}/${deal.deal_logo_url}` : defaultDealIcon}
+            alt="Deal Logo"
+          />
+          <DealTitle>{deal.deal_name || 'No Deal Name'}</DealTitle>
+          <StatusBadge $status={status}>{status === 'Open' ? 'Open' : 'Closed'}</StatusBadge>
+          <PercentageText>{progressPercentage}%</PercentageText> {/* 수정된 퍼센트 표시 */}
+        </BannerContainer>
 
         <GaugeWrapper>
-          <Gauge percentage={deal.percentage} />
-          <PercentageLabel>{deal.percentage}%</PercentageLabel>
+          <Gauge $percentage={parseFloat(progressPercentage)} />
         </GaugeWrapper>
-        <DealTitle>{deal.deal_name}</DealTitle>
 
-        <DealDescription>{deal.deal_desc}</DealDescription>
-        <ArrowIcon src={arrowIcon} alt="Arrow Icon" />
+        <DealDescription>{deal.summary || 'No Description Available'}</DealDescription>
       </DealItem>
     </DealCardContainer>
   );

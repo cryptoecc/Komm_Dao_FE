@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { API_BASE_URL } from 'src/utils/utils';
 
 const ModalContainer = styled.div`
   /* 모달 배경 스타일 */
@@ -51,7 +52,7 @@ interface ModalProps {
 const DeleteDealModal: React.FC<ModalProps> = ({ dealId, onClose, onDeleteSuccess }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:4000/api/deals/${dealId}`);
+      await axios.delete(`${API_BASE_URL}/api/deals/${dealId}`);
       console.log('Deal deleted successfully');
       onDeleteSuccess(); // 삭제 성공 후 호출
       onClose(); // 모달 닫기

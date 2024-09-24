@@ -14,6 +14,7 @@ export const Logo = styled.div`
   background-size: contain;
   margin: 20px 0;
   flex-shrink: 0; /* Prevent the logo from shrinking */
+  cursor: pointer;
 
   /* Ensure the size stays consistent across all screen sizes */
   @media (max-width: 1024px) {
@@ -77,9 +78,18 @@ export const NavItem = styled(NavLink)`
   padding: 20px 25px;
   gap: 20px;
   width: 100%;
-  color: #1a0737;
+  color: #1a0737; /* 기본 텍스트 색상 */
   text-decoration: none;
-  transition: padding 0.3s ease;
+  transition: padding 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+
+  &.active {
+    background-color: transparent;
+    color: #7a23ff !important; /* 활성화된 항목의 텍스트 색상 (보라색) */
+  }
+
+  &:hover {
+    background-color: rgba(135, 92, 255, 0.1); /* Hover 배경색 */
+  }
 
   @media (max-width: 768px) {
     padding: 15px 20px;
@@ -89,10 +99,11 @@ export const NavItem = styled(NavLink)`
     padding: 10px 15px;
   }
 `;
-export const Icon = styled.div<{ imageUrl: string }>`
+
+export const Icon = styled.div<{ $imageUrl: string }>`
   width: 24px;
   height: 24px;
-  background: url(${(props) => props.imageUrl}) no-repeat center center;
+  background: url(${(props) => props.$imageUrl}) no-repeat center center;
   background-size: contain;
 
   @media (max-width: 768px) {
@@ -131,6 +142,7 @@ export const Name = styled.div`
     display: none; /* Hide icon on smaller screens or when zoomed in */
   }
 `;
+
 export const NotificationItem = styled.div`
   padding: 20px;
   display: flex;
