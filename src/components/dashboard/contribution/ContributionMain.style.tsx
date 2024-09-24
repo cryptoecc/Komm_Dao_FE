@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   display: flex;
-  padding: 50px;
+  padding: 30px;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
   box-sizing: border-box;
-  width: 100%;
+  max-width: 1920px;
 
   @media (max-width: 768px) {
     flex-direction: column;
