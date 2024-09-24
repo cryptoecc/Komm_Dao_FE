@@ -39,7 +39,6 @@ export const MainSection = styled.section`
   justify-content: flex-start;
   flex-direction: column;
   gap: 27px;
-  margin: 47px 0 0 0;
   width: 100%;
 `;
 export const SubSection = styled.section`
