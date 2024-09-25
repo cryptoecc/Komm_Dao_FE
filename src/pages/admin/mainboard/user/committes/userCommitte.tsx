@@ -21,6 +21,8 @@ import checkbox from 'src/assets/admin/cellbox.svg';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
 import { API_BASE_URL } from 'src/utils/utils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
 
 interface Committee {
   komm_ver: string;
@@ -60,6 +62,10 @@ const UserCommitte: React.FC = () => {
       top: rect.top + window.scrollY + 40, // Adjust as needed
       left: rect.left + window.scrollX + rect.width / 2,
     });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setPopupContent(null);
   }, []);
 
   useEffect(() => {
@@ -126,6 +132,22 @@ const UserCommitte: React.FC = () => {
     setIsAllSelected(!isAllSelected);
   };
 
+  // 복사 기능 추가
+  const handleCellClick = async (content: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      toast.success('Copied to clipboard!', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000, // 1초 후 자동으로 알림 닫힘
+      });
+    } catch (error) {
+      toast.error('Failed to copy', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000,
+      });
+    }
+  };
+
   return (
     <UserMemberContainer>
       <Title>User Mgmt {'>'} K-ommittees</Title>
@@ -168,7 +190,14 @@ const UserCommitte: React.FC = () => {
               <TableCell $isSelected={selectedRows.has(kommittee.user.user_id)}>{kommittee.komm_ver}</TableCell>
               <TableCell $isSelected={selectedRows.has(kommittee.user.user_id)}>{kommittee.komm_name}</TableCell>
               <TableCell $isSelected={selectedRows.has(kommittee.user.user_id)}>{kommittee.user.user_name}</TableCell>
-              <TableCell $isSelected={selectedRows.has(kommittee.user.user_id)}>{kommittee.user.wallet_addr}</TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(kommittee.user.user_id)}
+                onMouseEnter={(e) => handleMouseEnter(kommittee.user.wallet_addr, e)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(kommittee.user.wallet_addr)}
+              >
+                {kommittee.user.wallet_addr}
+              </TableCell>
               <TableCell $isSelected={selectedRows.has(kommittee.user.user_id)}>{kommittee.start_date}</TableCell>
               <TableCell $isSelected={selectedRows.has(kommittee.user.user_id)}>{kommittee.end_date}</TableCell>
             </TableRow>
@@ -186,6 +215,7 @@ const UserCommitte: React.FC = () => {
         {/* 여기에 Add 모달 내부 내용을 추가하면 됩니다. */}
         <AddKommit onClose={() => setIsAddModalOpen(false)} />
       </Modal>
+      <ToastContainer />
     </UserMemberContainer>
   );
 };

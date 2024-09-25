@@ -14,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   const isAddMembers = title === 'Add Members';
 
   return (
-    <ModalBackdrop onClick={onClose}>
+    <ModalBackdrop>
       <ModalContent $isAddMembers={isAddMembers} onClick={(e) => e.stopPropagation()}>
         <ModalHeader>
           <ModalTitle $isAddMembers={isAddMembers}>{title}</ModalTitle>

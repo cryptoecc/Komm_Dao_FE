@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const UserMemberContainer = styled.div`
+  width: 100%;
   padding: 20px;
   background: #fff;
   border-radius: 8px;
@@ -107,13 +108,14 @@ export const TableHeader = styled.th`
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
-  width: 150px;
+  width: 400px;
   padding: 10px;
   position: sticky;
   top: 0; /* 헤더를 고정시킵니다 */
 
   &:first-child {
     width: 40px; /* 체크박스 열의 너비 설정 */
+    background: #fff;
     text-align: center;
   }
   &::after {
@@ -155,6 +157,7 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   vertical-align: middle; /* 세로 중앙 정렬 */
   /* 기본 셀 너비 */
   max-width: 150px;
+  cursor: pointer;
   /* position: relative; */
 
   &:hover .popup {
@@ -216,13 +219,17 @@ export const CheckboxContainer = styled.div`
   width: 28px;
   height: 28px;
   vertical-align: middle;
+
   cursor: pointer;
 `;
 
 export const Checkbox = styled.img`
+  position: relative;
   width: 28px;
   height: 28px;
   vertical-align: middle;
+  position: sticky;
+  /* background: #fff; */
   top: 0;
   left: 0;
   cursor: pointer;

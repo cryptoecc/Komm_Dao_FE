@@ -18,6 +18,8 @@ import checkbox from 'src/assets/admin/cellbox.svg';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
 import { API_BASE_URL } from 'src/utils/utils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
 
 interface Member {
   user_id: number;
@@ -143,6 +145,22 @@ const UserMember: React.FC = () => {
     setIsAllSelected(!isAllSelected);
   };
 
+  // 복사 기능 추가
+  const handleCellClick = async (content: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      toast.success('Copied to clipboard!', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000, // 1초 후 자동으로 알림 닫힘
+      });
+    } catch (error) {
+      toast.error('Failed to copy', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000,
+      });
+    }
+  };
+
   return (
     <UserMemberContainer>
       <Title>User Mgmt {'>'} Members</Title>
@@ -183,14 +201,41 @@ const UserMember: React.FC = () => {
                   </CheckboxContainer>
                 )}
               </TableCell>
-              <TableCell $isSelected={selectedRows.has(member.user_id)}>{member.user_name}</TableCell>
-              <TableCell $isSelected={selectedRows.has(member.user_id)}>{member.email_addr}</TableCell>
-              <TableCell $isSelected={selectedRows.has(member.user_id)}>{member.wallet_addr}</TableCell>
-              <TableCell $isSelected={selectedRows.has(member.user_id)}>{member.expertise}</TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(member.user_id)}
+                onMouseEnter={(e) => handleMouseEnter(member.user_name, e)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(member.user_name)}
+              >
+                {member.user_name}
+              </TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(member.user_id)}
+                onMouseEnter={(e) => handleMouseEnter(member.email_addr, e)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(member.email_addr)}
+              >
+                {member.email_addr}
+              </TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(member.user_id)}
+                onMouseEnter={(e) => handleMouseEnter(member.wallet_addr, e)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(member.wallet_addr)}
+              >
+                {member.wallet_addr}
+              </TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(member.user_id)}
+                onClick={() => handleCellClick(member.expertise)}
+              >
+                {member.expertise}
+              </TableCell>
               <TableCell
                 $isSelected={selectedRows.has(member.user_id)}
                 onMouseEnter={(e) => handleMouseEnter(member.bio, e)}
                 onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(member.bio)}
               >
                 {member.bio}
               </TableCell>
@@ -198,6 +243,7 @@ const UserMember: React.FC = () => {
                 $isSelected={selectedRows.has(member.user_id)}
                 onMouseEnter={(e) => handleMouseEnter(member.kommittees[0]?.komm_name || '~~', e)}
                 onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(member.kommittees[0].komm_name)}
               >
                 {member.kommittees.length > 0 ? member.kommittees[0].komm_name : '~~'}
               </TableCell>
@@ -229,6 +275,7 @@ const UserMember: React.FC = () => {
         </tbody>
       </Table>
       {popupContent && <Popup style={{ top: popupPosition.top, left: popupPosition.left }}>{popupContent}</Popup>}
+      <ToastContainer />
     </UserMemberContainer>
   );
 };

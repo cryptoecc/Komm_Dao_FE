@@ -43,7 +43,7 @@ export const TableHeader = styled.th`
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
-  width: 150px;
+  width: 300px;
   padding: 10px;
   position: sticky;
   top: 0; /* 헤더를 고정시킵니다 */
@@ -91,6 +91,7 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   vertical-align: middle; /* 세로 중앙 정렬 */
   /* 기본 셀 너비 */
   max-width: 150px;
+  cursor: pointer;
   /* position: relative; */
 
   &:hover .popup {
