@@ -13,8 +13,11 @@ import {
   Popup,
   ApplyBtn,
   EditBtn,
+  DropdownContainer,
+  DropdownMenu,
+  DropdownItem,
 } from './adminDiscover.style';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import TopBar from 'src/components/admin/topbar/Topbar';
@@ -22,6 +25,11 @@ import headerbox from 'src/assets/admin/headerbox.svg';
 import checkbox from 'src/assets/admin/cellbox.svg';
 import checkmark from 'src/assets/admin/cell_check.svg';
 import ToggleSwitch from 'src/components/toggle/Toggle';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
+import { images } from 'src/assets/discover/images';
+
+const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI']; // 카테고리
 
 const AdminDiscover = () => {
   // 검색
@@ -38,6 +46,33 @@ const AdminDiscover = () => {
   // Edit
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [editValues, setEditValues] = useState<{ [key: number]: { [field: string]: string } }>({});
+
+  // Category
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [isCategoryDropdownVisible, setIsCategoryDropdownVisible] = useState<boolean>(false);
+  const categoryDropdownRef = useRef<HTMLDivElement>(null); // Dropdown 외부 클릭 감지를 위한 Ref
+
+  // 카테고리 드롭다운 토글
+  const toggleCategoryDropdown = () => {
+    setIsCategoryDropdownVisible(!isCategoryDropdownVisible);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategories([category]); // 선택된 카테고리만 남기고 나머지 초기화
+  };
+
+  // 외부 클릭 시 드롭다운 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
+        setIsCategoryDropdownVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleToggle = () => {
     setIsEditable((prev) => !prev);
@@ -99,17 +134,19 @@ const AdminDiscover = () => {
     };
 
     fetchDiscovers();
-  }, []);
+  }, [isEditable]);
 
+  // 데이터 필터링 (카테고리 및 검색어 기준)
   useEffect(() => {
-    // 검색어로 필터링
-    const filteredData = discovers.filter((discover) =>
-      Object.values(discover).some(
+    const filteredData = discovers.filter((discover) => {
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(discover.category);
+      const matchesSearchTerm = Object.values(discover).some(
         (value) => typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
+      );
+      return matchesCategory && matchesSearchTerm;
+    });
     setFilteredDiscovers(filteredData);
-  }, [searchTerm, discovers]);
+  }, [searchTerm, discovers, selectedCategories]);
 
   // 체크박스 기능
   const handleCheckboxChange = (pjt_id: number) => {
@@ -147,7 +184,11 @@ const AdminDiscover = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, id: number, field: string) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, // HTMLSelectElement 타입도 추가
+    id: number,
+    field: string
+  ) => {
     const { value } = e.target;
 
     setEditValues((prevValues) => ({
@@ -183,11 +224,36 @@ const AdminDiscover = () => {
           prevDiscovers.map((discover) => (discover.pjt_id === pjt_id ? { ...discover, ...updatedFields } : discover))
         );
         console.log('Update successful');
+        toast.success('Update Successful!', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
       }
     } catch (error) {
       console.error('Error updating project:', error);
     }
   };
+
+  // 복사 기능 추가
+  const handleCellClick = async (content: string) => {
+    if (isEditable) {
+      // isEditable이 true인 경우에는 복사 기능을 하지 않음
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(content);
+      toast.success('Copied to clipboard!', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000, // 1초 후 자동으로 알림 닫힘
+      });
+    } catch (error) {
+      toast.error('Failed to copy', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000,
+      });
+    }
+  };
+
   return (
     <DiscoverContainer>
       <Title>Discover Mgmt</Title>
@@ -210,7 +276,32 @@ const AdminDiscover = () => {
               </TableHeader>
               <TableHeader>Project Name</TableHeader>
               <TableHeader>Website</TableHeader>
-              <TableHeader>Category</TableHeader>
+              <TableHeader onClick={toggleCategoryDropdown} $isActive={isCategoryDropdownVisible}>
+                <DropdownContainer ref={categoryDropdownRef}>
+                  Category
+                  <img
+                    src={isCategoryDropdownVisible ? images.downicon : images.sorticon}
+                    alt="toggle"
+                    style={{ width: '16px', height: '16px' }}
+                  />
+                  {isCategoryDropdownVisible && (
+                    <DropdownMenu>
+                      {categories.map((category) => (
+                        <DropdownItem key={category}>
+                          <label onClick={(e) => e.stopPropagation()}>
+                            <input
+                              type="checkbox"
+                              checked={selectedCategories.includes(category)}
+                              onChange={() => handleCategoryChange(category)} // 체크박스와 글자 클릭 모두 적용
+                            />
+                            {category}
+                          </label>
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  )}
+                </DropdownContainer>
+              </TableHeader>
               <TableHeader>X(Twitter)</TableHeader>
               <TableHeader>X Followers</TableHeader>
               <TableHeader>Discord</TableHeader>
@@ -244,7 +335,10 @@ const AdminDiscover = () => {
                     {selectedRows.has(discover.pjt_id) && <Checkmark src={checkmark} alt="checkmark" />}
                   </CheckboxContainer>
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.pjt_name)}
+                >
                   {isEditable ? (
                     <input
                       type="text"
@@ -261,6 +355,7 @@ const AdminDiscover = () => {
                   $isSelected={selectedRows.has(discover.pjt_id)}
                   onMouseEnter={(e) => handleMouseEnter(discover.website, e)}
                   onMouseLeave={handleMouseLeave}
+                  onClick={() => handleCellClick(discover.website)}
                 >
                   {isEditable ? (
                     <input
@@ -275,15 +370,19 @@ const AdminDiscover = () => {
                   )}
                 </TableCell>
                 <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
-                  {' '}
                   {isEditable ? (
-                    <input
-                      type="text"
+                    <select
                       value={
                         (editValues[discover.pjt_id] && editValues[discover.pjt_id]['category']) || discover.category
                       }
                       onChange={(e) => handleInputChange(e, discover.pjt_id, 'category')}
-                    />
+                    >
+                      {categories.map((category) => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
                   ) : (
                     discover.category
                   )}
@@ -292,6 +391,7 @@ const AdminDiscover = () => {
                   $isSelected={selectedRows.has(discover.pjt_id)}
                   onMouseEnter={(e) => handleMouseEnter(discover.x_link, e)}
                   onMouseLeave={handleMouseLeave}
+                  onClick={() => handleCellClick(discover.x_link)}
                 >
                   {isEditable ? (
                     <input
@@ -303,7 +403,10 @@ const AdminDiscover = () => {
                     discover.x_link
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.x_followers)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -322,6 +425,7 @@ const AdminDiscover = () => {
                   $isSelected={selectedRows.has(discover.pjt_id)}
                   onMouseEnter={(e) => handleMouseEnter(discover.discord_link, e)}
                   onMouseLeave={handleMouseLeave}
+                  onClick={() => handleCellClick(discover.discord_link)}
                 >
                   {isEditable ? (
                     <input
@@ -336,7 +440,10 @@ const AdminDiscover = () => {
                     discover.discord_link
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.discord_members)}
+                >
                   {isEditable ? (
                     <input
                       type="text"
@@ -354,6 +461,7 @@ const AdminDiscover = () => {
                   $isSelected={selectedRows.has(discover.pjt_id)}
                   onMouseEnter={(e) => handleMouseEnter(discover.linkedIn_link, e)}
                   onMouseLeave={handleMouseLeave}
+                  onClick={() => handleCellClick(discover.linkedIn_link)}
                 >
                   {isEditable ? (
                     <input
@@ -372,6 +480,7 @@ const AdminDiscover = () => {
                   $isSelected={selectedRows.has(discover.pjt_id)}
                   onMouseEnter={(e) => handleMouseEnter(discover.github_link, e)}
                   onMouseLeave={handleMouseLeave}
+                  onClick={() => handleCellClick(discover.github_link)}
                 >
                   {isEditable ? (
                     <input
@@ -386,7 +495,10 @@ const AdminDiscover = () => {
                     discover.github_link
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.github_stars)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -401,7 +513,10 @@ const AdminDiscover = () => {
                     discover.github_stars
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.linkedin)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -415,7 +530,10 @@ const AdminDiscover = () => {
                     discover.linkedin
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.raising_amount)}
+                >
                   {isEditable ? (
                     <input
                       type="text"
@@ -429,7 +547,10 @@ const AdminDiscover = () => {
                     discover.raising_amount
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.valuation)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -443,7 +564,10 @@ const AdminDiscover = () => {
                     discover.valuation
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.investors)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -457,7 +581,10 @@ const AdminDiscover = () => {
                     discover.investors
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.pjt_grade)}
+                >
                   {isEditable ? (
                     <input
                       type="text"
@@ -474,6 +601,7 @@ const AdminDiscover = () => {
                   $isSelected={selectedRows.has(discover.pjt_id)}
                   onMouseEnter={(e) => handleMouseEnter(discover.pjt_summary, e)}
                   onMouseLeave={handleMouseLeave}
+                  onClick={() => handleCellClick(discover.pjt_summary)}
                 >
                   {isEditable ? (
                     <input
@@ -492,6 +620,7 @@ const AdminDiscover = () => {
                   $isSelected={selectedRows.has(discover.pjt_id)}
                   onMouseEnter={(e) => handleMouseEnter(discover.pjt_details, e)}
                   onMouseLeave={handleMouseLeave}
+                  onClick={() => handleCellClick(discover.pjt_details)}
                 >
                   {isEditable ? (
                     <input
@@ -506,7 +635,10 @@ const AdminDiscover = () => {
                     discover.pjt_details
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.adm_trend)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -520,7 +652,10 @@ const AdminDiscover = () => {
                     discover.adm_trend
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.adm_expertise)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -535,7 +670,10 @@ const AdminDiscover = () => {
                     discover.adm_expertise
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
+                <TableCell
+                  $isSelected={selectedRows.has(discover.pjt_id)}
+                  onClick={() => handleCellClick(discover.adm_final_grade)}
+                >
                   {' '}
                   {isEditable ? (
                     <input
@@ -573,6 +711,7 @@ const AdminDiscover = () => {
         </Table>
       </TableWrapper>
       {popupContent && <Popup style={{ top: popupPosition.top, left: popupPosition.left }}>{popupContent}</Popup>}
+      <ToastContainer />
     </DiscoverContainer>
   );
 };

@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+interface TableHeaderProps {
+  $isActive?: boolean; // $isActive가 선택적 속성으로 추가됨
+}
 
 export const DiscoverContainer = styled.div`
   padding: 20px;
@@ -31,13 +34,14 @@ export const TableWrapper = styled.div`
 
 export const Table = styled.table`
   width: 100%;
+  height: 600px;
   border-collapse: collapse;
-  overflow-y: auto; /* 세로 스크롤이 생기게 합니다 */
-  max-height: 600px; /* 테이블 최대 높이 설정 */
+  overflow-y: auto;
+  /* max-height: 600px; */
   display: block; /* 테이블을 블록 요소로 변경 */
 `;
 
-export const TableHeader = styled.th`
+export const TableHeader = styled.th<TableHeaderProps>`
   background: #fff;
   color: var(--Light-Dark, #343a40);
   font-feature-settings: 'clig' off, 'liga' off;
@@ -95,6 +99,7 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   vertical-align: middle; /* 세로 중앙 정렬 */
   /* 기본 셀 너비 */
   max-width: 150px;
+  cursor: pointer;
   /* position: relative; */
 
   &:hover .popup {
@@ -209,4 +214,77 @@ export const EditBtn = styled.button`
   font-size: 14px;
   font-style: normal;
   cursor: pointer;
+`;
+
+export const DropdownContainer = styled.div`
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+`;
+
+export const DropdownMenu = styled.div`
+  margin-top: 20px;
+  display: block;
+  position: absolute;
+  background: white;
+  width: 100%;
+  min-width: 150px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 2px solid rgba(163, 128, 249, 0.3);
+  padding: 12px 16px;
+  z-index: 999;
+  /* top: 100%;
+  left: 0; */
+
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+    font-size: 10px;
+  }
+`;
+
+export const DropdownItem = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  padding: 5px 0;
+  cursor: pointer;
+  width: 100%;
+
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+
+  input {
+    margin-right: 8px;
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 4px 0;
+
+    input {
+      margin-right: 6px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+    padding: 3px 0;
+
+    input {
+      margin-right: 4px;
+    }
+  }
 `;

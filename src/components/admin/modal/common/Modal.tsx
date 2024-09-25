@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <ModalBackground onClick={onClose}>
+    <ModalBackground>
       <ModalContent onClick={(e) => e.stopPropagation()}>{children}</ModalContent>
     </ModalBackground>
   );

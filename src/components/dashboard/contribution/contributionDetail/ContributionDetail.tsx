@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -40,8 +41,10 @@ interface Participant {
 }
 
 const ContributionDetail: React.FC = () => {
+  const navaige = useNavigate();
   const location = useLocation();
   const { title, xp, imageUrl, logoUrl, startDate, endDate, progress, maxProgress, statusText } = location.state || {};
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [participantCount, setParticipantCount] = useState(0); // 현재 참여자 수
@@ -62,6 +65,18 @@ const ContributionDetail: React.FC = () => {
     setParticipantCount(dummyParticipants.length); // 참여자 수 저장
   }, []);
 
+  useEffect(() => {
+    // URL 파라미터에서 accessToken을 가져옴
+    const searchParams = new URLSearchParams(location.search);
+    const token = searchParams.get('accessToken');
+
+    if (token) {
+      setAccessToken(token);
+      console.log('Received access token:', token);
+      // 여기에서 트위터 API 요청을 할 수 있음
+    }
+  }, [location.search]);
+
   const start = dayjs(startDate, 'YY/MM/DD');
   const end = dayjs(endDate, 'YY/MM/DD');
   const currentDate = dayjs();
@@ -79,8 +94,13 @@ const ContributionDetail: React.FC = () => {
   // 트위터 Connect 버튼 클릭 핸들러
   const handleTwitterConnect = async (task: any) => {
     try {
+      const twitterUrl = 'https://x.com/Tesla';
       // 백엔드로 OAuth 인증 요청을 보냄
-      const response = await axios.get(`${API_BASE_URL}/api/user/twitter/auth`);
+      const response = await axios.post(
+        `${API_BASE_URL}/api/user/twitter/auth`,
+        { twitterUrl },
+        { withCredentials: true } // 세션 쿠키 전송
+      );
       const { authenticateUrl } = response.data;
 
       // 트위터 인증 URL로 리디렉션
@@ -89,6 +109,37 @@ const ContributionDetail: React.FC = () => {
       console.error('Error during Twitter OAuth:', error);
     }
   };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const accessToken = searchParams.get('accessToken');
+
+    if (accessToken) {
+      console.log('Access Token:', accessToken);
+
+      // 3초 후에 트위터 페이지로 리디렉션
+      // window.location.href = 'https://x.com/Tesla'
+    }
+
+    const getUserProfile = async (accessToken: any) => {
+      if (!accessToken) return;
+
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/user/twitter/user?accessToken=${accessToken}`);
+
+        const userId = response.data.data.id; // 트위터 사용자 ID
+        const userName = response.data.data.username; // 트위터 사용자 이름
+
+        console.log(`User ID: ${userId}, Username: ${userName}`);
+        return response.data.data; // 사용자 정보 반환
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        return null;
+      }
+    };
+
+    getUserProfile(accessToken);
+  }, [location.search]);
 
   return (
     <Container>

@@ -107,7 +107,7 @@ export const TableHeader = styled.th`
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
-  width: 150px;
+  width: 300px;
   padding: 10px;
   position: sticky;
   top: 0; /* 헤더를 고정시킵니다 */
@@ -128,13 +128,14 @@ export const TableHeader = styled.th`
   }
 `;
 
-export const TableRow = styled.tr`
+export const TableRow = styled.tr<{ $isSelected?: boolean }>`
   &:nth-child(even) {
     background: #f9f9f9;
   }
+  background-color: ${(props) => (props.$isSelected ? 'rgba(217, 217, 217, 0.50)' : 'transparent')};
 `;
 
-export const TableCell = styled.td`
+export const TableCell = styled.td<{ $isSelected?: boolean }>`
   /* display: flex; */
 
   height: 50px;
@@ -142,7 +143,7 @@ export const TableCell = styled.td`
   overflow: hidden;
   /* text-overflow: ellipsis; */
   white-space: nowrap;
-  background: #fff;
+  background: ${(props) => (props.$isSelected ? 'rgba(217, 217, 217, 0.50)' : '#fff')}; /* 선택된 셀의 배경 변경 */
   color: #6c757d;
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: Poppins;
@@ -154,6 +155,7 @@ export const TableCell = styled.td`
   vertical-align: middle; /* 세로 중앙 정렬 */
   /* 기본 셀 너비 */
   max-width: 150px;
+  cursor: pointer;
   /* position: relative; */
 
   &:hover .popup {

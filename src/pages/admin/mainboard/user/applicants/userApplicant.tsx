@@ -18,6 +18,8 @@ import checkbox from 'src/assets/admin/cellbox.svg';
 import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
 import { API_BASE_URL } from 'src/utils/utils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
 
 interface Applicant {
   user_id: number;
@@ -141,6 +143,22 @@ const UserApplicants: React.FC = () => {
     setIsAllSelected(!isAllSelected);
   };
 
+  // 복사 기능 추가
+  const handleCellClick = async (content: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      toast.success('Copied to clipboard!', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000, // 1초 후 자동으로 알림 닫힘
+      });
+    } catch (error) {
+      toast.error('Failed to copy', {
+        position: 'top-right', // 문자열로 위치를 지정합니다.
+        autoClose: 1000,
+      });
+    }
+  };
+
   return (
     <UserApplicantContainer>
       <Title>User Mgmt {'>'} Applicants</Title>
@@ -167,8 +185,11 @@ const UserApplicants: React.FC = () => {
         </thead>
         <tbody>
           {filteredApplicants.map((applicant) => (
-            <TableRow key={applicant.user_id}>
-              <TableCell onClick={() => handleCheckboxChange(applicant.user_id)}>
+            <TableRow key={applicant.user_id} $isSelected={selectedRows.has(applicant.user_id)}>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onClick={() => handleCheckboxChange(applicant.user_id)}
+              >
                 {applicant.user_name !== '~~' && (
                   <CheckboxContainer>
                     <Checkbox src={checkbox} alt="checkbox" />
@@ -176,18 +197,54 @@ const UserApplicants: React.FC = () => {
                   </CheckboxContainer>
                 )}
               </TableCell>
-              <TableCell>{applicant.user_name}</TableCell>
-              <TableCell>{applicant.email_addr}</TableCell>
-              <TableCell>{applicant.wallet_addr}</TableCell>
-              <TableCell>{applicant.expertise}</TableCell>
-              <TableCell onMouseEnter={(e) => handleMouseEnter(applicant.bio, e)} onMouseLeave={handleMouseLeave}>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onClick={() => handleCellClick(applicant.user_name)}
+                onMouseEnter={(e) => handleMouseEnter(applicant.user_name, e)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {applicant.user_name}
+              </TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onClick={() => handleCellClick(applicant.email_addr)}
+                onMouseEnter={(e) => handleMouseEnter(applicant.email_addr, e)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {applicant.email_addr}
+              </TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onClick={() => handleCellClick(applicant.wallet_addr)}
+                onMouseEnter={(e) => handleMouseEnter(applicant.wallet_addr, e)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {applicant.wallet_addr}
+              </TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onClick={() => handleCellClick(applicant.expertise)}
+              >
+                {applicant.expertise}
+              </TableCell>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onMouseEnter={(e) => handleMouseEnter(applicant.bio, e)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(applicant.bio)}
+              >
                 {applicant.bio}
               </TableCell>
-              <TableCell onMouseEnter={(e) => handleMouseEnter(applicant.value_add, e)} onMouseLeave={handleMouseLeave}>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onMouseEnter={(e) => handleMouseEnter(applicant.value_add, e)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCellClick(applicant.value_add)}
+              >
                 {applicant.value_add}
               </TableCell>
-              <TableCell>{applicant.reg_date}</TableCell>
-              <TableCell>
+              <TableCell $isSelected={selectedRows.has(applicant.user_id)}>{applicant.reg_date}</TableCell>
+              <TableCell $isSelected={selectedRows.has(applicant.user_id)}>
                 {applicant.appr_status === 'PENDING' ? (
                   <>
                     <button onClick={() => handleApproval(applicant.user_id, 'APPLIED')}>Add</button>
@@ -199,7 +256,11 @@ const UserApplicants: React.FC = () => {
                   applicant.appr_status
                 )}
               </TableCell>
-              <TableCell onMouseEnter={(e) => handleMouseEnter(applicant.appr_date, e)} onMouseLeave={handleMouseLeave}>
+              <TableCell
+                $isSelected={selectedRows.has(applicant.user_id)}
+                onMouseEnter={(e) => handleMouseEnter(applicant.appr_date, e)}
+                onMouseLeave={handleMouseLeave}
+              >
                 {applicant.appr_date == null ? '~~' : applicant.appr_date}
               </TableCell>
             </TableRow>
@@ -207,6 +268,7 @@ const UserApplicants: React.FC = () => {
         </tbody>
       </Table>
       {popupContent && <Popup style={{ top: popupPosition.top, left: popupPosition.left }}>{popupContent}</Popup>}
+      <ToastContainer />
     </UserApplicantContainer>
   );
 };
