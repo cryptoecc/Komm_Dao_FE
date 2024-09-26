@@ -2,33 +2,39 @@
 import React from 'react';
 import { PATH } from '../../../constants/path';
 import { SidebarContainer, Logo, NavItem, Icon, Name, NotificationItem } from '../../dashboard/sidebar/Sidebar.style';
+import { images } from '../../../assets/dashboard/images';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
+  const navigate = useNavigate();
+  const handleLogoClick = () => {
+    navigate('/mainboard/dashboard'); // 메인 페이지 경로로 이동
+  };
   return (
     <SidebarContainer>
-      <Logo />
+      <Logo style={{ backgroundImage: `url(${images.sidebarLogo})` }} onClick={handleLogoClick} />
       <NavItem to={PATH.DASHBOARD}>
-        <Icon imageUrl="/assets/images/dashboard.png" />
+        <Icon $imageUrl={images.dashboardIcon} />
         <Name>Dashboard</Name>
       </NavItem>
       <NavItem to={PATH.DEAL}>
-        <Icon imageUrl="/assets/images/deal.png" />
+        <Icon $imageUrl={images.dealIcon} />
         <Name>Deal</Name>
       </NavItem>
       <NavItem to={PATH.DISCOVER}>
-        <Icon imageUrl="/assets/images/discover.png" />
+        <Icon $imageUrl={images.discoverIcon} />
         <Name>Discover</Name>
       </NavItem>
       <NavItem to={PATH.CONTRIBUTION}>
-        <Icon imageUrl="/assets/images/contribution.png" />
+        <Icon $imageUrl={images.contributionIcon} />
         <Name>Contribution</Name>
       </NavItem>
       <NavItem to={PATH.GOVERNANCE}>
-        <Icon imageUrl="/assets/images/governance.png" />
+        <Icon $imageUrl={images.governanceIcon} />
         <Name>Governance</Name>
       </NavItem>
       <NotificationItem>
-        <Icon imageUrl="/assets/images/notifications.png" />
+        <Icon $imageUrl={images.notificationsIcon} />
       </NotificationItem>
     </SidebarContainer>
   );

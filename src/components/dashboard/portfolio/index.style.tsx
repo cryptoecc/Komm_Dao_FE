@@ -35,7 +35,6 @@ export const TitleContainer = styled.div`
 
 export const PortfolioTitle = styled.h1`
   color: #000;
-  font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -45,7 +44,6 @@ export const PortfolioTitle = styled.h1`
 
 export const PortfolioAmount = styled.div`
   color: #000;
-  font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -61,7 +59,6 @@ export const CalendarContainer = styled.div`
 
 export const CalendarTitle = styled.h1`
   color: #000;
-  font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;

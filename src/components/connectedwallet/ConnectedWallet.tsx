@@ -18,6 +18,10 @@ import { ReactComponent as CheckIcon } from '../../assets/modal/check.svg';
 import { shortenAddress } from 'src/utils/utils';
 import { signMessage } from 'src/utils/web3';
 import ErrorMessage from '../errormsg/ErrorMessage'; // 추가된 부분
+import { useDispatch } from 'react-redux';
+import { setUserData } from 'src/store/user/UserSlice';
+import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface ConnectedWalletProps {
   walletAddress: string;
@@ -29,6 +33,10 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('Waiting for Signature');
   const [verificationFailed, setVerificationFailed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지 상태 추가
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSign = async () => {
     try {
@@ -38,21 +46,32 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
 
       // 서명 검증
       setLoadingMessage('Verifying Wallet');
-      const response = await axios.post('http://localhost:4000/api/wallet/verify-address', {
+      const response = await axios.post(`${API_BASE_URL}/api/wallet/verify-address`, {
         address: walletAddress,
         message,
         signature,
       });
 
       if (response.data.success) {
+        console.log(response.data);
+        dispatch(setUserData(response.data.data));
         alert('Wallet verified successfully');
+        navigate('/mainboard/dashboard');
       } else {
-        setVerificationFailed(true); // 추가된 부분
+        // 백엔드에서 전송된 메시지에 따라 알림 또는 오류 메시지 설정
+        console.log(response.data);
+        setErrorMessage(response.data.message);
       }
-    } catch (error) {
-      console.error('Signing error:', error);
-      // alert('Failed to verify wallet');
-      setVerificationFailed(true);
+    } catch (error: any) {
+      console.log(error);
+      if (error.response.data.message === 'Wallet not registered') {
+        setVerificationFailed(true); // 지갑이 등록되지 않은 경우 에러 페이지로 이동
+      } else if (error.response.data.message === 'Wallet is not activated') {
+        console.log(error);
+        alert('Your wallet is not activated. Please contact support.'); // 활성화되지 않은 경우 알림
+      } else {
+        setErrorMessage(error.response.message); // 기타 오류 메시지 설정
+      }
     } finally {
       setIsLoading(false);
       setLoadingMessage('Waiting for Signature');

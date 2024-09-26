@@ -19,7 +19,6 @@ export const WalletDiv = styled.div`
 
 export const WalletBtn = styled.button`
   color: #fff;
-  font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
@@ -47,8 +46,7 @@ export const ModalHeader = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  font-family: Inter;
-  padding: 0px 256px 60px 0px;
+  padding: 0px 20px 60px 0px;
   /* top: 150px; */
 `;
 
