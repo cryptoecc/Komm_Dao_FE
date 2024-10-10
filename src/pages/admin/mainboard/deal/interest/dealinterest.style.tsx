@@ -1,6 +1,9 @@
 import styled from 'styled-components';
+interface TableHeaderProps {
+  $isActive?: boolean; // $isActive가 선택적 속성으로 추가됨
+}
 
-export const UserMemberContainer = styled.div`
+export const DiscoverContainer = styled.div`
   width: 100%;
   padding: 20px;
   background: #fff;
@@ -26,79 +29,20 @@ export const TopBar = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Search = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  margin-left: 110px;
-`;
-
-export const SearchInput = styled.input`
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  width: 350px;
-  background: var(--Light-Light, #f8f9fa);
-  margin-right: 10px;
-
-  &::placeholder {
-    color: var(--Dark-Secondary, #9fa2ab);
-    font-weight: 400;
-    font-feature-settings: 'clig' off, 'liga' off;
-    /* Base/Body */
-    font-family: Poppins;
-    font-size: 14px;
-    line-height: 22px;
-  }
-`;
-
-export const IconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  /* flex-grow: -1; */
-  justify-content: flex-end;
-`;
-
-export const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-`;
-
-export const SendMessageButton = styled.button`
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  background: var(--Purple-900, #7c4dff);
-  color: #fff;
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  /* gap: 10px; */
-  margin-left: 20px;
-
-  img {
-    margin-right: 10px;
-    /* color: #fff; */
-  }
+export const TableWrapper = styled.div`
+  overflow-x: auto;
 `;
 
 export const Table = styled.table`
-  /* width: 1078px; */
+  width: 100%;
+  height: 600px;
   border-collapse: collapse;
-  overflow-y: auto; /* 세로 스크롤이 생기게 합니다 */
-  max-height: 600px; /* 테이블 최대 높이 설정 */
+  overflow-y: auto;
+  /* max-height: 600px; */
   display: block; /* 테이블을 블록 요소로 변경 */
 `;
 
-export const TableHeader = styled.th`
+export const TableHeader = styled.th<TableHeaderProps>`
   background: #fff;
   color: var(--Light-Dark, #343a40);
   font-feature-settings: 'clig' off, 'liga' off;
@@ -107,9 +51,8 @@ export const TableHeader = styled.th`
   text-align: left;
   font-weight: 500;
   font-size: 14px;
-  overflow: hidden;
   white-space: nowrap;
-  width: 300px;
+  width: 150px;
   padding: 10px;
   position: sticky;
   top: 0; /* 헤더를 고정시킵니다 */
@@ -143,7 +86,7 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
   height: 50px;
   border-bottom: 1px solid #ddd;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
+  text-overflow: ellipsis;
   white-space: nowrap;
   background: ${(props) => (props.$isSelected ? 'rgba(217, 217, 217, 0.50)' : '#fff')}; /* 선택된 셀의 배경 변경 */
   color: #6c757d;
@@ -215,13 +158,6 @@ export const Checkbox = styled.img`
   cursor: pointer;
 `;
 
-// export const CheckboxHeader = styled.img`
-//   width: 28px;
-//   height: 28px;
-//   vertical-align: middle;
-//   cursor: pointer;
-// `;
-
 export const CheckboxHeader = styled(CheckboxContainer)`
   vertical-align: middle;
 `;
@@ -255,11 +191,171 @@ export const Popup = styled.div`
   /* transform: translateX(-50%); */
 `;
 
-export const ConfirmBtn = styled.button`
-  color: var(--Light-White, #fff);
+export const ApplyBtn = styled.button`
+  background: var(--Miscellaneous-Sidebar-Text---Selected, #007aff);
+  border: none;
+  color: white;
   padding: 5px 10px;
+  font-weight: 500;
+  border-radius: 20px;
+  font-family: Roboto;
   font-size: 14px;
+  font-style: normal;
+  cursor: pointer;
+`;
+
+export const EditBtn = styled.button`
   background: #8c63ff;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-weight: 500;
+  border-radius: 20px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  cursor: pointer;
+`;
+
+export const DropdownContainer = styled.div`
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+`;
+
+export const DropdownMenu = styled.div`
+  margin-top: 20px;
+  display: block;
+  position: absolute;
+  background: white;
+  width: 100%;
+  min-width: 150px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 2px solid rgba(163, 128, 249, 0.3);
+  padding: 12px 16px;
+  z-index: 999;
+  /* top: 100%;
+  left: 0; */
+
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+    font-size: 10px;
+  }
+`;
+
+export const DropdownItem = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  padding: 5px 0;
+  cursor: pointer;
+  width: 100%;
+
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+
+  input {
+    margin-right: 8px;
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 4px 0;
+
+    input {
+      margin-right: 6px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+    padding: 3px 0;
+
+    input {
+      margin-right: 4px;
+    }
+  }
+`;
+
+// Payment Pending 버튼 스타일
+export const PaymentButton = styled.button`
+  background: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+`;
+
+// 활성화된 인풋 스타일
+export const EditableInput = styled.input`
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 14px;
+  color: #333;
+  background: #fff;
+  width: 70px;
+
+  &:focus {
+    border-color: #8c63ff;
+    outline: none;
+    background: #fff;
+  }
+`;
+
+export const CalculateButton = styled.button`
+  background: #8c63ff;
+  border: none;
+  color: white;
+  padding: 5px 10px;
   font-weight: 500;
   border-radius: 25px;
+  font-family: Roboto;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 8px; /* 버튼과 Input 간의 여백 */
+
+  &:hover {
+    background: #7a53e3;
+  }
+`;
+
+export const DatePickerWrapper = styled.div`
+  display: flex;
+  align-items: center; /* 아이콘과 텍스트가 같은 높이로 정렬되도록 설정 */
+  gap: 8px; /* 아이콘과 텍스트 사이의 간격 */
+  cursor: pointer;
+`;
+
+export const DateIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  vertical-align: middle;
+`;
+
+export const DateText = styled.span`
+  margin-left: 8px; // 아이콘과 텍스트 간격 조정
+  color: #343a40;
+  font-size: 14px;
+  vertical-align: middle;
+  white-space: nowrap;
 `;

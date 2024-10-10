@@ -41,15 +41,13 @@ export const CardContent = styled.div`
 export const LogoAndTitle = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px; /* 간격을 줄임 */
+  gap: 10px;
   margin-bottom: 6px; /* 간격을 줄임 */
 `;
 
 export const Logo = styled.img`
-  width: 36px; /* 로고 크기를 약간 줄임 */
-  height: 36px;
-  border: 2px solid white;
-  background-color: white;
+  width: 40px; /* 로고 크기를 약간 줄임 */
+  height: 40px;
 `;
 
 export const Title = styled.h3`

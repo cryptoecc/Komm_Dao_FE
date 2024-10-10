@@ -248,6 +248,7 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
             <option value="Node/Validator">Node/Validator</option>
             <option value="Research">Research</option>
             <option value="Marketing">Marketing</option>
+            <option value="Invite">Invite</option>
           </Select>
         </TeamCategory>
         <DateWrapper>
@@ -256,6 +257,9 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
               Cont. XP
             </option>
             <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="500">500</option>
             <option value="1000">1000</option>
             <option value="2000">2000</option>
           </SelectXp>
@@ -296,6 +300,7 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
                 <option value="Twitter Retweet">Twitter Retweet</option>
                 <option value="Discord Verify">Discord Verify</option>
                 <option value="Telegram Join">Telegram Join</option>
+                <option value="Invite People">Invite People</option>
               </MissionSelect>
 
               <MissionInput

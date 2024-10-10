@@ -92,6 +92,7 @@ const CardGrid = styled.div`
 const Contribution: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState<'Ongoing' | 'Finished'>('Ongoing');
   const [userData, setUserData] = useState<any>(null);
+  const [contributionData, setContributionData] = useState<any[]>([]); // 기여 데이터 상태 추가
   const user = useSelector((state: RootState) => state.user);
   console.log(user);
 
@@ -100,9 +101,7 @@ const Contribution: React.FC = () => {
       if (user && user.wallet_addr) {
         // user와 wallet_addr이 있는지 확인
         try {
-          const walletAddress = user.wallet_addr;
-          console.log(walletAddress);
-          const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
+          const response = await axios.get(`${API_BASE_URL}/api/user/profile/${user.wallet_addr}`);
           setUserData(response.data);
         } catch (error) {
           console.error('Error fetching user data:', error);
@@ -123,12 +122,28 @@ const Contribution: React.FC = () => {
       }
     };
 
-    fetchUserData();
-  }, [user]); // user 값이 변경될 때마다 useEffect 실행
+    if (!userData) {
+      fetchUserData();
+    }
+  }, [user, userData]); // user 값이 변경될 때마다 useEffect 실행
+  useEffect(() => {
+    // 백엔드 API를 통해 기여 데이터를 가져옴
+    const fetchContributionData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/contribution/get-contribution`);
+        setContributionData(response.data); // 가져온 데이터를 상태에 저장
+      } catch (error) {
+        console.error('Error fetching contribution data:', error);
+      }
+    };
+
+    fetchContributionData();
+  }, []); // 컴포넌트가 마운트될 때 데이터를 가져옴
 
   if (!user || !userData) {
     return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
   }
+
   const settings = {
     dots: true,
     infinite: true,
@@ -138,94 +153,21 @@ const Contribution: React.FC = () => {
     autoplay: true,
     autoplaySpeed: 2000,
   };
-  const slidesData = [
-    {
-      pjt_id: 1,
-      projectLogo: `${images.MYX}`,
-      projectTitle: 'MYX Finance Research',
-      kohortLabel: 'Kohort only',
-      totalAvg: '',
-      xpValue: '100 XP',
-      dates: '24/08/08 ~ 24/09/27',
-      progress: '50%',
-      progressText: '5 / 10',
-      bannerImage: `${images.MYX_banner}`,
-    },
-    {
-      pjt_id: 2,
-      projectLogo: `${images.NIBIRU}`,
-      projectTitle: 'Nibiru Chain Marketing',
-      kohortLabel: 'Kohort only',
-      totalAvg: '',
-      xpValue: '200 XP',
-      dates: '24/08/08 ~ 24/09/27',
-      progress: '47%',
-      progressText: '14 / 30',
-      bannerImage: `${images.NIBIRU_banner2}`,
-    },
-    {
-      pjt_id: 3,
-      projectLogo: `${images.Exocore}`,
-      projectTitle: 'Exocore Marketing',
-      kohortLabel: 'Kohort only',
-      totalAvg: '',
-      xpValue: '100 XP',
-      dates: '24/08/08 ~ 24/09/27',
-      progress: '71%',
-      progressText: '10 / 14',
-      bannerImage: `${images.Exocore_banner}`,
-    },
-    {
-      pjt_id: 4,
-      projectLogo: `${images.OG}`,
-      projectTitle: 'Og Labs Research',
-      kohortLabel: 'Kohort only',
-      totalAvg: '',
-      xpValue: '200 XP',
-      dates: '24/08/08 ~ 24/09/27',
-      progress: '100%',
-      progressText: '10 / 10',
-      bannerImage: `${images.OG_banner}`,
-    },
-    {
-      pjt_id: 5,
-      projectLogo: `${images.Airstack}`,
-      projectTitle: 'Airstack Validator',
-      kohortLabel: 'Kohort only',
-      totalAvg: '',
-      xpValue: '100 XP',
-      dates: '24/08/08 ~ 24/09/09',
-      progress: '40%',
-      progressText: '6 / 15',
-      bannerImage: `${images.Airstack_banner}`,
-    },
-    {
-      pjt_id: 6,
-      projectLogo: `${images.Airstack}`,
-      projectTitle: 'Airstack Research',
-      kohortLabel: '',
-      totalAvg: '',
-      xpValue: '200 XP',
-      dates: '24/08/08 ~ 24/09/27',
-      progress: '45%',
-      progressText: '18 / 40',
-      bannerImage: `${images.Airstack_banner2}`,
-    },
-  ];
 
   const currentDate = dayjs();
 
   // 날짜 파싱 및 카드 필터링
-  const ongoingCards = slidesData.filter((slide) => {
-    const endDate = dayjs(slide.dates.split(' ~ ')[1], 'YY/MM/DD'); // 종료 날짜 파싱
-    return endDate.isAfter(currentDate); // 현재 날짜와 비교
+  const ongoingCards = contributionData.filter((slide) => {
+    if (!slide.start_date || !slide.end_date) return false; // 유효성 검사
+    const endDate = dayjs(slide.end_date); // 종료 날짜 파싱
+    return endDate.isAfter(currentDate); // 현재 날짜와 비교하여 Ongoing 필터링
   });
 
-  const finishedCards = slidesData.filter((slide) => {
-    const endDate = dayjs(slide.dates.split(' ~ ')[1], 'YY/MM/DD'); // 종료 날짜 파싱
-    return endDate.isBefore(currentDate); // 현재 날짜와 비교
+  const finishedCards = contributionData.filter((slide) => {
+    if (!slide.start_date || !slide.end_date) return false; // 유효성 검사
+    const endDate = dayjs(slide.end_date); // 종료 날짜 파싱
+    return endDate.isBefore(currentDate); // 현재 날짜와 비교하여 Finished 필터링
   });
-
   return (
     <ContributionContainer>
       <ContributionHeader>
@@ -242,18 +184,22 @@ const Contribution: React.FC = () => {
 
       <ContributionContent>
         <Slider {...settings}>
-          {slidesData.map((slide) => (
+          {contributionData.map((slide) => (
             <ContributionMain
-              key={slide.pjt_id}
-              projectLogo={slide.projectLogo}
-              projectTitle={slide.projectTitle}
-              kohortLabel={slide.kohortLabel}
-              totalAvg={slide.totalAvg}
-              xpValue={slide.xpValue}
-              dates={slide.dates}
+              key={slide.cont_id}
+              logoUrl={slide.cont_logo}
+              title={slide.pjt_name}
+              kohortLabel={slide.cont_category}
+              totalAvg={'300'}
+              xp={slide.cont_xp}
+              startDate={slide.start_date}
+              endDate={slide.end_date}
               progress={slide.progress}
               progressText={slide.progressText}
-              bannerImage={slide.bannerImage}
+              imageUrl={slide.cont_banner}
+              id={slide.cont_id}
+              maxProgress={slide.max_participant}
+              statusText={slide.cont_status}
             />
           ))}
         </Slider>
@@ -269,31 +215,31 @@ const Contribution: React.FC = () => {
           {activeTab === 'Ongoing'
             ? ongoingCards.map((card) => (
                 <ContributionCard
-                  key={card.pjt_id}
-                  id={card.pjt_id} // id를 추가하여 넘김
-                  title={card.projectTitle}
-                  xp={parseInt(card.xpValue.split(' ')[0], 10)}
-                  imageUrl={card.bannerImage}
-                  logoUrl={card.projectLogo}
-                  startDate={card.dates.split(' ~ ')[0]}
-                  endDate={card.dates.split(' ~ ')[1]}
-                  progress={parseInt(card.progressText.split(' / ')[0], 10)}
-                  maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
+                  key={card.cont_id}
+                  id={card.cont_id} // id를 추가하여 넘김
+                  title={card.pjt_name}
+                  xp={card.cont_xp}
+                  imageUrl={card.cont_banner}
+                  logoUrl={card.cont_logo}
+                  startDate={card.start_date}
+                  endDate={card.end_date}
+                  progress={card.cur_participant}
+                  maxProgress={card.max_participant}
                   statusText={card.kohortLabel} // Kohort only 값을 넘김
                 />
               ))
             : finishedCards.map((card) => (
                 <ContributionCard
-                  key={card.pjt_id}
-                  id={card.pjt_id} // id를 추가하여 넘김
-                  title={card.projectTitle}
-                  xp={parseInt(card.xpValue.split(' ')[0], 10)}
-                  imageUrl={card.bannerImage}
-                  logoUrl={card.projectLogo}
-                  startDate={card.dates.split(' ~ ')[0]}
-                  endDate={card.dates.split(' ~ ')[1]}
-                  progress={parseInt(card.progressText.split(' / ')[0], 10)}
-                  maxProgress={parseInt(card.progressText.split(' / ')[1], 10)}
+                  key={card.cont_id}
+                  id={card.cont_id} // id를 추가하여 넘김
+                  title={card.pjt_name}
+                  xp={card.cont_xp}
+                  imageUrl={card.cont_banner}
+                  logoUrl={card.cont_logo}
+                  startDate={card.start_date}
+                  endDate={card.end_date}
+                  progress={card.cur_participant}
+                  maxProgress={card.max_participant}
                   statusText={card.kohortLabel} // Kohort only 값을 넘김
                 />
               ))}

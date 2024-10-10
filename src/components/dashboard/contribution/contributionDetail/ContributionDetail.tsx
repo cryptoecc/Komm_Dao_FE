@@ -78,7 +78,9 @@ const ContributionDetail: React.FC = () => {
   }, [location.search]);
 
   const start = dayjs(startDate, 'YY/MM/DD');
+  console.log(start);
   const end = dayjs(endDate, 'YY/MM/DD');
+  console.log(end);
   const currentDate = dayjs();
 
   const isActive = currentDate.isAfter(start) && currentDate.isBefore(end) ? 'Active' : 'Finished';
