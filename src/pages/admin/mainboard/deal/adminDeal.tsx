@@ -63,26 +63,27 @@ const AdminDeal: React.FC = () => {
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null);
   const [dealToDelete, setDealToDelete] = useState<number | null>(null); // 삭제할 dealId 저장
 
+  const [fetchTrigger, setFetchTrigger] = useState(false); // 딜 목록을 다시 가져오는 상태 트리거
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // 백엔드 API에서 deal 데이터 가져오기
-    const fetchDeals = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${API_BASE_URL}/api/admin/deal-list`);
-        setDeals(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching deals:', err);
-        setError('Failed to fetch deals');
-        setLoading(false);
-      }
-    };
+  const fetchDeals = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${API_BASE_URL}/api/admin/deal-list`);
+      setDeals(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching deals:', err);
+      setError('Failed to fetch deals');
+      setLoading(false);
+    }
+  };
 
+  // fetchTrigger가 변경될 때마다 딜 목록을 다시 가져옴
+  useEffect(() => {
     fetchDeals();
-  }, []);
+  }, [fetchTrigger]); // fetchTrigger가 변경될 때 딜 목록을 다시 가져오기
 
   const handleEdit = (deal: Deal) => {
     setSelectedDeal(deal); // 수정할 deal 정보를 설정
@@ -126,6 +127,10 @@ const AdminDeal: React.FC = () => {
   const currentDate = dayjs();
   //   const endDate = dayjs(deal.end_date);
   //   const status = currentDate.isBefore(endDate) ? 'Open' : 'Closed';
+
+  const addNewDeal = (newDeal: any) => {
+    setDeals((prevDeals) => [...prevDeals, newDeal]);
+  };
 
   return (
     <PageWrapper>
@@ -173,7 +178,7 @@ const AdminDeal: React.FC = () => {
         </DealCardContainer>
       </Container>
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Deal">
-        <AddDeal onCancel={() => setIsAddModalOpen(false)} />
+        <AddDeal onCancel={() => setIsAddModalOpen(false)} onDealCreated={() => setFetchTrigger((prev) => !prev)} />
       </Modal>
 
       {/* Edit 모달 */}

@@ -42,6 +42,7 @@ interface Project {
 
 interface AddDealProps {
   onCancel: () => void; // 모달을 닫기 위한 prop
+  onDealCreated: () => void;
 }
 
 const CustomDateInput = forwardRef(({ value, onClick, placeholder }: any, ref: any) => (
@@ -51,7 +52,7 @@ const CustomDateInput = forwardRef(({ value, onClick, placeholder }: any, ref: a
   </DateInputWrapper>
 ));
 
-const AddDeal: React.FC<AddDealProps> = ({ onCancel }) => {
+const AddDeal: React.FC<AddDealProps> = ({ onCancel, onDealCreated }) => {
   const [dealRound, setDealRound] = useState('');
   const [minAlloc, setMinAlloc] = useState('');
   const [maxAlloc, setMaxAlloc] = useState('');
@@ -133,7 +134,7 @@ const AddDeal: React.FC<AddDealProps> = ({ onCancel }) => {
       });
 
       console.log('Deal created successfully', response.data);
-
+      onDealCreated();
       onCancel();
     } catch (error) {
       console.error('Error creating deal', error);

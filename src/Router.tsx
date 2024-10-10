@@ -33,6 +33,7 @@ import Proposal from './pages/proposal';
 import AdminContribution from './pages/admin/mainboard/contribution/adminContribution';
 import AdminDeal from './pages/admin/mainboard/deal/adminDeal';
 import ContributionDetails from './pages/mainboard/contribution/contributionDetails';
+import AdminInterest from './pages/admin/mainboard/deal/interest/dealInterest';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -76,6 +77,7 @@ const Router = () => {
         { path: PATH.ADMINDISCOVER, element: <AdminDiscover /> },
         { path: PATH.ADMINCONTRIBUTION, element: <AdminContribution /> },
         { path: PATH.ADMINDEAL, element: <AdminDeal /> },
+        { path: PATH.DEALINTEREST, element: <AdminInterest /> },
       ],
     },
     { path: PATH.CREATE_PROPOSAL, element: <Proposal /> },

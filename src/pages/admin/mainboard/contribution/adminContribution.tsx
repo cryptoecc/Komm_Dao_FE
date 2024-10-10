@@ -21,6 +21,8 @@ import Modal from 'src/components/admin/modal/Modal';
 import axios from 'axios';
 import AddContribution from 'src/components/admin/modal/addContribution/AddContribution';
 import { API_BASE_URL } from 'src/utils/utils';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Contribution {
   cont_id: number;
@@ -32,6 +34,7 @@ interface Contribution {
   cont_reward: number;
   start_date: string; // 'YYYY-MM-DD' 형식으로 가정
   end_date: string; // 'YYYY-MM-DD' 형식으로 가정
+  cur_participant: number;
   max_participant: number;
   cont_xp: number;
   cont_status: string;
@@ -123,9 +126,40 @@ const AdminContribution = () => {
   };
 
   // Handle confirm button click
-  const handleConfirmClick = (cont_id: number) => {
-    // 서버로 확인 요청 전송 (이 부분은 서버와 연동 필요)
-    console.log(`Confirmed contribution with ID: ${cont_id}`);
+  const handleConfirmClick = async (cont_id: number) => {
+    try {
+      // 백엔드로 상태 업데이트 요청
+      const response = await axios.put(`${API_BASE_URL}/api/admin/contribution-status`, {
+        cont_id,
+        cont_status: 'APPLIED',
+      });
+
+      if (response.status === 200) {
+        // 상태가 성공적으로 변경된 경우
+        toast.success(`Contribution ${cont_id} has been successfully applied!`, {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+
+        // 상태 업데이트: 변경된 상태를 바로 반영
+        setFilteredContributions((prevContributions) =>
+          prevContributions.map((contribution) =>
+            contribution.cont_id === cont_id ? { ...contribution, cont_status: 'APPLIED' } : contribution
+          )
+        );
+      } else {
+        toast.error('Failed to update contribution status.', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      console.error('Error updating contribution status:', error);
+      toast.error('Error updating contribution status.', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    }
   };
 
   return (
@@ -151,6 +185,7 @@ const AdminContribution = () => {
             <TableHeader>Start date</TableHeader>
             <TableHeader>End date</TableHeader>
             <TableHeader>Max Part.</TableHeader>
+            <TableHeader>Cur Part.</TableHeader>
             <TableHeader>XP</TableHeader>
             <TableHeader>Status</TableHeader>
             <TableHeader>Performance(%)</TableHeader>
@@ -176,6 +211,7 @@ const AdminContribution = () => {
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.start_date}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.end_date}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.max_participant}</TableCell>
+              <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cur_participant}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_xp}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{contribution.cont_status}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{'~~'}</TableCell>

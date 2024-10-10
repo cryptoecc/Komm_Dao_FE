@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
 export const UserApplicantContainer = styled.div`
+  width: 100%;
   padding: 20px;
   background: #fff;
   border-radius: 8px;
+  overflow-x: auto;
 `;
 
 export const Title = styled.h1`

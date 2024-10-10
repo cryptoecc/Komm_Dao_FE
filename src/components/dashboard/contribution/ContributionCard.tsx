@@ -16,6 +16,9 @@ import {
   XPText,
 } from './ContribuitonCard.style';
 import { PATH } from 'src/constants/path';
+import { API_BASE_URL } from 'src/utils/utils';
+import defaultDealIcon from 'src/assets/deal/MYX.png';
+import defaultBannerImg from 'src/assets/deal/DELEGATE_banner.png';
 
 interface ContributionCardProps {
   title: string;
@@ -63,12 +66,12 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
   return (
     <CardContainer onClick={handleCardClick}>
       <ImageContainer>
-        <CardImage src={imageUrl} alt={title} />
+        <CardImage src={imageUrl ? `${API_BASE_URL}/${imageUrl}` : defaultBannerImg} alt={title} />
       </ImageContainer>
       <CardContent>
         {statusText && <StatusText>{statusText}</StatusText>}
         <LogoAndTitle>
-          <Logo src={logoUrl} alt={`${title} Logo`} />
+          <Logo src={logoUrl ? `${API_BASE_URL}/${logoUrl}` : defaultDealIcon} alt={`${title} Logo`} />
           <Title>{title}</Title>
         </LogoAndTitle>
         <XPText>{xp} XP</XPText>

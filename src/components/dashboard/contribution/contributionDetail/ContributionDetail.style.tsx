@@ -5,9 +5,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column; /* 상단에 타이틀, 아래에 섹션들 */
   justify-content: space-between;
-  background-color: #f9f8fe;
+  background-color: #f4efff;
   border-radius: 20px;
-  width: 80%;
+  width: 90%;
   margin: 40px auto;
 `;
 
