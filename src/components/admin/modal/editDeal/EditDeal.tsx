@@ -33,6 +33,7 @@ import { API_BASE_URL } from 'src/utils/utils';
 interface EditDealProps {
   deal: any; // 기존 deal 데이터
   onCancel: () => void; // 모달을 닫기 위한 함수
+  onSave: (updatedDeal: any) => void;
 }
 
 interface Project {
@@ -47,18 +48,19 @@ const CustomDateInput = forwardRef(({ value, onClick, placeholder }: any, ref: a
   </DateInputWrapper>
 ));
 
-const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel }) => {
+const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel, onSave }) => {
+  console.log(deal);
   // 기존 deal 데이터를 state로 설정
   const [dealRound, setDealRound] = useState(deal.deal_round || '');
-  const [minAlloc, setMinAlloc] = useState(deal.min_interest || '');
-  const [maxAlloc, setMaxAlloc] = useState(deal.max_interest || '');
+  const [minAlloc, setMinAlloc] = useState(deal.deal_min_interest || '');
+  const [maxAlloc, setMaxAlloc] = useState(deal.deal_max_interest || '');
   const [endDate, setEndDate] = useState<Date | null>(deal.end_date ? new Date(deal.end_date as string) : null);
   const [dealSummary, setDealSummary] = useState(deal.deal_summary || '');
   const [dealDesc, setDealDesc] = useState(deal.deal_desc || '');
 
   const [projects, setProjects] = useState<Project[]>([]); // 프로젝트 리스트 상태
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(deal.pjt_id || null);
-  const [selectedProjectName, setSelectedProjectName] = useState<string>(deal.pjt_name || '');
+  const [selectedProjectName, setSelectedProjectName] = useState<string>(deal.deal_name || '');
 
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [bannerImage, setBannerImage] = useState<File | null>(null);
@@ -111,8 +113,9 @@ const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel }) => {
         formData.append('bannerImage', bannerImage);
       }
       formData.append('pjt_id', String(selectedProjectId));
-      formData.append('pjt_name', selectedProjectName);
-
+      formData.append('pjt_name', selectedProjectName || deal.pjt_name); // 기존 프로젝트 네임 유지
+      console.log('Saving Project Name:', selectedProjectName || deal.pjt_name);
+      console.log(selectedProjectId);
       formData.append('deal_round', dealRound);
       formData.append('end_date', endDate ? endDate.toISOString() : '');
       formData.append('min_interest', minAlloc);
@@ -121,11 +124,14 @@ const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel }) => {
       formData.append('deal_desc', dealDesc);
 
       // 백엔드에 수정된 데이터 전송
-      await axios.put(`${API_BASE_URL}/api/admin/deals/${deal.deal_id}`, formData, {
+      const response = await axios.put(`${API_BASE_URL}/api/admin/deals/${deal.deal_id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log(response.data);
+
+      onSave(response.data);
 
       console.log('Deal updated successfully');
       onCancel(); // 모달 닫기
@@ -133,6 +139,13 @@ const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel }) => {
       console.error('Error updating deal', error);
     }
   };
+
+  useEffect(() => {
+    if (deal.pjt_id && deal.pjt_name) {
+      setSelectedProjectId(deal.pjt_id);
+      setSelectedProjectName(deal.pjt_name);
+    }
+  }, [deal.pjt_id, deal.pjt_name]);
 
   return (
     <Container>
@@ -162,9 +175,11 @@ const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel }) => {
             value={selectedProjectId || ''}
             onChange={(e) => {
               const project = projects.find((p) => p.pjt_id === Number(e.target.value));
+              console.log(project);
               if (project) {
                 setSelectedProjectId(project.pjt_id);
                 setSelectedProjectName(project.pjt_name); // 프로젝트 이름 저장
+                console.log('Selected Project Name:', project.pjt_name);
               }
             }}
           >
