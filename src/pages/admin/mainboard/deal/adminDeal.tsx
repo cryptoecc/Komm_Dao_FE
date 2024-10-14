@@ -90,6 +90,14 @@ const AdminDeal: React.FC = () => {
     setIsEditModalOpen(true); // 편집 모달 열기
   };
 
+  // Deal 업데이트를 처리하는 함수
+  const handleUpdateDeal = (updatedDeal: Deal) => {
+    console.log(updatedDeal);
+    setDeals((prevDeals) => prevDeals.map((deal) => (deal.deal_id === updatedDeal.deal_id ? updatedDeal : deal)));
+    fetchDeals();
+    setIsEditModalOpen(false); // 모달 닫기
+  };
+
   const handleDelete = (dealId: number) => {
     console.log('Deleting deal:', dealId);
     // 삭제 확인 모달을 띄우거나 삭제 API 요청
@@ -184,7 +192,7 @@ const AdminDeal: React.FC = () => {
       {/* Edit 모달 */}
       {selectedDeal && (
         <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Edit Deal">
-          <EditDeal deal={selectedDeal} onCancel={() => setIsEditModalOpen(false)} />
+          <EditDeal deal={selectedDeal} onCancel={() => setIsEditModalOpen(false)} onSave={handleUpdateDeal} />
         </Modal>
       )}
       {/* 삭제 확인 모달 */}
