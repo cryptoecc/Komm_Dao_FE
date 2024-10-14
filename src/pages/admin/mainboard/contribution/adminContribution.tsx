@@ -11,6 +11,7 @@ import {
   CheckboxContainer,
   Checkmark,
   ConfirmBtn,
+  DetailBtn,
 } from './adminContribution.style';
 import React, { useState, useEffect } from 'react';
 import headerbox from 'src/assets/admin/headerbox.svg';
@@ -20,6 +21,7 @@ import checkmark from 'src/assets/admin/cell_check.svg';
 import Modal from 'src/components/admin/modal/Modal';
 import axios from 'axios';
 import AddContribution from 'src/components/admin/modal/addContribution/AddContribution';
+import InviteDetailsModal from 'src/components/admin/modal/inviteDetailModal/InviteDetailModal';
 import { API_BASE_URL } from 'src/utils/utils';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -49,6 +51,9 @@ const AdminContribution = () => {
   // 모달
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+  const [inviteDetails, setInviteDetails] = useState([]);
+  const [inviteeList, setInviteeList] = useState([]); // 초대받은 유저들의 리스트
+  const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
 
   // 검색
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -162,6 +167,22 @@ const AdminContribution = () => {
     }
   };
 
+  const handleDetailClick = async (cont_id: number) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/admin/invite-details/${cont_id}`);
+      console.log(response.data);
+
+      if (response.data) {
+        setInviteDetails(response.data); // 서버에서 받은 전체 데이터를 그대로 설정
+        setIsDetailOpen(true); // 모달 열기
+      } else {
+        console.error('No data received from the server');
+      }
+    } catch (error) {
+      console.error('Failed to fetch invite details', error);
+    }
+  };
+
   return (
     <UserMemberContainer>
       <Title>Contribution Mgmt</Title>
@@ -217,10 +238,19 @@ const AdminContribution = () => {
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{'~~'}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>{'~~'}</TableCell>
               <TableCell $isSelected={selectedRows.has(contribution.cont_id)}>
-                {contribution.cont_status === 'PENDING' ? (
+                {/* Confirm 버튼 */}
+                {contribution.cont_status === 'PENDING' && (
                   <ConfirmBtn onClick={() => handleConfirmClick(contribution.cont_id)}>Confirm</ConfirmBtn>
-                ) : (
-                  contribution.cont_status
+                )}
+
+                {/* Detail 버튼 */}
+                {contribution.cont_type === 'Invite' && contribution.cont_status === 'APPLIED' && (
+                  <DetailBtn onClick={() => handleDetailClick(contribution.cont_id)}>Detail</DetailBtn>
+                )}
+
+                {/* 상태 표시 */}
+                {contribution.cont_status !== 'PENDING' && contribution.cont_status !== 'APPLIED' && (
+                  <span>{contribution.cont_status}</span>
                 )}
               </TableCell>
             </TableRow>
@@ -236,6 +266,12 @@ const AdminContribution = () => {
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="New Contribution">
         <AddContribution onCancel={() => setIsAddModalOpen(false)} />
       </Modal>
+      <InviteDetailsModal
+        isOpen={isDetailOpen}
+        onClose={() => setIsDetailOpen(false)}
+        inviteDetails={inviteDetails}
+        // inviteeList={inviteeList}
+      />
     </UserMemberContainer>
   );
 };

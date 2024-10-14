@@ -4,11 +4,19 @@ import storage from 'redux-persist/lib/storage'; // `localStorage`에 상태를 
 import userReducer from './user/UserSlice';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist/es/constants';
 import AdminSlice from './admin/AdminSlice';
+import expireReducer from 'redux-persist-transform-expire';
 
 // `redux-persist` 설정
 const persistConfig = {
   key: 'root', // 상태 저장의 key (localStorage에 저장될 때의 이름)
   storage, // `localStorage`에 상태를 저장
+  transforms: [
+    expireReducer('user', {
+      expireSeconds: 15 * 60, // 15분 후 상태 만료 (초 단위)
+      expiredState: {}, // 만료 후 상태 설정
+      autoExpire: true, // 만료 시 자동 삭제
+    }),
+  ],
 };
 
 const adminPersistConfig = {

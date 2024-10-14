@@ -150,21 +150,18 @@ export const ProgressContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 15px;
-  width: 100%;
+  background-color: #f0e6ff;
+  position: relative;
+  border-radius: 20px;
+  /* height:22px; */
+  width: 83%;
 `;
 
-export const ProgressBar = styled.div`
-  width: 80%;
-  height: 22px;
-  background-color: #e0e0e0;
+export const ProgressBar = styled.div<{ $progress: number; $maxProgress: number }>`
+  width: ${({ $progress, $maxProgress }) => ($progress / $maxProgress) * 100}%;
+  height: 25px;
+  background-color: #875cff;
   border-radius: 20px;
-  margin-bottom: 8px;
-
-  .progress {
-    height: 100%;
-    background-color: #875cff;
-    border-radius: 20px;
-  }
 
   @media (max-width: 768px) {
     width: 100%;

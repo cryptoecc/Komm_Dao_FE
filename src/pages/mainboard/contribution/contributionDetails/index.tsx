@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import ContributionDetail from 'src/components/dashboard/contribution/contributionDetail/ContributionDetail';
 
 const PageContainer = styled.div`
-  padding: 20px;
+  padding: 40px 10px;
+  /* height: 100%; */
 `;
 
 const BackButton = styled.div`
@@ -21,7 +22,7 @@ const BackLink = styled.div`
   cursor: pointer;
   color: #875cff;
   font-weight: 700;
-
+  padding-left: 60px;
   span {
     margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 */
   }

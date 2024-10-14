@@ -15,7 +15,7 @@
     "isolatedModules": false, // 각 파일을 독립적인 모듈로 컴파일 여부
     "jsx": "react-jsx", // JSX 문법 설정 (React 프로젝트라면 react-jsx 사용)
     "baseUrl": "./", // 모듈을 해석할 기본 경로 설정
-    "typeRoots": ["./node_modules/@types"], // @types 패키지를 검색할 루트 경로 설정
+    "typeRoots": ["./src/types", "./node_modules/@types"], // @types 패키지를 검색할 루트 경로 설정
     "types": [] // 프로젝트에서 사용할 타입 정의 파일 목록
   },
   "include": ["src"] // 포함할 파일 및 디렉터리 목록 설정

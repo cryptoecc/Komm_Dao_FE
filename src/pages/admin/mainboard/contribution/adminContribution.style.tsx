@@ -263,3 +263,12 @@ export const ConfirmBtn = styled.button`
   font-weight: 500;
   border-radius: 25px;
 `;
+
+export const DetailBtn = styled.button`
+  color: var(--Light-White, #fff);
+  padding: 5px 10px;
+  font-size: 14px;
+  background: #007aff;
+  font-weight: 500;
+  border-radius: 25px;
+`;

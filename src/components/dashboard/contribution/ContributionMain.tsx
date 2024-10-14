@@ -30,12 +30,13 @@ interface ContributionMainProps {
   xp: string;
   startDate: string;
   endDate: string;
-  progress: string;
+  progress: number;
   progressText: string;
+  desc: string;
   imageUrl: string;
   id: number;
   maxProgress: number;
-  statusText: string;
+  type: string;
 }
 
 const ContributionMain: React.FC<ContributionMainProps> = ({
@@ -48,10 +49,11 @@ const ContributionMain: React.FC<ContributionMainProps> = ({
   endDate,
   progress,
   progressText,
+  desc,
   imageUrl,
   id,
   maxProgress,
-  statusText,
+  type,
 }) => {
   const navigate = useNavigate();
 
@@ -64,14 +66,16 @@ const ContributionMain: React.FC<ContributionMainProps> = ({
         logoUrl,
         startDate,
         endDate,
+        desc,
         progress,
         maxProgress,
-        statusText,
+        type,
+        id,
       },
     });
   };
   return (
-    <div onClick={handleCardClick}>
+    <div onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <ProjectTitleWrapper>
         <ProjectLogo src={logoUrl ? `${API_BASE_URL}/${logoUrl}` : defaultDealIcon} alt="Project Logo" />
         <ProjectTitle>{title}</ProjectTitle>
@@ -100,10 +104,7 @@ const ContributionMain: React.FC<ContributionMainProps> = ({
             {startDate} ~ {endDate}
           </Dates>
           <ProgressContainer>
-            <ProgressBar>
-              <div className="progress" style={{ width: progress }}></div>
-            </ProgressBar>
-            <ProgressText>{progressText}</ProgressText>
+            <ProgressBar $progress={progress} $maxProgress={maxProgress} />
           </ProgressContainer>
         </LeftSection>
         <RightSection>
