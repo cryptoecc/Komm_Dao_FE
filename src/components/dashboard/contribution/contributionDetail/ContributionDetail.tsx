@@ -27,10 +27,17 @@ import {
   TaskWrapper,
   ClaimButton,
   ClaimButtonText,
+  InviteSection,
+  InviteButton,
+  InviteIcon,
 } from './ContributionDetail.style';
 import ContributionModal from './ContributionModal'; // 모달 컴포넌트 추가
+import InviteModal from 'src/components/inviteModal/InviteModal';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
+import defaultDealIcon from 'src/assets/deal/MYX.png';
+import defaultBannerImg from 'src/assets/deal/DELEGATE_banner.png';
+import inviteImg from 'src/assets/contribution/invite.png';
 
 dayjs.extend(customParseFormat);
 
@@ -43,8 +50,10 @@ interface Participant {
 const ContributionDetail: React.FC = () => {
   const navaige = useNavigate();
   const location = useLocation();
-  const { title, xp, imageUrl, logoUrl, startDate, endDate, progress, maxProgress, statusText } = location.state || {};
+  const { title, xp, imageUrl, logoUrl, startDate, endDate, progress, maxProgress, type, desc, id } =
+    location.state || {};
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [isInviteModalOpen, setInviteModalOpen] = useState(false);
 
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [participantCount, setParticipantCount] = useState(0); // 현재 참여자 수
@@ -77,10 +86,9 @@ const ContributionDetail: React.FC = () => {
     }
   }, [location.search]);
 
-  const start = dayjs(startDate, 'YY/MM/DD');
-  console.log(start);
-  const end = dayjs(endDate, 'YY/MM/DD');
-  console.log(end);
+  const start = dayjs(startDate, 'YYYY-MM-DD');
+  const end = dayjs(endDate, 'YYYY-MM-DD');
+
   const currentDate = dayjs();
 
   const isActive = currentDate.isAfter(start) && currentDate.isBefore(end) ? 'Active' : 'Finished';
@@ -143,6 +151,15 @@ const ContributionDetail: React.FC = () => {
     getUserProfile(accessToken);
   }, [location.search]);
 
+  const handleInviteClick = () => {
+    setInviteModalOpen(true);
+  };
+
+  // Invite 모달 닫기 핸들러
+  const handleCloseInviteModal = () => {
+    setInviteModalOpen(false);
+  };
+
   return (
     <Container>
       <TitleWrapper>
@@ -161,21 +178,13 @@ const ContributionDetail: React.FC = () => {
       <div style={{ display: 'flex', width: '100%' }}>
         <LeftSection>
           <ContentWrapper>
-            <Banner src={imageUrl} alt="Project Banner" />
+            <Banner src={imageUrl ? `${API_BASE_URL}/${imageUrl}` : defaultBannerImg} alt="Project Banner" />
             <RewardSection>
-              Reward <span>{xp} XP</span>
+              Reward <span style={{ paddingLeft: '10px' }}>{xp} XP</span>
             </RewardSection>
             <MissionSection>
               <h3>Mission</h3>
-              <p>
-                MYX 커뮤니티 활성화를 위해 트위터, 디스코드 이벤트를 진행중에 있습니다.
-                <br />
-                해당 트위터와 디스코드를 자신의 계정과 연결하면 Claim 버튼이 활성화 되고,
-                <br />
-                MYX의 소식을 실시간으로 빠르게 받아보실 수 있습니다!
-                <br />
-                지금 바로 참여하여 XP를 획득해보세요!
-              </p>
+              <p>{desc}</p>
             </MissionSection>
             <DateSection>
               <h4>Date</h4>
@@ -188,33 +197,52 @@ const ContributionDetail: React.FC = () => {
 
         <RightSection>
           <TaskWrapper>
-            <TaskSection>
-              <ul>
-                <li>
-                  <img src={logoUrl} alt="Task Icon" />
-                  MYX Twitter Followers
-                  <ActionButton onClick={() => handleTwitterConnect('followers')}>Connect</ActionButton>
-                </li>
-                <li>
-                  <img src={logoUrl} alt="Task Icon" />
-                  MYX Retweet
-                  <ActionButton onClick={() => handleTwitterConnect('retweet')}>Connect</ActionButton>
-                </li>
-                <li>
-                  <img src={logoUrl} alt="Task Icon" />
-                  MYX Discord
-                  <ActionButton>Connect</ActionButton>
-                </li>
-              </ul>
-            </TaskSection>
+            {type === 'Invite' ? (
+              <>
+                <InviteSection>
+                  <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                    <InviteIcon src={inviteImg} alt="Invite Icon" />
+                    {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> */}
+                    <div>
+                      <h3>Invite a New Member</h3>
+                      <p>You have invited {progress} members.</p>
+                    </div>
+                  </div>
+
+                  {/* </div> */}
+
+                  <InviteButton onClick={handleInviteClick}>Invite</InviteButton>
+                </InviteSection>
+              </>
+            ) : (
+              <TaskSection>
+                <ul>
+                  <li>
+                    <img src={logoUrl} alt="Task Icon" />
+                    MYX Twitter Followers
+                    <ActionButton onClick={() => handleTwitterConnect('followers')}>Connect</ActionButton>
+                  </li>
+                  <li>
+                    <img src={logoUrl} alt="Task Icon" />
+                    MYX Retweet
+                    <ActionButton onClick={() => handleTwitterConnect('retweet')}>Connect</ActionButton>
+                  </li>
+                  <li>
+                    <img src={logoUrl} alt="Task Icon" />
+                    MYX Discord
+                    <ActionButton>Connect</ActionButton>
+                  </li>
+                </ul>
+              </TaskSection>
+            )}
           </TaskWrapper>
 
           <ParticipantSection>
             <h4>Participants</h4>
             <ProgressContainer>
-              <ProgressBar $progress={participantCount} $maxProgress={maxProgress} />
+              <ProgressBar $progress={progress} $maxProgress={maxProgress} />
               <ProgressText>
-                {participantCount} / {maxProgress}
+                {progress} / {maxProgress}
               </ProgressText>
             </ProgressContainer>
             <AvatarList>
@@ -235,6 +263,7 @@ const ContributionDetail: React.FC = () => {
       </div>
 
       {/* 모달 */}
+      <InviteModal isOpen={isInviteModalOpen} onClose={handleCloseInviteModal} data={id} />
       <ContributionModal isOpen={isModalOpen} claimedXP={claimedXP} onClose={handleCloseModal} />
     </Container>
   );

@@ -80,7 +80,7 @@ export const DateRange = styled.span`
 export const ProgressBarContainer = styled.div`
   width: 100%;
   height: 8px; /* 높이를 줄임 */
-  background-color: #f0e6ff;
+  background-color: #fff;
   border-radius: 5px;
   margin-bottom: 8px;
   position: relative;

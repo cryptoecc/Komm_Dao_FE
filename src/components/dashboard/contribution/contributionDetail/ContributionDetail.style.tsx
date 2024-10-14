@@ -8,7 +8,8 @@ export const Container = styled.div`
   background-color: #f4efff;
   border-radius: 20px;
   width: 90%;
-  margin: 40px auto;
+  height: 100%;
+  margin: 20px auto;
 `;
 
 export const TitleWrapper = styled.div`
@@ -16,12 +17,12 @@ export const TitleWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 export const ProjectTitle = styled.h1`
   color: black;
-  font-size: 50px;
+  font-size: 45px;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
@@ -37,8 +38,8 @@ export const RightSection = styled.div`
 `;
 
 export const ActiveBadge = styled.div`
-  width: 150px;
-  height: 50px;
+  width: 125px;
+  height: 35px;
   padding: 17px;
   background: linear-gradient(0deg, #7c4dff 0%, #7c4dff 100%);
   border-radius: 30px;
@@ -48,7 +49,7 @@ export const ActiveBadge = styled.div`
   margin-left: 20px;
   div {
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     word-wrap: break-word;
@@ -76,8 +77,9 @@ export const FinishedBadge = styled.div`
 
 export const ContentWrapper = styled.div`
   border-radius: 30px;
-  border: 10px #ebe3fe solid;
+  border: 10px solid #ebe3fe;
   padding: 20px;
+  background-color: white;
 `;
 
 export const Banner = styled.img`
@@ -147,6 +149,7 @@ export const TaskWrapper = styled.div`
   border-radius: 20px;
   border: 10px #ebe3fe solid;
   padding: 20px;
+  background-color: white;
 `;
 
 export const TaskSection = styled.div`
@@ -222,9 +225,9 @@ export const ParticipantSection = styled.div`
 export const ProgressContainer = styled.div`
   width: 100%;
   height: 15px; /* 기존 10px에서 15px으로 높이 증가 */
-  background-color: #f0e6ff;
+  background-color: white;
   border-radius: 5px;
-  margin: 35px 0px;
+  margin: 18px 0px 40px 0px;
   position: relative;
 `;
 
@@ -236,8 +239,10 @@ export const ProgressBar = styled.div<{ $progress: number; $maxProgress: number 
 `;
 
 export const ProgressText = styled.div`
-  font-size: 16px; /* 기존 14px에서 16px으로 폰트 크기 증가 */
-  color: #555;
+  font-size: 15px; /* 기존 14px에서 16px으로 폰트 크기 증가 */
+  color: #000;
+  font-weight: 500;
+  font-family: Inter;
   margin-bottom: 20px; /* 기존 10px에서 20px으로 변경 */
   padding-top: 5px; /* 텍스트와 위 요소 간의 간격 확보 */
   text-align: center; /* 텍스트 중앙 정렬 */
@@ -294,4 +299,76 @@ export const ClaimButtonText = styled.div`
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
+`;
+
+export const InviteSection = styled.div`
+  /* display: flex; */
+  align-items: center;
+  /* justify-content: space-between; */
+  /* padding: 20px; */
+  /* margin: 20px 0; */
+
+  width: 100%;
+
+  h3 {
+    color: #000;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  p {
+    width: 180px;
+    color: #000;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+`;
+
+export const InviteIcon = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+export const InviteButton = styled.button`
+  background: var(--Purple-900, #7c4dff);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  /* margin-top: 10px; */
+  cursor: pointer;
+  /* position: relative; */
+  /* top: 40px; */
+  /* right: 30px; */
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #6e40cc;
+  }
+  float: right;
+  /* align-self: flex-end; 오른쪽 수직 정렬 */
+  /* margin-left: auto; 버튼이 수평으로 오른쪽에 붙도록 함 */
+`;
+
+export const ActionButtons = styled.button`
+  background-color: #875cff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #6e40cc;
+  }
+
+  align-self: flex-end; /* 오른쪽 수직 정렬 */
+  margin-left: auto; /* 버튼이 수평으로 오른쪽에 붙도록 함 */
 `;

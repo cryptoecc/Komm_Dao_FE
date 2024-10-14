@@ -168,6 +168,8 @@ const Contribution: React.FC = () => {
     const endDate = dayjs(slide.end_date); // 종료 날짜 파싱
     return endDate.isBefore(currentDate); // 현재 날짜와 비교하여 Finished 필터링
   });
+
+  console.log(contributionData);
   return (
     <ContributionContainer>
       <ContributionHeader>
@@ -194,12 +196,13 @@ const Contribution: React.FC = () => {
               xp={slide.cont_xp}
               startDate={slide.start_date}
               endDate={slide.end_date}
-              progress={slide.progress}
+              progress={slide.cur_participant}
               progressText={slide.progressText}
+              desc={slide.cont_desc}
               imageUrl={slide.cont_banner}
               id={slide.cont_id}
               maxProgress={slide.max_participant}
-              statusText={slide.cont_status}
+              type={slide.cont_type}
             />
           ))}
         </Slider>
@@ -225,7 +228,8 @@ const Contribution: React.FC = () => {
                   endDate={card.end_date}
                   progress={card.cur_participant}
                   maxProgress={card.max_participant}
-                  statusText={card.kohortLabel} // Kohort only 값을 넘김
+                  type={card.cont_type} // Kohort only 값을 넘김
+                  desc={card.cont_desc}
                 />
               ))
             : finishedCards.map((card) => (
@@ -240,7 +244,8 @@ const Contribution: React.FC = () => {
                   endDate={card.end_date}
                   progress={card.cur_participant}
                   maxProgress={card.max_participant}
-                  statusText={card.kohortLabel} // Kohort only 값을 넘김
+                  type={card.cont_type} // Kohort only 값을 넘김
+                  desc={card.cont_desc}
                 />
               ))}
         </CardGrid>

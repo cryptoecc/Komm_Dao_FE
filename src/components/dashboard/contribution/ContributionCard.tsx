@@ -29,7 +29,8 @@ interface ContributionCardProps {
   endDate: string;
   progress: number;
   maxProgress: number;
-  statusText?: string;
+  desc: string;
+  type?: string;
   id: number; // 각 카드의 고유 ID
 }
 
@@ -42,7 +43,8 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
   endDate,
   progress,
   maxProgress,
-  statusText,
+  desc,
+  type,
   id,
 }) => {
   const navigate = useNavigate();
@@ -58,7 +60,9 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
         endDate,
         progress,
         maxProgress,
-        statusText,
+        desc,
+        type,
+        id,
       },
     });
   };
@@ -69,7 +73,7 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
         <CardImage src={imageUrl ? `${API_BASE_URL}/${imageUrl}` : defaultBannerImg} alt={title} />
       </ImageContainer>
       <CardContent>
-        {statusText && <StatusText>{statusText}</StatusText>}
+        {/* {type && <StatusText>{type}</StatusText>} */}
         <LogoAndTitle>
           <Logo src={logoUrl ? `${API_BASE_URL}/${logoUrl}` : defaultDealIcon} alt={`${title} Logo`} />
           <Title>{title}</Title>

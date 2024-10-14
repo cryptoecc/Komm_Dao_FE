@@ -59,7 +59,7 @@ const AdminLogin: React.FC = () => {
           },
         });
 
-        dispatch(setUserData(userResponse.data));
+        // dispatch(setUserData(userResponse.data));
 
         navigate('/admin-mainboard');
       } else {
