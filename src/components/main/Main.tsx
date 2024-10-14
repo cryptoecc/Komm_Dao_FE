@@ -10,7 +10,7 @@ const Main: React.FC = () => {
       <ContainerMain>
         {/* <ConnectWallet /> */}
         <Logo src={MainLogo} alt="Logo" />
-        <Text>KommDAO</Text>
+        <Text>Komm DAO</Text>
         <SubText>The First Venture DAO in Korea</SubText>
       </ContainerMain>
     </div>
