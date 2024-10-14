@@ -47,6 +47,69 @@ const AdminDiscover = () => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [editValues, setEditValues] = useState<{ [key: number]: { [field: string]: string } }>({});
 
+  // Add
+  const [newRowVisible, setNewRowVisible] = useState<boolean>(false); // 새로운 행을 추가할지 여부
+  const [newRowData, setNewRowData] = useState<any>({
+    pjt_name: '',
+    website: '',
+    category: '',
+    x_link: '',
+    x_followers: '',
+    discord_link: '',
+    discord_members: '',
+    linkedIn_link: '',
+    github_link: '',
+    github_stars: '',
+    raising_amount: '',
+    valuation: '',
+    investors: '',
+    pjt_grade: '',
+    pjt_summary: '',
+    pjt_details: '',
+    adm_trend: '',
+    adm_expertise: '',
+    adm_final_grade: '',
+    update_date: '',
+    apply_yn: '',
+    // 필요한 다른 필드들 추가
+  });
+
+  // 새로운 데이터 행 추가
+  const handleAddClick = () => setNewRowVisible(true);
+
+  const handleNewRowInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    setNewRowData({ ...newRowData, [field]: e.target.value });
+  };
+
+  // 새로운 데이터를 추가하는 함수
+  const handleSaveNewRow = () => {
+    setDiscovers((prevDiscovers) => [newRowData, ...prevDiscovers]); // 새로운 데이터를 테이블 맨 위에 추가
+    setNewRowVisible(false); // 새로운 행 감추기
+    setNewRowData({
+      pjt_name: '',
+      website: '',
+      category: '',
+      x_link: '',
+      x_followers: '',
+      discord_link: '',
+      discord_members: '',
+      linkedIn_link: '',
+      github_link: '',
+      github_stars: '',
+      raising_amount: '',
+      valuation: '',
+      investors: '',
+      pjt_grade: '',
+      pjt_summary: '',
+      pjt_details: '',
+      adm_trend: '',
+      adm_expertise: '',
+      adm_final_grade: '',
+      update_date: '',
+      apply_yn: '',
+    }); // 필드 초기화
+  };
+
   // Category
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isCategoryDropdownVisible, setIsCategoryDropdownVisible] = useState<boolean>(false);
@@ -260,6 +323,7 @@ const AdminDiscover = () => {
       <TopBar
         onSearchChange={setSearchTerm} // 검색어가 변경될 때 필터링
         onEditClick={() => console.log('Edit Clicked')} // 편집 버튼 클릭 시 동작 추가 가능
+        onAddClick={handleAddClick}
         showToggle={true}
         onToggleChange={handleToggle}
         // 추가 버튼 클릭 시 동작 추가 가능
@@ -324,6 +388,182 @@ const AdminDiscover = () => {
             </TableRow>
           </thead>
           <tbody>
+            {newRowVisible && (
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.pjt_name}
+                    onChange={(e) => handleNewRowInputChange(e, 'pjt_name')}
+                    placeholder="Project Name"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.website}
+                    onChange={(e) => handleNewRowInputChange(e, 'website')}
+                    placeholder="Website"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Category"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="X(Twitter)"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="X Followers"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Discord"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Discord Members"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Linkdein"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Github"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Github Stars"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Github wkly"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Raising"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Valuation"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Investors"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Grade"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Summary"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Details"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Trend"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Expertise"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="Final Grade"
+                  />
+                </TableCell>
+                <TableCell>
+                  <input
+                    type="text"
+                    value={newRowData.category}
+                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    placeholder="update date"
+                  />
+                </TableCell>
+                <TableCell>
+                  <EditBtn onClick={handleSaveNewRow}>Save</EditBtn>
+                </TableCell>
+              </TableRow>
+            )}
             {filteredDiscovers.map((discover) => (
               <TableRow key={discover.pjt_id} $isSelected={selectedRows.has(discover.pjt_id)}>
                 <TableCell

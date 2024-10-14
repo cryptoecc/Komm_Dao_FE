@@ -54,6 +54,35 @@ export const switchToOptimism = async () => {
   }
 };
 
+// Sepolia 네트워크 전환
+export const switchToSepolia = async () => {
+  try {
+    if (window.ethereum) {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            chainId: '0xaa36a7', // Sepolia 테스트 네트워크의 체인 ID는 11155111입니다. 16진수로는 0xaa36a7입니다.
+            chainName: 'Ethereum Testnet Sepolia',
+            nativeCurrency: {
+              name: 'SepoliaETH',
+              symbol: 'ETH',
+              decimals: 18,
+            },
+            rpcUrls: ['https://sepolia.infura.io/v3/b9b632f9e59c480fb0f81e446afdfb85'], // 실제 사용 시 Infura의 프로젝트 ID를 넣어야 합니다.
+            blockExplorerUrls: ['https://sepolia.etherscan.io'],
+          },
+        ],
+      });
+    } else {
+      console.error('MetaMask is not installed');
+    }
+  } catch (error) {
+    console.error('Network switch error:', error);
+    throw error;
+  }
+};
+
 // 지갑연결해지
 export const disconnectWallet = async () => {
   try {
