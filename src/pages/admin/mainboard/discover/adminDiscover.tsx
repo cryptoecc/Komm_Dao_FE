@@ -54,12 +54,12 @@ const AdminDiscover = () => {
     website: '',
     category: '',
     x_link: '',
-    x_followers: '',
+    x_followers: 0,
     discord_link: '',
-    discord_members: '',
+    discord_members: 0,
     linkedIn_link: '',
     github_link: '',
-    github_stars: '',
+    github_stars: 0,
     raising_amount: '',
     valuation: '',
     investors: '',
@@ -79,35 +79,60 @@ const AdminDiscover = () => {
 
   const handleNewRowInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
     setNewRowData({ ...newRowData, [field]: e.target.value });
+    console.log('입력 :', newRowData);
   };
 
-  // 새로운 데이터를 추가하는 함수
-  const handleSaveNewRow = () => {
-    setDiscovers((prevDiscovers) => [newRowData, ...prevDiscovers]); // 새로운 데이터를 테이블 맨 위에 추가
-    setNewRowVisible(false); // 새로운 행 감추기
-    setNewRowData({
-      pjt_name: '',
-      website: '',
-      category: '',
-      x_link: '',
-      x_followers: '',
-      discord_link: '',
-      discord_members: '',
-      linkedIn_link: '',
-      github_link: '',
-      github_stars: '',
-      raising_amount: '',
-      valuation: '',
-      investors: '',
-      pjt_grade: '',
-      pjt_summary: '',
-      pjt_details: '',
-      adm_trend: '',
-      adm_expertise: '',
-      adm_final_grade: '',
-      update_date: '',
-      apply_yn: '',
-    }); // 필드 초기화
+  const handleSaveNewRow = async () => {
+    try {
+      // 백엔드로 새 데이터 전송
+      const response = await axios.post(`${API_BASE_URL}/api/admin/add-project`, newRowData);
+
+      if (response.status === 200) {
+        const newProject = response.data.project; // 백엔드에서 반환된 프로젝트 데이터
+        console.log(newProject);
+
+        // 성공적으로 저장된 경우 테이블에 새로운 행 추가
+        setDiscovers((prevDiscovers) => [newProject, ...prevDiscovers]);
+        setNewRowVisible(false); // 새로운 행 감추기
+        setNewRowData({
+          pjt_name: '',
+          website: '',
+          category: '',
+          x_link: '',
+          x_followers: 0,
+          discord_link: '',
+          discord_members: 0,
+          linkedIn_link: '',
+          github_link: '',
+          github_stars: 0,
+          raising_amount: '',
+          valuation: '',
+          investors: '',
+          pjt_grade: '',
+          pjt_summary: '',
+          pjt_details: '',
+          adm_trend: '',
+          adm_expertise: '',
+          adm_final_grade: '',
+          update_date: '',
+          apply_yn: '',
+        }); // 필드 초기화
+
+        // 성공 메시지
+        toast.success('New row added successfully!', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      } else {
+        throw new Error('Failed to add new row');
+      }
+    } catch (error) {
+      console.error('Error adding new row:', error);
+      toast.error('Failed to add new row', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    }
   };
 
   // Category
@@ -317,6 +342,28 @@ const AdminDiscover = () => {
     }
   };
 
+  // 선택된 항목 삭제 핸들러
+  const handleDeleteSelected = async () => {
+    try {
+      const selectedIds = Array.from(selectedRows); // 선택된 프로젝트의 pjt_id 목록
+      await axios.post(`${API_BASE_URL}/api/admin/delete-projects`, { ids: selectedIds }); // 백엔드로 삭제 요청
+
+      // 삭제된 항목을 클라이언트에서 제거
+      setDiscovers((prevDiscovers) => prevDiscovers.filter((discover) => !selectedIds.includes(discover.pjt_id)));
+      setSelectedRows(new Set()); // 선택된 항목 초기화
+      toast.success('Selected rows deleted successfully!', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    } catch (error) {
+      console.error('Error deleting selected rows:', error);
+      toast.error('Failed to delete selected rows', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    }
+  };
+
   return (
     <DiscoverContainer>
       <Title>Discover Mgmt</Title>
@@ -326,6 +373,7 @@ const AdminDiscover = () => {
         onAddClick={handleAddClick}
         showToggle={true}
         onToggleChange={handleToggle}
+        onDeleteClick={handleDeleteSelected}
         // 추가 버튼 클릭 시 동작 추가 가능
       />
       <TableWrapper>
@@ -418,144 +466,144 @@ const AdminDiscover = () => {
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.x_link}
+                    onChange={(e) => handleNewRowInputChange(e, 'x_link')}
                     placeholder="X(Twitter)"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.x_followers}
+                    onChange={(e) => handleNewRowInputChange(e, 'x_followers')}
                     placeholder="X Followers"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.discord_link}
+                    onChange={(e) => handleNewRowInputChange(e, 'discord_link')}
                     placeholder="Discord"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.discord_members}
+                    onChange={(e) => handleNewRowInputChange(e, 'discord_members')}
                     placeholder="Discord Members"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.linkedIn_link}
+                    onChange={(e) => handleNewRowInputChange(e, 'linkedIn_link')}
                     placeholder="Linkdein"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.github_link}
+                    onChange={(e) => handleNewRowInputChange(e, 'github_link')}
                     placeholder="Github"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.github_stars}
+                    onChange={(e) => handleNewRowInputChange(e, 'github_stars')}
                     placeholder="Github Stars"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.github_wkly_comm}
+                    onChange={(e) => handleNewRowInputChange(e, 'github_wkly_comm')}
                     placeholder="Github wkly"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.raising_amount}
+                    onChange={(e) => handleNewRowInputChange(e, 'raising_amount')}
                     placeholder="Raising"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.valuation}
+                    onChange={(e) => handleNewRowInputChange(e, 'valuation')}
                     placeholder="Valuation"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.investors}
+                    onChange={(e) => handleNewRowInputChange(e, 'investors')}
                     placeholder="Investors"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.pjt_grade}
+                    onChange={(e) => handleNewRowInputChange(e, 'pjt_grade')}
                     placeholder="Grade"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.pjt_summary}
+                    onChange={(e) => handleNewRowInputChange(e, 'pjt_summary')}
                     placeholder="Summary"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.pjt_details}
+                    onChange={(e) => handleNewRowInputChange(e, 'pjt_details')}
                     placeholder="Details"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.adm_trend}
+                    onChange={(e) => handleNewRowInputChange(e, 'adm_trend')}
                     placeholder="Trend"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.adm_expertise}
+                    onChange={(e) => handleNewRowInputChange(e, 'adm_expertise')}
                     placeholder="Expertise"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.adm_final_grade}
+                    onChange={(e) => handleNewRowInputChange(e, 'adm_final_grade')}
                     placeholder="Final Grade"
                   />
                 </TableCell>
                 <TableCell>
                   <input
                     type="text"
-                    value={newRowData.category}
-                    onChange={(e) => handleNewRowInputChange(e, 'category')}
+                    value={newRowData.update_date}
+                    onChange={(e) => handleNewRowInputChange(e, 'update_date')}
                     placeholder="update date"
                   />
                 </TableCell>

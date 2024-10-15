@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import raceTrack from 'src/assets/toggle/RaceTrack.svg';
+import raceTrackChecked from 'src/assets/toggle/checked.svg';
 import knob from 'src/assets/toggle/knob.svg';
 
 export const SwitchContainer = styled.div`
@@ -22,7 +23,8 @@ export const Switch = styled.div<{ isChecked: boolean }>`
   position: relative;
   width: 50px;
   height: 30px;
-  background-image: url(${raceTrack}); /* 트랙 이미지 경로 설정 */
+  background-image: url(${({ isChecked }) =>
+    isChecked ? raceTrackChecked : raceTrack}); /* 상태에 따라 배경 이미지 변경 */
   background-size: contain;
   background-repeat: no-repeat;
   transition: background-color 0.3s;
