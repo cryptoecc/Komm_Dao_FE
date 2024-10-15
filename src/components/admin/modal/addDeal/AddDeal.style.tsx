@@ -117,6 +117,17 @@ export const Input = styled.input`
   border: 1px solid #ccc;
 `;
 
+export const DealName = styled.input`
+  width: 660px;
+  height: 50px;
+  font-weight: 300;
+  /* font-family: Inter; */
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+`;
+
 export const Select = styled.select`
   width: 660px;
   height: 50px;
@@ -136,6 +147,30 @@ export const Select = styled.select`
     color: #000;
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
+  }
+`;
+
+export const SelectDropdown = styled.div`
+  position: absolute;
+  background: #eee;
+  border: 1px solid #000;
+
+  max-height: 150px;
+  overflow-y: auto;
+  /* width: 100%; */
+  width: 660px;
+  margin-top: 50px;
+  border-radius: 20px; /* 옵션의 모서리를 둥글게 */
+  padding: 10px;
+  z-index: 1;
+`;
+
+export const DropdownItem = styled.div`
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
   }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useEffect } from 'react';
+import React, { useState, forwardRef, useEffect, useRef } from 'react';
 import {
   Container,
   Title,
@@ -26,6 +26,9 @@ import {
   HiddenFileInput,
   PreviewImage,
   RoundSelect,
+  SelectDropdown,
+  DropdownItem,
+  DealName,
 } from './AddDeal.style';
 import DatePicker from 'react-datepicker';
 import calenderIcon from 'src/assets/admin/calendar_month.svg';
@@ -71,6 +74,9 @@ const AddDeal: React.FC<AddDealProps> = ({ onCancel, onDealCreated }) => {
   const [bannerImagePreview, setBannerImagePreview] = useState<string | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+  const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 열림 상태
+  const dropdownRef = useRef<HTMLDivElement>(null); // 드롭다운 감지를 위한 ref
 
   useEffect(() => {
     // 백엔드에서 프로젝트 정보를 가져오기
@@ -86,6 +92,24 @@ const AddDeal: React.FC<AddDealProps> = ({ onCancel, onDealCreated }) => {
 
     fetchProjects();
   }, []);
+
+  // 검색어로 필터링된 프로젝트 목록
+  const filteredProjects = projects.filter((project) =>
+    project.pjt_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  console.log(filteredProjects);
+
+  const handleProjectSelect = (projectId: number) => {
+    const project = projects.find((p) => p.pjt_id === projectId);
+    console.log(project);
+    if (project) {
+      setSelectedProjectId(project.pjt_id);
+      setSearchTerm(project.pjt_name); // 선택된 프로젝트 이름을 인풋 필드에 표시
+      setSelectedProjectName(project.pjt_name);
+      setIsDropdownOpen(false); // 선택 후 드롭다운 닫기
+    }
+  };
 
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -119,6 +143,7 @@ const AddDeal: React.FC<AddDealProps> = ({ onCancel, onDealCreated }) => {
       // 나머지 텍스트 데이터
       formData.append('pjt_id', String(selectedProjectId));
       formData.append('pjt_name', selectedProjectName);
+      console.log(selectedProjectName);
       formData.append('deal_round', dealRound);
       formData.append('end_date', endDate ? endDate.toISOString() : '');
       formData.append('min_interest', minAlloc);
@@ -140,6 +165,20 @@ const AddDeal: React.FC<AddDealProps> = ({ onCancel, onDealCreated }) => {
       console.error('Error creating deal', error);
     }
   };
+
+  // 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <Container>
@@ -165,25 +204,24 @@ const AddDeal: React.FC<AddDealProps> = ({ onCancel, onDealCreated }) => {
       </ImageContainer>
       <Form>
         <TeamGroup>
-          <Select
-            value={selectedProjectId || ''}
-            onChange={(e) => {
-              const project = projects.find((p) => p.pjt_id === Number(e.target.value));
-              if (project) {
-                setSelectedProjectId(project.pjt_id);
-                setSelectedProjectName(project.pjt_name); // 프로젝트 이름 저장
-              }
-            }}
-          >
-            <option value="" disabled>
-              Deal Name
-            </option>
-            {projects.map((project) => (
-              <option key={project.pjt_id} value={project.pjt_id}>
-                {project.pjt_name}
-              </option>
-            ))}
-          </Select>
+          <DealName
+            type="text"
+            placeholder="Search or Select Deal Name"
+            value={searchTerm}
+            onClick={() => setIsDropdownOpen(true)} // 클릭하면 드롭다운 열림
+            onChange={(e) => setSearchTerm(e.target.value)} // 검색어 업데이트
+          />
+
+          {/* 드롭다운: 사용자가 검색어에 따라 필터된 결과를 보게 함 */}
+          {isDropdownOpen && (
+            <SelectDropdown ref={dropdownRef}>
+              {filteredProjects.map((project) => (
+                <DropdownItem key={project.pjt_id} onClick={() => handleProjectSelect(project.pjt_id)}>
+                  {project.pjt_name}
+                </DropdownItem>
+              ))}
+            </SelectDropdown>
+          )}
         </TeamGroup>
         <TeamGroup>
           <RoundSelect value={dealRound} onChange={(e) => setDealRound(e.target.value)}>
