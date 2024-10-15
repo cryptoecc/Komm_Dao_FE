@@ -288,3 +288,75 @@ export const DropdownItem = styled.label`
     }
   }
 `;
+
+export const EditableInput = styled.input<{ isFocused: boolean }>`
+  width: ${(props) => (props.isFocused ? '400px' : '100px')}; /* 클릭 시 넓어지게 설정 */
+  transition: width 0.3s ease; /* 부드럽게 변하도록 트랜지션 추가 */
+  padding: 5px;
+  font-size: 14px;
+`;
+
+export const PopupContainer = styled.div<{ isVisible: boolean }>`
+  display: ${(props) => (props.isVisible ? 'block' : 'none')};
+  position: absolute;
+  top: 50%; /* 팝업 위치 설정 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: auto;
+  padding: 20px;
+
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* 팝업이 상단에 보이도록 설정 */
+  border-radius: 15px;
+
+  h3 {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+`;
+
+export const PopupBackdrop = styled.div<{ isVisible: boolean }>`
+  display: ${(props) => (props.isVisible ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999; /* 팝업 뒤의 어두운 배경 설정 */
+`;
+
+export const PopupInput = styled.textarea`
+  width: 500px;
+  height: 150px;
+  padding: 10px;
+  margin-top: 10px;
+  /* margin: 0 auto; */
+  font-size: 16px;
+  border: 1px solid #ccc;
+`;
+
+export const Textarea = styled.div`
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+`;
+
+export const SaveBtn = styled.button`
+  color: #fff;
+  float: right;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 17px 26px;
+  border-radius: 20px;
+  background: var(--Purple-900, #7c4dff);
+  cursor: pointer;
+`;

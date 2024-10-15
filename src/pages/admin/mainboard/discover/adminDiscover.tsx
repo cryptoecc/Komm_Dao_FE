@@ -16,6 +16,12 @@ import {
   DropdownContainer,
   DropdownMenu,
   DropdownItem,
+  EditableInput,
+  PopupContainer,
+  PopupBackdrop,
+  PopupInput,
+  Textarea,
+  SaveBtn,
 } from './adminDiscover.style';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
@@ -28,10 +34,20 @@ import ToggleSwitch from 'src/components/toggle/Toggle';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
 import { images } from 'src/assets/discover/images';
+import ResponseModal from 'src/components/admin/modal/common/ResponseModal';
 
 const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI']; // 카테고리
 
 const AdminDiscover = () => {
+  //팝업
+  const [popupProjectId, setPopupProjectId] = useState<number | null>(null); // 팝업에서 편집할 프로젝트 I
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // 팝업 열림 상태
+  const [popupValue, setPopupValue] = useState(''); // 팝업에서 입력하는 값
+  const [popupField, setPopupField] = useState<string>(''); // 수정할 필드 이름
+  const [currentEditingId, setCurrentEditingId] = useState<number | null>(null); // 현재 수정 중인 항목 ID
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
+  const [modalMessage, setModalMessage] = useState(''); // 모달에 표시할 메시지
   // 검색
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [discovers, setDiscovers] = useState<any[]>([]); // Kohorts 데이터를 담을 상태
@@ -73,6 +89,52 @@ const AdminDiscover = () => {
     apply_yn: '',
     // 필요한 다른 필드들 추가
   });
+
+  const useDebouncedValue = (value: string, delay: number) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
+
+    return debouncedValue;
+  };
+
+  const handleInputClick = (projectId: number, currentValue: string, field: string) => {
+    // console.log(pjt_name);
+    setPopupProjectId(projectId);
+    setPopupValue(currentValue); // 현재 필드 값을 팝업에 전달
+    setPopupField(field); // 수정할 필드 설정
+    setIsPopupOpen(true); // 팝업 열기
+  };
+
+  const debouncedPopupValue = useDebouncedValue(popupValue, 200);
+
+  // 수정 내용을 저장하는 함수 (동적으로 필드를 업데이트)
+  const handleSave = () => {
+    if (popupProjectId !== null && popupField !== '') {
+      setEditValues((prevValues) => ({
+        ...prevValues,
+        [popupProjectId]: {
+          ...prevValues[popupProjectId],
+          [popupField]: debouncedPopupValue, // 동적으로 수정할 필드 업데이트
+        },
+      }));
+
+      // 팝업 닫기
+      setIsPopupOpen(false);
+    }
+  };
+
+  const handleBackdropClick = () => {
+    setIsPopupOpen(false); // 배경 클릭 시 팝업 닫기
+  };
 
   // 새로운 데이터 행 추가
   const handleAddClick = () => setNewRowVisible(true);
@@ -346,15 +408,26 @@ const AdminDiscover = () => {
   const handleDeleteSelected = async () => {
     try {
       const selectedIds = Array.from(selectedRows); // 선택된 프로젝트의 pjt_id 목록
-      await axios.post(`${API_BASE_URL}/api/admin/delete-projects`, { ids: selectedIds }); // 백엔드로 삭제 요청
+      const response = await axios.post(`${API_BASE_URL}/api/admin/delete-projects`, { ids: selectedIds }); // 백엔드로 삭제 요청
 
-      // 삭제된 항목을 클라이언트에서 제거
-      setDiscovers((prevDiscovers) => prevDiscovers.filter((discover) => !selectedIds.includes(discover.pjt_id)));
-      setSelectedRows(new Set()); // 선택된 항목 초기화
-      toast.success('Selected rows deleted successfully!', {
-        position: 'top-right',
-        autoClose: 1000,
-      });
+      if (response.data.undeletableIds && response.data.undeletableIds.length > 0) {
+        const undeletableNames = discovers
+          .filter((discover) => response.data.undeletableIds.includes(discover.pjt_id))
+          .map((discover) => discover.pjt_name)
+          .join(', ');
+
+        // toast 대신 모달창을 띄움
+        setModalMessage(`Unable to delete the following projects: ${undeletableNames}`);
+        setIsModalOpen(true); // 모달 열기
+      } else {
+        // 성공적으로 삭제된 항목들을 클라이언트에서 제거
+        setDiscovers((prevDiscovers) => prevDiscovers.filter((discover) => !selectedIds.includes(discover.pjt_id)));
+        setSelectedRows(new Set());
+        toast.success('Selected rows deleted successfully!', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      }
     } catch (error) {
       console.error('Error deleting selected rows:', error);
       toast.error('Failed to delete selected rows', {
@@ -894,13 +967,19 @@ const AdminDiscover = () => {
                   {isEditable ? (
                     <input
                       type="text"
-                      value={
-                        (editValues[discover.pjt_id] && editValues[discover.pjt_id]['pjt_summary']) ||
-                        discover.pjt_summary
-                      }
-                      onChange={(e) => handleInputChange(e, discover.pjt_id, 'pjt_summary')}
+                      value={editValues[discover.pjt_id]?.pjt_summary || discover.pjt_summary}
+                      onClick={() => handleInputClick(discover.pjt_id, discover.pjt_summary, 'pjt_summary')} // 팝업 열기
+                      readOnly
                     />
                   ) : (
+                    // <input
+                    //   type="text"
+                    //   value={
+                    //     (editValues[discover.pjt_id] && editValues[discover.pjt_id]['pjt_summary']) ||
+                    //     discover.pjt_summary
+                    //   }
+                    //   onChange={(e) => handleInputChange(e, discover.pjt_id, 'pjt_summary')}
+                    // />
                     discover.pjt_summary
                   )}
                 </TableCell>
@@ -913,11 +992,9 @@ const AdminDiscover = () => {
                   {isEditable ? (
                     <input
                       type="text"
-                      value={
-                        (editValues[discover.pjt_id] && editValues[discover.pjt_id]['pjt_details']) ||
-                        discover.pjt_details
-                      }
-                      onChange={(e) => handleInputChange(e, discover.pjt_id, 'pjt_details')}
+                      value={editValues[discover.pjt_id]?.pjt_details || discover.pjt_details}
+                      onClick={() => handleInputClick(discover.pjt_id, discover.pjt_details, 'pjt_details')} // 팝업 열기
+                      readOnly
                     />
                   ) : (
                     discover.pjt_details
@@ -998,7 +1075,27 @@ const AdminDiscover = () => {
           </tbody>
         </Table>
       </TableWrapper>
+      <PopupBackdrop isVisible={isPopupOpen} onClick={handleBackdropClick} />
+      <PopupContainer isVisible={isPopupOpen}>
+        <h3>Edit</h3>
+        <Textarea>
+          <PopupInput
+            // type="text"
+            value={popupValue}
+            onChange={(e) => setPopupValue(e.target.value)} // 팝업에서 입력한 값 업데이트
+          />
+        </Textarea>
+        <div>
+          <SaveBtn onClick={handleSave}>Save</SaveBtn>
+        </div>
+      </PopupContainer>
       {popupContent && <Popup style={{ top: popupPosition.top, left: popupPosition.left }}>{popupContent}</Popup>}
+      <ResponseModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message={modalMessage}
+        title="Notification"
+      />
       <ToastContainer />
     </DiscoverContainer>
   );
