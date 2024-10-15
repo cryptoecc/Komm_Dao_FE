@@ -107,10 +107,14 @@ const AdminDiscover = () => {
   };
 
   const handleInputClick = (projectId: number, currentValue: string, field: string) => {
-    // console.log(pjt_name);
+    const safeCurrentValue = currentValue || '';
+    console.log('Current Value:', safeCurrentValue);
     setPopupProjectId(projectId);
-    setPopupValue(currentValue); // 현재 필드 값을 팝업에 전달
     setPopupField(field); // 수정할 필드 설정
+    const editedValue = editValues[projectId]?.[field] || safeCurrentValue;
+
+    setPopupValue(editedValue);
+
     setIsPopupOpen(true); // 팝업 열기
   };
 
