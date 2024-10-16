@@ -1,4 +1,3 @@
-// src/pages/dashboard/index.tsx
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ProfileCard from '../../../components/dashboard/profile/ProfileCard';
@@ -15,25 +14,19 @@ const DashboardContainer = styled.div`
   position: relative;
   max-width: 1920px;
   max-height: 1080px;
-  /* min-height: 100vh;
-  width: 100%;
-  padding: 30px;
-  background-color: ${({ theme }) => theme.colors.white}; */
 `;
 
 const DashboardHeader = styled.div`
   display: flex;
-  justify-content: space-between; /* 양 끝으로 배치 */
-  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 `;
 
 const DashboardTitle = styled.h1`
   color: #1a0737;
   font-size: 32px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
   margin-bottom: 20px;
 `;
 
@@ -43,16 +36,14 @@ const WalletWrap = styled.div`
 
 const Dashboard: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (user && user.wallet_addr) {
-        // user와 wallet_addr이 있는지 확인
         try {
           const walletAddress = user.wallet_addr;
-          console.log(walletAddress);
           const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
           setUserData(response.data);
         } catch (error) {
@@ -70,15 +61,23 @@ const Dashboard: React.FC = () => {
               governance: 0,
             },
           });
+        } finally {
+          setIsLoading(false); // 로딩 완료
         }
+      } else {
+        setIsLoading(false); // user 또는 wallet_addr이 없으면 로딩 완료
       }
     };
 
     fetchUserData();
-  }, [user]); // user 값이 변경될 때마다 useEffect 실행
+  }, [user]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // 데이터 로딩 중에 표시
+  }
 
   if (!user || !userData) {
-    return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
+    return <div>No user data available</div>; // user 또는 userData가 없을 때 처리
   }
 
   return (
@@ -87,10 +86,10 @@ const Dashboard: React.FC = () => {
         <DashboardTitle>Dashboard</DashboardTitle>
         <WalletWrap>
           <Wallet
-            address={userData.walletAddress}
-            username={userData.name}
-            profileImage={userData.profileImage}
-            expertise={userData.expertise}
+            address={userData.walletAddress || 'N/A'}
+            username={userData.name || 'Unknown'}
+            profileImage={userData.profileImage || 'default-profile.png'}
+            expertise={userData.expertise || 'Unknown'}
           />
         </WalletWrap>
       </DashboardHeader>

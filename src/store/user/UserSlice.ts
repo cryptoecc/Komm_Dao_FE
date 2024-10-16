@@ -1,5 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// 포인트 히스토리 데이터 타입 정의
+interface PointsData {
+  date: string;
+  participation: string;
+  activity: string;
+  xpEarned: number;
+  transactionId: string;
+}
+
 interface UserState {
   user_id: number;
   user_name: string;
@@ -18,6 +27,7 @@ interface UserState {
   voting_power: number;
   activate_yn: string;
   isWalletConnected: boolean;
+  pointHistory: PointsData[]; // 포인트 히스토리 추가
 }
 
 const initialState: UserState = {
@@ -38,6 +48,7 @@ const initialState: UserState = {
   voting_power: 0,
   activate_yn: 'N',
   isWalletConnected: false,
+  pointHistory: [], // 초기 포인트 히스토리 배열
 };
 
 const userSlice = createSlice({
@@ -58,7 +69,11 @@ const userSlice = createSlice({
     setEmail: (state, action: PayloadAction<string>) => {
       state.email_addr = action.payload;
     },
-    // 로그아웃 액션 추가
+    // 포인트 히스토리 설정 액션 추가
+    setPointHistory: (state, action: PayloadAction<PointsData[]>) => {
+      state.pointHistory = action.payload;
+    },
+    // 로그아웃 액션
     logoutUser: (state) => {
       return { ...initialState }; // 초기 상태로 되돌림
     },

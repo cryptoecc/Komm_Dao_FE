@@ -51,7 +51,7 @@ const Discover: React.FC = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<any>(null);
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
+  console.log('@@?', user);
 
   useEffect(() => {
     const fetchUserData = async () => {
