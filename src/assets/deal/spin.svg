@@ -1,0 +1,13 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="2">
+<path id="3" d="M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10ZM2.99027 10C2.99027 13.8714 6.12863 17.0097 10 17.0097C13.8714 17.0097 17.0097 13.8714 17.0097 10C17.0097 6.12863 13.8714 2.99027 10 2.99027C6.12863 2.99027 2.99027 6.12863 2.99027 10Z" fill="url(#paint0_angular_2193_2586)"/>
+<circle id="Ellipse 1" cx="10.1001" cy="18.5" r="1.5" fill="#004FFF"/>
+</g>
+<defs>
+<radialGradient id="paint0_angular_2193_2586" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(10 10) rotate(90) scale(10)">
+<stop stop-color="#004FFF"/>
+<stop offset="0.175675" stop-color="#004FFF"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

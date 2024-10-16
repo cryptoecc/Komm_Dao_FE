@@ -139,6 +139,17 @@ export const Select = styled.select`
   }
 `;
 
+export const DealName = styled.div`
+  width: 660px;
+  height: 50px;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-weight: 300;
+  color: #797777;
+`;
+
 export const DateWrapper = styled.div`
   /* display: flex; */
   /* justify-content: center; */

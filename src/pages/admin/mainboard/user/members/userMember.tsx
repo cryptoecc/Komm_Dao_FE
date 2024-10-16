@@ -264,7 +264,7 @@ const UserMember: React.FC = () => {
               <TableCell $isSelected={selectedRows.has(member.user_id)}>
                 {member.appr_status === 'APPLIED' ? (
                   <>
-                    <button onClick={() => handleRevoke(member.user_id, 'REVOKE')}>Revoke</button>
+                    <button onClick={() => handleRevoke(member.user_id, 'PENDING')}>Revoke</button>
                   </>
                 ) : (
                   member.appr_status

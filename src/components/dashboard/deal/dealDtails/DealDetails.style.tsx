@@ -268,4 +268,10 @@ export const ParticipateButton = styled.button`
   &:hover {
     background-color: #774bcc;
   }
+
+  &:disabled,
+  &:disabled:hover {
+    background-color: grey !important; /* 비활성화된 버튼의 배경색 */
+    cursor: not-allowed !important; /* 커서 모양을 변경 */
+  }
 `;

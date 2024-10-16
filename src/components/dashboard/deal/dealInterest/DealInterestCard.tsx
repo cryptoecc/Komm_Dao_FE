@@ -55,6 +55,9 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
     console.log('Max Interest:', deal.max_interest);
   }, [deal]);
 
+  const minInterest = new Intl.NumberFormat('en-US').format(deal.min_interest);
+  const maxInterest = new Intl.NumberFormat('en-US').format(deal.max_interest);
+
   const handleMaxClick = () => {
     // Ensure that max_interest is a number
     const maxInterest = Number(deal.max_interest); // Convert to number
@@ -67,14 +70,18 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/,/g, ''); // 쉼표 제거
 
-    // 숫자만 허용
+    // 숫자와 소수점만 허용하는 정규식
     if (/^\d*\.?\d*$/.test(value)) {
-      // 정규 표현식: 숫자와 소수점만 허용
+      // 입력된 값이 숫자라면 상태에 저장
       setInputValue(value);
     }
-    console.log('Input Value Changed:', value);
+  };
+
+  const formatNumber = (value: string) => {
+    // 숫자로 변환한 후 Intl.NumberFormat을 사용하여 쉼표 추가
+    return new Intl.NumberFormat().format(Number(value));
   };
 
   const handleContinue = async () => {
@@ -118,7 +125,7 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
       <Title>SUBMIT YOUR INTEREST</Title>
       <InputContainer>
         <Input
-          value={inputValue}
+          value={formatNumber(inputValue)}
           onChange={handleInputChange}
           isNumeric={isNumeric}
           placeholder="0"
@@ -133,11 +140,11 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
       <AllocationInfo>
         <div>
           <AllocationText>Min Interest</AllocationText>
-          <AllocationValue>{deal.min_interest} USDT</AllocationValue>
+          <AllocationValue>{minInterest} USDT</AllocationValue>
         </div>
         <div>
           <AllocationText>Max Interest</AllocationText>
-          <AllocationValue>{deal.max_interest} USDT</AllocationValue>
+          <AllocationValue>{maxInterest} USDT</AllocationValue>
         </div>
       </AllocationInfo>
       <ContinueButton onClick={openInterestModal}>Continue</ContinueButton>

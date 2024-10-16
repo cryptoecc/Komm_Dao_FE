@@ -74,7 +74,7 @@ const PointsHistory: React.FC = () => {
         ) : errorMessage ? (
           <NoDataMessage>{errorMessage}</NoDataMessage>
         ) : pointsData.length === 0 ? (
-          <NoDataMessage></NoDataMessage>
+          <NoDataMessage>You have not yet earned any XP. Participate in activities to start earning!</NoDataMessage>
         ) : (
           pointsData.map((item, index) => (
             <DataRow key={index}>

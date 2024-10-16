@@ -113,7 +113,7 @@ interface InviteDetailsModalProps {
 
 const InviteDetailsModal: React.FC<InviteDetailsModalProps> = ({ isOpen, onClose, inviteDetails }) => {
   const [visibleInvitees, setVisibleInvitees] = useState<number | null>(null); // 어떤 초대자의 View 버튼을 클릭했는지 기억
-
+  console.log(inviteDetails);
   if (!isOpen) return null;
 
   return (

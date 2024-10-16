@@ -57,6 +57,7 @@ const DealDetails: React.FC = () => {
     const fetchDealData = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/deals/${dealId}`);
+        console.log(response.data);
         setDeal(response.data);
       } catch (error) {
         console.error('Error fetching deal data:', error);
@@ -116,6 +117,7 @@ const DealDetails: React.FC = () => {
     calculateProgress(selectedDeal.create_date, selectedDeal.end_date)
   );
 
+  // console.log(remainingTime);
   useEffect(() => {
     const timer = setInterval(() => {
       setRemainingTime(calculateRemainingTime(selectedDeal.end_date));
@@ -193,6 +195,7 @@ const DealDetails: React.FC = () => {
               state: { deal: selectedDeal },
             })
           }
+          disabled={progressPercentage === '100.00'} // progressPercentage가 100이면 버튼 비활성화
         >
           Participate
         </ParticipateButton>
