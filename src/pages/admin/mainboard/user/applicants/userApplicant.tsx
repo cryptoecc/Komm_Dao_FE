@@ -19,6 +19,7 @@ import TopBar from 'src/components/admin/topbar/Topbar';
 import checkmark from 'src/assets/admin/cell_check.svg';
 import { API_BASE_URL } from 'src/utils/utils';
 import { ToastContainer, toast } from 'react-toastify';
+import Spinner from 'src/components/spinner/Spinner';
 import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
 
 interface Applicant {
@@ -39,7 +40,7 @@ const UserApplicants: React.FC = () => {
   const [filteredApplicants, setFilteredApplicants] = useState<Applicant[]>([]);
   const [popupContent, setPopupContent] = useState<string | null>(null);
   const [popupPosition, setPopupPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
-
+  const [loadingState, setLoadingState] = useState<{ [key: number]: boolean }>({}); // 각 user_id별 로딩 상태 저장
   // 검색
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -105,6 +106,7 @@ const UserApplicants: React.FC = () => {
   // Approve 기능
   const handleApproval = async (user_id: number, status: string) => {
     try {
+      setLoadingState((prevState) => ({ ...prevState, [user_id]: true })); // 해당 user_id 로딩 시작
       const response = await axios.post(`${API_BASE_URL}/api/admin/update-status`, { user_id, status });
       if (response.status === 200) {
         setApplicants((prevApplicants) =>
@@ -115,6 +117,8 @@ const UserApplicants: React.FC = () => {
       }
     } catch (error) {
       console.error('Error updating status:', error);
+    } finally {
+      setLoadingState((prevState) => ({ ...prevState, [user_id]: false })); // 해당 user_id 로딩 종료
     }
   };
 
@@ -245,7 +249,9 @@ const UserApplicants: React.FC = () => {
               </TableCell>
               <TableCell $isSelected={selectedRows.has(applicant.user_id)}>{applicant.reg_date}</TableCell>
               <TableCell $isSelected={selectedRows.has(applicant.user_id)}>
-                {applicant.appr_status === 'PENDING' ? (
+                {loadingState[applicant.user_id] ? ( // 로딩 상태일 때 Spinner 표시
+                  <Spinner />
+                ) : applicant.appr_status === 'PENDING' ? (
                   <>
                     <button onClick={() => handleApproval(applicant.user_id, 'APPLIED')}>Add</button>
                     <button className="deny" onClick={() => handleApproval(applicant.user_id, 'DENIED')}>

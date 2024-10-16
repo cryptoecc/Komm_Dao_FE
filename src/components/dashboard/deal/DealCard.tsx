@@ -33,6 +33,7 @@ interface Deal {
 
 const DealCard: React.FC<{ deal: Deal }> = ({ deal }) => {
   // 현재 날짜와 종료 날짜 설정
+  console.log(deal);
   const currentDate = dayjs();
   const endDate = dayjs(deal.end_date);
   const startDate = dayjs(deal.create_date); // 시작 날짜 설정

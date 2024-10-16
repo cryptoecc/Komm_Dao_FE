@@ -85,6 +85,12 @@ export const DataItem = styled.div`
 
 export const NoDataMessage = styled.div`
   height: 100px;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  font-size: 20px;
+  padding-top: 60px;
+  color: #000;
   /* text-align: center;
   font-size: 14px;
   font-weight: 500;

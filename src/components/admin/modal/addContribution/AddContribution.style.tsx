@@ -250,7 +250,8 @@ export const DateInputWrapper = styled.div`
   border-radius: 20px;
   border: 1px solid #ccc;
   padding: 7px;
-  width: 215px;
+  width: 100%;
+  /* width: 215px; */
   height: 50px;
   box-sizing: border-box; /* 이 속성을 추가 */
   /* gap: 10px; 아이콘과 텍스트 사이의 간격을 설정 */
@@ -263,7 +264,7 @@ export const CalendarIcon = styled.img`
 
 export const DateInput = styled.input`
   flex-grow: 1;
-  width: 325px;
+  /* width: 325px; */
   border: none;
   outline: none;
   font-size: 16px;

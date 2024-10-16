@@ -24,6 +24,7 @@ import {
   HiddenFileInput,
   PreviewImage,
   RoundSelect,
+  DealName,
 } from './EditDeal.style';
 import DatePicker from 'react-datepicker';
 import calenderIcon from 'src/assets/admin/calendar_month.svg';
@@ -147,6 +148,11 @@ const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel, onSave }) => {
     }
   }, [deal.pjt_id, deal.pjt_name]);
 
+  const formatNumber = (value: string) => {
+    // 숫자로 변환한 후 Intl.NumberFormat을 사용하여 쉼표 추가
+    return new Intl.NumberFormat().format(Number(value));
+  };
+
   return (
     <Container>
       <ImageContainer>
@@ -171,7 +177,10 @@ const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel, onSave }) => {
       </ImageContainer>
       <Form>
         <TeamGroup>
-          <Select
+          {/* 고정된 Deal Name 표시 */}
+          {/* <p>{selectedProjectName || 'No project selected'}</p> */}
+          <DealName>{selectedProjectName || 'No project selected'}</DealName>
+          {/* <Select
             value={selectedProjectId || ''}
             onChange={(e) => {
               const project = projects.find((p) => p.pjt_id === Number(e.target.value));
@@ -191,7 +200,7 @@ const EditDeal: React.FC<EditDealProps> = ({ deal, onCancel, onSave }) => {
                 {project.pjt_name}
               </option>
             ))}
-          </Select>
+          </Select> */}
         </TeamGroup>
         <TeamGroup>
           <RoundSelect value={dealRound} onChange={(e) => setDealRound(e.target.value)}>
