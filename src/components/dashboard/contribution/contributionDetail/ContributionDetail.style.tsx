@@ -309,6 +309,7 @@ export const InviteSection = styled.div`
   /* margin: 20px 0; */
 
   width: 100%;
+  height: 100px;
 
   h3 {
     color: #000;
@@ -328,8 +329,8 @@ export const InviteSection = styled.div`
 `;
 
 export const InviteIcon = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 38px;
+  height: 38px;
 `;
 
 export const InviteButton = styled.button`
@@ -337,10 +338,11 @@ export const InviteButton = styled.button`
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 10px 20px;
+  padding: 10px 26px;
   font-size: 14px;
   font-weight: 700;
-  /* margin-top: 10px; */
+  margin-right: 20px;
+  margin-top: 20px;
   cursor: pointer;
   /* position: relative; */
   /* top: 40px; */
