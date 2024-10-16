@@ -937,10 +937,9 @@ const AdminDiscover = () => {
                   {isEditable ? (
                     <input
                       type="text"
-                      value={
-                        (editValues[discover.pjt_id] && editValues[discover.pjt_id]['investors']) || discover.investors
-                      }
-                      onChange={(e) => handleInputChange(e, discover.pjt_id, 'investors')}
+                      value={editValues[discover.pjt_id]?.investors || discover.investors}
+                      onClick={() => handleInputClick(discover.pjt_id, discover.investors, 'investors')} // 팝업 열기
+                      readOnly
                     />
                   ) : (
                     discover.investors

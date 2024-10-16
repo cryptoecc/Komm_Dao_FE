@@ -37,7 +37,7 @@ import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import defaultDealIcon from 'src/assets/deal/MYX.png';
 import defaultBannerImg from 'src/assets/deal/DELEGATE_banner.png';
-import inviteImg from 'src/assets/contribution/invite.png';
+import inviteImg from 'src/assets/contribution/inviteIcon.png';
 
 dayjs.extend(customParseFormat);
 
@@ -200,7 +200,15 @@ const ContributionDetail: React.FC = () => {
             {type === 'Invite' ? (
               <>
                 <InviteSection>
-                  <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '20px',
+                      marginTop: '10px',
+                      marginLeft: '20px',
+                    }}
+                  >
                     <InviteIcon src={inviteImg} alt="Invite Icon" />
                     {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> */}
                     <div>
