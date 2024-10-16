@@ -30,51 +30,51 @@ import { RootState } from 'src/store/store';
 
 const ProfileCard: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
+
   useEffect(() => {
     if (user) {
-      try {
-        // const parsedData = JSON.parse(persistedRoot);
-        const walletAddress = user.wallet_addr;
+      const walletAddress = user.wallet_addr;
 
-        const fetchUserData = async () => {
-          try {
-            const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
-            setUserData(response.data);
-          } catch (error) {
-            console.error('Error fetching user data:', error);
-            setUserData({
-              profileImage: 'default-profile.png',
-              name: 'Default User',
-              expertise: 'Unknown',
-              points: 0,
-              xp: 0,
-              stats: {
-                deal: 0,
-                discover: 0,
-                contribution: 0,
-                governance: 0,
-              },
-            });
-          }
-        };
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
+          setUserData(response.data); // 사용자 데이터 저장
+          console.log('@@어케 찍히니', response.data);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          setUserData({
+            profileImage: 'default-profile.png',
+            name: 'Default User',
+            expertise: 'Unknown',
+            xp: 0, // 백엔드에서 넘어온 cur_xp가 xp로 변환되었는지 확인
+            stats: {
+              deal: 0,
+              discover: 0,
+              contribution: 0,
+              governance: 0,
+            },
+          });
+        } finally {
+          setLoading(false); // 데이터 로드 완료 후 로딩 상태 해제
+        }
+      };
 
-        fetchUserData();
-      } catch (error) {
-        console.error('Error parsing persisted root data:', error);
-      }
+      fetchUserData();
     } else {
-      console.error('persist:root not found in localStorage');
+      console.error('User not found in store');
+      setLoading(false);
     }
-  }, []);
+  }, [user]);
 
   const handleProfileClick = () => {
     navigate('/mainboard/dashboard/profile');
   };
 
-  if (!userData) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>; // 로딩 상태 처리
   }
 
   return (
@@ -97,7 +97,7 @@ const ProfileCard: React.FC = () => {
               Earn points through various activities to unlock rewards. Your total XP will be used for rewards.
             </Tooltip>
           </Points>
-          <XP>{formatNumber(userData.xp ?? 0)} XP</XP>
+          <XP>{formatNumber(userData.xp ?? 0)} XP</XP> {/* XP 출력 */}
         </PointsAndXPWrap>
       </PointsWrap>
       <StatsWrap>
