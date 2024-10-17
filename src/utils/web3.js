@@ -83,6 +83,34 @@ export const switchToSepolia = async () => {
   }
 };
 
+export const switchToHolesky = async () => {
+  try {
+    if (window.ethereum) {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            chainId: '0x4268', // 17000의 16진수
+            chainName: 'Holesky',
+            nativeCurrency: {
+              name: 'HolETH',
+              symbol: 'ETH',
+              decimals: 18,
+            },
+            rpcUrls: ['https://ethereum-holesky-rpc.publicnode.com'],
+            blockExplorerUrls: ['https://holesky.etherscan.io'],
+          },
+        ],
+      });
+    } else {
+      console.error('MetaMask가 설치되어 있지 않습니다.');
+    }
+  } catch (error) {
+    console.error('네트워크 전환 오류:', error);
+    throw error;
+  }
+};
+
 // 지갑연결해지
 export const disconnectWallet = async () => {
   try {

@@ -157,3 +157,11 @@ export const SpinIcon = styled.img`
   animation: spin 2s linear infinite; // 2초 동안 계속해서 회전
   ${spinAnimation}// 위에서 정의한 애니메이션 추가
 `;
+
+export const CloseButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: end;
+`;

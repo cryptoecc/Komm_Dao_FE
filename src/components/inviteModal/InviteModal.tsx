@@ -18,12 +18,14 @@ import {
   LabelRow,
   ButtonWrap,
   AddIconWrapper,
+  ErrorMessage,
 } from './inviteModal.style';
 import { ReactComponent as AddIcon } from 'src/assets/contribution/add_circle.svg';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store'; // Redux 스토어의 RootState 타입을 가져옵니다.
+import Spinner from '../spinner/Spinner';
 
 interface InviteModalProps {
   isOpen: boolean;
@@ -33,6 +35,9 @@ interface InviteModalProps {
 
 const InviteModal: React.FC<InviteModalProps> = ({ isOpen, onClose, data }) => {
   const [members, setMembers] = useState([{ email: '', nickname: '' }]);
+  const [duplicateEmails, setDuplicateEmails] = useState<string[]>([]); // 중복 이메일 저장
+  const [errorMessage, setErrorMessage] = useState<string>(''); // 에러 메시지 저장
+  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 추가
 
   const userId = useSelector((state: RootState) => state.user.user_id); // 전역 상태에서 user_id를 가져옵니다.
   console.log(userId);
@@ -50,26 +55,44 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpen, onClose, data }) => {
   };
 
   const handleInvite = async () => {
-    const payload = {
-      cont_id: data, // ContributionDetail.tsx에서 전달받은 cont_id
-      user_id: userId, // Redux 또는 session에서 가져온 user_id
-      members, // [{ nickname: "", email: "" }] 형태로 보낼 예정
-    };
+    setIsLoading(true);
+    const emails = members.map((member) => member.email); // 모든 이메일을 배열로 저장
+    setErrorMessage(''); // 에러 메시지 초기화
 
+    // 이메일 중복 체크 API 호출
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/contribution/send-invite-email`, payload, {
+      const checkResponse = await axios.post(`${API_BASE_URL}/api/contribution/check-duplicate-emails`, { emails });
+      const { existingEmails } = checkResponse.data;
+
+      if (existingEmails.length > 0) {
+        // 중복 이메일이 있을 경우
+        setDuplicateEmails(existingEmails);
+        setErrorMessage(`The following emails are already applied: ${existingEmails.join(', ')}`);
+        return; // 초대 진행 중단
+      }
+
+      // 중복 이메일이 없으면 초대 진행
+      const payload = {
+        cont_id: data,
+        user_id: userId,
+        members,
+      };
+
+      const inviteResponse = await axios.post(`${API_BASE_URL}/api/contribution/send-invite-email`, payload, {
         withCredentials: true,
       });
 
-      if (response.data.success) {
+      if (inviteResponse.data.success) {
         alert('Invitations sent successfully');
-        onClose(); // 모달 창 닫기
+        onClose(); // 모달 닫기
       } else {
         alert('Failed to send invitations');
       }
     } catch (error) {
       console.error('Error sending invitations:', error);
-      alert('An error occurred while sending invitations');
+      setErrorMessage('An error occurred while sending invitations');
+    } finally {
+      setIsLoading(false); // 로딩 상태 종료
     }
   };
 
@@ -117,6 +140,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpen, onClose, data }) => {
               {/* 필요하면 삭제 버튼 추가 가능 */}
             </InviteForm>
           ))}
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>} {/* 에러 메시지 표시 */}
           <ButtonWrap>
             <AddPersonButton onClick={handleAddPerson}>
               <AddIconWrapper>
@@ -124,7 +148,9 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpen, onClose, data }) => {
                 Add another person
               </AddIconWrapper>
             </AddPersonButton>
-            <InviteButton onClick={handleInvite}>Invite</InviteButton>
+            <InviteButton onClick={handleInvite} disabled={isLoading}>
+              {isLoading ? <Spinner /> : 'Invite'} {/* 로딩 중일 때 Spinner 표시 */}
+            </InviteButton>
           </ButtonWrap>
         </InviteModalWrapper>
       </ModalContent>

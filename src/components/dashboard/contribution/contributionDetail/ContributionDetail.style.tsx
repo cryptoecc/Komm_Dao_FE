@@ -291,6 +291,12 @@ export const ClaimButton = styled.button`
   &:hover {
     background-color: #6e40cc;
   }
+
+  &:disabled {
+    background-color: #d9d9d9; /* 비활성화 상태일 때 배경색 */
+    color: #a0a0a0; /* 비활성화 상태일 때 텍스트 색상 */
+    cursor: not-allowed; /* 비활성화 상태일 때 커서 모양 */
+  }
 `;
 
 export const ClaimButtonText = styled.div`

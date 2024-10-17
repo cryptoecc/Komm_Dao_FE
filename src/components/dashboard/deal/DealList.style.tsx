@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const DealItem = styled.div`
   width: 40vw;
   height: auto;
-  max-width: 500px;
+  /* max-width: 500px; */
   max-height: 400px;
   flex-shrink: 0;
   border-radius: 30px;

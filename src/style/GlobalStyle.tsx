@@ -16,6 +16,17 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: #ffffff;
     font-size: 14px;
+
+      /* 1470px 이상 기본 스타일 */
+    @media (min-width: 1470px) {
+      font-size: 16px;
+      padding:20px;
+    }
+     /* 1920px 이상일 때 스타일 */
+    @media (min-width: 1920px) {
+      font-size: 18px;
+      padding: 40px;
+    }
     @media (max-width: 768px) {
       font-size: 12px;
     }
@@ -43,6 +54,19 @@ const GlobalStyle = createGlobalStyle`
 
     --main-border-color: #F2EEFF;
     --sub-border-color: #F2EEFF;
+
+    @media (min-width: 1470px) {
+      --text-size-primary: 16px;
+      --text-size-medium: 18px;
+      --text-size-large: 28px;
+    }
+
+    @media (min-width: 1920px) {
+      --text-size-primary: 18px;
+      --text-size-medium: 20px;
+      --text-size-large: 32px;
+    }
+
 
     @media (max-width: 768px) {
       --text-size-primary: 12px;
@@ -142,6 +166,15 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
     font-size: 100%;
     vertical-align: baseline;
+     /* 1470px 이상일 때의 기본 폰트 크기 */
+     @media (min-width: 1470px) {
+      font-size: 100%;
+    }
+
+    /* 1920px 이상일 때의 폰트 크기 */
+    @media (min-width: 1920px) {
+      font-size: 105%;
+    }
 
     @media (max-width: 768px) {
       font-size: 90%;

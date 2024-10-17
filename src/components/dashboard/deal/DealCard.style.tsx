@@ -6,17 +6,26 @@ export const DealCardContainer = styled.div`
   gap: 20px;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  /* padding: 20px; */
+  /* margin-left: 10px; */
   width: 100%;
   height: 459px;
   box-sizing: border-box;
 
   @media (min-width: 600px) {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   }
 
   @media (min-width: 900px) {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+
+  @media (min-width: 1470px) {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* 1470px 이상에서 최소 400px */
+  }
+
+  @media (min-width: 1920px) {
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); /* 1920px 이상에서 최소 450px */
   }
 `;
 

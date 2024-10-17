@@ -125,6 +125,7 @@ const AdminInterest = () => {
     if (!isDataLoaded) {
       fetchDeals();
     }
+    setModalChannel('https://forms.gle/8zBuf3Z5r7E4nyoD8');
   }, [isDataLoaded]);
 
   // 데이터 필터링 (검색어 기준)
