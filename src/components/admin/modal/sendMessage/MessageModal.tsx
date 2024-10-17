@@ -41,7 +41,7 @@ const MessageModal: React.FC<MessageModalProps> = ({
   formLink = '(Optional) Also send to a discord channel:',
 }) => {
   if (!isOpen) return null;
-
+  console.log(content);
   return (
     <ModalOverlay>
       <ModalContainer>
