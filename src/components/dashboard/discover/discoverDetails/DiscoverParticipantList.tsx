@@ -1,4 +1,3 @@
-// 여기서부터는 어드민계정으로 수수료충당 코드 실험
 import React, { useState } from 'react';
 import Web3 from 'web3';
 import {
@@ -20,17 +19,22 @@ import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import { XpClaim_ABI } from 'src/configs/contract-abi/XpClaim';
 
+// 환경 변수에서 어드민 계정 정보를 가져옵니다.
+const adminAddress = process.env.REACT_APP_ADMIN_WALLET_ADDRESS || '';
+const adminPrivateKey = process.env.REACT_APP_ADMIN_WALLET_PRIVATE_KEY || '';
+
+console.log(adminAddress, adminPrivateKey);
+
 interface ParticipantListProps {
   participants: { id: number; user: string }[];
 }
-
 const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [points, setPoints] = useState<number>(4);
   const [rating, setRating] = useState<number>(0);
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const contractAddress = '0x4C9B3dd7DC97db2E722b7A540e2eC40929426342';
+  const contractAddress = '0x15e7a34b6a5aBf8b0aD4FcD85D873FD7e7163E97';
   const contractABI = XpClaim_ABI;
 
   // XP 잔액을 가져와서 백엔드에 업데이트하는 함수
@@ -79,15 +83,15 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
       const walletAddress = accounts[0];
       const xpPoints = 10;
 
-      // 어드민 계정 정보 설정
-      const adminAddress = '0x403746C0D8e91aB0ad15008ab2488036dFb27d3F';
-      const adminPrivateKey = '0636a7f71d25cec64125b88e86474e54e566614e78823145dc7e865b9d53650e';
-
       const contract = new web3.eth.Contract(contractABI, contractAddress);
 
       // 가스 가격 및 가스 추정
       const gasPrice = await web3.eth.getGasPrice();
+
       const gasEstimate = await contract.methods.claimXP(walletAddress, xpPoints).estimateGas({ from: adminAddress });
+      console.log('Estimated gas:', gasEstimate);
+
+      // const nonce = await web3.eth.getTransactionCount(adminAddress, 'pending');
 
       const tx = {
         from: adminAddress,
@@ -96,34 +100,31 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
         gas: gasEstimate.toString(),
         gasPrice: gasPrice.toString(),
         value: '0x0',
+        // nonce: nonce, // 수동으로 설정한 논스
       };
 
       const signedTx = await web3.eth.accounts.signTransaction(tx, adminPrivateKey);
       const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction || '');
-
       if (!receipt.transactionHash) {
         throw new Error('Transaction failed');
       }
 
-      // 트랜잭션 해시를 문자열로 변환
-      const transactionHash = receipt.transactionHash.toString(); // 문자열로 변환
+      const transactionHash = receipt.transactionHash.toString();
 
       // 트랜잭션 성공 후, 새로운 API로 XP 잔액 업데이트
       const xpBalanceRaw = await contract.methods.getXP(walletAddress).call();
 
-      // xpBalanceRaw가 undefined 또는 예상치 않은 값일 때 대비하여 처리
       if (!xpBalanceRaw) {
         throw new Error('Invalid XP balance returned from contract');
       }
 
-      const xpBalance = parseInt(xpBalanceRaw.toString(), 10); // toString()으로 변환 후 parseInt
+      const xpBalance = parseInt(xpBalanceRaw.toString(), 10);
       if (isNaN(xpBalance)) {
         throw new Error('Failed to parse XP balance');
       }
 
       await updateXPBalance(walletAddress, xpBalance);
 
-      // 포인트 히스토리 업데이트
       await updatePointHistory(walletAddress, xpPoints, transactionHash);
 
       setIsModalOpen(true);
@@ -131,7 +132,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
       console.error('XP 클레임 중 오류 발생:', error);
       alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
     } finally {
-      setIsLoading(false); // 요청 완료 후 로딩 상태 해제
+      setIsLoading(false);
     }
   };
 
