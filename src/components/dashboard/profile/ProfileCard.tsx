@@ -42,7 +42,6 @@ const ProfileCard: React.FC = () => {
         try {
           const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
           setUserData(response.data); // 사용자 데이터 저장
-          console.log('@@어케 찍히니', response.data);
         } catch (error) {
           console.error('Error fetching user data:', error);
           setUserData({
