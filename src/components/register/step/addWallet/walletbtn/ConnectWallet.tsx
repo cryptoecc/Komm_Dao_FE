@@ -16,7 +16,13 @@ import { ReactComponent as CloseIcon } from 'src/assets/modal/close.svg';
 import MetamaskIcon from 'src/assets/modal/MetaMask_Fox.png';
 import WalletCntIcon from 'src/assets/modal/walletconnect.png';
 import ConnectedWallet from '../connectedwallet/ConnectedWallet';
-import { connectWallet, switchToOptimism, disconnectWallet, switchToSepolia } from '../../../../../utils/web3';
+import {
+  connectWallet,
+  switchToOptimism,
+  disconnectWallet,
+  switchToSepolia,
+  switchToHolesky,
+} from '../../../../../utils/web3';
 
 Modal.setAppElement('#root');
 
@@ -51,7 +57,7 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({ onComplete }) => {
     if (wallet === 'metamask') {
       try {
         const address = await connectWallet();
-        await switchToSepolia();
+        await switchToHolesky();
         setWalletAddress(address);
         setIsWalletConnected(true);
       } catch (error) {

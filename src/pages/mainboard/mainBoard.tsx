@@ -15,6 +15,7 @@ const ContentArea = styled.div`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.white};
   overflow-y: auto; /* 스크롤바 추가 */
+  padding: 0 3vh;
 `;
 
 const MainBoard: React.FC = () => {

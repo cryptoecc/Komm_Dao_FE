@@ -26,7 +26,7 @@ const DealListContainer = styled.div`
   flex-wrap: wrap;
   /* margin-left: 50px; */
   /* justify-content: center; */
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   /* margin: 0 auto; */
 
@@ -40,7 +40,7 @@ const DealWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
-  max-width: 500px;
+  max-width: 550px;
 
   @media (max-width: 767px) {
     width: 90vw;

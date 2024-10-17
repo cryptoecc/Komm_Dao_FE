@@ -48,6 +48,17 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isInterestModalOpen, setInterestModalOpen] = useState<boolean>(false);
   const [isInvalidModalOpen, setInvalidModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림/닫힘 상태
+
+  // 모달을 열기 위한 함수
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // 모달을 닫기 위한 함수
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   // Log min and max interest when the component mounts
   useEffect(() => {
@@ -161,6 +172,7 @@ const DealInterestCard: React.FC<DealInterestCardProps> = ({ deal }) => {
             closeInterestModal();
           }}
           onInvalid={closeInvalidModal} // Added onInvalid
+          onClose={closeInterestModal}
         />
       )}
       {isInvalidModalOpen && (

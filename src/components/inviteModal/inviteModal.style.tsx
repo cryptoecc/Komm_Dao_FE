@@ -186,3 +186,9 @@ export const ButtonWrap = styled.div`
   align-items: baseline;
   justify-content: space-between;
 `;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+`;
