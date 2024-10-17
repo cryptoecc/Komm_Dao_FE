@@ -181,23 +181,17 @@ const DiscoverList = () => {
   // 필터링된 데이터
   const filteredData = data.filter((item) => {
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(item.category);
+
     const matchesGrade =
       selectedGrades.length === 0 ||
-      selectedGrades.some(
-        (selectedGrade) => item.pjt_grade.split(' ')[0].trim().toUpperCase() === selectedGrade.trim().toUpperCase()
-      );
+      selectedGrades.some((selectedGrade) => {
+        const selectedGradeCode = selectedGrade.split(' ')[0].trim(); // 선택된 등급의 코드를 추출
+        const itemGradeCode = item.pjt_grade.split(' ')[0].trim(); // 항목의 등급 코드를 추출
+        return selectedGradeCode === itemGradeCode; // 정확히 일치하는지 비교
+      });
+
     return matchesCategory && matchesGrade;
   });
-
-  // const filteredData = data.filter((item) => {
-  //   const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(item.category);
-  //   const matchesGrade =
-  //     selectedGrades.length === 0 ||
-  //     selectedGrades.some(
-  //       (selectedGrade) => item.pjt_grade.split(' ')[0].trim().toUpperCase() === selectedGrade.trim().toUpperCase()
-  //     );
-  //   return matchesCategory && matchesGrade;
-  // });
 
   const gradePriority: { [key: string]: number } = {
     AAA: 1,
@@ -206,7 +200,6 @@ const DiscoverList = () => {
     BBB: 4,
     BB: 5,
     B: 6,
-    C: 7, // 추가적인 등급도 필요한 경우 추가
   };
 
   // 등급을 숫자로 변환하여 우선순위를 반환하는 함수
@@ -232,23 +225,6 @@ const DiscoverList = () => {
 
     return 0;
   });
-
-  // 정렬된 데이터
-  // const sortedData = [...filteredData].sort((a, b) => {
-  //   if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-  //   if (sortConfig) {
-  //     const aValue = a[sortConfig.key];
-  //     const bValue = b[sortConfig.key];
-
-  //     if (aValue < bValue) {
-  //       return sortConfig.direction === 'ascending' ? -1 : 1;
-  //     }
-  //     if (aValue > bValue) {
-  //       return sortConfig.direction === 'ascending' ? 1 : -1;
-  //     }
-  //   }
-  //   return 0;
-  // });
 
   // 카테고리 드롭다운 토글
   const toggleCategoryDropdown = () => {
