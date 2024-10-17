@@ -45,39 +45,125 @@ const AdminInterest = () => {
   const [modalTitle, setModalTitle] = useState(''); // 모달 제목 상태
   const [modalContent, setModalContent] = useState(''); // 모달 내용 상태
   const [modalChannel, setModalChannel] = useState(''); // 모달 채널 상태
+  const [currentUserData, setCurrentUserData] = useState<any>(null); // 선택된 유저의 데이터
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  const handleOpenModal = () => {
-    // 선택된 모든 행의 데이터를 수집
-    const selectedDealsData = filteredDeals
-      .filter((deal) => selectedRows.has(deal.deal_id)) // selectedRows에 포함된 deal_id만 필터링
-      .map((deal) => {
-        return `Deal Name: ${deal.deal_name}\nUser Name: ${deal.user_name}\nFinal Allocation: ${
-          deal.user_final_allocation !== undefined ? deal.user_final_allocation : '--'
-        }\nPayment Due Date: ${formatDate(paymentDueDates[deal.deal_id])}`;
-      });
-    console.log('Selected Deals Data:', selectedDealsData); // 선택된 모든 deal의 데이터를 확인
+  const generateMessageForUser = (deal: any, paymentDueDate: string) => {
+    return `안녕하세요 ${deal.user_name}님,
+  
+  신청하신 ${deal.deal_name} 프로젝트에 대한 투자금 납입 안내드립니다.
+  
+  하기 안내사항에 따라 투자금을 납입하여 주시되, 납입 기한을 반드시 지켜 주시기 바랍니다.
+  
+  투자금 납입 완료 후, 트랜잭션 해시(TX hash) 링크를 아래 구글폼을 통해 제출해주십시오.
+  
+  구글폼 링크: ${modalChannel}
+  
+  □ 납입 화폐
+  USDT-ERC20
+  
+  □ 납입 수량
+  ${deal.user_final_allocation !== undefined ? deal.user_final_allocation : '--'} USDT
+  
+  □ 납입 기한
+  ${paymentDueDate} 자정까지
+  
+  □ 납입 주소
+  0x2dB0544f170157077B60baB07f33b1E3d32750D6
+  
+  ※ 회원의 네트워크 선택 또는 주소 기재 오류로 오입금이 발생하는 경우, Komm DAO는 손해배상, 복구지원 등 책임을 부담하지 않습니다.
+  
+  추가적인 문의사항 있으시거나 부득이하게 납입 기한까지 송금하지 못하시는 분은 메일 회신 혹은 디스코드 채널의 open-ticket으로 문의 부탁드립니다. 기한을 못 지킬 시 불이익이 발생할 수 있습니다.
+  
+  감사합니다.`;
+  };
 
-    // 수집한 데이터를 모달 Content에 반영
-    setModalContent(selectedDealsData.join('\n\n')); // 각 딜 내용을 두 줄 간격으로 구분
+  // const handleOpenModal = () => {
+  //   // 선택된 모든 행의 데이터를 수집
+  //   const selectedDealsData = filteredDeals
+  //     .filter((deal) => selectedRows.has(deal.deal_id)) // selectedRows에 포함된 deal_id만 필터링
+  //     .map((deal) => {
+  //       return ` 안녕하세요 ${deal.user_name}님,
+
+  // 신청하신 ${deal.deal_name} 프로젝트에 대한 투자금 납입 안내드립니다.
+
+  // 하기 안내사항에 따라 투자금을 납입하여 주시되, 납입 기한을 반드시 지켜 주시기 바랍니다.
+
+  // 투자금 납입 완료 후, 트랜잭션 해시(TX hash) 링크를 아래 구글폼을 통해 제출해주십시오.
+
+  // 구글폼 링크:
+
+  // □ 납입 화폐
+  // USDT-ERC20
+
+  // □ 납입 수량
+
+  // ${deal.user_final_allocation !== undefined ? deal.user_final_allocation : '--'} USDT
+
+  // □ 납입 기한
+  // ${formatDate(paymentDueDates[deal.deal_id])} 자정까지
+
+  // □ 납입 주소
+  // 0x2dB0544f170157077B60baB07f33b1E3d32750D6
+
+  // ※ 회원의 네트워크 선택 또는 주소 기재 오류로 오입금이 발생하는 경우, Komm DAO는 손해배상, 복구지원 등 책임을 부담하지 않습니다.
+
+  // 추가적인 문의사항 있으시거나 부득이하게 납입 기한까지 송금하지 못하시는 분은 메일 회신 혹은 디스코드 채널의 open-ticket으로 문의 부탁드립니다. 기한을 못 지킬 시 불이익이 발생할 수 있습니다.
+
+  // 감사합니다.;`;
+  //     });
+  //   console.log('Selected Deals Data:', selectedDealsData); // 선택된 모든 deal의 데이터를 확인
+
+  //   // 수집한 데이터를 모달 Content에 반영
+  //   setModalContent(selectedDealsData.join('\n\n')); // 각 딜 내용을 두 줄 간격으로 구분
+  //   setIsModalOpen(true); // 모달 열기
+  // };
+  // const handleOpenModal = () => {
+  //   // 선택된 모든 행의 데이터를 수집
+  //   const selectedDealsData = filteredDeals
+  //     .filter((deal) => selectedRows.has(deal.deal_id)) // 선택된 행의 deal_id만 필터링
+  //     .map((deal) => ({
+  //       dealName: deal.deal_name,
+  //       userName: deal.user_name,
+  //       finalAllocation: deal.user_final_allocation !== undefined ? deal.user_final_allocation : '--',
+  //       paymentDueDate: formatDate(paymentDueDates[deal.deal_id]),
+  //     }));
+  //   console.log('Selected Deals Data:', selectedDealsData); // 선택된 모든 deal의 데이터를 확인
+
+  //   // 수집한 데이터를 모달 Content에 반영
+  //   setModalContent(selectedDealsData.join('\n\n')); // 각 딜 내용을 두 줄 간격으로 구분
+  //   setIsModalOpen(true); // 모달 열기
+  // };
+
+  const handleOpenModal = () => {
+    const selectedDealsData = filteredDeals
+      .filter((deal) => selectedRows.has(deal.deal_id)) // 선택된 딜 필터링
+      .map((deal) => generateMessageForUser(deal, formatDate(paymentDueDates[deal.deal_id]))); // 메시지 생성
+
+    // 메시지 데이터 설정
+    setModalContent(selectedDealsData.join('\n\n')); // 각 딜 간 두 줄 간격 추가
     setIsModalOpen(true); // 모달 열기
   };
+
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleSendMessages = async () => {
     console.log('Selected Rows:', Array.from(selectedRows)); // 선택된 deal_id가 정확히 들어가는지 확인
     console.log('Filtered Deals:', filteredDeals); // 필터링된 deals가 정확히 포함되는지 확인
 
-    // 선택된 모든 deal의 데이터를 필터링하고 JSON 객체로 변환
     const messagePayload = filteredDeals
       .filter((deal) => selectedRows.has(deal.deal_id)) // selectedRows에 포함된 deal_id만 필터링
       .map((deal) => {
+        // 사용자에게 보낼 메시지 생성
+        const userMessage = generateMessageForUser(deal, formatDate(paymentDueDates[deal.deal_id]));
+
         return {
           deal_name: deal.deal_name,
           user_name: deal.user_name,
           final_allocation: deal.user_final_allocation || '--',
           payment_due_date: formatDate(paymentDueDates[deal.deal_id]),
+          message: userMessage, // 사용자 메시지를 payload에 추가
         };
       });
 
