@@ -84,7 +84,7 @@ const PointsHistory: React.FC = () => {
               <DataItem>{item.xpEarned}</DataItem>
               <DataItem>
                 <a
-                  href={`https://sepolia.etherscan.io/tx/${item.transactionId}`}
+                  href={`https://holesky.etherscan.io/tx/${item.transactionId}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ color: 'blue', textDecoration: 'underline' }}

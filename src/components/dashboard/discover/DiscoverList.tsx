@@ -174,7 +174,7 @@ const DiscoverList = () => {
   // 프로젝트 클릭 시 상세 페이지로 이동
   const handleProjectClick = (projectData: DataItem) => {
     navigate(PATH.DISCOVER_DETAILS.replace(':projectId', projectData.pjt_id.toString()), {
-      state: projectData,
+      state: { ...projectData }, // 이 부분에서 projectData 전체를 전달해야 합니다.
     });
   };
 
