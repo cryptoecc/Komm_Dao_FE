@@ -17,6 +17,7 @@ interface TopBarProps {
   onToggleChange?: (checked: boolean) => void;
   onSendMessageClick?: () => void; // 추가된 prop
   onDeleteClick?: () => void;
+  onSaveClick?: () => void;
 }
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -27,6 +28,7 @@ const TopBar: React.FC<TopBarProps> = ({
   onToggleChange,
   onSendMessageClick,
   onDeleteClick,
+  onSaveClick,
 }) => {
   const [isChecked, setIsChecked] = React.useState(false);
 
@@ -49,7 +51,7 @@ const TopBar: React.FC<TopBarProps> = ({
         <Icon src={addIcon} alt="add" onClick={onAddClick} />
         <Icon src={editIcon} alt="edit" onClick={onEditClick} />
         <Icon src={deleteIcon} alt="delete" onClick={onDeleteClick} />
-        <Icon src={saveIcon} alt="save" />
+        <Icon src={saveIcon} alt="save" onClick={onSaveClick} />
         <Icon src={downloadIcon} alt="download" />
         <SendMessageButton onClick={onSendMessageClick}>
           <Icon src={sendMessageIcon} alt="send messages" />

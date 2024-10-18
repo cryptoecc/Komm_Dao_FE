@@ -49,6 +49,9 @@ const AdminInterest = () => {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedValues, setEditedValues] = useState<{ [key: number]: any }>({});
+
   const generateMessageForUser = (deal: any, paymentDueDate: string) => {
     return `안녕하세요 ${deal.user_name}님,
   
@@ -78,47 +81,6 @@ const AdminInterest = () => {
   
   감사합니다.`;
   };
-
-  // const handleOpenModal = () => {
-  //   // 선택된 모든 행의 데이터를 수집
-  //   const selectedDealsData = filteredDeals
-  //     .filter((deal) => selectedRows.has(deal.deal_id)) // selectedRows에 포함된 deal_id만 필터링
-  //     .map((deal) => {
-  //       return ` 안녕하세요 ${deal.user_name}님,
-
-  // 신청하신 ${deal.deal_name} 프로젝트에 대한 투자금 납입 안내드립니다.
-
-  // 하기 안내사항에 따라 투자금을 납입하여 주시되, 납입 기한을 반드시 지켜 주시기 바랍니다.
-
-  // 투자금 납입 완료 후, 트랜잭션 해시(TX hash) 링크를 아래 구글폼을 통해 제출해주십시오.
-
-  // 구글폼 링크:
-
-  // □ 납입 화폐
-  // USDT-ERC20
-
-  // □ 납입 수량
-
-  // ${deal.user_final_allocation !== undefined ? deal.user_final_allocation : '--'} USDT
-
-  // □ 납입 기한
-  // ${formatDate(paymentDueDates[deal.deal_id])} 자정까지
-
-  // □ 납입 주소
-  // 0x2dB0544f170157077B60baB07f33b1E3d32750D6
-
-  // ※ 회원의 네트워크 선택 또는 주소 기재 오류로 오입금이 발생하는 경우, Komm DAO는 손해배상, 복구지원 등 책임을 부담하지 않습니다.
-
-  // 추가적인 문의사항 있으시거나 부득이하게 납입 기한까지 송금하지 못하시는 분은 메일 회신 혹은 디스코드 채널의 open-ticket으로 문의 부탁드립니다. 기한을 못 지킬 시 불이익이 발생할 수 있습니다.
-
-  // 감사합니다.;`;
-  //     });
-  //   console.log('Selected Deals Data:', selectedDealsData); // 선택된 모든 deal의 데이터를 확인
-
-  //   // 수집한 데이터를 모달 Content에 반영
-  //   setModalContent(selectedDealsData.join('\n\n')); // 각 딜 내용을 두 줄 간격으로 구분
-  //   setIsModalOpen(true); // 모달 열기
-  // };
   // const handleOpenModal = () => {
   //   // 선택된 모든 행의 데이터를 수집
   //   const selectedDealsData = filteredDeals
@@ -136,6 +98,48 @@ const AdminInterest = () => {
   //   setIsModalOpen(true); // 모달 열기
   // };
 
+  // 2. Edit 버튼을 눌렀을 때 편집 모드로 전환하는 함수
+  const handleEditClick = () => {
+    if (selectedRows.size > 0) {
+      setIsEditing(true);
+
+      // 선택된 deal_id의 모든 사용자 데이터를 편집할 수 있도록 editedValues에 저장
+      const newEditedValues: { [dealId: number]: { [userId: number]: any } } = {};
+      selectedRows.forEach((dealId) => {
+        const selectedDeals = dealData.filter((deal) => deal.deal_id === dealId);
+        if (selectedDeals.length > 0) {
+          selectedDeals.forEach((deal) => {
+            if (!newEditedValues[deal.deal_id]) {
+              newEditedValues[deal.deal_id] = {};
+            }
+            newEditedValues[deal.deal_id][deal.user_id] = { ...deal }; // 각 user의 데이터를 저장
+          });
+        }
+      });
+      setEditedValues(newEditedValues);
+    } else {
+      toast.error('편집할 항목을 선택하세요.', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    }
+  };
+
+  // 3. Input 필드 값이 변경되었을 때 상태 업데이트
+  const handleInputChange = (dealId: number, userId: number, field: string, value: string | number) => {
+    const parsedValue = field === 'user_interest' || field === 'user_payment_amount' ? Number(value) : value;
+
+    setEditedValues((prevValues) => ({
+      ...prevValues,
+      [dealId]: {
+        ...prevValues[dealId],
+        [userId]: {
+          ...prevValues[dealId][userId],
+          [field]: parsedValue, // 숫자 필드의 값을 변환해서 저장
+        },
+      },
+    }));
+  };
   const handleOpenModal = () => {
     const selectedDealsData = filteredDeals
       .filter((deal) => selectedRows.has(deal.deal_id)) // 선택된 딜 필터링
@@ -440,11 +444,48 @@ const AdminInterest = () => {
     }
   };
 
+  // 4. 변경사항 저장 및 백엔드에 업데이트하는 함수 (각 userId별로 업데이트)
+  const handleSaveChanges = async () => {
+    try {
+      const updatePromises = Object.keys(editedValues).map(async (dealIdString) => {
+        const dealId = parseInt(dealIdString, 10); // 문자열로 반환된 dealId를 숫자로 변환
+
+        const userUpdates = Object.keys(editedValues[dealId]).map(async (userIdString) => {
+          const userId = parseInt(userIdString, 10); // 문자열로 반환된 userId를 숫자로 변환
+          const updatedDeal = editedValues[dealId][userId];
+
+          console.log(updatedDeal);
+
+          // 각각의 user 데이터 업데이트
+          await axios.put(`${API_BASE_URL}/api/admin/update-deal/${dealId}/${userId}`, updatedDeal);
+        });
+
+        await Promise.all(userUpdates); // 각 userId에 대한 업데이트 요청
+      });
+
+      await Promise.all(updatePromises);
+      setIsEditing(false); // 편집 모드 종료
+      fetchDeals(); // 업데이트된 데이터를 다시 불러옴
+      toast.success('성공적으로 저장되었습니다.', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    } catch (error) {
+      toast.error('저장 중 오류가 발생했습니다.', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+      console.error('Error saving changes:', error);
+    }
+  };
+
   return (
     <DiscoverContainer>
       <Title>Deal Interest</Title>
       <TopBar
         onSearchChange={setSearchTerm}
+        onEditClick={handleEditClick}
+        onSaveClick={handleSaveChanges}
         // onAddClick={}
         showToggle={false}
         onSendMessageClick={handleOpenModal}
@@ -502,7 +543,17 @@ const AdminInterest = () => {
                   )}
                 </TableCell>
                 <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.user_name}</TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.user_interest}</TableCell>
+                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                  {isEditing && selectedRows.has(deal.deal_id) ? (
+                    <input
+                      type="text"
+                      value={editedValues[deal.deal_id]?.[deal.user_id]?.user_interest || ''}
+                      onChange={(e) => handleInputChange(deal.deal_id, deal.user_id, 'user_interest', e.target.value)}
+                    />
+                  ) : (
+                    deal.user_interest
+                  )}
+                </TableCell>
                 <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.total_interest}</TableCell>
                 <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
                   {deal.deal_status === 'PAYMENT_PENDING' && index === findFirstRowIndex(deal.deal_name) ? (
@@ -525,7 +576,19 @@ const AdminInterest = () => {
                     deal.user_final_allocation || '--'
                   )}
                 </TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.user_payment_amount}</TableCell>
+                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                  {isEditing && selectedRows.has(deal.deal_id) ? (
+                    <input
+                      type="text"
+                      value={editedValues[deal.deal_id]?.[deal.user_id]?.user_payment_amount || ''}
+                      onChange={(e) =>
+                        handleInputChange(deal.deal_id, deal.user_id, 'user_payment_amount', e.target.value)
+                      }
+                    />
+                  ) : (
+                    deal.user_payment_amount
+                  )}
+                </TableCell>
                 <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.payment_status}</TableCell>
                 <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
                   {deal.deal_status === 'PAYMENT_PENDING' &&
