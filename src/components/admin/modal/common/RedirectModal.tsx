@@ -18,9 +18,9 @@ const ModalContent = styled.div`
   background: white;
   padding: 40px;
   border-radius: 10px;
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
-  height: 450px;
+  height: 400px;
   width: 100%;
 
   display: flex; /* Flexbox 사용 */
@@ -36,7 +36,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const RedirectModal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
@@ -46,4 +46,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   );
 };
 
-export default Modal;
+export default RedirectModal;

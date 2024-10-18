@@ -35,6 +35,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
 import { images } from 'src/assets/discover/images';
 import ResponseModal from 'src/components/admin/modal/common/ResponseModal';
+import Pagination from 'src/components/pagenation/Pagenation';
 
 const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI']; // 카테고리
 
@@ -89,6 +90,11 @@ const AdminDiscover = () => {
     apply_yn: '',
     // 필요한 다른 필드들 추가
   });
+
+  //페이지네이션
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+  const [itemsPerPage, setItemsPerPage] = useState(20); // 페이지당 항목 수
 
   const useDebouncedValue = (value: string, delay: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -246,49 +252,88 @@ const AdminDiscover = () => {
     setPopupContent(null);
   }, []);
 
+  // useEffect(() => {
+  //   // 백엔드에서 Discover 데이터를 가져오기
+  //   const fetchDiscovers = async (page, serarhTerm) => {
+  //     try {
+  //       const response = await axios.get(`${API_BASE_URL}/api/admin/project-list`, {
+  //         params: {
+  //           page,
+  //           limit: 20, // 페이지당 20개씩 가져옴
+  //           searchTerm,
+  //         },
+  //       });
+  //       const data = response.data;
+
+  //       // if (data.length < 20) {
+  //       //   const emptyItems = Array.from({ length: 20 - data.length }, (_, index) => ({
+  //       //     pjt_id: `empty-${index}`, // 고유한 ID를 제공하기 위해 'empty' 접두사 추가
+  //       //     pjt_name: '~~',
+  //       //     website: '~~',
+  //       //     category: '~~',
+  //       //     x_link: '~~',
+  //       //     x_followers: '~~',
+  //       //     discord_link: '~~',
+  //       //     discord_members: '~~',
+  //       //     linkedIn_link: '~~',
+  //       //     github_link: '~~',
+  //       //     github_stars: '~~',
+  //       //     raising_amount: '~~',
+  //       //     valuation: '~~',
+  //       //     investors: '~~',
+  //       //     pjt_grade: '~~',
+  //       //     pjt_summary: '~~',
+  //       //     pjt_details: '~~',
+  //       //     adm_trend: '~~',
+  //       //     adm_expertise: '~~',
+  //       //     adm_final_grade: '~~',
+  //       //     update_date: '~~',
+  //       //     apply_yn: '~~',
+  //       //   }));
+  //       //   setDiscovers([...data, ...emptyItems]);
+  //       // } else {
+  //       //   setDiscovers(data);
+  //       // }
+  //     } catch (error) {
+  //       console.error('Error fetching discovers:', error);
+  //     }
+  //   };
+
+  //   fetchDiscovers();
+  // }, [isEditable]);
+  const fetchProjects = async (page: number, searchTerm: string, limit: number) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/admin/project-list`, {
+        params: {
+          page,
+          limit, // 페이지당 20개씩 가져옴
+          searchTerm,
+        },
+      });
+
+      setDiscovers(response.data.data); // 프로젝트 데이터 설정
+      console.log(response.data.data);
+      setTotalPages(response.data.totalPages); // 전체 페이지 설정
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
   useEffect(() => {
-    // 백엔드에서 Discover 데이터를 가져오기
-    const fetchDiscovers = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/api/admin/project-list`);
-        const data = response.data;
+    fetchProjects(currentPage, searchTerm, itemsPerPage); // 페이지나 검색어가 바뀔 때마다 데이터 가져오기
+  }, [currentPage, searchTerm, itemsPerPage]);
 
-        if (data.length < 20) {
-          const emptyItems = Array.from({ length: 20 - data.length }, (_, index) => ({
-            pjt_id: `empty-${index}`, // 고유한 ID를 제공하기 위해 'empty' 접두사 추가
-            pjt_name: '~~',
-            website: '~~',
-            category: '~~',
-            x_link: '~~',
-            x_followers: '~~',
-            discord_link: '~~',
-            discord_members: '~~',
-            linkedIn_link: '~~',
-            github_link: '~~',
-            github_stars: '~~',
-            raising_amount: '~~',
-            valuation: '~~',
-            investors: '~~',
-            pjt_grade: '~~',
-            pjt_summary: '~~',
-            pjt_details: '~~',
-            adm_trend: '~~',
-            adm_expertise: '~~',
-            adm_final_grade: '~~',
-            update_date: '~~',
-            apply_yn: '~~',
-          }));
-          setDiscovers([...data, ...emptyItems]);
-        } else {
-          setDiscovers(data);
-        }
-      } catch (error) {
-        console.error('Error fetching discovers:', error);
-      }
-    };
+  // TopBar에서 검색어가 변경될 때 호출되는 함수
+  const handleSearchChange = (newSearchTerm: string) => {
+    setSearchTerm(newSearchTerm); // 검색어를 상태로 설정
+    setCurrentPage(1); // 검색 시 첫 페이지로 이동
+  };
 
-    fetchDiscovers();
-  }, [isEditable]);
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   // 데이터 필터링 (카테고리 및 검색어 기준)
   useEffect(() => {
@@ -445,7 +490,7 @@ const AdminDiscover = () => {
     <DiscoverContainer>
       <Title>Discover Mgmt</Title>
       <TopBar
-        onSearchChange={setSearchTerm} // 검색어가 변경될 때 필터링
+        onSearchChange={handleSearchChange} // 검색어가 변경될 때 필터링
         onEditClick={() => console.log('Edit Clicked')} // 편집 버튼 클릭 시 동작 추가 가능
         onAddClick={handleAddClick}
         showToggle={true}
@@ -1078,6 +1123,17 @@ const AdminDiscover = () => {
           </tbody>
         </Table>
       </TableWrapper>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={handlePageChange}
+        itemsPerPage={itemsPerPage} // 한 페이지당 표시할 항목 수
+        setItemsPerPage={(newItemsPerPage) => {
+          // 페이지당 항목 수를 변경하는 로직
+          setCurrentPage(1); // 페이지당 항목 수 변경 시 첫 페이지로 돌아가기
+          setItemsPerPage(newItemsPerPage); // 새로운 항목 수에 맞게 데이터를 가져오기
+        }}
+      />
       <PopupBackdrop isVisible={isPopupOpen} onClick={handleBackdropClick} />
       <PopupContainer isVisible={isPopupOpen}>
         <h3>Edit</h3>
