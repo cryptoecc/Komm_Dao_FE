@@ -128,14 +128,26 @@ const AdminDiscover = () => {
 
   // 수정 내용을 저장하는 함수 (동적으로 필드를 업데이트)
   const handleSave = () => {
+    console.log('Current Value:', popupValue); // 현재 값 확인
+    console.log('popupProjectId:', popupProjectId); // popupProjectId 값 확인
+    console.log('popupField:', popupField); // popupField 값 확인
+
     if (popupProjectId !== null && popupField !== '') {
       setEditValues((prevValues) => ({
         ...prevValues,
         [popupProjectId]: {
           ...prevValues[popupProjectId],
-          [popupField]: debouncedPopupValue, // 동적으로 수정할 필드 업데이트
+          [popupField]: popupValue === '' ? '' : popupValue, // 빈 문자열도 허용
         },
       }));
+
+      console.log('Updated editValues:', {
+        ...editValues,
+        [popupProjectId]: {
+          ...editValues[popupProjectId],
+          [popupField]: popupValue,
+        },
+      });
 
       // 팝업 닫기
       setIsPopupOpen(false);
@@ -1026,7 +1038,11 @@ const AdminDiscover = () => {
                   {isEditable ? (
                     <input
                       type="text"
-                      value={editValues[discover.pjt_id]?.pjt_summary || discover.pjt_summary}
+                      value={
+                        editValues[discover.pjt_id]?.pjt_summary !== undefined
+                          ? editValues[discover.pjt_id]?.pjt_summary
+                          : discover.pjt_summary
+                      }
                       onClick={() => handleInputClick(discover.pjt_id, discover.pjt_summary, 'pjt_summary')} // 팝업 열기
                       readOnly
                     />
@@ -1152,7 +1168,10 @@ const AdminDiscover = () => {
           <PopupInput
             // type="text"
             value={popupValue}
-            onChange={(e) => setPopupValue(e.target.value)} // 팝업에서 입력한 값 업데이트
+            onChange={(e) => {
+              console.log('Input value:', e.target.value); // 사용자가 입력한 값 확인
+              setPopupValue(e.target.value); // 입력 값을 popupValue에 저장
+            }} // 팝업에서 입력한 값 업데이트
           />
         </Textarea>
         <div>

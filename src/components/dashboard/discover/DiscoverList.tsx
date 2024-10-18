@@ -33,7 +33,7 @@ interface DataItem {
   pjt_name: string;
   category: string;
   pjt_summary: string;
-  pjt_grade: string;
+  adm_final_grade: string;
   pinned: boolean;
   checked: boolean;
   apply_yn: string;
@@ -192,7 +192,7 @@ const DiscoverList: React.FC<DiscoverListProps> = ({ searchTerm }) => {
       selectedGrades.length === 0 ||
       selectedGrades.some((selectedGrade) => {
         const selectedGradeCode = selectedGrade.split(' ')[0].trim(); // 선택된 등급의 코드를 추출
-        const itemGradeCode = item.pjt_grade.split(' ')[0].trim(); // 항목의 등급 코드를 추출
+        const itemGradeCode = item.adm_final_grade.split(' ')[0].trim(); // 항목의 등급 코드를 추출
         return selectedGradeCode === itemGradeCode; // 정확히 일치하는지 비교
       });
 
@@ -224,8 +224,8 @@ const DiscoverList: React.FC<DiscoverListProps> = ({ searchTerm }) => {
     if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
 
     // 현재 정렬 기준에 따른 값을 가져옵니다.
-    const aValue = sortConfig.key === 'pjt_grade' ? getGradePriority(a.pjt_grade) : a[sortConfig.key];
-    const bValue = sortConfig.key === 'pjt_grade' ? getGradePriority(b.pjt_grade) : b[sortConfig.key];
+    const aValue = sortConfig.key === 'adm_final_grade' ? getGradePriority(a.adm_final_grade) : a[sortConfig.key];
+    const bValue = sortConfig.key === 'adm_final_grade' ? getGradePriority(b.adm_final_grade) : b[sortConfig.key];
 
     if (aValue < bValue) {
       return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -265,6 +265,23 @@ const DiscoverList: React.FC<DiscoverListProps> = ({ searchTerm }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // 점수에 따른 등급 계산 함수
+  const calculateGrade = (score: number | string) => {
+    if (score === 'N/A' || score === null || score === undefined) {
+      return 'N/A';
+    }
+
+    const numericScore = parseFloat(score as string);
+
+    if (numericScore >= 2.5 && numericScore <= 3.0) return 'AAA (Exceptional)';
+    if (numericScore >= 2.0 && numericScore < 2.5) return 'AA (Excellent)';
+    if (numericScore >= 1.5 && numericScore < 2.0) return 'A (Good)';
+    if (numericScore >= 1.0 && numericScore < 1.5) return 'BBB (Fair)';
+    if (numericScore < 1.0) return 'BB and Below (Poor)';
+
+    return 'N/A'; // 범위 외의 경우 기본값
+  };
 
   return (
     <DiscoverPageContainer>
@@ -380,8 +397,8 @@ const DiscoverList: React.FC<DiscoverListProps> = ({ searchTerm }) => {
                     {row.pjt_summary || 'No summary available'}
                   </TableCell>
                   <TableCell width="20%">
-                    <GradeBadge $grade={row.pjt_grade ? row.pjt_grade.split(' ')[0] : 'N/A'}>
-                      {row.pjt_grade || 'No grade'}
+                    <GradeBadge $grade={calculateGrade(row.adm_final_grade).split(' ')[0]}>
+                      {calculateGrade(row.adm_final_grade)} {/* 점수에 따라 등급 표시 */}
                     </GradeBadge>
                   </TableCell>
                 </TableRow>
