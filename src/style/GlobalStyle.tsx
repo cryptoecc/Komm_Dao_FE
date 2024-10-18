@@ -19,12 +19,12 @@ const GlobalStyle = createGlobalStyle`
 
       /* 1470px 이상 기본 스타일 */
     @media (min-width: 1470px) {
-      font-size: 16px;
+      font-size: 14px;
       padding:20px;
     }
      /* 1920px 이상일 때 스타일 */
     @media (min-width: 1920px) {
-      font-size: 18px;
+      font-size: 14px;
       padding: 40px;
     }
     @media (max-width: 768px) {
@@ -55,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
     --main-border-color: #F2EEFF;
     --sub-border-color: #F2EEFF;
 
-    @media (min-width: 1470px) {
+    /* @media (min-width: 1470px) {
       --text-size-primary: 16px;
       --text-size-medium: 18px;
       --text-size-large: 28px;
@@ -78,7 +78,7 @@ const GlobalStyle = createGlobalStyle`
       --text-size-primary: 10px;
       --text-size-medium: 12px;
       --text-size-large: 18px;
-    }
+    } */
   }
 
   /* reset.css */
@@ -172,9 +172,9 @@ const GlobalStyle = createGlobalStyle`
     }
 
     /* 1920px 이상일 때의 폰트 크기 */
-    @media (min-width: 1920px) {
+    /* @media (min-width: 1920px) {
       font-size: 105%;
-    }
+    } */
 
     @media (max-width: 768px) {
       font-size: 90%;

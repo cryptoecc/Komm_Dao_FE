@@ -543,7 +543,7 @@ const AdminDiscover = () => {
               <TableHeader>Linkdein</TableHeader>
               <TableHeader>Github</TableHeader>
               <TableHeader>Github Stars</TableHeader>
-              <TableHeader>Linkdein</TableHeader>
+              <TableHeader>Github Wkly Comm</TableHeader>
               <TableHeader>Raising</TableHeader>
               <TableHeader>Valuation</TableHeader>
               <TableHeader>Investors</TableHeader>
@@ -776,7 +776,9 @@ const AdminDiscover = () => {
                       onChange={(e) => handleInputChange(e, discover.pjt_id, 'website')}
                     />
                   ) : (
-                    discover.website
+                    <a href={discover.website} target="_blank" rel="noopener noreferrer">
+                      {discover.website}
+                    </a>
                   )}
                 </TableCell>
                 <TableCell $isSelected={selectedRows.has(discover.pjt_id)}>
@@ -810,7 +812,9 @@ const AdminDiscover = () => {
                       onChange={(e) => handleInputChange(e, discover.pjt_id, 'x_link')}
                     />
                   ) : (
-                    discover.x_link
+                    <a href={discover.x_link} target="_blank" rel="noopener noreferrer">
+                      {discover.x_link}
+                    </a>
                   )}
                 </TableCell>
                 <TableCell
@@ -847,7 +851,9 @@ const AdminDiscover = () => {
                       onChange={(e) => handleInputChange(e, discover.pjt_id, 'discord_link')}
                     />
                   ) : (
-                    discover.discord_link
+                    <a href={discover.discord_link} target="_blank" rel="noopener noreferrer">
+                      {discover.discord_link}
+                    </a>
                   )}
                 </TableCell>
                 <TableCell
@@ -883,7 +889,9 @@ const AdminDiscover = () => {
                       onChange={(e) => handleInputChange(e, discover.pjt_id, 'linkedIn_link')}
                     />
                   ) : (
-                    discover.linkedIn_link
+                    <a href={discover.linkedIn_link} target="_blank" rel="noopener noreferrer">
+                      {discover.linkedIn_link}
+                    </a>
                   )}
                 </TableCell>
                 <TableCell
@@ -902,7 +910,9 @@ const AdminDiscover = () => {
                       onChange={(e) => handleInputChange(e, discover.pjt_id, 'github_link')}
                     />
                   ) : (
-                    discover.github_link
+                    <a href={discover.github_link} target="_blank" rel="noopener noreferrer">
+                      {discover.github_link}
+                    </a>
                   )}
                 </TableCell>
                 <TableCell
@@ -925,19 +935,20 @@ const AdminDiscover = () => {
                 </TableCell>
                 <TableCell
                   $isSelected={selectedRows.has(discover.pjt_id)}
-                  onClick={() => handleCellClick(discover.linkedin)}
+                  onClick={() => handleCellClick(discover.github_wkly_comm)}
                 >
                   {' '}
                   {isEditable ? (
                     <input
                       type="text"
                       value={
-                        (editValues[discover.pjt_id] && editValues[discover.pjt_id]['linkedin']) || discover.linkedin
+                        (editValues[discover.pjt_id] && editValues[discover.pjt_id]['github_wkly_comm']) ||
+                        discover.github_wkly_comm
                       }
-                      onChange={(e) => handleInputChange(e, discover.pjt_id, 'linkedin')}
+                      onChange={(e) => handleInputChange(e, discover.pjt_id, 'github_wkly_comm')}
                     />
                   ) : (
-                    discover.linkedin
+                    discover.github_wkly_comm
                   )}
                 </TableCell>
                 <TableCell
