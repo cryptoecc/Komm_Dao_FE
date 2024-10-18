@@ -97,7 +97,7 @@ export const switchToHolesky = async () => {
               symbol: 'ETH',
               decimals: 18,
             },
-            rpcUrls: ['https://holesky.infura.io/v3/d6ecd425e13048f790b9697210cf1067'],
+            rpcUrls: ['https://ethereum-holesky-rpc.publicnode.com'],
             blockExplorerUrls: ['https://holesky.etherscan.io'],
           },
         ],
@@ -110,6 +110,8 @@ export const switchToHolesky = async () => {
     throw error;
   }
 };
+
+//https://holesky.infura.io/v3/d6ecd425e13048f790b9697210cf106
 
 // 지갑연결해지
 export const disconnectWallet = async () => {

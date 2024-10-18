@@ -26,7 +26,7 @@ const DealListContainer = styled.div`
   flex-wrap: wrap;
   /* margin-left: 50px; */
   /* justify-content: center; */
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   /* margin: 0 auto; */
 

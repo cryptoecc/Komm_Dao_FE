@@ -134,6 +134,14 @@ const DealDetails: React.FC = () => {
     config: { duration: 100 },
   });
 
+  const formatUrl = (url: string) => {
+    // url이 http:// 또는 https://로 시작하지 않으면 https://를 추가
+    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+      return `https://${url}`;
+    }
+    return url;
+  };
+
   return (
     <Container>
       <LeftSection>
@@ -149,11 +157,29 @@ const DealDetails: React.FC = () => {
           alt="Banner Image"
         />
         <IconWrapper>
-          <Icon src={images.twitter} alt="Twitter" />
-          <Icon src={images.discord} alt="Discord" />
-          <Icon src={images.language} alt="Language" />
+          {selectedDeal.x_link && (
+            <a href={formatUrl(selectedDeal.x_link)} target="_blank" rel="noopener noreferrer">
+              <Icon src={images.twitter} alt="Twitter" />
+            </a>
+          )}
+          {selectedDeal.discord_link && (
+            <a href={formatUrl(selectedDeal.discord_link)} target="_blank" rel="noopener noreferrer">
+              <Icon src={images.discord} alt="Discord" />
+            </a>
+          )}
+          {selectedDeal.website && (
+            <a href={formatUrl(selectedDeal.website)} target="_blank" rel="noopener noreferrer">
+              <Icon src={images.language} alt="Website" />
+            </a>
+          )}
         </IconWrapper>
-        <DealSummary>{selectedDeal.deal_desc}</DealSummary>
+        <DealSummary
+          dangerouslySetInnerHTML={{
+            __html: selectedDeal.deal_desc
+              ? selectedDeal.deal_desc.replace(/\r\n|\n/g, '<br />') // 내용이 있으면 개행 문자를 <br />로 변환
+              : selectedDeal.deal_desc || '', // 내용이 없으면 그대로 출력
+          }}
+        />
       </LeftSection>
 
       <RightSection>

@@ -21,7 +21,7 @@ export const DealCardContainer = styled.div`
   }
 
   @media (min-width: 1470px) {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* 1470px 이상에서 최소 400px */
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); /* 1470px 이상에서 최소 400px */
   }
 
   @media (min-width: 1920px) {
