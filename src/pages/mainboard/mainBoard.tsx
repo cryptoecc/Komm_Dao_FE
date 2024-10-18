@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector
 import { RootState } from 'src/store/store'; // Adjust the import path as necessary
 import Sidebar from '../../components/dashboard/sidebar/Sidebar';
 import styled from 'styled-components';
+import RedirectModal from 'src/components/admin/modal/common/RedirectModal';
+import GovernanceModal from 'src/components/admin/modal/redirectMotal/Governance';
 
 const MainBoardContainer = styled.div`
   width: 100%;
@@ -21,7 +23,15 @@ const ContentArea = styled.div`
 const MainBoard: React.FC = () => {
   const location = useLocation();
   const user = useSelector((state: RootState) => state.user); // Get user info from Redux store
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
+  const handleGovernanceClick = () => {
+    setIsModalOpen(true); // 모달 열기
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
   // Redirect to the main page if user info is not available
   if (!user || user.user_id === 0) {
     return <Navigate to="/" replace />;
@@ -33,12 +43,18 @@ const MainBoard: React.FC = () => {
   }
 
   return (
-    <MainBoardContainer>
-      <Sidebar />
-      <ContentArea>
-        <Outlet />
-      </ContentArea>
-    </MainBoardContainer>
+    <>
+      <MainBoardContainer>
+        <Sidebar onGovernanceClick={handleGovernanceClick} />
+        <ContentArea>
+          <Outlet />
+        </ContentArea>
+      </MainBoardContainer>
+      {/* 모달 */}
+      <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <GovernanceModal onClose={handleCloseModal} />
+      </RedirectModal>
+    </>
   );
 };
 
