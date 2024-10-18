@@ -33,7 +33,7 @@ const ContributionHeader = styled.div`
 `;
 
 const WalletWrap = styled.div`
-  margin-right: 60px;
+  /* margin-right: 60px; */
 `;
 
 const ContributionTitle = styled.h1`

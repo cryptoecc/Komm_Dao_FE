@@ -1,12 +1,12 @@
 import React from 'react';
-import { CloseButton, ButtonGroup, ConfirmButton, Wrap } from './Governance.style';
+import { CloseButton, ButtonGroup, ConfirmButton, Wrap } from './Calender.style';
 import closeIcon from 'src/assets/modal/close.svg';
 
-interface GovernanceModalProps {
+interface CalenderModalProps {
   onClose: () => void;
 }
 
-const GovernanceModal: React.FC<GovernanceModalProps> = ({ onClose }) => {
+const CalenderModal: React.FC<CalenderModalProps> = ({ onClose }) => {
   return (
     <div>
       {/* 닫기 버튼 */}
@@ -19,7 +19,7 @@ const GovernanceModal: React.FC<GovernanceModalProps> = ({ onClose }) => {
       {/* 경고 메시지 */}
       <Wrap>
         <h2 style={{ fontSize: '24px' }}>Access Restricted</h2>
-        <div>You do not have access to the Governance page at this time.</div>
+        <div>You do not have access to the Calender page at this time.</div>
         <div>Please contact support if you believe this is an error.</div>
         <ButtonGroup>
           <ConfirmButton onClick={onClose}>Close</ConfirmButton>
@@ -31,4 +31,4 @@ const GovernanceModal: React.FC<GovernanceModalProps> = ({ onClose }) => {
   );
 };
 
-export default GovernanceModal;
+export default CalenderModal;

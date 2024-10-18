@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
+import RedirectModal from 'src/components/admin/modal/common/RedirectModal';
+import CalenderModal from 'src/components/admin/modal/redirectMotal/Calender';
 
 const DiscoverContainer = styled.div`
   padding: 20px;
@@ -51,6 +53,16 @@ const Discover: React.FC = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<any>(null);
   const user = useSelector((state: RootState) => state.user);
+  const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 추가
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+
+  const handleCalenderClick = () => {
+    setIsModalOpen(true); // 모달 열기
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -83,11 +95,15 @@ const Discover: React.FC = () => {
     fetchUserData();
   }, [user]); // user 값이 변경될 때마다 useEffect 실행
 
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm); // 검색어 상태 업데이트
+  };
+
   if (!user || !userData) {
     return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
   }
   const handleCalendarClick = () => {
-    navigate(PATH.DISCOVER_CALENDAR); // Navigate to the calendar page
+    navigate('#'); // Navigate to the calendar page
   };
 
   return (
@@ -106,14 +122,17 @@ const Discover: React.FC = () => {
 
       <DiscoverContent>
         <TopContents>
-          <SearchBar />
-          <CalendarButton onClick={handleCalendarClick}>
+          <SearchBar onSearch={handleSearch} />
+          <CalendarButton onClick={handleCalenderClick}>
             <img src={CalendarIcon} alt="Calendar icon" />
             My Calendar
           </CalendarButton>
         </TopContents>
-        <DiscoverList />
+        <DiscoverList searchTerm={searchTerm} />
       </DiscoverContent>
+      <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <CalenderModal onClose={handleCloseModal} />
+      </RedirectModal>
     </DiscoverContainer>
   );
 };

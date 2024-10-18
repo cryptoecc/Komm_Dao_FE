@@ -16,18 +16,12 @@ const ModalBackground = styled.div`
 
 const ModalContent = styled.div`
   background: white;
-  padding: 40px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 20px;
   max-width: 800px;
   margin: 0 auto;
-  height: 400px;
+  height: 380px;
   width: 100%;
-
-  display: flex; /* Flexbox 사용 */
-  flex-direction: column; /* 세로로 정렬 */
-  justify-content: center; /* 세로 가운데 정렬 */
-  align-items: center; /* 가로 가운데 정렬 */
-  text-align: center; /* 텍스트 가운데 정렬 */
 `;
 
 interface ModalProps {

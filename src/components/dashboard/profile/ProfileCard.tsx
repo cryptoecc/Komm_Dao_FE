@@ -27,12 +27,25 @@ import { images } from '../../../assets/dashboard/images';
 import { API_BASE_URL } from '../../../../src/utils/utils';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
+import RedirectModal from 'src/components/admin/modal/common/RedirectModal';
+import CalenderModal from 'src/components/admin/modal/redirectMotal/Calender';
 
 const ProfileCard: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+
+  const handleCalenderClick = () => {
+    setIsModalOpen(true); // 모달 열기
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
+
   console.log(user, userData);
   useEffect(() => {
     if (user) {
@@ -42,6 +55,7 @@ const ProfileCard: React.FC = () => {
         try {
           const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
           setUserData(response.data); // 사용자 데이터 저장
+          console.log(response.data);
         } catch (error) {
           console.error('Error fetching user data:', error);
           setUserData({
@@ -102,7 +116,7 @@ const ProfileCard: React.FC = () => {
       <StatsWrap>
         <Stat>
           <StatItem>Deal</StatItem>
-          <StatValue>{formatNumber(userData.stats?.deal ?? 0)}</StatValue>
+          <StatValue>{formatNumber(userData.claimedDealCount ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Discover</StatItem>
@@ -110,7 +124,7 @@ const ProfileCard: React.FC = () => {
         </Stat>
         <Stat>
           <StatItem>Contribution</StatItem>
-          <StatValue>{formatNumber(userData.stats?.contribution ?? 0)}</StatValue>
+          <StatValue>{formatNumber(userData.claimedContributionCount ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Governance</StatItem>
@@ -118,9 +132,14 @@ const ProfileCard: React.FC = () => {
         </Stat>
         <StyledLinkWrap>
           <LinkIcon src={images.pointsIcon} alt="Points Icon" />
-          <StyledLink to="/mainboard/discover/calendar">Go to My Calendar</StyledLink>
+          <StyledLink to="#" onClick={handleCalenderClick}>
+            Go to My Calendar
+          </StyledLink>
         </StyledLinkWrap>
       </StatsWrap>
+      <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <CalenderModal onClose={handleCloseModal} />
+      </RedirectModal>
     </ProfileCardContainer>
   );
 };

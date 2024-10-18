@@ -52,7 +52,7 @@ export const SocialIcons = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 30px; /* Add spacing below the icons */
-
+  gap: 10px;
   img {
     margin-right: 15px;
     width: 35px; /* Adjusted size for consistency */

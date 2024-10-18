@@ -12,7 +12,8 @@ const PageContainer = styled.div`
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   position: relative;
-  max-width: 1920px;
+  /* max-width: 1920px; */
+  width: 100%;
 `;
 
 const DealdHeader = styled.div`

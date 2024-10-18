@@ -26,11 +26,23 @@ const DealListContainer = styled.div`
   flex-wrap: wrap;
   /* margin-left: 50px; */
   /* justify-content: center; */
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   /* margin: 0 auto; */
 
   @media (max-width: 767px) {
+    gap: 15px;
+  }
+
+  @media (min-width: 1440px) {
+    gap: 15px;
+  }
+
+  @media (max-width: 1777px) {
+    justify-content: center;
+  }
+
+  @media (min-width: 1920px) {
     gap: 15px;
   }
 `;

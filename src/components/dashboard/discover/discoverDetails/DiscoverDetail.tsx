@@ -44,6 +44,8 @@ const DiscoverDetail = () => {
     }
   }, [user, projectData.pjt_id]);
 
+  console.log(projectData);
+
   const handleWatchlistClick = async (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault(); // Prevent default link behavior
 
@@ -83,6 +85,14 @@ const DiscoverDetail = () => {
     }, 3000);
   };
 
+  const formatUrl = (url: string) => {
+    // url이 http:// 또는 https://로 시작하지 않으면 https://를 추가
+    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+      return `https://${url}`;
+    }
+    return url;
+  };
+
   if (!projectData.pjt_name) {
     return <div>Loading...</div>; // 데이터가 없을 때 로딩 상태 표시
   }
@@ -101,11 +111,23 @@ const DiscoverDetail = () => {
         )}
       </ProjectHeader>
       <SocialIcons>
-        <img src={images.language} alt="Language" />
-        <img src={images.twitter} alt="Twitter" />
-        <img src={images.discord} alt="Discord" />
+        {projectData.website && (
+          <a href={formatUrl(projectData.website)} target="_blank" rel="noopener noreferrer">
+            <img src={images.language} alt="Language" />
+          </a>
+        )}
+        {projectData.x_link && (
+          <a href={formatUrl(projectData.x_link)} target="_blank" rel="noopener noreferrer">
+            <img src={images.twitter} alt="Language" />
+          </a>
+        )}
+        {projectData.discord_link && (
+          <a href={formatUrl(projectData.discord_link)} target="_blank" rel="noopener noreferrer">
+            <img src={images.discord} alt="Language" />
+          </a>
+        )}
       </SocialIcons>
-      <Description>{projectData.pjt_summary || 'No description available'}</Description>
+      <Description>{projectData.pjt_details || 'No description available'}</Description>
       {isShareModalOpen && (
         <ShareModal
           link={window.location.href}

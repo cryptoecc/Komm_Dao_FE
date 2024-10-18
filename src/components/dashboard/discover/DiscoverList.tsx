@@ -46,7 +46,11 @@ interface SortConfig {
   direction: 'ascending' | 'descending';
 }
 
-const DiscoverList = () => {
+interface DiscoverListProps {
+  searchTerm: string; // 검색어 추가
+}
+
+const DiscoverList: React.FC<DiscoverListProps> = ({ searchTerm }) => {
   const navigate = useNavigate();
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'pjt_name', direction: 'ascending' });
   const [data, setData] = useState<DataItem[]>([]);
@@ -62,13 +66,15 @@ const DiscoverList = () => {
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const gradeDropdownRef = useRef<HTMLDivElement>(null);
 
+  const [discoverData, setDiscoverData] = useState<any[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         // 1. 프로젝트 리스트 불러오기
         const projectResponse = await axios.get(`${API_BASE_URL}/api/admin/main-project-list`);
         const filteredProjects = projectResponse.data.filter((item: any) => item.apply_yn === 'Y');
-
+        console.log(filteredProjects);
         // 2. 유저의 Watchlist 불러오기
         const watchlistResponse = await axios.get(`${API_BASE_URL}/api/user/watchlist/${user.user_id}`);
         const userWatchlist = watchlistResponse.data.data.map((item: any) => item.pjt_id);
@@ -190,7 +196,12 @@ const DiscoverList = () => {
         return selectedGradeCode === itemGradeCode; // 정확히 일치하는지 비교
       });
 
-    return matchesCategory && matchesGrade;
+    // 검색어가 포함되는지 확인 (pjt_name, pjt_summary에서 검색어 확인)
+    const matchesSearchTerm =
+      !searchTerm ||
+      (item.pjt_name && item.pjt_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.pjt_summary && item.pjt_summary.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesCategory && matchesGrade && matchesSearchTerm;
   });
 
   const gradePriority: { [key: string]: number } = {

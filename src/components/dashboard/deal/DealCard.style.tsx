@@ -13,11 +13,11 @@ export const DealCardContainer = styled.div`
   box-sizing: border-box;
 
   @media (min-width: 600px) {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   }
 
   @media (min-width: 900px) {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   }
 
   @media (min-width: 1470px) {

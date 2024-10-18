@@ -221,7 +221,10 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
           <div>
             {participants.map((participant) => (
               <ParticipantItem key={participant.id}>
-                <img src={participant.user} alt={`Participant ${participant.id}`} />
+                <img
+                  src={participant.user ? `${API_BASE_URL}/${participant.user}` : images.profile}
+                  alt={`Participant ${participant.id}`}
+                />
               </ParticipantItem>
             ))}
           </div>

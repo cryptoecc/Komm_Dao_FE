@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DiscoverDetail from 'src/components/dashboard/discover/discoverDetails/DiscoverDetail';
 import DiscoverParticipantList from 'src/components/dashboard/discover/discoverDetails/DiscoverParticipantList';
 import CommunityRating from 'src/components/dashboard/discover/discoverDetails/CommunityRating';
 import styled from 'styled-components';
 import { images } from 'src/assets/discover/images';
+import { API_BASE_URL } from 'src/utils/utils';
+import axios from 'axios';
 
 interface Participant {
   id: number;
@@ -44,27 +46,38 @@ const BackLink = styled.div`
 const DiscoverDetails: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [participants, setParticipants] = useState<Participant[]>([]); // 참여자 데이터를 위한 상태
   const projectData = location.state;
+  console.log(projectData);
 
-  const participants: Participant[] = projectData?.participants?.map((participant: Participant, index: number) => ({
-    id: participant.id ?? index + 1,
-    user: participant.user || images.user, // Use images.user as the default image
-  })) || [
-    { id: 1, user: images.profile },
-    { id: 2, user: images.profile },
-    { id: 3, user: images.profile },
-    { id: 4, user: images.profile },
-    { id: 5, user: images.profile },
-    { id: 6, user: images.profile },
-    { id: 7, user: images.profile },
-    { id: 8, user: images.profile },
-    { id: 9, user: images.profile },
-    { id: 10, user: images.profile },
-    { id: 11, user: images.profile },
-    { id: 12, user: images.profile },
-    { id: 13, user: images.profile },
-    // Add more participants as needed
-  ];
+  useEffect(() => {
+    const fetchParticipants = async () => {
+      try {
+        // projectData에서 pjt_id를 추출
+        const pjtId = projectData.pjt_id;
+        console.log(pjtId);
+
+        if (pjtId) {
+          // 백엔드로 pjt_id를 통해 참여자 데이터 요청
+          const response = await axios.get(`${API_BASE_URL}/api/user/profile/${pjtId}/participants`);
+
+          // 응답 데이터를 participants로 설정
+          setParticipants(
+            response.data.map((participant: any, index: number) => ({
+              id: index + 1,
+              user: participant.user_image_link || images.user, // user_image_link가 있으면 사용, 없으면 기본 이미지 사용
+            }))
+          );
+        }
+      } catch (error) {
+        console.error('Error fetching participants:', error);
+      }
+    };
+
+    fetchParticipants();
+  }, [projectData]);
+
+  console.log(participants);
 
   // Ensure rating and percentile have default values if not present
   const rating = projectData?.rating ?? 4.8; // Default to 0 if undefined
