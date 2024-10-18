@@ -29,11 +29,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 
 const ProfileCard: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user);
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
-
+  console.log(user, userData);
   useEffect(() => {
     if (user) {
       const walletAddress = user.wallet_addr;
@@ -42,7 +42,6 @@ const ProfileCard: React.FC = () => {
         try {
           const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
           setUserData(response.data); // 사용자 데이터 저장
-          console.log('@@어케 찍히니', response.data);
         } catch (error) {
           console.error('Error fetching user data:', error);
           setUserData({
@@ -107,7 +106,7 @@ const ProfileCard: React.FC = () => {
         </Stat>
         <Stat>
           <StatItem>Discover</StatItem>
-          <StatValue>{formatNumber(userData.stats?.discover ?? 0)}</StatValue>
+          <StatValue>{formatNumber(userData.claimedProjectsCount ?? 0)}</StatValue>
         </Stat>
         <Stat>
           <StatItem>Contribution</StatItem>

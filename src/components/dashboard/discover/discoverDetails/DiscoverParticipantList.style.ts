@@ -77,19 +77,20 @@ export const RatingContainer = styled.div`
   }
 `;
 
-export const ClaimXPButton = styled.button`
-  background-color: #875cff;
+export const ClaimXPButton = styled.button<{ disabled: boolean }>`
+  background-color: ${({ disabled }) => (disabled ? '#ccc' : '#875cff')};
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   font-size: 18px;
   font-weight: 700;
   margin-left: 20px; /* Add space between text and button */
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #7a52e3;
+    background-color: ${({ disabled }) => (disabled ? '#ccc' : '#7a52e3')};
   }
 `;
 

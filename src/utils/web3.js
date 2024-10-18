@@ -97,7 +97,7 @@ export const switchToHolesky = async () => {
               symbol: 'ETH',
               decimals: 18,
             },
-            rpcUrls: ['https://ethereum-holesky-rpc.publicnode.com'],
+            rpcUrls: ['https://holesky.infura.io/v3/d6ecd425e13048f790b9697210cf1067'],
             blockExplorerUrls: ['https://holesky.etherscan.io'],
           },
         ],

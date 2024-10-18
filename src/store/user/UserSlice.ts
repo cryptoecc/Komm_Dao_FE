@@ -28,6 +28,7 @@ interface UserState {
   activate_yn: string;
   isWalletConnected: boolean;
   pointHistory: PointsData[]; // 포인트 히스토리 추가
+  claimedProjectsCount: number;
 }
 
 const initialState: UserState = {
@@ -49,6 +50,7 @@ const initialState: UserState = {
   activate_yn: 'N',
   isWalletConnected: false,
   pointHistory: [], // 초기 포인트 히스토리 배열
+  claimedProjectsCount: 0, // 초기 값 설정
 };
 
 const userSlice = createSlice({

@@ -67,7 +67,7 @@ const DiscoverList = () => {
       try {
         // 1. 프로젝트 리스트 불러오기
         const projectResponse = await axios.get(`${API_BASE_URL}/api/admin/main-project-list`);
-        const filteredProjects = projectResponse.data.filter((item: any) => item.apply_yn === 'N');
+        const filteredProjects = projectResponse.data.filter((item: any) => item.apply_yn === 'Y');
 
         // 2. 유저의 Watchlist 불러오기
         const watchlistResponse = await axios.get(`${API_BASE_URL}/api/user/watchlist/${user.user_id}`);
@@ -174,30 +174,24 @@ const DiscoverList = () => {
   // 프로젝트 클릭 시 상세 페이지로 이동
   const handleProjectClick = (projectData: DataItem) => {
     navigate(PATH.DISCOVER_DETAILS.replace(':projectId', projectData.pjt_id.toString()), {
-      state: projectData,
+      state: { ...projectData }, // 이 부분에서 projectData 전체를 전달해야 합니다.
     });
   };
 
   // 필터링된 데이터
   const filteredData = data.filter((item) => {
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(item.category);
+
     const matchesGrade =
       selectedGrades.length === 0 ||
-      selectedGrades.some(
-        (selectedGrade) => item.pjt_grade.split(' ')[0].trim().toUpperCase() === selectedGrade.trim().toUpperCase()
-      );
+      selectedGrades.some((selectedGrade) => {
+        const selectedGradeCode = selectedGrade.split(' ')[0].trim(); // 선택된 등급의 코드를 추출
+        const itemGradeCode = item.pjt_grade.split(' ')[0].trim(); // 항목의 등급 코드를 추출
+        return selectedGradeCode === itemGradeCode; // 정확히 일치하는지 비교
+      });
+
     return matchesCategory && matchesGrade;
   });
-
-  // const filteredData = data.filter((item) => {
-  //   const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(item.category);
-  //   const matchesGrade =
-  //     selectedGrades.length === 0 ||
-  //     selectedGrades.some(
-  //       (selectedGrade) => item.pjt_grade.split(' ')[0].trim().toUpperCase() === selectedGrade.trim().toUpperCase()
-  //     );
-  //   return matchesCategory && matchesGrade;
-  // });
 
   const gradePriority: { [key: string]: number } = {
     AAA: 1,
@@ -206,7 +200,6 @@ const DiscoverList = () => {
     BBB: 4,
     BB: 5,
     B: 6,
-    C: 7, // 추가적인 등급도 필요한 경우 추가
   };
 
   // 등급을 숫자로 변환하여 우선순위를 반환하는 함수
@@ -232,23 +225,6 @@ const DiscoverList = () => {
 
     return 0;
   });
-
-  // 정렬된 데이터
-  // const sortedData = [...filteredData].sort((a, b) => {
-  //   if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-  //   if (sortConfig) {
-  //     const aValue = a[sortConfig.key];
-  //     const bValue = b[sortConfig.key];
-
-  //     if (aValue < bValue) {
-  //       return sortConfig.direction === 'ascending' ? -1 : 1;
-  //     }
-  //     if (aValue > bValue) {
-  //       return sortConfig.direction === 'ascending' ? 1 : -1;
-  //     }
-  //   }
-  //   return 0;
-  // });
 
   // 카테고리 드롭다운 토글
   const toggleCategoryDropdown = () => {
@@ -393,7 +369,7 @@ const DiscoverList = () => {
                     {row.pjt_summary || 'No summary available'}
                   </TableCell>
                   <TableCell width="20%">
-                    <GradeBadge grade={row.pjt_grade ? row.pjt_grade.split(' ')[0] : 'N/A'}>
+                    <GradeBadge $grade={row.pjt_grade ? row.pjt_grade.split(' ')[0] : 'N/A'}>
                       {row.pjt_grade || 'No grade'}
                     </GradeBadge>
                   </TableCell>

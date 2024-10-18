@@ -1,5 +1,4 @@
-// 여기서부터는 어드민계정으로 수수료충당 코드 실험
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
 import {
   ParticipantListContainer,
@@ -19,6 +18,11 @@ import checkedStar from 'src/assets/discover/checkedStar.svg';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import { XpClaim_ABI } from 'src/configs/contract-abi/XpClaim';
+import { useLocation } from 'react-router-dom';
+
+// 환경 변수에서 어드민 계정 정보를 가져옵니다.
+const adminAddress = process.env.REACT_APP_ADMIN_WALLET_ADDRESS || '';
+const adminPrivateKey = process.env.REACT_APP_ADMIN_WALLET_PRIVATE_KEY || '';
 
 interface ParticipantListProps {
   participants: { id: number; user: string }[];
@@ -26,49 +30,96 @@ interface ParticipantListProps {
 
 const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [points, setPoints] = useState<number>(4);
+  const [points, setPoints] = useState<number>(4); // 점수(평점)
   const [rating, setRating] = useState<number>(0);
+  const [isRatingFixed, setIsRatingFixed] = useState<boolean>(false); // 클릭 후 고정되는 상태
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const contractAddress = '0x4C9B3dd7DC97db2E722b7A540e2eC40929426342';
+  const [isClaimed, setIsClaimed] = useState<boolean>(false); // XP가 이미 클레임 되었는지 여부
+  const contractAddress = '0x15e7a34b6a5aBf8b0aD4FcD85D873FD7e7163E97';
   const contractABI = XpClaim_ABI;
+  const location = useLocation();
+  const projectData = location.state;
+  const projectName = projectData?.pjt_name || 'Unknown Project';
+  const projectId = projectData?.pjt_id;
 
-  // XP 잔액을 가져와서 백엔드에 업데이트하는 함수
-  const updateXPBalance = async (walletAddress: string, xpBalance: number) => {
-    try {
-      await axios.post(`${API_BASE_URL}/api/user/profile/update-xp-balance`, {
-        walletAddress,
-        xpBalance,
-      });
+  useEffect(() => {
+    const checkIfClaimed = async () => {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const walletAddress = accounts[0];
 
-      console.log(`XP balance updated in database for ${walletAddress}.`);
-    } catch (error) {
-      console.error('Error updating XP balance:', error);
-      alert('XP 잔액 업데이트 중 오류가 발생했습니다. 다시 시도해 주세요.');
-    }
+        const response = await axios.post(`${API_BASE_URL}/api/user/profile/check-already-claimed`, {
+          walletAddress,
+          project_id: projectData?.pjt_id, // project_id 전송
+        });
+
+        if (response.data.alreadyClaimed) {
+          setIsClaimed(true); // 이미 클레임한 경우 버튼을 비활성화
+        }
+      } catch (error) {
+        console.error('Error checking claim status:', error);
+      }
+    };
+
+    checkIfClaimed(); // 컴포넌트 마운트 시 클레임 상태 확인
+  }, [projectData]);
+
+  const truncateProjectName = (name: string, maxLength: number) => {
+    return name.length > maxLength ? name.substring(0, maxLength) + '...' : name;
   };
+  const truncatedProjectName = truncateProjectName(projectName, 6);
 
-  // 포인트 히스토리 업데이트 함수
-  const updatePointHistory = async (walletAddress: string, xpPoints: number, transactionHash: string) => {
-    try {
-      await axios.post(`${API_BASE_URL}/api/user/profile/update-history`, {
-        walletAddress,
-        date: new Date().toISOString(),
-        participation: 'Project Rating',
-        activity: 'Claim XP',
-        xpEarned: xpPoints,
-        transactionId: transactionHash,
-      });
+  // 메타마스크 서명창이 뜨는 경우
+  // const handleClaimXPClick = async () => {
+  //   if (isLoading || isClaimed) return; // 중복 처리 및 이미 클레임한 경우 방지
 
-      console.log(`Point history updated for wallet ${walletAddress}`);
-    } catch (error) {
-      console.error('Error updating point history:', error);
-    }
-  };
+  //   setPoints(rating);
+  //   setIsLoading(true);
 
-  // XP 클레임 처리 함수
+  //   try {
+  //     const web3 = new Web3((window as any).ethereum);
+  //     const accounts = await web3.eth.getAccounts();
+  //     const walletAddress = accounts[0];
+  //     const xpPoints = 10;
+  //     const projectId = projectData?.pjt_id; // projectId 추가
+  //     const projectName = projectData?.pjt_name; // projectName 추가
+
+  //     const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+  //     // 트랜잭션 데이터 준비
+  //     const txData = contract.methods.claimXP(walletAddress, xpPoints).encodeABI();
+
+  //     // 메시지 해시 생성
+  //     const messageHash = web3.utils.keccak256(txData);
+
+  //     // 사용자 서명 요청 (eth_sign 사용)
+  //     const signature = await web3.eth.sign(messageHash, walletAddress);
+
+  //     console.log('서명된 트랜잭션 데이터:', signature);
+
+  //     // 서버로 서명된 트랜잭션을 전송
+  //     await axios.post(`${API_BASE_URL}/api/user/profile/update-xp`, {
+  //       walletAddress,
+  //       signature,
+  //       txData,
+  //       xpPoints, // xpPoints 추가
+  //       projectId, // projectId 추가
+  //       projectName, // projectName 추가
+  //     });
+
+  //     setIsClaimed(true); // 클레임 후 버튼 비활성화
+  //   } catch (error) {
+  //     console.error('XP 클레임 중 오류 발생:', error);
+  //     alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // 메타마스크 서명창이 뜨지 않는 경우
   const handleClaimXPClick = async () => {
-    if (isLoading) return; // 중복 방지
+    if (isLoading || isClaimed) return; // 중복 처리 및 이미 클레임한 경우 방지
 
     setPoints(rating);
     setIsLoading(true);
@@ -79,13 +130,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
       const walletAddress = accounts[0];
       const xpPoints = 10;
 
-      // 어드민 계정 정보 설정
-      const adminAddress = '0x403746C0D8e91aB0ad15008ab2488036dFb27d3F';
-      const adminPrivateKey = '0636a7f71d25cec64125b88e86474e54e566614e78823145dc7e865b9d53650e';
-
       const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-      // 가스 가격 및 가스 추정
       const gasPrice = await web3.eth.getGasPrice();
       const gasEstimate = await contract.methods.claimXP(walletAddress, xpPoints).estimateGas({ from: adminAddress });
 
@@ -100,38 +145,43 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
 
       const signedTx = await web3.eth.accounts.signTransaction(tx, adminPrivateKey);
       const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction || '');
-
       if (!receipt.transactionHash) {
         throw new Error('Transaction failed');
       }
 
-      // 트랜잭션 해시를 문자열로 변환
-      const transactionHash = receipt.transactionHash.toString(); // 문자열로 변환
-
-      // 트랜잭션 성공 후, 새로운 API로 XP 잔액 업데이트
       const xpBalanceRaw = await contract.methods.getXP(walletAddress).call();
-
-      // xpBalanceRaw가 undefined 또는 예상치 않은 값일 때 대비하여 처리
       if (!xpBalanceRaw) {
         throw new Error('Invalid XP balance returned from contract');
       }
 
-      const xpBalance = parseInt(xpBalanceRaw.toString(), 10); // toString()으로 변환 후 parseInt
-      if (isNaN(xpBalance)) {
-        throw new Error('Failed to parse XP balance');
-      }
+      const xpBalance = parseInt(xpBalanceRaw.toString(), 10);
+      const transactionHash = receipt.transactionHash.toString();
 
-      await updateXPBalance(walletAddress, xpBalance);
+      // Send XP balance, rating, and other details to the backend
+      await axios.post(`${API_BASE_URL}/api/user/profile/update-xp-balance`, {
+        walletAddress,
+        xpBalance,
+        rating, // Send rating to backend
+      });
 
-      // 포인트 히스토리 업데이트
-      await updatePointHistory(walletAddress, xpPoints, transactionHash);
+      await axios.post(`${API_BASE_URL}/api/user/profile/update-history`, {
+        walletAddress,
+        date: new Date().toISOString(),
+        participation: 'Discover',
+        activity: `Voted on Project ${truncatedProjectName}`,
+        xpEarned: xpPoints,
+        transactionId: transactionHash,
+        project_id: projectId,
+        rating, // Send rating to the backend
+      });
 
       setIsModalOpen(true);
+      setIsClaimed(true); // 클레임 후 버튼 비활성화
     } catch (error) {
       console.error('XP 클레임 중 오류 발생:', error);
       alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
     } finally {
-      setIsLoading(false); // 요청 완료 후 로딩 상태 해제
+      setIsLoading(false);
     }
   };
 
@@ -141,23 +191,28 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
 
   const handleStarClick = (index: number) => {
     setRating(index + 1);
+    setIsRatingFixed(true);
   };
 
   const handleStarHover = (index: number) => {
-    setHoverRating(index + 1);
+    if (!isRatingFixed) {
+      setHoverRating(index + 1);
+    }
   };
 
   const handleStarLeave = () => {
-    setHoverRating(0);
+    if (!isRatingFixed) {
+      setHoverRating(0);
+    }
   };
 
-  const displayRating = hoverRating || rating;
+  const displayRating = isRatingFixed ? rating : hoverRating || rating;
 
   return (
     <>
       {isLoading && (
         <LoadingOverlay>
-          <LoadingSpinner></LoadingSpinner>
+          <LoadingSpinner />
         </LoadingOverlay>
       )}
       <ParticipantListContainer style={{ filter: isLoading ? 'blur(4px)' : 'none' }}>
@@ -179,7 +234,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
                 .fill(0)
                 .map((_, index) => (
                   <img
-                    src={(hoverRating ? index < hoverRating : index < rating) ? checkedStar : images.star2}
+                    src={index < displayRating ? checkedStar : images.star2}
                     alt="Rating Star"
                     key={index}
                     onClick={() => handleStarClick(index)}
@@ -206,7 +261,9 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
               <p>
                 Each rating earns you <span>10 XP!</span>
               </p>
-              <ClaimXPButton onClick={handleClaimXPClick}>Claim XP</ClaimXPButton>
+              <ClaimXPButton onClick={handleClaimXPClick} disabled={isClaimed}>
+                {isClaimed ? 'Already Claimed' : 'Claim XP'}
+              </ClaimXPButton>
             </BtnWrap>
           </RatingSection>
         </RightSection>
