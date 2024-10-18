@@ -67,7 +67,7 @@ const DiscoverList = () => {
       try {
         // 1. 프로젝트 리스트 불러오기
         const projectResponse = await axios.get(`${API_BASE_URL}/api/admin/project-list`);
-        const filteredProjects = projectResponse.data.filter((item: any) => item.apply_yn === 'N');
+        const filteredProjects = projectResponse.data.filter((item: any) => item.apply_yn === 'Y');
 
         // 2. 유저의 Watchlist 불러오기
         const watchlistResponse = await axios.get(`${API_BASE_URL}/api/user/watchlist/${user.user_id}`);
@@ -369,7 +369,7 @@ const DiscoverList = () => {
                     {row.pjt_summary || 'No summary available'}
                   </TableCell>
                   <TableCell width="20%">
-                    <GradeBadge grade={row.pjt_grade ? row.pjt_grade.split(' ')[0] : 'N/A'}>
+                    <GradeBadge $grade={row.pjt_grade ? row.pjt_grade.split(' ')[0] : 'N/A'}>
                       {row.pjt_grade || 'No grade'}
                     </GradeBadge>
                   </TableCell>

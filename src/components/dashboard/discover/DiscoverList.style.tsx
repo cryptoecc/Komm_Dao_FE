@@ -206,10 +206,11 @@ export const ProjectLink = styled.a`
   }
 `;
 
-export const GradeBadge = styled.span<{ grade: string }>`
-  font-weight: bold;
-  color: ${(props) => (props.grade === 'AAA' ? '#00c853' : props.grade === 'AA' ? '#ffeb3b' : '#ff7043')};
-
+export const GradeBadge = styled.span<{ $grade: string }>`
+  background-color: ${({ $grade }) => ($grade === 'AAA' ? 'white' : 'white')};
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
   @media (max-width: 768px) {
     font-size: 12px;
   }
