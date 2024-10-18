@@ -52,6 +52,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
         const response = await axios.post(`${API_BASE_URL}/api/user/profile/check-already-claimed`, {
           walletAddress,
           project_id: projectData?.pjt_id, // project_id 전송
+          participation: 'Discover',
         });
 
         if (response.data.alreadyClaimed) {
