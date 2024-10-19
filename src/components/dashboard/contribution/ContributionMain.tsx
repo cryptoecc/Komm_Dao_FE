@@ -32,7 +32,7 @@ interface ContributionMainProps {
   endDate: string;
   progress: number;
   progressText: string;
-  desc: string;
+  desc: JSX.Element;
   imageUrl: string;
   id: number;
   maxProgress: number;

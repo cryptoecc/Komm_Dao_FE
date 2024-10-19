@@ -29,7 +29,7 @@ interface ContributionCardProps {
   endDate: string;
   progress: number;
   maxProgress: number;
-  desc: string;
+  desc: JSX.Element;
   type?: string;
   id: number; // 각 카드의 고유 ID
 }
@@ -48,6 +48,7 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
   id,
 }) => {
   const navigate = useNavigate();
+  console.log(desc);
 
   const handleCardClick = () => {
     navigate(`${PATH.CONTRIBUTION_DETAIL.replace(':contributionId', id.toString())}`, {

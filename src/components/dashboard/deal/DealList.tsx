@@ -36,14 +36,17 @@ const DealListContainer = styled.div`
 
   @media (min-width: 1440px) {
     gap: 15px;
-  }
-
-  @media (max-width: 1777px) {
     justify-content: center;
   }
 
+  /* @media (max-width: 1777px) {
+    gap: 15px;
+  
+  } */
+
   @media (min-width: 1920px) {
     gap: 15px;
+    /* justify-content: center; */
   }
 `;
 

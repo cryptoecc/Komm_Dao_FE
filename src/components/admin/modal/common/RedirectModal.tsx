@@ -16,12 +16,12 @@ const ModalBackground = styled.div`
 
 const ModalContent = styled.div`
   background: white;
-  padding: 30px;
+  padding: 40px;
   border-radius: 20px;
-  max-width: 800px;
   margin: 0 auto;
   height: 380px;
-  width: 100%;
+  width: 700px;
+  height: 400px;
 `;
 
 interface ModalProps {

@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onGovernanceClick }) => {
         <Icon $imageUrl={images.contributionIcon} />
         <Name>Contribution</Name>
       </NavItem>
-      <NavItem to="#" onClick={onGovernanceClick}>
+      <NavItem to={PATH.GOVERNANCE} onClick={onGovernanceClick}>
         <Icon $imageUrl={images.governanceIcon} />
         <Name>Governance</Name>
       </NavItem>

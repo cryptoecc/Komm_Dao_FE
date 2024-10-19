@@ -3,13 +3,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
   padding: 40px;
   display: flex;
-  flex-direction: column; /* 상단에 타이틀, 아래에 섹션들 */
-  justify-content: space-between;
+  flex-direction: column;
+  /* justify-content: center; */
   background-color: #f4efff;
   border-radius: 20px;
-  width: 90%;
-  height: 100%;
-  margin: 20px auto;
+  width: 100%;
+  /* height: 100%; */
+  /* max-height: 1080px; */
+  /* margin: 0px auto; */
 `;
 
 export const TitleWrapper = styled.div`
@@ -80,11 +81,12 @@ export const ContentWrapper = styled.div`
   border: 10px solid #ebe3fe;
   padding: 20px;
   background-color: white;
+  /* width: 600px; */
 `;
 
 export const Banner = styled.img`
   width: 100%; /* 화면 크기에 맞게 자동으로 설정 */
-  max-width: 570px; /* 최대 너비를 설정하여 너무 커지지 않도록 제한 */
+  /* max-width: 570px; 최대 너비를 설정하여 너무 커지지 않도록 제한 */
   height: auto; /* 높이는 자동으로 설정하여 비율을 유지 */
   border-radius: 20px;
   margin-bottom: 20px;
@@ -117,6 +119,8 @@ export const MissionSection = styled.div`
   word-wrap: break-word;
   margin-bottom: 20px;
   padding: 10px;
+  max-height: 200px;
+  overflow-y: scroll;
 
   p {
     color: black;
@@ -284,8 +288,9 @@ export const ClaimButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-left: auto;
+  float: right;
+
+  /* margin-left: auto; */
   width: 140px; /* 버튼 너비 설정 */
 
   &:hover {

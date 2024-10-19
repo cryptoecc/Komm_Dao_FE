@@ -52,6 +52,36 @@ const AdminInterest = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedValues, setEditedValues] = useState<{ [key: number]: any }>({});
 
+  const generateMessageTemplate = () => {
+    return `안녕하세요 {user_name}님,
+    
+    신청하신 {deal_name} 프로젝트에 대한 투자금 납입 안내드립니다.
+    
+    하기 안내사항에 따라 투자금을 납입하여 주시되, 납입 기한을 반드시 지켜 주시기 바랍니다.
+    
+    투자금 납입 완료 후, 트랜잭션 해시(TX hash) 링크를 아래 구글폼을 통해 제출해주십시오.
+    
+    구글폼 링크: {modalChannel}
+    
+    □ 납입 화폐
+    USDT-ERC20
+    
+    □ 납입 수량
+    {user_final_allocation} USDT
+    
+    □ 납입 기한
+    {paymentDueDate} 자정까지
+    
+    □ 납입 주소
+    0x2dB0544f170157077B60baB07f33b1E3d32750D6
+    
+    ※ 회원의 네트워크 선택 또는 주소 기재 오류로 오입금이 발생하는 경우, Komm DAO는 손해배상, 복구지원 등 책임을 부담하지 않습니다.
+    
+    추가적인 문의사항 있으시거나 부득이하게 납입 기한까지 송금하지 못하시는 분은 메일 회신 혹은 디스코드 채널의 open-ticket으로 문의 부탁드립니다. 기한을 못 지킬 시 불이익이 발생할 수 있습니다.
+    
+    감사합니다.`;
+  };
+
   const generateMessageForUser = (deal: any, paymentDueDate: string) => {
     return `안녕하세요 ${deal.user_name}님,
   
@@ -99,6 +129,7 @@ const AdminInterest = () => {
   // };
 
   // 2. Edit 버튼을 눌렀을 때 편집 모드로 전환하는 함수
+
   const handleEditClick = () => {
     if (selectedRows.size > 0) {
       setIsEditing(true);
@@ -125,28 +156,51 @@ const AdminInterest = () => {
     }
   };
 
+  const handleFinalAllocationChange = (dealId: number, userId: number, value: number) => {
+    // user_final_allocation 값을 수정하는 로직
+    setFilteredDeals((prevDeals) =>
+      prevDeals.map((deal) => {
+        // deal_id와 user_id에 해당하는 데이터를 찾아서 업데이트
+        if (deal.deal_id === dealId && deal.user_id === userId) {
+          return {
+            ...deal,
+            user_final_allocation: value, // 수정한 값을 반영
+          };
+        }
+        return deal;
+      })
+    );
+  };
+
   // 3. Input 필드 값이 변경되었을 때 상태 업데이트
   const handleInputChange = (dealId: number, userId: number, field: string, value: string | number) => {
     const parsedValue = field === 'user_interest' || field === 'user_payment_amount' ? Number(value) : value;
 
+    // 수동 입력 값을 editedValues에도 반영
     setEditedValues((prevValues) => ({
       ...prevValues,
       [dealId]: {
         ...prevValues[dealId],
         [userId]: {
           ...prevValues[dealId][userId],
-          [field]: parsedValue, // 숫자 필드의 값을 변환해서 저장
+          [field]: parsedValue, // 수동 입력 값 업데이트
         },
       },
     }));
   };
-  const handleOpenModal = () => {
-    const selectedDealsData = filteredDeals
-      .filter((deal) => selectedRows.has(deal.deal_id)) // 선택된 딜 필터링
-      .map((deal) => generateMessageForUser(deal, formatDate(paymentDueDates[deal.deal_id]))); // 메시지 생성
+  // const handleOpenModal = () => {
+  //   const selectedDealsData = filteredDeals
+  //     .filter((deal) => selectedRows.has(deal.deal_id)) // 선택된 딜 필터링
+  //     .map((deal) => generateMessageForUser(deal, formatDate(paymentDueDates[deal.deal_id]))); // 메시지 생성
 
-    // 메시지 데이터 설정
-    setModalContent(selectedDealsData.join('\n\n')); // 각 딜 간 두 줄 간격 추가
+  //   // 메시지 데이터 설정
+  //   setModalContent(selectedDealsData.join('\n\n')); // 각 딜 간 두 줄 간격 추가
+  //   setIsModalOpen(true); // 모달 열기
+  // };
+
+  const handleOpenModal = () => {
+    // 양식만 모달에 표시
+    setModalContent(generateMessageTemplate());
     setIsModalOpen(true); // 모달 열기
   };
 
@@ -156,18 +210,29 @@ const AdminInterest = () => {
     console.log('Selected Rows:', Array.from(selectedRows)); // 선택된 deal_id가 정확히 들어가는지 확인
     console.log('Filtered Deals:', filteredDeals); // 필터링된 deals가 정확히 포함되는지 확인
 
-    const messagePayload = filteredDeals
-      .filter((deal) => selectedRows.has(deal.deal_id)) // selectedRows에 포함된 deal_id만 필터링
-      .map((deal) => {
-        // 사용자에게 보낼 메시지 생성
-        const userMessage = generateMessageForUser(deal, formatDate(paymentDueDates[deal.deal_id]));
+    // const messagePayload = filteredDeals
+    //   .filter((deal) => selectedRows.has(deal.deal_id)) // selectedRows에 포함된 deal_id만 필터링
+    //   .map((deal) => {
+    //     // 사용자에게 보낼 메시지 생성
+    //     const userMessage = generateMessageForUser(deal, formatDate(paymentDueDates[deal.deal_id]));
 
+    //     return {
+    //       deal_name: deal.deal_name,
+    //       user_name: deal.user_name,
+    //       final_allocation: deal.user_final_allocation || '--',
+    //       payment_due_date: formatDate(paymentDueDates[deal.deal_id]),
+    //       message: userMessage, // 사용자 메시지를 payload에 추가
+    //     };
+    //   });
+    const messagePayload = filteredDeals
+      .filter((deal) => selectedRows.has(deal.deal_id))
+      .map((deal) => {
         return {
           deal_name: deal.deal_name,
           user_name: deal.user_name,
           final_allocation: deal.user_final_allocation || '--',
           payment_due_date: formatDate(paymentDueDates[deal.deal_id]),
-          message: userMessage, // 사용자 메시지를 payload에 추가
+          message: modalContent, // 어드민이 수정한 내용을 전송
         };
       });
 
@@ -281,9 +346,12 @@ const AdminInterest = () => {
 
         // 계산식: (Final Cap / Total Interest) * User Interest
         const calculatedAllocation = (Number(finalCaps[dealId]) / total_interest) * user_interest;
-        console.log(calculatedAllocation);
+
+        // 소수점 첫째 자리에서 올림 처리
+        const roundedAllocation = Math.ceil(calculatedAllocation);
+        console.log(roundedAllocation);
         // 각 유저의 할당량 업데이트
-        return { ...deal, user_final_allocation: calculatedAllocation.toFixed(2) };
+        return { ...deal, user_final_allocation: roundedAllocation };
       }
       console.log(deal);
       return deal;
@@ -296,6 +364,7 @@ const AdminInterest = () => {
       autoClose: 1000,
     });
   };
+  console.log(filteredDeals);
 
   // Payment Due Date 변경 함수
   const handleDateChange = (date: Date | null, dealId: number) => {
@@ -319,6 +388,7 @@ const AdminInterest = () => {
   const handlePaymentPendingClick = async (dealId: number) => {
     // 1. 딜 ID로 해당 딜에 속하는 모든 유저 데이터 필터링
     const targetDeals = filteredDeals.filter((deal) => deal.deal_id === dealId);
+
     if (targetDeals.length === 0) {
       toast.error('Deal not found for this ID.', {
         position: 'top-right',
@@ -514,100 +584,115 @@ const AdminInterest = () => {
             </TableRow>
           </thead>
           <tbody>
-            {filteredDeals.map((deal, index) => (
-              <TableRow key={`${deal.deal_id}-${index}`} $isSelected={selectedRows.has(deal.deal_id)}>
-                <TableCell
-                  $isSelected={selectedRows.has(deal.deal_id)}
-                  onClick={() => handleCheckboxChange(deal.deal_id)}
-                >
-                  <CheckboxContainer>
-                    <Checkbox src={checkbox} alt="checkbox" />
-                    {selectedRows.has(deal.deal_id) && <Checkmark src={checkmark} alt="checkmark" />}
-                  </CheckboxContainer>
-                </TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.deal_name}</TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
-                  {/* deal_status가 PAYMENT_PENDING일 때 Payment Pending 버튼, PAYMENT_VERIFY일 때 Payment_Verify 버튼 */}
-                  {deal.deal_status === 'PAYMENT_PENDING' && index === findFirstRowIndex(deal.deal_name) ? (
-                    <PaymentButton onClick={() => handlePaymentPendingClick(deal.deal_id)}>
-                      Payment Pending
-                    </PaymentButton>
-                  ) : deal.deal_status === 'PAYMENT_VERIFY' && index === findFirstRowIndex(deal.deal_name) ? (
-                    <PaymentButton onClick={() => handlePaymentVerifyClick(deal.deal_id)}>Payment Verify</PaymentButton>
-                  ) : deal.deal_status === 'PAYMENT_COMPLETED' && index === findFirstRowIndex(deal.deal_name) ? (
-                    <PaymentButton onClick={() => handlePaymentCompleteClick(deal.deal_id)}>
-                      Payment Completed
-                    </PaymentButton>
-                  ) : (
-                    deal.deal_status || '--'
-                  )}
-                </TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.user_name}</TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
-                  {isEditing && selectedRows.has(deal.deal_id) ? (
-                    <input
-                      type="text"
-                      value={editedValues[deal.deal_id]?.[deal.user_id]?.user_interest || ''}
-                      onChange={(e) => handleInputChange(deal.deal_id, deal.user_id, 'user_interest', e.target.value)}
-                    />
-                  ) : (
-                    deal.user_interest
-                  )}
-                </TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.total_interest}</TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
-                  {deal.deal_status === 'PAYMENT_PENDING' && index === findFirstRowIndex(deal.deal_name) ? (
-                    <>
+            {filteredDeals &&
+              filteredDeals.length > 0 &&
+              filteredDeals.map((deal, index) => (
+                <TableRow key={`${deal.deal_id}-${index}`} $isSelected={selectedRows.has(deal.deal_id)}>
+                  <TableCell
+                    $isSelected={selectedRows.has(deal.deal_id)}
+                    onClick={() => handleCheckboxChange(deal.deal_id)}
+                  >
+                    <CheckboxContainer>
+                      <Checkbox src={checkbox} alt="checkbox" />
+                      {selectedRows.has(deal.deal_id) && <Checkmark src={checkmark} alt="checkmark" />}
+                    </CheckboxContainer>
+                  </TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.deal_name}</TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                    {/* deal_status가 PAYMENT_PENDING일 때 Payment Pending 버튼, PAYMENT_VERIFY일 때 Payment_Verify 버튼 */}
+                    {deal.deal_status === 'PAYMENT_PENDING' && index === findFirstRowIndex(deal.deal_name) ? (
+                      <PaymentButton onClick={() => handlePaymentPendingClick(deal.deal_id)}>
+                        Payment Pending
+                      </PaymentButton>
+                    ) : deal.deal_status === 'PAYMENT_VERIFY' && index === findFirstRowIndex(deal.deal_name) ? (
+                      <PaymentButton onClick={() => handlePaymentVerifyClick(deal.deal_id)}>
+                        Payment Verify
+                      </PaymentButton>
+                    ) : deal.deal_status === 'PAYMENT_COMPLETED' && index === findFirstRowIndex(deal.deal_name) ? (
+                      <PaymentButton onClick={() => handlePaymentCompleteClick(deal.deal_id)}>
+                        Payment Completed
+                      </PaymentButton>
+                    ) : (
+                      deal.deal_status || '--'
+                    )}
+                  </TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.user_name}</TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                    {isEditing && selectedRows.has(deal.deal_id) ? (
+                      <input
+                        type="text"
+                        value={editedValues[deal.deal_id]?.[deal.user_id]?.user_interest || ''}
+                        onChange={(e) => handleInputChange(deal.deal_id, deal.user_id, 'user_interest', e.target.value)}
+                      />
+                    ) : (
+                      deal.user_interest
+                    )}
+                  </TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.total_interest}</TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                    {deal.deal_status === 'PAYMENT_PENDING' && index === findFirstRowIndex(deal.deal_name) ? (
+                      <>
+                        <EditableInput
+                          type="number"
+                          value={finalCaps[deal.deal_id] !== undefined ? finalCaps[deal.deal_id] : ''} // undefined일 경우 빈 문자열로 초기화
+                          onChange={(e) => setFinalCaps((prev) => ({ ...prev, [deal.deal_id]: e.target.value }))}
+                        />
+                        <CalculateButton onClick={() => handleCalculate(deal.deal_id)}>Cal</CalculateButton>
+                      </>
+                    ) : (
+                      deal.final_cap || '--'
+                    )}
+                  </TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                    {deal.deal_status === 'PAYMENT_PENDING' ? (
                       <EditableInput
-                        type="number"
-                        value={finalCaps[deal.deal_id] !== undefined ? finalCaps[deal.deal_id] : ''} // undefined일 경우 빈 문자열로 초기화
-                        onChange={(e) => setFinalCaps((prev) => ({ ...prev, [deal.deal_id]: e.target.value }))}
+                        value={
+                          deal.user_final_allocation !== undefined && deal.user_final_allocation !== null
+                            ? deal.user_final_allocation
+                            : '' // undefined 또는 null일 때 빈 값 처리
+                        }
+                        onChange={(e) =>
+                          handleFinalAllocationChange(deal.deal_id, deal.user_id, Number(e.target.value))
+                        }
                       />
-                      <CalculateButton onClick={() => handleCalculate(deal.deal_id)}>Cal</CalculateButton>
-                    </>
-                  ) : (
-                    deal.final_cap || '--'
-                  )}
-                </TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
-                  {deal.deal_status === 'PAYMENT_PENDING' ? (
-                    <EditableInput value={deal.user_final_allocation} readOnly />
-                  ) : (
-                    deal.user_final_allocation || '--'
-                  )}
-                </TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
-                  {isEditing && selectedRows.has(deal.deal_id) ? (
-                    <input
-                      type="text"
-                      value={editedValues[deal.deal_id]?.[deal.user_id]?.user_payment_amount || ''}
-                      onChange={(e) =>
-                        handleInputChange(deal.deal_id, deal.user_id, 'user_payment_amount', e.target.value)
-                      }
-                    />
-                  ) : (
-                    deal.user_payment_amount
-                  )}
-                </TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.payment_status}</TableCell>
-                <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
-                  {deal.deal_status === 'PAYMENT_PENDING' &&
-                  index === filteredDeals.findIndex((d) => d.deal_name === deal.deal_name) ? (
-                    <DatePickerWrapper>
-                      <DatePicker
-                        selected={paymentDueDates[deal.deal_id] || null}
-                        onChange={(date) => handleDateChange(date, deal.deal_id)}
-                        dateFormat="yyyy-MM-dd"
-                        customInput={<DateIcon src={calenderIcon} alt="calendar icon" />}
+                    ) : deal.user_final_allocation !== undefined && deal.user_final_allocation !== null ? (
+                      deal.user_final_allocation
+                    ) : (
+                      ''
+                    )}
+                  </TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                    {isEditing && selectedRows.has(deal.deal_id) ? (
+                      <input
+                        type="text"
+                        value={editedValues[deal.deal_id]?.[deal.user_id]?.user_payment_amount || ''}
+                        onChange={(e) =>
+                          handleInputChange(deal.deal_id, deal.user_id, 'user_payment_amount', e.target.value)
+                        }
                       />
-                      <DateText>{formatDate(paymentDueDates[deal.deal_id])}</DateText>
-                    </DatePickerWrapper>
-                  ) : (
-                    deal.payment_due_date || '--'
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
+                    ) : (
+                      deal.user_payment_amount
+                    )}
+                  </TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>{deal.payment_status}</TableCell>
+                  <TableCell $isSelected={selectedRows.has(deal.deal_id)}>
+                    {deal.deal_status === 'PAYMENT_PENDING' &&
+                    index === filteredDeals.findIndex((d) => d.deal_name === deal.deal_name) ? (
+                      <DatePickerWrapper>
+                        <DatePicker
+                          selected={paymentDueDates[deal.deal_id] || null}
+                          onChange={(date) => handleDateChange(date, deal.deal_id)}
+                          dateFormat="yyyy-MM-dd"
+                          customInput={<DateIcon src={calenderIcon} alt="calendar icon" />}
+                        />
+                        <DateText>{formatDate(paymentDueDates[deal.deal_id])}</DateText>
+                      </DatePickerWrapper>
+                    ) : (
+                      deal.payment_due_date || '--'
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
           </tbody>
         </Table>
       </TableWrapper>

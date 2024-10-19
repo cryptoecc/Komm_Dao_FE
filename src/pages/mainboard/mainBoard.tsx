@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector
 import { RootState } from 'src/store/store'; // Adjust the import path as necessary
 import Sidebar from '../../components/dashboard/sidebar/Sidebar';
@@ -17,7 +18,7 @@ const ContentArea = styled.div`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.white};
   overflow-y: auto; /* 스크롤바 추가 */
-  padding: 0 3vh;
+  padding: 0 4vh;
 `;
 
 const MainBoard: React.FC = () => {
@@ -25,12 +26,15 @@ const MainBoard: React.FC = () => {
   const user = useSelector((state: RootState) => state.user); // Get user info from Redux store
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
+  const navigate = useNavigate();
+
   const handleGovernanceClick = () => {
     setIsModalOpen(true); // 모달 열기
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
+    navigate(-1);
   };
   // Redirect to the main page if user info is not available
   if (!user || user.user_id === 0) {

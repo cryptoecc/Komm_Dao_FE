@@ -76,7 +76,7 @@ const ContributionContent = styled.div`
 
 const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(334px, 1fr));
   gap: 20px;
   margin-top: 40px;
 
@@ -170,6 +170,7 @@ const Contribution: React.FC = () => {
   });
 
   console.log(contributionData);
+
   return (
     <ContributionContainer>
       <ContributionHeader>

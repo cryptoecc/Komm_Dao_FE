@@ -40,7 +40,7 @@ export const Logo = styled.div`
 `;
 
 export const SidebarContainer = styled.div`
-  width: 275px;
+  width: 250px;
   height: 100vh;
   flex-shrink: 0;
   background: #f9f8fe;

@@ -340,14 +340,28 @@ const ContributionDetail: React.FC = () => {
         });
 
         console.log(checkConfirm.data.claim_yn);
-        setClaim(checkConfirm.data.claim_yn);
-      } catch (error) {
+        // 백엔드 응답에 따른 claim 상태 설정
+        if (checkConfirm.data && checkConfirm.data.claim_yn) {
+          setClaim(checkConfirm.data.claim_yn);
+        } else {
+          setClaim('N'); // claim_yn 값이 없으면 N으로 설정
+        }
+      } catch (error: any) {
         console.error('Error fetching invite details:', error);
+
+        // 백엔드에서 "No user contribution found for this mission." 메시지가 온 경우
+        if (error.response && error.response.data.message === 'No user contribution found for this mission.') {
+          setClaim('N'); // 백엔드에서 특정 에러 메시지를 받았을 때 N으로 설정
+        }
       }
     };
 
     fetchInviteDetails(); // 컴포넌트 마운트 시 API 호출
   }, []);
+
+  const formatDescription = (desc: string) => {
+    return desc.replace(/\r\n/g, '<br />').replace(/\n/g, '<br />'); // \r\n 또는 \n을 <br />로 변환
+  };
 
   return (
     <Container>
@@ -373,7 +387,7 @@ const ContributionDetail: React.FC = () => {
             </RewardSection>
             <MissionSection>
               <h3>Mission</h3>
-              <p>{desc}</p>
+              <p dangerouslySetInnerHTML={{ __html: formatDescription(desc) }} />
             </MissionSection>
             <DateSection>
               <h4>Date</h4>

@@ -13,6 +13,9 @@ export const MainContainer = styled.div`
     flex-direction: column;
     padding: 15px;
   }
+
+  @media (min-width: 1440px) {
+  }
 `;
 
 export const LeftSection = styled.div`
@@ -36,13 +39,17 @@ export const RightSection = styled.div`
     width: 100%;
     margin-top: 20px;
   }
+
+  @media (min-width: 1920px) {
+    width: 50%;
+  }
 `;
 
 export const ProjectTitleWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  margin-left: 50px;
+  margin-left: 30px;
   @media (max-width: 768px) {
     margin-bottom: 10px;
   }
@@ -95,7 +102,7 @@ export const KohortLabel = styled.div`
 export const XPInfoWrapper = styled.div`
   display: flex;
   align-items: baseline;
-  width: 80%;
+  width: 90%;
   margin-top: 10px;
   justify-content: space-between;
 
@@ -154,7 +161,7 @@ export const ProgressContainer = styled.div`
   position: relative;
   border-radius: 20px;
   /* height:22px; */
-  width: 83%;
+  width: 90%;
 `;
 
 export const ProgressBar = styled.div<{ $progress: number; $maxProgress: number }>`
@@ -184,7 +191,7 @@ export const ProgressText = styled.div`
 `;
 
 export const BannerWrapper = styled.div`
-  max-width: 500px;
+  max-width: 700px;
   height: 250px; // 높이를 250px로 고정
   background-color: #f2efff;
   border-radius: 20px;

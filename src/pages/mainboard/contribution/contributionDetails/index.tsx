@@ -1,10 +1,31 @@
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import ContributionDetail from 'src/components/dashboard/contribution/contributionDetail/ContributionDetail';
+import Wallet from 'src/components/walletbtn/WalletComponent';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
+import axios from 'axios';
+import { API_BASE_URL } from 'src/utils/utils';
 
 const PageContainer = styled.div`
-  padding: 40px 10px;
-  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* padding: 40px 10px; */
+  height: 100%;
+  /* padding: 30px; */
+  /* max-height: 1080px; */
+  max-width: 1920px;
+  @media (min-width: 1040px) {
+    /* height: 700px; */
+    height: 100%;
+  }
+`;
+const WalletWrap = styled.div`
+  /* float: right; */
+  text-align: end;
+  margin-right: 60px;
 `;
 
 const BackButton = styled.div`
@@ -22,7 +43,7 @@ const BackLink = styled.div`
   cursor: pointer;
   color: #875cff;
   font-weight: 700;
-  padding-left: 60px;
+  /* padding-left: 60px; */
   span {
     margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 */
   }
@@ -30,14 +51,63 @@ const BackLink = styled.div`
 
 const DealDtailsPage: React.FC = () => {
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user); // 사용자 정보 가져오기
+  const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  // user 데이터를 가져오는 useEffect
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user) {
+        try {
+          const walletAddress = user.wallet_addr;
+          console.log(walletAddress);
+          const response = await axios.get(`${API_BASE_URL}/api/user/profile/${walletAddress}`);
+          console.log(response.data);
+          setUserData(response.data);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          setUserData({
+            profileImage: 'default-profile.png',
+            name: 'Default User',
+            expertise: 'Unknown',
+            points: 0,
+            xp: 0,
+            stats: {
+              deal: 0,
+              discover: 0,
+              contribution: 0,
+              governance: 0,
+            },
+          });
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [user]); // user 값이 변경될 때마다 useEffect 실행
+  if (loading || !userData) {
+    return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
+  }
 
   return (
     <PageContainer>
+      <WalletWrap>
+        <Wallet
+          address={userData.walletAddress}
+          username={userData.name}
+          profileImage={userData.profileImage}
+          expertise={userData.expertise}
+        />
+      </WalletWrap>
       <BackButton onClick={() => navigate(-1)}>
         <BackLink>
           <span>&larr;</span>Back to Contribution
         </BackLink>
       </BackButton>
+
       <ContributionDetail />
     </PageContainer>
   );

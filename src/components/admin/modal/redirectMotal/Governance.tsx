@@ -18,11 +18,16 @@ const GovernanceModal: React.FC<GovernanceModalProps> = ({ onClose }) => {
 
       {/* 경고 메시지 */}
       <Wrap>
-        <h2 style={{ fontSize: '24px' }}>Access Restricted</h2>
-        <div>You do not have access to the Governance page at this time.</div>
-        <div>Please contact support if you believe this is an error.</div>
+        <p style={{ fontSize: '36px', fontWeight: '600', fontFamily: 'Inter', width: '400px', lineHeight: '42px' }}>
+          Governance Page Coming Soon!
+        </p>
+        <div style={{ lineHeight: '20px' }}>
+          <p>This page will be available in a future update.</p>
+          <p>Stay tuned for more features in our next release.</p>
+        </div>
+
         <ButtonGroup>
-          <ConfirmButton onClick={onClose}>Close</ConfirmButton>
+          <ConfirmButton onClick={onClose}>OK</ConfirmButton>
         </ButtonGroup>
       </Wrap>
 

@@ -32,8 +32,8 @@ export const ProfileInfo = styled.div`
 
 export const ProfileImage = styled.img`
   margin-top: 10px;
-  width: 110px;
-  height: 95px;
+  width: 100px;
+  height: 100px;
   flex-shrink: 0;
   border-radius: 50px;
 
