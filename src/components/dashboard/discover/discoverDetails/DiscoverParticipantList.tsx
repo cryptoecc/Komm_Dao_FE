@@ -71,54 +71,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
   };
   const truncatedProjectName = truncateProjectName(projectName, 6);
 
-  // 메타마스크 서명창이 뜨는 경우
-  // const handleClaimXPClick = async () => {
-  //   if (isLoading || isClaimed) return; // 중복 처리 및 이미 클레임한 경우 방지
-
-  //   setPoints(rating);
-  //   setIsLoading(true);
-
-  //   try {
-  //     const web3 = new Web3((window as any).ethereum);
-  //     const accounts = await web3.eth.getAccounts();
-  //     const walletAddress = accounts[0];
-  //     const xpPoints = 10;
-  //     const projectId = projectData?.pjt_id; // projectId 추가
-  //     const projectName = projectData?.pjt_name; // projectName 추가
-
-  //     const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-  //     // 트랜잭션 데이터 준비
-  //     const txData = contract.methods.claimXP(walletAddress, xpPoints).encodeABI();
-
-  //     // 메시지 해시 생성
-  //     const messageHash = web3.utils.keccak256(txData);
-
-  //     // 사용자 서명 요청 (eth_sign 사용)
-  //     const signature = await web3.eth.sign(messageHash, walletAddress);
-
-  //     console.log('서명된 트랜잭션 데이터:', signature);
-
-  //     // 서버로 서명된 트랜잭션을 전송
-  //     await axios.post(`${API_BASE_URL}/api/user/profile/update-xp`, {
-  //       walletAddress,
-  //       signature,
-  //       txData,
-  //       xpPoints, // xpPoints 추가
-  //       projectId, // projectId 추가
-  //       projectName, // projectName 추가
-  //     });
-
-  //     setIsClaimed(true); // 클레임 후 버튼 비활성화
-  //   } catch (error) {
-  //     console.error('XP 클레임 중 오류 발생:', error);
-  //     alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // 메타마스크 서명창이 뜨지 않는 경우
+  // 메타마스크 서명창이 안뜨는 경우
   const handleClaimXPClick = async () => {
     if (isLoading || isClaimed) return; // 중복 처리 및 이미 클레임한 경우 방지
 
@@ -158,11 +111,12 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
       const xpBalance = parseInt(xpBalanceRaw.toString(), 10);
       const transactionHash = receipt.transactionHash.toString();
 
-      // Send XP balance, rating, and other details to the backend
+      // Send XP balance, rating, and project_id to the backend
       await axios.post(`${API_BASE_URL}/api/user/profile/update-xp-balance`, {
         walletAddress,
         xpBalance,
-        rating, // Send rating to backend
+        pjt_id: projectId, // Project ID 추가
+        rating, // 별점 값 추가
       });
 
       await axios.post(`${API_BASE_URL}/api/user/profile/update-history`, {
@@ -172,8 +126,8 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
         activity: `Voted on Project ${truncatedProjectName}`,
         xpEarned: xpPoints,
         transactionId: transactionHash,
-        project_id: projectId,
-        rating, // Send rating to the backend
+        project_id: projectId, // Project ID 추가
+        rating, // 별점 값 추가
       });
 
       setIsModalOpen(true);
@@ -185,6 +139,74 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
       setIsLoading(false);
     }
   };
+
+  // 서명창 뜨는코드
+  // const handleClaimXPClick = async () => {
+  //   if (isLoading || isClaimed) return; // 중복 처리 및 이미 클레임한 경우 방지
+
+  //   setPoints(rating);
+  //   setIsLoading(true);
+
+  //   try {
+  //     const web3 = new Web3((window as any).ethereum);
+  //     const accounts = await web3.eth.getAccounts();
+  //     const walletAddress = accounts[0];
+  //     const xpPoints = 10;
+
+  //     const contract = new web3.eth.Contract(contractABI, contractAddress);
+  //     const gasPrice = await web3.eth.getGasPrice();
+  //     const gasEstimate = await contract.methods.claimXP(walletAddress, xpPoints).estimateGas({ from: adminAddress });
+
+  //     const tx = {
+  //       from: adminAddress,
+  //       to: contractAddress,
+  //       data: contract.methods.claimXP(walletAddress, xpPoints).encodeABI(),
+  //       gas: gasEstimate.toString(),
+  //       gasPrice: gasPrice.toString(),
+  //       value: '0x0',
+  //     };
+
+  //     const signedTx = await web3.eth.accounts.signTransaction(tx, adminPrivateKey);
+  //     const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction || '');
+  //     if (!receipt.transactionHash) {
+  //       throw new Error('Transaction failed');
+  //     }
+
+  //     const xpBalanceRaw = await contract.methods.getXP(walletAddress).call();
+  //     if (!xpBalanceRaw) {
+  //       throw new Error('Invalid XP balance returned from contract');
+  //     }
+
+  //     const xpBalance = parseInt(xpBalanceRaw.toString(), 10);
+  //     const transactionHash = receipt.transactionHash.toString();
+
+  //     // Send XP balance, rating, and other details to the backend
+  //     await axios.post(`${API_BASE_URL}/api/user/profile/update-xp-balance`, {
+  //       walletAddress,
+  //       xpBalance,
+  //       rating, // Send rating to backend
+  //     });
+
+  //     await axios.post(`${API_BASE_URL}/api/user/profile/update-history`, {
+  //       walletAddress,
+  //       date: new Date().toISOString(),
+  //       participation: 'Discover',
+  //       activity: `Voted on Project ${truncatedProjectName}`,
+  //       xpEarned: xpPoints,
+  //       transactionId: transactionHash,
+  //       project_id: projectId,
+  //       rating, // Send rating to the backend
+  //     });
+
+  //     setIsModalOpen(true);
+  //     setIsClaimed(true); // 클레임 후 버튼 비활성화
+  //   } catch (error) {
+  //     console.error('XP 클레임 중 오류 발생:', error);
+  //     alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const closeModal = () => {
     setIsModalOpen(false);
