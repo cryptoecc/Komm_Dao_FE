@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select, { components, OptionProps, InputProps, GroupBase } from 'react-select';
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 import {
   Container,
   Header,
@@ -149,6 +150,7 @@ const CustomOption = (props: OptionProps<any>) => (
 const CustomInput = (props: InputProps<any, false, GroupBase<any>>) => <components.Input {...props} isHidden />;
 
 const ProfileUpdate: React.FC = () => {
+  const navigate = useNavigate(); // useNavigate 추가
   const user = useSelector((state: RootState) => state.user);
 
   const [profileData, setProfileData] = useState<ProfileData>({
@@ -165,14 +167,12 @@ const ProfileUpdate: React.FC = () => {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
 
   useEffect(() => {
-    // Local Storage에서 저장된 지갑 주소를 가져옴
     const persistedRoot = localStorage.getItem('persist:root');
-    console.log(persistedRoot);
     if (persistedRoot) {
       try {
         const parsedData = JSON.parse(persistedRoot);
         const walletAddress = JSON.parse(parsedData.wallet_addr);
-        const email = parsedData?.email_addr || ''; // 이메일 값 가져오기
+        const email = parsedData?.email_addr || '';
         setProfileData((prevState) => ({
           ...prevState,
           walletAddress,
@@ -200,7 +200,6 @@ const ProfileUpdate: React.FC = () => {
     } catch (error) {
       console.error('Error fetching profile data:', error);
 
-      // Set default data if API call fails
       setProfileData({
         name: 'Default Name',
         email: 'default@example.com',
@@ -211,7 +210,7 @@ const ProfileUpdate: React.FC = () => {
         stayUpdated: true,
         profileImage: null,
       });
-      setPreviewImage(images.profileDefaultIcon); // Use default profile image
+      setPreviewImage(images.profileDefaultIcon);
     }
   };
 
@@ -275,6 +274,7 @@ const ProfileUpdate: React.FC = () => {
         if (response.data.profileImage) {
           setPreviewImage(`${API_BASE_URL}/${response.data.profileImage}`);
         }
+        navigate(-1); // 프로필이 성공적으로 업데이트되면 이전 페이지로 이동
       }
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -282,18 +282,22 @@ const ProfileUpdate: React.FC = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate(-1); // 'Cancel' 버튼 클릭 시 이전 페이지로 이동
+  };
+
   const handleEmailClick = () => {
-    setIsEmailModalOpen(true); // 이메일 필드 클릭 시 모달 오픈
+    setIsEmailModalOpen(true);
   };
 
   const handleCloseEmailModal = () => {
-    setIsEmailModalOpen(false); // 모달 닫기
+    setIsEmailModalOpen(false);
   };
 
   const updateEmail = (newEmail: string) => {
     setProfileData((prevState) => ({
       ...prevState,
-      email: newEmail, // 이메일 업데이트
+      email: newEmail,
     }));
   };
 
@@ -344,26 +348,17 @@ const ProfileUpdate: React.FC = () => {
               name="email"
               placeholder="Enter your email"
               value={user.email_addr}
-              // onChange={handleInputChange}
               onClick={handleEmailClick}
               readOnly
             />
             <InputIcon src={images.edit_black} alt="Edit" />
           </EmailField>
-          {/* 모달 추가 */}
           <Modal isOpen={isEmailModalOpen} onClose={handleCloseEmailModal}>
-            <AddEmail onComplete={handleCloseEmailModal} fromProfileUpdate={true} onUpdateEmail={updateEmail} />{' '}
-            {/* 모달에 AddEmail 컴포넌트 렌더링 */}
+            <AddEmail onComplete={handleCloseEmailModal} fromProfileUpdate={true} onUpdateEmail={updateEmail} />
           </Modal>
           <WalletAddressField>
             <Label>Wallet Address</Label>
-            <Input
-              type="text"
-              name="walletAddress"
-              placeholder="Enter your wallet address"
-              value={profileData.walletAddress}
-              readOnly
-            />
+            <Input type="text" name="walletAddress" value={profileData.walletAddress} readOnly />
           </WalletAddressField>
           <BioField>
             <Label>Bio</Label>
@@ -394,7 +389,11 @@ const ProfileUpdate: React.FC = () => {
             </CheckboxContainer>
           </HorizontalGroup>
           <ButtonGroup>
-            <Button className="cancel">Cancel</Button>
+            <Button className="cancel" onClick={handleCancel}>
+              {' '}
+              {/* Cancel 버튼에 핸들러 추가 */}
+              Cancel
+            </Button>
             <Button className="save" onClick={handleSave}>
               Save
             </Button>
