@@ -25,9 +25,9 @@ import Test from './pages/test';
 import DealInterest from './pages/mainboard/deal/dealDtails/dealInterest'; // Correct the path to your new component
 import AdminDiscover from './pages/admin/mainboard/discover/adminDiscover';
 import DiscoverCalendar from './pages/mainboard/discover/discoverCalendar';
-import Proposals from './pages/mainboard/governance/proposals';
-import Delegates from './pages/mainboard/governance/delegates';
-import Kohort from './pages/mainboard/governance/kohort';
+// import Proposals from './pages/mainboard/governance/proposals';
+// import Delegates from './pages/mainboard/governance/delegates';
+// import Kohort from './pages/mainboard/governance/kohort';
 import SpecProposal from './pages/mainboard/governance/proposals/SpecProposal';
 import Proposal from './pages/proposal';
 import AdminContribution from './pages/admin/mainboard/contribution/adminContribution';

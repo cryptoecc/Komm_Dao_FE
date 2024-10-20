@@ -28,7 +28,7 @@ const BackButton = styled.div`
   cursor: pointer;
   color: #875cff;
   font-weight: 700;
-  margin-bottom: 20px; /* Title 아래에 위치하도록 조정 */
+  margin-bottom: 20px;
 `;
 
 const BackLink = styled.div`
@@ -39,49 +39,49 @@ const BackLink = styled.div`
   font-weight: 700;
 
   span {
-    margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 */
+    margin-right: 10px;
   }
 `;
 
 const DiscoverDetails: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [participants, setParticipants] = useState<Participant[]>([]); // 참여자 데이터를 위한 상태
   const projectData = location.state;
-  console.log(projectData);
+  const [participants, setParticipants] = useState<Participant[]>([]);
+  const [rating, setRating] = useState<number>(0);
+  const [percentile, setPercentile] = useState<number>(0);
 
   useEffect(() => {
-    const fetchParticipants = async () => {
+    const fetchProjectData = async () => {
       try {
-        // projectData에서 pjt_id를 추출
         const pjtId = projectData.pjt_id;
-        console.log(pjtId);
+        const response = await axios.get(`${API_BASE_URL}/api/project/${pjtId}/details`);
+        const projectDetails = response.data;
 
-        if (pjtId) {
-          // 백엔드로 pjt_id를 통해 참여자 데이터 요청
-          const response = await axios.get(`${API_BASE_URL}/api/user/profile/${pjtId}/participants`);
+        // rating 값을 설정
+        setRating(projectDetails.project.avg_rating || 0);
 
-          // 응답 데이터를 participants로 설정
-          setParticipants(
-            response.data.map((participant: any, index: number) => ({
-              id: index + 1,
-              user: participant.user_image_link || images.user, // user_image_link가 있으면 사용, 없으면 기본 이미지 사용
-            }))
-          );
-        }
+        // 백엔드에서 받은 percentile 값을 처리
+        const parsedPercentile = projectDetails.project.percentile
+          ? parseFloat(projectDetails.project.percentile) // "20.00"을 20으로 변환
+          : 0; // 값이 없을 경우 기본값 0 설정
+
+        setPercentile(parsedPercentile);
+
+        // 참가자 목록 설정
+        setParticipants(
+          projectDetails.participants.map((participant: any, index: number) => ({
+            id: index + 1,
+            user: participant.user_image_link || images.user,
+          }))
+        );
       } catch (error) {
-        console.error('Error fetching participants:', error);
+        console.error('Error fetching project details:', error);
       }
     };
 
-    fetchParticipants();
+    fetchProjectData();
   }, [projectData]);
-
-  console.log(participants);
-
-  // Ensure rating and percentile have default values if not present
-  const rating = projectData?.rating ?? 4.8; // Default to 0 if undefined
-  const percentile = projectData?.percentile ?? 50; // Default to 100% if undefined
 
   return (
     <DiscoverContainer>
@@ -92,9 +92,7 @@ const DiscoverDetails: React.FC = () => {
       </BackButton>
       <DiscoverContent>
         <DiscoverDetail />
-
         <CommunityRating rating={rating} percentile={percentile} />
-
         <DiscoverParticipantList participants={participants} />
       </DiscoverContent>
     </DiscoverContainer>
