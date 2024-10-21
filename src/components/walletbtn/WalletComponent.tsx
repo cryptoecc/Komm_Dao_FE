@@ -13,7 +13,7 @@ import {
   IconWrapper,
 } from './WalletComponent.styls';
 import { images } from 'src/assets/dashboard/images';
-import FaWallet from 'src/assets/main/WalletImg.svg';
+import FaWallet from 'src/assets/main/business.png';
 import ProfileIcon from 'src/assets/main/account_circle.svg';
 import LogoutIcon from 'src/assets/main/logout.svg';
 import { API_BASE_URL } from 'src/utils/utils';
@@ -67,18 +67,6 @@ const Wallet: React.FC<WalletProps> = ({ address, profileImage, username, expert
       {/* 드롭다운 메뉴 */}
       {isDropdownOpen && (
         <DropdownMenu>
-          <DropdownItem onClick={handleProfileClick}>
-            <IconWrapper>
-              <img src={ProfileIcon} alt="Profile Icon" />
-            </IconWrapper>
-            Profile
-          </DropdownItem>
-          <DropdownItem onClick={handleLogout}>
-            <IconWrapper>
-              <img src={LogoutIcon} alt="Logout Icon" />
-            </IconWrapper>
-            Sign Out
-          </DropdownItem>
           <DropdownItem>
             <ProfileImage
               src={profileImage ? `${API_BASE_URL}/${profileImage}` : images.profileDefaultIcon}
@@ -88,6 +76,12 @@ const Wallet: React.FC<WalletProps> = ({ address, profileImage, username, expert
               <UserName>{username}</UserName>
               <WalletAddress>{expertise}</WalletAddress>
             </UserInfo>
+          </DropdownItem>
+          <DropdownItem onClick={handleLogout}>
+            <IconWrapper>
+              <img src={LogoutIcon} alt="Logout Icon" />
+            </IconWrapper>
+            Sign Out
           </DropdownItem>
         </DropdownMenu>
       )}

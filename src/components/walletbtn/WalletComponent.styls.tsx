@@ -12,6 +12,7 @@ export const WalletButton = styled.div`
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 8px;
+  margin-right: 55px;
 `;
 
 export const WalletIcon = styled.img`
@@ -21,8 +22,8 @@ export const WalletIcon = styled.img`
 
 export const Address = styled.span`
   position: absolute;
-  left: 70px;
-  bottom: 42px;
+  left: 55px;
+  bottom: 12px;
   font-size: 16px;
   font-weight: 500;
   color: #333;
@@ -30,7 +31,7 @@ export const Address = styled.span`
 
 export const DropdownMenu = styled.div`
   position: absolute;
-  top: 80px;
+  top: 40px;
   left: -20px;
   width: 200px;
   background-color: #fff;

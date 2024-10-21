@@ -132,14 +132,11 @@ const ProfileCard: React.FC = () => {
         </Stat>
         <StyledLinkWrap>
           <LinkIcon src={images.pointsIcon} alt="Points Icon" />
-          <StyledLink to="#" onClick={handleCalenderClick}>
+          <StyledLink to="/mainboard/discover/calendar" onClick={handleCalenderClick}>
             Go to My Calendar
           </StyledLink>
         </StyledLinkWrap>
       </StatsWrap>
-      <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <CalenderModal onClose={handleCloseModal} />
-      </RedirectModal>
     </ProfileCardContainer>
   );
 };

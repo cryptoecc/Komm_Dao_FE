@@ -1,8 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
   * {
     box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   html, body, #root {
@@ -16,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: #ffffff;
     font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 
       /* 1470px 이상 기본 스타일 */
     @media (min-width: 1470px) {

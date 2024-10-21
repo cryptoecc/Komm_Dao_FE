@@ -3,15 +3,15 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 80%;
   padding: 20px; /* 내부 여백 */
+
   display: flex;
   flex-direction: column;
   align-items: center; /* 모바일 화면에서 중앙 정렬 */
   gap: 30px; /* 요소들 사이의 간격 증가 */
   position: relative; /* Edit 버튼을 절대 위치로 배치하기 위한 설정 */
 
-  @media (max-width: 768px) {
-    width: 100%; /* 모바일 화면에서 전체 너비 사용 */
-    padding: 10px; /* 모바일 화면에서 내부 여백 조정 */
+  @media (min-width: 1500px) {
+    margin-top: 90px;
   }
 `;
 
@@ -30,8 +30,8 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  width: 167px;
-  height: 167px;
+  width: 156px;
+  height: 156px;
   border-radius: 50%;
   border: 5px solid #875cff;
   background-size: cover;
@@ -58,7 +58,7 @@ export const Info = styled.div`
 export const Name = styled.div`
   color: #000;
   font-family: Inter;
-  font-size: 40px;
+  font-size: 32px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -71,7 +71,7 @@ export const Name = styled.div`
 export const Job = styled.div`
   color: #875cff;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -84,7 +84,7 @@ export const Job = styled.div`
 export const Email = styled.div`
   color: #000;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -126,9 +126,9 @@ export const WalletAddressContentsWrap = styled.div`
 `;
 
 export const WalletAddress = styled.div`
-  color: rgba(0, 0, 0, 0.5);
+  color: #000;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -137,7 +137,7 @@ export const WalletAddress = styled.div`
 export const WalletContents = styled.div`
   color: #000;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 17x;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -154,8 +154,8 @@ export const CopyButton = styled.button`
 `;
 
 export const CopyIcon = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
 `;
 
@@ -170,9 +170,9 @@ export const BioWrap = styled.div`
 `;
 
 export const Bio = styled.div`
-  color: rgba(0, 0, 0, 0.5);
+  color: #000;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -182,9 +182,9 @@ export const Bio = styled.div`
 export const BioContents = styled.div`
   color: #000;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 17px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.5;
   width: 100%; /* 부모 요소의 너비를 따름 */
   max-width: 100%; /* 최대 너비를 설정 */
@@ -211,9 +211,9 @@ export const MembershipNftWrapInner = styled.div`
 `;
 
 export const MembershipNftTitle = styled.h3`
-  color: rgba(0, 0, 0, 0.5);
+  color: #000;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -227,7 +227,7 @@ export const OpenSeaIcon = styled.img`
 export const OpenSeaLink = styled.a`
   color: #875cff;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 17px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -246,7 +246,7 @@ export const EditButton = styled.button`
   background: #000;
   color: white;
   font-family: Inter;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -254,7 +254,7 @@ export const EditButton = styled.button`
   border-radius: 20px;
   background: var(--Purple-900, #7c4dff);
   position: absolute; /* 절대 위치로 설정 */
-  top: -60px; /* 상단에서 20px 위치 */
+  top: 55px; /* 상단에서 20px 위치 */
   right: -100px; /* 우측에서 20px 위치 */
   &:hover {
     background: #d1d1e9;
@@ -273,8 +273,8 @@ export const EditButton = styled.button`
 `;
 
 export const EditIcon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   display: block;
 `;
 

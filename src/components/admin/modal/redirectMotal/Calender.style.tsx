@@ -25,14 +25,14 @@ export const CloseButton = styled.button`
   border: none;
   font-size: 24px;
   cursor: pointer;
-  text-align: end;
 `;
 
 export const Wrap = styled.div`
-  padding-left: 40px;
-  padding-top: 50px;
+  padding-left: 30px;
+  /* padding-top: 10px; */
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  height: 300px;
+  /* height: 100%; */
+  height: 350px;
 `;
