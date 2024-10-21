@@ -18,10 +18,8 @@ const ModalContent = styled.div`
   background: white;
   padding: 40px;
   border-radius: 20px;
-  margin: 0 auto;
-  height: 380px;
-  width: 700px;
-  height: 400px;
+  width: 600px;
+  height: 300px;
 `;
 
 interface ModalProps {

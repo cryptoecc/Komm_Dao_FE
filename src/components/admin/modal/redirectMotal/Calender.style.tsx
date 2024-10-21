@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ButtonGroup = styled.div`
   text-align: right;
+  margin-top: 40px;
 `;
 
 export const ConfirmButton = styled.button`
@@ -34,5 +35,4 @@ export const Wrap = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   /* height: 100%; */
-  height: 350px;
 `;

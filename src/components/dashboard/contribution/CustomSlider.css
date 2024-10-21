@@ -58,3 +58,10 @@
 .swiper-pagination {
   margin-top: 50px;
 }
+
+.modal {
+  width: 600px;
+  height: 300px;
+  position: absolute;
+  top: 50%;
+}

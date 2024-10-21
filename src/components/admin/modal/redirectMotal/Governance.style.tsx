@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const ButtonGroup = styled.div`
+  margin-top: 40px;
   text-align: right;
 `;
 
@@ -34,5 +35,4 @@ export const Wrap = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   /* height: 100%; */
-  height: 350px;
 `;

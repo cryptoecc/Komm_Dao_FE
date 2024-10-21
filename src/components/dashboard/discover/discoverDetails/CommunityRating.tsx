@@ -26,7 +26,7 @@ const CommunityRating: React.FC<CommunityRatingProps> = ({ rating, percentile })
     <CommunityRatingContainer>
       <RatingSection>
         <p>Community Rating</p>
-        <RatingValue>{rating ? rating.toFixed(1) : 'N/A'}</RatingValue> {/* rating이 없을 경우 N/A 표시 */}
+        <RatingValue>{rating ? rating.toFixed(1) : '0'}</RatingValue> {/* rating이 없을 경우 N/A 표시 */}
         <StarRating>
           {[...Array(5)].map((_, index) => {
             const filled = index + 1 <= Math.floor(rating);
@@ -49,10 +49,10 @@ const CommunityRating: React.FC<CommunityRatingProps> = ({ rating, percentile })
           circleRatio={0.5}
           styles={buildStyles({
             rotation: 1 / 4 + 1 / 2,
-            pathColor: '#875cff',
-            textColor: '#000',
-            trailColor: '#f0e4ff',
-            textSize: '14px',
+            pathColor: '#6A5FEB',
+            textColor: '#404040',
+            trailColor: '#EEEDFD',
+            textSize: '12px',
           })}
         />
       </GraphSection>

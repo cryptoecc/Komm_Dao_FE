@@ -94,11 +94,10 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
         <div>
           <span
             style={{
-              fontSize: '15px',
+              fontSize: '14px',
               color: 'rgba(0, 0, 0, 0.50)',
               fontStyle: 'normal',
               //   lineHeight: '15px',
-              fontFamily: 'Inter',
               fontWeight: '400',
             }}
           >
@@ -106,7 +105,7 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
           </span>
           <br />
           <span
-            style={{ fontSize: '20px', fontWeight: '400', color: '#000', fontStyle: 'normal', lineHeight: 'normal' }}
+            style={{ fontSize: '18px', fontWeight: '400', color: '#000', fontStyle: 'normal', lineHeight: 'normal' }}
           >
             {' '}
             {shortenAddress(walletAddress)}
@@ -129,7 +128,7 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
             <p>{loadingMessage}</p>
           </LoadingWrapper>
           {loadingMessage === 'Waiting for Signature' && (
-            <p style={{ textAlign: 'center', marginTop: '10px' }}>
+            <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '14px' }}>
               Your wallet app will prompt you to sign a message to verify your wallet.
             </p>
           )}

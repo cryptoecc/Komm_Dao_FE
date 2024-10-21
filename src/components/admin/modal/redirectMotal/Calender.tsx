@@ -18,10 +18,10 @@ const CalenderModal: React.FC<CalenderModalProps> = ({ onClose }) => {
 
       {/* 경고 메시지 */}
       <Wrap>
-        <p style={{ fontSize: '32px', fontWeight: '700', fontFamily: 'Inter', width: '520px', lineHeight: '42px' }}>
+        <p style={{ fontSize: '25px', fontWeight: '700', width: '520px', lineHeight: '24px', marginTop: '20px' }}>
           Calender Page Coming Soon!
         </p>
-        <div style={{ lineHeight: 'normal', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>
+        <div style={{ lineHeight: 'normal', fontSize: '18px', fontWeight: '400', marginTop: '50px' }}>
           <p>This page will be available in a future update.</p>
           <p>Stay tuned for more features in our next release.</p>
         </div>

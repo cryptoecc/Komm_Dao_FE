@@ -4,25 +4,28 @@ export const ParticipantListContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  /* padding: 20px; */
 `;
 
 export const LeftSection = styled.div`
   flex: 1;
   padding: 10px;
+  padding-bottom: 40px;
   max-width: 50%; /* Ensures LeftSection does not exceed 50% of the total width */
 
-  h3 {
-    font-size: 18px;
-    margin-bottom: 30px;
+  p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    color: #404040;
+    font-weight: 500;
   }
 
   div {
     display: grid;
-    grid-template-columns: repeat(7, 50px);
+    grid-template-columns: repeat(7, 25px);
     gap: 10px;
     grid-auto-flow: row; /* Ensures items flow into the next row automatically */
-    grid-auto-rows: minmax(50px, auto); /* Controls the row height */
+    grid-auto-rows: minmax(25px, auto); /* Controls the row height */
     overflow-wrap: break-word; /* Allows breaking long words */
   }
 `;
@@ -37,29 +40,32 @@ export const RightSection = styled.div`
 
 export const ParticipantItem = styled.div`
   img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 25px;
+    height: 25px;
     margin: 0; /* Ensure no extra margin is added */
   }
 `;
 
 export const RatingSection = styled.div`
+  width: 100%;
+  margin-top: 60px;
   p {
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 10px;
 
     span {
-      font-weight: bold;
-      color: #875cff;
+      font-weight: 700;
+      color: #6a5feb;
     }
   }
 `;
 
 export const BtnWrap = styled.div`
   display: flex;
+  width: 100%;
+  /* vertical-align: center; */
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   margin-top: 20px; /* Add space between stars and the text/button section */
 `;
 
@@ -70,23 +76,28 @@ export const RatingContainer = styled.div`
 
   img {
     margin-top: 10px;
-    width: 48px;
-    height: 48px;
+    width: 35px;
+    height: 35px;
     margin-right: 10px; /* Increase space between each star */
     cursor: pointer;
   }
 `;
 
+export const Xp = styled.p`
+  font-size: 14px;
+`;
+
 export const ClaimXPButton = styled.button<{ disabled: boolean }>`
-  background-color: ${({ disabled }) => (disabled ? '#ccc' : '#875cff')};
+  background-color: ${({ disabled }) => (disabled ? '#ccc' : '#6A5FEB')};
   color: white;
-  padding: 10px 20px;
+  padding: 8px 24px;
+  width: 120px;
   border: none;
   border-radius: 20px;
+  /* margin-bottom: 30px; */
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  font-size: 18px;
-  font-weight: 700;
-  margin-left: 20px; /* Add space between text and button */
+  font-size: 16px;
+  font-weight: 600;
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -123,4 +134,24 @@ export const LoadingSpinner = styled.div`
       transform: rotate(360deg);
     }
   }
+`;
+
+export const ModalContent = styled.div`
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+
+  /* width: 300px; */
+  position: relative;
+  /* top: 50px; */
+`;
+
+export const CloseButton = styled.button`
+  width: 25px;
+  height: 25px;
+  font-weight: 700;
+  float: right;
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
