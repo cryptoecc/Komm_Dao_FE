@@ -5,10 +5,12 @@ export const CommunityRatingContainer = styled.div`
   justify-content: center;
   gap: 50px;
   align-items: center;
-  background-color: #f9f8fe;
+  border: 7px solid #eeedfd;
+  background: #fbfbff;
+
   padding: 20px;
-  border-radius: 30px;
-  min-height: 220px;
+  border-radius: 20px;
+  min-height: 250px;
 `;
 
 export const RatingSection = styled.div`
@@ -20,16 +22,16 @@ export const RatingSection = styled.div`
 
   p {
     margin: 0;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 500;
-    color: #000;
+    color: #404040;
   }
 `;
 
 export const RatingValue = styled.div`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: bold;
-  color: #000;
+  color: #404040;
   margin: 10px 0;
 `;
 

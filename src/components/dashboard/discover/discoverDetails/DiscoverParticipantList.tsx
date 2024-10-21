@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
+import Modal from 'react-modal';
 import {
   ParticipantListContainer,
   LeftSection,
@@ -9,8 +10,11 @@ import {
   RatingContainer,
   ClaimXPButton,
   BtnWrap,
+  Xp,
   LoadingOverlay,
   LoadingSpinner,
+  ModalContent,
+  CloseButton,
 } from './DiscoverParticipantList.style';
 import { images } from 'src/assets/discover/images';
 import ClaimModal from './ClaimModal';
@@ -19,6 +23,9 @@ import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import { XpClaim_ABI } from 'src/configs/contract-abi/XpClaim';
 import { useLocation } from 'react-router-dom';
+import { ReactComponent as CloseIcon } from 'src/assets/modal/close.svg';
+
+Modal.setAppElement('#root');
 
 // 환경 변수에서 어드민 계정 정보를 가져옵니다.
 const adminAddress = process.env.REACT_APP_ADMIN_WALLET_ADDRESS || '';
@@ -26,15 +33,18 @@ const adminPrivateKey = process.env.REACT_APP_ADMIN_WALLET_PRIVATE_KEY || '';
 
 interface ParticipantListProps {
   participants: { id: number; user: string }[];
+  onXpClaimed: () => void; // XP 클레임 후 호출할 콜백 함수
 }
 
-const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants }) => {
+const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants, onXpClaimed }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [points, setPoints] = useState<number>(4); // 점수(평점)
   const [rating, setRating] = useState<number>(0);
   const [isRatingFixed, setIsRatingFixed] = useState<boolean>(false); // 클릭 후 고정되는 상태
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const [isClaimed, setIsClaimed] = useState<boolean>(false); // XP가 이미 클레임 되었는지 여부
   const contractAddress = '0x15e7a34b6a5aBf8b0aD4FcD85D873FD7e7163E97';
   const contractABI = XpClaim_ABI;
@@ -76,6 +86,8 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
     if (isLoading || isClaimed) return; // 중복 처리 및 이미 클레임한 경우 방지
 
     setPoints(rating);
+
+    setIsModalOpen(true);
     setIsLoading(true);
 
     try {
@@ -87,6 +99,8 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
       const contract = new web3.eth.Contract(contractABI, contractAddress);
       const gasPrice = await web3.eth.getGasPrice();
       const gasEstimate = await contract.methods.claimXP(walletAddress, xpPoints).estimateGas({ from: adminAddress });
+      const nonceBigInt = await web3.eth.getTransactionCount(adminAddress, 'pending');
+      const nonce = Number(nonceBigInt);
 
       const tx = {
         from: adminAddress,
@@ -94,6 +108,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
         data: contract.methods.claimXP(walletAddress, xpPoints).encodeABI(),
         gas: gasEstimate.toString(),
         gasPrice: gasPrice.toString(),
+        nonce: nonce,
         value: '0x0',
       };
 
@@ -130,11 +145,13 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
         rating, // 별점 값 추가
       });
 
-      setIsModalOpen(true);
+      setIsSuccess(true);
       setIsClaimed(true); // 클레임 후 버튼 비활성화
+      onXpClaimed(); // XP 클레임 후 데이터를 업데이트하는 콜백 호출
     } catch (error) {
       console.error('XP 클레임 중 오류 발생:', error);
       alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
@@ -233,14 +250,14 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
 
   return (
     <>
-      {isLoading && (
+      {/* {isLoading && (
         <LoadingOverlay>
           <LoadingSpinner />
         </LoadingOverlay>
-      )}
-      <ParticipantListContainer style={{ filter: isLoading ? 'blur(4px)' : 'none' }}>
+      )} */}
+      <ParticipantListContainer>
         <LeftSection>
-          <h3>Participant List</h3>
+          <p>Participant List</p>
           <div>
             {participants.map((participant) => (
               <ParticipantItem key={participant.id}>
@@ -260,7 +277,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
                 .fill(0)
                 .map((_, index) => (
                   <img
-                    src={index < displayRating ? checkedStar : images.star2}
+                    src={index < displayRating ? images.checked_star : images.star2}
                     alt="Rating Star"
                     key={index}
                     onClick={() => handleStarClick(index)}
@@ -284,16 +301,38 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants 
               </div>
             </RatingContainer>
             <BtnWrap>
-              <p>
+              <Xp>
                 Each rating earns you <span>10 XP!</span>
-              </p>
+              </Xp>
+
               <ClaimXPButton onClick={handleClaimXPClick} disabled={isClaimed}>
-                {isClaimed ? 'Already Claimed' : 'Claim XP'}
+                {isClaimed ? 'Claimed' : 'Claim XP'}
               </ClaimXPButton>
             </BtnWrap>
           </RatingSection>
         </RightSection>
-        <ClaimModal isOpen={isModalOpen} onClose={closeModal} points={points} />
+        <ClaimModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          points={points}
+          loading={isLoading}
+          isSuccess={isSuccess}
+          isError={isError}
+          onRetry={handleClaimXPClick}
+        />
+        {/* <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          contentLabel="Wallet Modal"
+          className="modal"
+          overlayClassName="overlay"
+        >
+          <ModalContent>
+            <CloseButton onClick={closeModal}>
+              <CloseIcon />
+            </CloseButton>
+          </ModalContent>
+        </Modal> */}
       </ParticipantListContainer>
     </>
   );

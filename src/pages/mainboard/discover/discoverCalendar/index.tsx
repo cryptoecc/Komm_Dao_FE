@@ -132,7 +132,7 @@ const DiscoverCalendar: React.FC = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
-    navigate(-1);
+    navigate('/mainboard/dashboard');
   };
 
   // 페이지가 렌더링될 때 모달이 자동으로 열리도록 설정

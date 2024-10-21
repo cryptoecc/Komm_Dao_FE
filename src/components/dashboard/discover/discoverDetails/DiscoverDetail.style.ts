@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
-export const DiscoverDetailContainer = styled.div`
-  padding: 10px;
-`;
+export const DiscoverDetailContainer = styled.div``;
 
 export const ProjectHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px; /* Add space below the header */
+  margin-bottom: 50px; /* Add space below the header */
 `;
 
 export const ProjectNameWrapper = styled.div`
@@ -34,18 +32,12 @@ export const ShareIcon = styled.img`
   width: 30px;
   height: 30px;
   cursor: pointer;
-  margin-left: 15px;
 `;
 
 export const AddWatchlistLink = styled.a`
-  font-size: 20px;
-  color: #875cff;
+  font-size: 16px;
+  color: #6a5feb;
   font-weight: 700;
-  text-decoration: underline;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 export const SocialIcons = styled.div`
@@ -55,8 +47,8 @@ export const SocialIcons = styled.div`
   gap: 10px;
   img {
     margin-right: 15px;
-    width: 35px; /* Adjusted size for consistency */
-    height: 35px;
+    width: 25px; /* Adjusted size for consistency */
+    height: 25px;
   }
 
   img:last-child {
@@ -65,9 +57,10 @@ export const SocialIcons = styled.div`
 `;
 
 export const Description = styled.p`
-  font-size: 16px;
-  color: #333;
-  line-height: 1.6; /* Adjust line height for better readability */
+  font-size: 14px;
+  font-weight: 500;
+  color: #404040;
+  line-height: 24px; /* Adjust line height for better readability */
   margin-top: 0; /* Ensure there's no margin above the description */
   height: 110px; /* Set the basic height */
   overflow-y: auto; /* Add a vertical scrollbar if content exceeds height */

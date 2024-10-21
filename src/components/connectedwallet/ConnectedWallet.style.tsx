@@ -5,19 +5,20 @@ export const ModalContent = styled.div`
   background: #fff;
   padding: 40px;
   border-radius: 10px;
-
+  /* width: 600px;
+  height: 300px; */
   /* width: 300px; */
   position: relative;
-  /* top:50px; */
+  /* top: 50px; */
 `;
 
 export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 10px;
   color: #000;
-  font-size: 36px;
+  font-size: 25px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -36,20 +37,20 @@ export const CloseButton = styled.button`
 
 export const ConnectedWalletWrapper = styled.div`
   display: flex;
-  width: 564px;
-  height: 75px;
+  width: 500px;
+  height: 70px;
   justify-content: space-between;
   align-items: center;
   background: #f8f8fa;
   border-radius: 20px;
   padding: 10px 20px;
-  margin: auto; /* 가운데 정렬을 위해 추가 */
+  /* margin: auto; 가운데 정렬을 위해 추가 */
 `;
 
 export const DisconnectButton = styled.button`
   display: flex;
   color: #000;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   line-height: normal;
   background: none;
@@ -62,7 +63,7 @@ export const ActionButtons = styled.div`
   display: flex;
   justify-content: end;
   gap: 10px;
-  margin-right: 28px;
+  margin-right: 20px;
   margin-top: 48px;
   /* margin: 0 auto; */
 `;
@@ -78,7 +79,7 @@ export const CancelButton = styled.button`
   align-items: center;
   border: 1px solid #000;
   color: #000;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -93,7 +94,7 @@ export const SignButton = styled.button`
   align-items: center;
   gap: 10px;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   line-height: normal;
   border: none;
@@ -129,7 +130,7 @@ export const LoadingWrapper = styled.div`
 
   p {
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     line-height: normal;
     color: #000;

@@ -288,109 +288,100 @@ const DiscoverList: React.FC<DiscoverListProps> = ({ searchTerm }) => {
       <TableContainer>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableHeader width="10%">
-                Watchlist
-                {/* <img
-                  src={images.sorticon}
-                  alt=""
-                  onClick={handleWatchlistClick}
-                  style={{ width: '16px', height: '16px' }}
-                /> */}
-              </TableHeader>
-              <TableHeader width="20%">
-                Project
+            <TableHeader width="10%">Watchlist</TableHeader>
+            <TableHeader width="20%">
+              Project
+              <img
+                src={images.sorticon}
+                alt=""
+                onClick={() => handleSort('pjt_name')}
+                style={{ width: '16px', height: '16px' }}
+              />
+            </TableHeader>
+            <TableHeader width="15%" onClick={toggleCategoryDropdown} $isActive={isCategoryDropdownVisible}>
+              <DropdownContainer ref={categoryDropdownRef}>
+                Category
                 <img
-                  src={images.sorticon}
+                  src={isCategoryDropdownVisible ? images.downicon : images.sorticon}
                   alt=""
-                  onClick={() => handleSort('pjt_name')}
                   style={{ width: '16px', height: '16px' }}
                 />
-              </TableHeader>
-              <TableHeader width="15%" onClick={toggleCategoryDropdown} $isActive={isCategoryDropdownVisible}>
-                <DropdownContainer ref={categoryDropdownRef}>
-                  Category
-                  <img
-                    src={isCategoryDropdownVisible ? images.downicon : images.sorticon}
-                    alt=""
-                    style={{ width: '16px', height: '16px' }}
-                  />
-                  {isCategoryDropdownVisible && (
-                    <DropdownMenu>
-                      {categories.map((category) => (
-                        <DropdownItem key={category} onClick={(e) => e.stopPropagation()}>
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={selectedCategories.includes(category)}
-                              onChange={() => handleCategoryChange(category)}
-                            />
-                            {category}
-                          </label>
-                        </DropdownItem>
-                      ))}
-                    </DropdownMenu>
-                  )}
-                </DropdownContainer>
-              </TableHeader>
-              <TableHeader width="25%">Description</TableHeader>
-              <TableHeader width="20%" onClick={toggleGradeDropdown} $isActive={isGradeDropdownVisible}>
-                <DropdownContainer ref={gradeDropdownRef}>
-                  <TooltipContainer>
-                    <img src={images.exclamationIcon} alt="Info Icon" style={{ width: '16px', height: '16px' }} />
-                    Grade
-                    <div className="tooltip">
-                      AAA: 2.5 to 3.0
-                      <br />
-                      AA: 2.0 to 2.5
-                      <br />
-                      A: 1.5 to 2.0
-                      <br />
-                      BBB: 1.0 to 1.5
-                      <br />
-                      BB and Below: 1.0 or below
-                    </div>
-                  </TooltipContainer>
-                  <img
-                    src={isGradeDropdownVisible ? images.downicon : images.sorticon}
-                    alt=""
-                    style={{ width: '16px', height: '16px' }}
-                  />
-                  {isGradeDropdownVisible && (
-                    <DropdownMenu>
-                      {grades.map((grade) => (
-                        <DropdownItem key={grade} onClick={(e) => e.stopPropagation()}>
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={selectedGrades.includes(grade)}
-                              onChange={() => handleGradeChange(grade)}
-                            />
-                            {grade}
-                          </label>
-                        </DropdownItem>
-                      ))}
-                    </DropdownMenu>
-                  )}
-                </DropdownContainer>
-              </TableHeader>
-            </TableRow>
+                {isCategoryDropdownVisible && (
+                  <DropdownMenu>
+                    {categories.map((category) => (
+                      <DropdownItem key={category} onClick={(e) => e.stopPropagation()}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={selectedCategories.includes(category)}
+                            onChange={() => handleCategoryChange(category)}
+                          />
+                          {category}
+                        </label>
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                )}
+              </DropdownContainer>
+            </TableHeader>
+            <TableHeader width="25%">Description</TableHeader>
+            <TableHeader width="20%" onClick={toggleGradeDropdown} $isActive={isGradeDropdownVisible}>
+              <DropdownContainer ref={gradeDropdownRef}>
+                <TooltipContainer>
+                  <img src={images.exclamationIcon} alt="Info Icon" style={{ width: '16px', height: '16px' }} />
+                  Grade
+                  <div className="tooltip">
+                    AAA: 2.5 to 3.0
+                    <br />
+                    AA: 2.0 to 2.5
+                    <br />
+                    A: 1.5 to 2.0
+                    <br />
+                    BBB: 1.0 to 1.5
+                    <br />
+                    BB and Below: 1.0 or below
+                  </div>
+                </TooltipContainer>
+                <img
+                  src={isGradeDropdownVisible ? images.downicon : images.sorticon}
+                  alt=""
+                  style={{ width: '16px', height: '16px' }}
+                />
+                {isGradeDropdownVisible && (
+                  <DropdownMenu>
+                    {grades.map((grade) => (
+                      <DropdownItem key={grade} onClick={(e) => e.stopPropagation()}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={selectedGrades.includes(grade)}
+                            onChange={() => handleGradeChange(grade)}
+                          />
+                          {grade}
+                        </label>
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                )}
+              </DropdownContainer>
+            </TableHeader>
           </TableHead>
           <tbody>
             {sortedData.length > 0 ? (
               sortedData.map((row) => (
-                <TableRow key={row.pjt_id}>
+                <TableRow key={row.pjt_id} onClick={() => handleProjectClick(row)}>
                   <TableCell width="10%">
                     <StarIcon
                       src={row.checked ? `${images.checked_star}` : `${images.star}`}
                       alt={row.pinned ? 'Pinned' : 'Not pinned'}
-                      onClick={() => handleStarClick(row.pjt_id)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // 즐겨찾기 아이콘 클릭 시 행 클릭 이벤트 중단
+                        handleStarClick(row.pjt_id);
+                      }}
                     />
                   </TableCell>
                   <TableCell width="20%">
-                    <ProjectLink as="button" onClick={() => handleProjectClick(row)}>
-                      {row.pjt_name}
-                    </ProjectLink>
+                    <ProjectLink as="button">{row.pjt_name}</ProjectLink>
                   </TableCell>
                   <TableCell width="15%">{row.category || 'N/A'}</TableCell>
                   <TableCell className="description" width="25%">

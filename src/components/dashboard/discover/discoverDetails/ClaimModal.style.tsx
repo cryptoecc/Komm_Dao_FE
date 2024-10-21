@@ -18,40 +18,74 @@ export const ModalContent = styled.div`
   padding: 50px;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 550px;
-  height: 280px;
-  width: 100%;
+  height: 300px;
+  width: 600px;
   text-align: left;
   position: relative;
 `;
 
 export const ModalTitle = styled.h2`
-  font-size: 24px;
+  font-size: 25px;
   font-weight: bold;
+  margin-top: 10px;
   margin-bottom: 40px;
 `;
 
 export const ModalText = styled.p`
-  font-size: 16px;
+  font-size: 18px;
+  width: 380px;
+  margin-bottom: 50px;
+  line-height: 24px;
+`;
+
+export const ErrorText = styled.p`
+  font-size: 18px;
+  width: 380px;
   margin-bottom: 20px;
+  line-height: 24px;
+`;
+
+export const LoadingMessage = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
 `;
 
 export const CloseButton = styled.button`
-  background-color: #875cff;
-  color: white;
-  padding: 10px 20px;
+  width: 25px;
+  height: 25px;
+  font-weight: 700;
+  float: right;
+  background: none;
   border: none;
+  cursor: pointer;
+`;
+
+export const Button = styled.div`
+  font-size: 18px;
+  color: #fff;
+  float: right;
+  font-weight: 700;
+  padding: 17px 26px;
+  background: var(--Purple-900, #7c4dff);
   border-radius: 20px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: Inter;
+`;
 
-  position: absolute;
-  bottom: 20px; /* Position the button 20px from the bottom of the modal content */
-  right: 20px; /* Position the button 20px from the right of the modal content */
+export const LoadingSpinner = styled.div`
+  border: 2px solid rgba(0, 0, 0, 0.1); /* 바깥 테두리를 옅은 회색으로 */
+  border-radius: 50%;
+  border-top: 2px solid #3498db; /* 상단 테두리를 파란색으로 변경 */
+  width: 15px;
+  height: 15px;
+  animation: spin 1s linear infinite;
 
-  &:hover {
-    background-color: #7a52e3;
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;

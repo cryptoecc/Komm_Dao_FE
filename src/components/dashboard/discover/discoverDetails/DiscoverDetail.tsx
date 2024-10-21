@@ -102,31 +102,35 @@ const DiscoverDetail = () => {
       <ProjectHeader>
         <ProjectNameWrapper>
           <ProjectName>{projectData.pjt_name}</ProjectName>
-          <ShareIcon src={images.share} alt="Share" onClick={() => setIsShareModalOpen(true)} />
         </ProjectNameWrapper>
-        {!isInWatchlist && (
-          <AddWatchlistLink href="#" onClick={handleWatchlistClick}>
-            + Add Watchlist
-          </AddWatchlistLink>
-        )}
       </ProjectHeader>
-      <SocialIcons>
-        {projectData.website && (
-          <a href={formatUrl(projectData.website)} target="_blank" rel="noopener noreferrer">
-            <img src={images.language} alt="Language" />
-          </a>
-        )}
-        {projectData.x_link && (
-          <a href={formatUrl(projectData.x_link)} target="_blank" rel="noopener noreferrer">
-            <img src={images.twitter} alt="Language" />
-          </a>
-        )}
-        {projectData.discord_link && (
-          <a href={formatUrl(projectData.discord_link)} target="_blank" rel="noopener noreferrer">
-            <img src={images.discord} alt="Language" />
-          </a>
-        )}
-      </SocialIcons>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <SocialIcons>
+          {projectData.website && (
+            <a href={formatUrl(projectData.website)} target="_blank" rel="noopener noreferrer">
+              <img src={images.language} alt="Language" />
+            </a>
+          )}
+          {projectData.x_link && (
+            <a href={formatUrl(projectData.x_link)} target="_blank" rel="noopener noreferrer">
+              <img src={images.twitter} alt="Language" />
+            </a>
+          )}
+          {projectData.discord_link && (
+            <a href={formatUrl(projectData.discord_link)} target="_blank" rel="noopener noreferrer">
+              <img src={images.discord} alt="Language" />
+            </a>
+          )}
+          <ShareIcon src={images.share} alt="Share" onClick={() => setIsShareModalOpen(true)} />
+        </SocialIcons>
+        <div>
+          {!isInWatchlist && (
+            <AddWatchlistLink href="#" onClick={handleWatchlistClick}>
+              + Add Watchlist
+            </AddWatchlistLink>
+          )}
+        </div>
+      </div>
       <Description>{projectData.pjt_details || 'No description available'}</Description>
       {isShareModalOpen && (
         <ShareModal

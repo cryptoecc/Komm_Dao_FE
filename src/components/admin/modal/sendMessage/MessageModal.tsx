@@ -22,9 +22,12 @@ interface MessageModalProps {
   title: string;
   content: string;
   channel: string;
+  email: string[];
+  setEmail: (value: string[]) => void;
   setTitle: (value: string) => void;
   setContent: (value: string) => void;
   setChannel: (value: string) => void;
+
   formLink?: string;
 }
 
@@ -38,8 +41,16 @@ const MessageModal: React.FC<MessageModalProps> = ({
   setTitle,
   setContent,
   setChannel,
+  email,
+  setEmail,
   formLink = '(Optional) Also send to a discord channel:',
 }) => {
+  // 이메일 수정 핸들러
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emails = e.target.value.split(',').map((email) => email.trim()); // 콤마로 구분해서 배열로 변환
+    setEmail(emails); // 이메일 배열 업데이트
+  };
+
   if (!isOpen) return null;
   console.log(content);
   return (
@@ -59,7 +70,12 @@ const MessageModal: React.FC<MessageModalProps> = ({
             </div>
             <div>
               <label>{formLink}</label>
-              <Option type="text" value={channel} onChange={(e) => setChannel(e.target.value)} />
+              <Option
+                type="text"
+                value={email.join(', ')} // 이메일 배열을 콤마로 구분해서 표시
+                onChange={handleEmailChange} // 이메일 값이 변경되면 handleEmailChange 호출
+                placeholder="Enter emails, separated by commas"
+              />
             </div>
           </ModalBody>
           <ModalFooter>

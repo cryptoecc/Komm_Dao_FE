@@ -115,6 +115,7 @@ export const DealDescription = styled.p`
   overflow-y: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
+  line-height: 24px;
   padding: 5px;
   width: 430px;
 `;

@@ -40,9 +40,9 @@ export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 10px;
   color: #000;
-  font-size: 36px;
+  font-size: 25px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -53,6 +53,7 @@ export const ModalHeader = styled.div`
 export const CloseButton = styled.button`
   width: 25px;
   height: 25px;
+  font-weight: 700;
   float: right;
   background: none;
   border: none;
@@ -70,16 +71,16 @@ export const WalletOptionButton = styled.button`
   background: #f8f8fa;
   color: #000;
   border: none;
-  width: 500px;
+  width: 520px;
   height: 60px;
   padding: 10px;
   font-weight: 400;
   border-radius: 20px;
-  font-size: 24px;
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   text-align: center;
   cursor: pointer;
   position: relative;
@@ -93,6 +94,7 @@ export const WalletOptionButtonContent = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
+  /* width: 500px; */
   gap: 10px;
 `;
 
@@ -102,6 +104,6 @@ export const WalletIconWrapper = styled.div`
 `;
 
 export const WalletIcon = styled.img`
-  width: 39px;
-  height: 39px;
+  width: 46px;
+  height: 46px;
 `;

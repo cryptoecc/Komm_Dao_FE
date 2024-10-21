@@ -34,7 +34,7 @@ const MainBoard: React.FC = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
-    navigate(-1);
+    navigate('/mainboard/dashboard');
   };
   // Redirect to the main page if user info is not available
   if (!user || user.user_id === 0) {

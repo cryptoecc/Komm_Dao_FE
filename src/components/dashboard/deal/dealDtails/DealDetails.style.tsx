@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: space-between;
   min-height: 100vh;
   max-width: 1920px;
-  margin: 0 auto;
+
   gap: 20px;
   @media (max-width: 768px) {
     flex-direction: column;
@@ -21,8 +21,8 @@ export const LeftSection = styled.div`
   flex-direction: column;
   width: 50%;
   position: relative;
-  margin-top: 10px;
-  padding: 30px;
+  /* margin-top: 20px; */
+  padding: 20px 0px 20px 0px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -34,7 +34,7 @@ export const RightSection = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 20px 0px 20px 0px;
   align-items: center;
   width: 50%;
 
@@ -72,6 +72,7 @@ export const BannerImage = styled.img`
   border-radius: 10px;
   object-fit: contain;
   margin-bottom: 20px;
+  background-color: #f3efff;
 `;
 
 export const IconWrapper = styled.div`
@@ -117,7 +118,7 @@ export const ParticipationCard = styled.div`
   border-radius: 20px;
   padding: 40px;
   width: 100%;
-  max-width: 500px;
+  /* max-width: 500px; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -253,7 +254,7 @@ export const ParticipateButton = styled.button`
   color: white;
   border: none;
   padding: 15px 30px;
-  border-radius: 30px;
+  border-radius: 20px;
   font-size: 18px;
   cursor: pointer;
   align-self: flex-end;
@@ -261,7 +262,7 @@ export const ParticipateButton = styled.button`
   @media (max-width: 768px) {
     align-self: flex-start;
     width: 100%;
-    font-size: 16px;
+    font-size: 18px;
     padding: 10px 20px;
   }
 
