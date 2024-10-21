@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomCalendar from 'src/components/dashboard/discover/discoverCalendar/Calendar';
 import styled from 'styled-components';
+import RedirectModal from 'src/components/admin/modal/common/RedirectModal';
+import CalenderModal from 'src/components/admin/modal/redirectMotal/Calender';
 
 export const PageContainer = styled.div`
   display: flex;
@@ -126,6 +128,18 @@ const DiscoverCalendar: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+    navigate(-1);
+  };
+
+  // 페이지가 렌더링될 때 모달이 자동으로 열리도록 설정
+  useEffect(() => {
+    setIsModalOpen(true); // 페이지 진입 시 모달 열기
+  }, []);
+
   return (
     <>
       <BackButton onClick={() => navigate(-1)}>
@@ -136,6 +150,9 @@ const DiscoverCalendar: React.FC = () => {
       <PageContainer>
         <CustomCalendar events={events} />
       </PageContainer>
+      <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <CalenderModal onClose={handleCloseModal} />
+      </RedirectModal>
     </>
   );
 };

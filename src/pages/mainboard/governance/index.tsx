@@ -19,11 +19,28 @@ import { RootState } from 'src/store/store';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import Wallet from 'src/components/walletbtn/WalletComponent';
+import RedirectModal from 'src/components/admin/modal/common/RedirectModal';
+import CalenderModal from 'src/components/admin/modal/redirectMotal/Calender';
+import { useNavigate } from 'react-router-dom';
 
 const Governance: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [userData, setUserData] = useState<any>(null);
   const user = useSelector((state: RootState) => state.user);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+
+  const navigate = useNavigate();
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+    navigate('/mainboard/dashboard');
+  };
+
+  // 페이지가 렌더링될 때 모달이 자동으로 열리도록 설정
+  useEffect(() => {
+    setIsModalOpen(true); // 페이지 진입 시 모달 열기
+  }, []);
+
   console.log(user);
 
   useEffect(() => {
@@ -103,6 +120,9 @@ const Governance: React.FC = () => {
         </MainSection>
         <SubSection></SubSection>
       </GovernanceContent>
+      <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <CalenderModal onClose={handleCloseModal} />
+      </RedirectModal>
     </GovernanceContainer>
   );
 };

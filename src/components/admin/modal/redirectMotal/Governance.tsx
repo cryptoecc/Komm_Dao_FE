@@ -18,10 +18,10 @@ const GovernanceModal: React.FC<GovernanceModalProps> = ({ onClose }) => {
 
       {/* 경고 메시지 */}
       <Wrap>
-        <p style={{ fontSize: '36px', fontWeight: '600', fontFamily: 'Inter', width: '400px', lineHeight: '42px' }}>
+        <p style={{ fontSize: '32px', fontWeight: '700', fontFamily: 'Inter', width: '520px', lineHeight: '42px' }}>
           Governance Page Coming Soon!
         </p>
-        <div style={{ lineHeight: '20px' }}>
+        <div style={{ lineHeight: 'normal', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>
           <p>This page will be available in a future update.</p>
           <p>Stay tuned for more features in our next release.</p>
         </div>

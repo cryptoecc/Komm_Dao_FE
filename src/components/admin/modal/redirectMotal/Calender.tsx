@@ -18,11 +18,16 @@ const CalenderModal: React.FC<CalenderModalProps> = ({ onClose }) => {
 
       {/* 경고 메시지 */}
       <Wrap>
-        <h2 style={{ fontSize: '24px' }}>Access Restricted</h2>
-        <div>You do not have access to the Calender page at this time.</div>
-        <div>Please contact support if you believe this is an error.</div>
+        <p style={{ fontSize: '32px', fontWeight: '700', fontFamily: 'Inter', width: '520px', lineHeight: '42px' }}>
+          Calender Page Coming Soon!
+        </p>
+        <div style={{ lineHeight: 'normal', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>
+          <p>This page will be available in a future update.</p>
+          <p>Stay tuned for more features in our next release.</p>
+        </div>
+
         <ButtonGroup>
-          <ConfirmButton onClick={onClose}>Close</ConfirmButton>
+          <ConfirmButton onClick={onClose}>OK</ConfirmButton>
         </ButtonGroup>
       </Wrap>
 

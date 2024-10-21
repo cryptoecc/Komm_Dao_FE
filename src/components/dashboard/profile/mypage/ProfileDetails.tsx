@@ -127,6 +127,10 @@ const ProfileDetails: React.FC = () => {
           <Job>{profileData.expertise}</Job>
           <Email>{profileData.email}</Email>
         </Info>
+        <EditButton onClick={handleEditClick}>
+          <EditIcon src={images.editIcon2} alt="Edit Icon" />
+          Edit
+        </EditButton>
       </ProfileContainer>
       <WalletAddressWrap>
         <WalletAddress>Wallet Address</WalletAddress>
