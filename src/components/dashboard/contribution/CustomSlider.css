@@ -37,3 +37,24 @@
   height: 15px; /* 활성화된 슬라이더의 점 높이 */
   border-radius: 15px; /* 활성화된 슬라이더의 점을 타원형으로 만들기 */
 }
+
+/* 기본 도트의 크기와 색상 변경 */
+.swiper-pagination-bullet {
+  width: 50px; /* 도트의 너비 */
+  height: 12px; /* 도트의 높이 */
+  background-color: #f0eaff; /* 비활성화된 도트의 색상 */
+  opacity: 1; /* 투명도 */
+  border-radius: 20px; /* 원 모양으로 만들기 */
+  transition: background-color 0.3s ease;
+}
+
+/* 활성화된 도트의 스타일 */
+.swiper-pagination-bullet-active {
+  background-color: #9a77fd; /* 활성화된 도트의 색상 */
+  width: 50x; /* 활성화된 도트의 너비 */
+  height: 12px; /* 활성화된 도트의 높이 */
+}
+
+.swiper-pagination {
+  margin-top: 50px;
+}

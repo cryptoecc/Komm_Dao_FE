@@ -8,6 +8,7 @@ export const MainContainer = styled.div`
   background-color: #fff;
   box-sizing: border-box;
   max-width: 1920px;
+  margin-bottom: 40px;
 
   @media (max-width: 768px) {
     flex-direction: column;

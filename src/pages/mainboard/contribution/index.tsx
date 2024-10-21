@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Slider from 'react-slick';
+import 'swiper/swiper-bundle.css';
 import ContributionMain from 'src/components/dashboard/contribution/ContributionMain';
 import ContributionCard from 'src/components/dashboard/contribution/ContributionCard'; // ContributionCard 임포트
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'src/components/dashboard/contribution/CustomSlider.css'; // 스타일 파일
-import { images } from 'src/assets/contribution/images';
 import dayjs from 'dayjs'; // 날짜 비교를 위한 dayjs 사용
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useSelector } from 'react-redux';
@@ -14,6 +15,7 @@ import { RootState } from 'src/store/store';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import Wallet from 'src/components/walletbtn/WalletComponent';
+import { Pagination, Autoplay } from 'swiper/modules'; // 필요한 모듈 임포트
 
 dayjs.extend(customParseFormat);
 
@@ -186,7 +188,34 @@ const Contribution: React.FC = () => {
       </ContributionHeader>
 
       <ContributionContent>
-        <Slider {...settings}>
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 2000 }}
+          loop={true}
+        >
+          {contributionData.map((slide) => (
+            <SwiperSlide key={slide.cont_id}>
+              <ContributionMain
+                logoUrl={slide.cont_logo}
+                title={slide.pjt_name}
+                kohortLabel={slide.cont_category}
+                totalAvg={'300'}
+                xp={slide.cont_xp}
+                startDate={slide.start_date}
+                endDate={slide.end_date}
+                progress={slide.cur_participant}
+                progressText={slide.progressText}
+                desc={slide.cont_desc}
+                imageUrl={slide.cont_banner}
+                id={slide.cont_id}
+                maxProgress={slide.max_participant}
+                type={slide.cont_type}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {/* <Slider {...settings}>
           {contributionData.map((slide) => (
             <ContributionMain
               key={slide.cont_id}
@@ -206,7 +235,7 @@ const Contribution: React.FC = () => {
               type={slide.cont_type}
             />
           ))}
-        </Slider>
+        </Slider> */}
         <ContributionTabs>
           <TabButton $active={activeTab === 'Ongoing'} onClick={() => setActiveTab('Ongoing')}>
             Ongoing
