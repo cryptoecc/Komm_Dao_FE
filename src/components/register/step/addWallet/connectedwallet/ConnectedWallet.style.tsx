@@ -101,6 +101,10 @@ export const SignButton = styled.button`
   border-radius: 20px;
   padding: 17px 26px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #7a52e3;
+  }
 `;
 
 const spin = keyframes`

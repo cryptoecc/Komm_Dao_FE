@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ModalContent, CloseButton } from '../walletbtn/ConnectWallet.style';
-import { ModalHeader, DirectMsg } from './ErrorMessage.style';
+import { ModalHeader, DirectMsg, ErrorContent } from './ErrorMessage.style';
 import { ReactComponent as CloseIcon } from '../../assets/modal/close.svg';
 import { ReactComponent as UnSmileIcon } from '../../assets/modal/unsmile.svg';
 
@@ -18,12 +18,12 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ onClose }) => {
   }, []);
 
   return (
-    <ModalContent>
+    <ErrorContent>
       {/* <CloseButton onClick={onClose}> */}
       <UnSmileIcon style={{ marginLeft: '10px' }} />
       {/* </CloseButton> */}
       <ModalHeader>
-        <h2>Sorry, this wallet address is not registered.</h2>
+        <p>Sorry, this wallet address is not registered.</p>
         <p>Please use a registered address to log in.</p>
       </ModalHeader>
       <DirectMsg>
@@ -31,7 +31,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ onClose }) => {
           Redirecting to the registration page...
         </a>
       </DirectMsg>
-    </ModalContent>
+    </ErrorContent>
   );
 };
 

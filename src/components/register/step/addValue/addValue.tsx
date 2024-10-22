@@ -42,14 +42,15 @@ const AddValue: React.FC<StepProps> = ({ onComplete }) => {
       <div>
         <Text>Add Value</Text>
         <SubText>Please describe how you can Add Value</SubText>
-        <SubText>to KommDao. This information is crucial for the</SubText>
-        <SubText>approval process</SubText>
+        <SubText>to Komm DAO. This information is crucial for the</SubText>
+        <SubText>approval process.</SubText>
 
         <form>
           <Textarea
             placeholder="Please write up to 500 characters, including spaces, with a minimum of 100 characters."
             value={value}
             onChange={handleValueChange}
+            maxLength={500}
           ></Textarea>
           {valueError && <ErrorMessage>{valueError}</ErrorMessage>}
           <Counter>{valueLength}/500</Counter>

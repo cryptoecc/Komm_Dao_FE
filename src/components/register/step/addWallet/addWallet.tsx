@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Text, SubText, WalletContainer } from './addWallet.style';
 import ConnectWallet from 'src/components/register/step/addWallet/walletbtn/ConnectWallet';
-
+import { logoutUser } from 'src/store/user/UserSlice';
+import { persistor } from 'src/store/store';
+import { useDispatch } from 'react-redux';
 interface StepProps {
   onComplete: () => void;
 }
@@ -9,9 +11,22 @@ interface StepProps {
 const AddWallet: React.FC<StepProps> = ({ onComplete }) => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleWalletConnect = () => {
     setIsWalletConnected(true);
   };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    persistor.purge();
+    localStorage.removeItem('persist:root');
+  };
+
+  useEffect(() => {
+    console.log('됨');
+    handleLogout();
+  }, []);
 
   return (
     <Container>

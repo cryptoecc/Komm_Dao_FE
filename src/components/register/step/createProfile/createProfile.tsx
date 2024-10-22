@@ -28,9 +28,10 @@ import {
   CheckboxLabel,
   CustomCheckbox,
 } from './createProfile.style';
-import smileIcon from 'src/assets/register/smileIcon.svg';
+import defaultIcon from 'src/assets/register/profile_default.png';
 import editIcon from 'src/assets/register/editIcon.svg';
 import { RootState } from 'src/store/store';
+import { API_BASE_URL } from 'src/utils/utils';
 
 interface StepProps {
   onComplete: () => void;
@@ -167,6 +168,22 @@ const CreateProfile: React.FC<StepProps> = ({ onComplete, setSelectedImage }) =>
       return;
     }
 
+    // 중복 체크를 위한 백엔드 API 호출
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/user/check-duplicate-nickname`, {
+        displayName,
+      });
+
+      if (!response.data.success) {
+        setDisplayNameError('This display name is already taken. Please choose another.');
+        return;
+      }
+    } catch (error) {
+      console.error('Failed to check duplicate nickname', error);
+      setDisplayNameError('An error occurred while checking nickname availability.');
+      return;
+    }
+
     if (bioLength < 50) {
       setBioError('Bio must be at least 50 characters long.');
       return;
@@ -199,9 +216,14 @@ const CreateProfile: React.FC<StepProps> = ({ onComplete, setSelectedImage }) =>
   };
 
   const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setBio(e.target.value);
-    setBioLength(e.target.value.length);
-    setBioError('');
+    const inputValue = e.target.value;
+    if (inputValue.length <= 200) {
+      setBio(inputValue);
+      setBioLength(inputValue.length);
+      setBioError(''); // 오류 메시지 초기화
+    } else {
+      setBioError('You can write up to 200 characters.'); // 200자를 초과하면 오류 메시지 표시
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -226,7 +248,7 @@ const CreateProfile: React.FC<StepProps> = ({ onComplete, setSelectedImage }) =>
       <SubText>
         Please select one of the following roles and fill out
         <br />
-        your profile information to Finish up.
+        your profile information to finish up.
         <br />
         You can change your role later.
       </SubText>
@@ -237,7 +259,7 @@ const CreateProfile: React.FC<StepProps> = ({ onComplete, setSelectedImage }) =>
               $backgroundImage={imagePreviewUrl}
               onClick={() => document.getElementById('file-input')?.click()}
             >
-              {!imagePreviewUrl && <ProfileImage src={smileIcon} alt="Profile" />}
+              {!imagePreviewUrl && <ProfileImage src={defaultIcon} alt="Profile" />}
               {/* {imagePreviewUrl && <ProfileImage src={imagePreviewUrl} alt="Profile" />} */}
               <EditIconWrapper onClick={(e) => e.stopPropagation()}>
                 <label htmlFor="file-input">
@@ -277,15 +299,21 @@ const CreateProfile: React.FC<StepProps> = ({ onComplete, setSelectedImage }) =>
               placeholder="Bio (Please write at least 50 characters, including spaces)"
               value={bio}
               onChange={handleBioChange}
+              maxLength={200} // 최대 200자 제한
             />
             {bioError && <ErrorMessage>{bioError}</ErrorMessage>}
             <Counter>{bioLength}/200</Counter>
           </FormGroup>
           <CheckboxWrapper>
-            <CheckboxLabel>
-              <Checkbox type="checkbox" checked={isSubscribed} onChange={(e) => setIsSubscribed(e.target.checked)} />
+            <CheckboxLabel htmlFor="subscribe-checkbox">
+              <Checkbox
+                id="subscribe-checkbox" // 체크박스에 id 추가
+                type="checkbox"
+                checked={isSubscribed}
+                onChange={(e) => setIsSubscribed(e.target.checked)}
+              />
               <CustomCheckbox />
-              <Label>Stay up to date with Komm DAO</Label>
+              <Label htmlFor="subscribe-checkbox">Stay up to date with Komm DAO</Label>
             </CheckboxLabel>
           </CheckboxWrapper>
           {isSubscribedError && <ErrorMessage>{isSubscribedError}</ErrorMessage>}

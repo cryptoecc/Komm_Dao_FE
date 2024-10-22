@@ -152,7 +152,7 @@ export const TableCell = styled.td<{ width?: string }>`
   font-size: 16px;
   color: #404040;
   border-top: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
   vertical-align: middle;
   width: ${({ width }) => width || '10%'};
   box-sizing: border-box;

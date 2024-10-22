@@ -12,7 +12,6 @@ export const Text = styled.p`
 
 export const SubText = styled.p`
   color: #000;
-  font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -22,7 +21,6 @@ export const SubText = styled.p`
 export const Textarea = styled.textarea`
   width: 559px;
   height: 212px;
-  font-family: Inter;
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 20px;
@@ -60,8 +58,8 @@ export const ErrorMessage = styled.p`
 `;
 
 export const Submit = styled.button`
-  background: #7c4dff;
-  color: #fff;
+  background: #6a5feb;
+  color: #fbfbff;
   border: none;
   padding: 17px 26px;
   border-radius: 20px;
@@ -77,8 +75,7 @@ export const Submit = styled.button`
   /* margin-left: 50px; */
 
   &:hover {
-    background: #d1d1e9;
-    color: #7c4dff;
+    background: #564dba;
   }
 `;
 

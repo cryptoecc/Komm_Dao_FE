@@ -52,8 +52,8 @@ export const Text = styled.div<StepProps>`
   text-align: center;
   gap: 4px;
   font-size: 19px;
-  color: ${({ $active, $completed }) => ($active ? '#8E63FF' : $completed ? '#010000' : '#8e8e93')};
-  font-weight: ${({ $active, $completed }) => ($active || $completed ? 700 : 500)};
+  color: ${({ $active, $completed }) => ($active ? '#6A5FEB' : $completed ? '#404040' : '#8e8e93')};
+  font-weight: ${({ $active, $completed }) => ($active || $completed ? 600 : 500)};
   line-height: 20px; /* 100% */
 `;
 
@@ -72,9 +72,9 @@ export const Number = styled.div<StepProps>`
   font-feature-settings: 'clig' off, 'liga' off;
   border: 3px solid
     ${({ $active, $completed }) =>
-    $active ? 'var(--Purple-900, #7C4DFF)' : $completed ? 'var(--Purple-900, #7C4DFF)' : '#8e8e93'};
-  background: ${({ $active, $completed }) => ($active ? '#fff' : $completed ? '#9f78ff' : '#fff')};
-  color: ${({ $active, $completed }) => ($active ? '#7C4DFF' : $completed ? '#fff' : '#8e8e93')};
+      $active ? 'var(--Purple-900, #6A5FEB)' : $completed ? 'var(--Purple-900, #6A5FEB)' : '#5C5C5C'};
+  background: ${({ $active, $completed }) => ($active ? '#FBFBFF' : $completed ? '#6A5FEB' : '#FBFBFF')};
+  color: ${({ $active, $completed }) => ($active ? '#6A5FEB' : $completed ? '#fff' : '#5C5C5C')};
 
   //
   text-align: center;

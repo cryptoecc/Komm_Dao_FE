@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from 'src/components/register/sidebar/Sidebar';
 import { MainContainer, Content, StepContent, ConnectButton } from './SignupPage.style';
 import AddEmail from 'src/components/register/step/addEmail/addEmail';

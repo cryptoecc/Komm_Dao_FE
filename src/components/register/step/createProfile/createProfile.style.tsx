@@ -17,17 +17,17 @@ export const ProfileContainer = styled.div`
 `;
 
 export const Text = styled.p`
-  color: #000;
+  color: #404040;
   font-size: 36px;
-  font-style: normal;
+
   font-weight: 600;
   line-height: normal;
 `;
 
 export const SubText = styled.p`
-  color: #000;
+  color: #404040;
   font-size: 24px;
-  font-style: normal;
+
   font-weight: 400;
   line-height: normal;
   margin-top: 20px;
@@ -57,8 +57,8 @@ export const ProfileImageWrapper = styled.div<{ $backgroundImage: string | null 
 `;
 
 export const ProfileImage = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 130px;
+  height: 130px;
   object-fit: cover;
 
   /* width: 50px;
@@ -244,6 +244,8 @@ export const Label = styled.label`
   font-weight: 500;
   line-height: normal;
   color: #000;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const SaveButton = styled.button`
@@ -283,4 +285,5 @@ export const ErrorMessage = styled.p`
   color: red;
   font-size: 14px;
   margin-top: 5px;
+  text-align: end;
 `;

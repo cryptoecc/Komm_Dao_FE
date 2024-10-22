@@ -37,7 +37,7 @@ export const WalletContainer = styled.div`
     border-radius: 20px;
     cursor: pointer;
     &:hover {
-      background-color: #6b3dff;
+      background-color: #7a52e3;
     }
   }
 `;

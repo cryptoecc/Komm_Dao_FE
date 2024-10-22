@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
   UserApplicantContainer,
   Title,
@@ -21,6 +21,7 @@ import { API_BASE_URL } from 'src/utils/utils';
 import { ToastContainer, toast } from 'react-toastify';
 import Spinner from 'src/components/spinner/Spinner';
 import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
+import ClipboardJS from 'clipboard';
 
 interface Applicant {
   user_id: number;

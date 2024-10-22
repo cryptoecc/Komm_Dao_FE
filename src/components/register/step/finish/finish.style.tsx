@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Text = styled.p`
-  color: #000;
+  color: #404040;
   font-family: Inter;
   font-size: 36px;
   font-style: normal;
@@ -10,7 +10,7 @@ export const Text = styled.p`
 `;
 
 export const SubText = styled.p`
-  color: #000;
+  color: #404040;
   font-family: Inter;
   font-size: 24px;
   font-style: normal;
@@ -29,19 +29,18 @@ export const Button = styled.button`
   padding: 17px 26px;
   align-items: center;
   border-radius: 20px;
-  background: var(--Purple-900, #7c4dff);
+  background: #6a5feb;
   margin-top: 30px;
 
-  color: #fff;
-  font-family: Inter;
+  color: #fbfbff;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  cursor: pointer;
 
   &:hover {
-    background: #d1d1e9;
-    color: #7c4dff;
+    background: #564dba;
   }
 
   &:disabled {

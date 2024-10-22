@@ -5,11 +5,11 @@ export const ModalHeader = styled.div`
   flex-direction: column;
   justify-content: start;
   /* align-items: center; */
-  margin-top: 40px;
+  margin-top: 20px;
   color: #000;
   font-size: 25px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
   padding: 10px;
   /* padding: 0px 256px 60px 0px; */
@@ -20,8 +20,14 @@ export const DirectMsg = styled.p`
   color: #875cff;
   font-size: 25px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 10px;
+`;
+
+export const ErrorContent = styled.div`
+  width: 600px;
+  height: 300px;
+  padding: 30px;
 `;

@@ -26,7 +26,7 @@ export const DocumentContent = styled.div`
 `;
 
 export const AcceptButton = styled.button`
-  background: #7c4dff;
+  background: #6a5feb;
   color: #fff;
   border: none;
   padding: 17px 26px;
@@ -40,8 +40,7 @@ export const AcceptButton = styled.button`
   height: 58px;
 
   &:hover {
-    background: #d1d1e9;
-    color: #7c4dff;
+    background: #564dba;
   }
 
   &:disabled {

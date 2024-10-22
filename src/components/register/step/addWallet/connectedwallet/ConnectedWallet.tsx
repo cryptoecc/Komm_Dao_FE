@@ -51,7 +51,7 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
 
       if (response.data.success) {
         dispatch(connectWallet(walletAddress));
-        alert('Wallet verified successfully');
+        alert('Wallet connected successfully');
         onComplete();
       } else {
         setVerificationFailed(true); // 추가된 부분

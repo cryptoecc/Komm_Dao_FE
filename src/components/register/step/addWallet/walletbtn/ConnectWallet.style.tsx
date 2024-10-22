@@ -78,7 +78,7 @@ export const WalletOptionButton = styled.button`
   padding: 10px;
   font-weight: 400;
   border-radius: 20px;
-  font-size: 24px;
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;

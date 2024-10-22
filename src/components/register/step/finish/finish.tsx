@@ -65,9 +65,9 @@ const Finish: React.FC<StepProps> = ({ onComplete, selectedImage }) => {
         <SmileIcon />
       </Wrap>
       <br />
-      <SubText>You're all signed up We've notified the</SubText>
-      <SubText>administrators of Komm DAO so that they can</SubText>
-      <SubText>review your membership information</SubText>
+      <SubText>You're all signed up! Our team will</SubText>
+      <SubText>review your membership information </SubText>
+      <SubText>and notify you once it's approved.</SubText>
       <Button onClick={handleSubmit}>Start!</Button>
     </div>
   );

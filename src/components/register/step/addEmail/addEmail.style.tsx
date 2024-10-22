@@ -3,16 +3,15 @@ import SpinnerImg from 'src/assets/modal/spinner.png';
 import EditImg from 'src/assets/register/Edit.svg';
 
 export const Text = styled.p`
-  color: #000;
-  font-size: 36px;
-  font-style: normal;
+  color: #404040;
+  font-size: 24px;
   font-weight: 600;
   line-height: normal;
 `;
 
 export const SubText = styled.p`
-  color: #000;
-  font-size: 24px;
+  color: #404040;
+  font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -61,10 +60,10 @@ export const NextButton = styled.button`
   display: inline-flex;
   justify-content: center;
   /* right: 50px; */
-  background: var(--Purple-900, #7c4dff);
+  background: var(--Purple-900, #6a5feb);
   border: none;
   border-radius: 20px;
-  padding: 17px 26px;
+  padding: 8px 30px;
   color: #fff;
   font-size: 20px;
   font-weight: 700;
@@ -72,17 +71,20 @@ export const NextButton = styled.button`
   float: right;
 
   &:hover {
-    background: #d1d1e9;
-    color: var(--Purple-900, #7c4dff);
+    background: #564dba;
+  }
+
+  &:active {
+    background: #fbfbff;
+    border: 1px solid #6a5feb;
+    color: #6a5feb;
   }
 
   &:disabled {
-    background: #fff;
-    border: 1px solid #000;
-    color: #000;
-    line-height: normal;
+    background: #fbfbff;
+    border: 1px solid #6a5feb;
+    color: #6a5feb;
     cursor: not-allowed;
-    font-weight: 500;
   }
 `;
 
@@ -131,8 +133,8 @@ export const Code = styled.div`
   width: 600px;
   height: 60px;
   border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  background: #f8f8fa;
+  border: 1px solid #404040;
+  background: #fbfbff;
   gap: 5px;
   padding-left: 20px;
   margin-top: 40px;
@@ -159,10 +161,11 @@ export const Code = styled.div`
 `;
 
 export const Edit = styled.button`
-  color: #000;
+  color: #404040;
   font-size: 20px;
   font-weight: 500;
   line-height: normal;
+  cursor: pointer;
 `;
 
 export const EditImage = styled.div`
