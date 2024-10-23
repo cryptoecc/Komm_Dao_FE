@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div``;
 
 export const Text = styled.p`
-  color: #000;
+  color: #404040
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -11,7 +11,7 @@ export const Text = styled.p`
 `;
 
 export const SubText = styled.p`
-  color: #000;
+  color: #404040
   font-size: 24px;
   font-style: normal;
   font-weight: 400;

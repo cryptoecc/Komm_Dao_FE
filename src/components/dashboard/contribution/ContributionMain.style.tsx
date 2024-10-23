@@ -2,13 +2,15 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   display: flex;
-  padding: 0px 30px 30px 30px;
+  /* position: relative; */
+  /* padding: 0px 30px 30px 30px; */
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
   box-sizing: border-box;
   max-width: 1920px;
-  margin-bottom: 40px;
+  margin-top: 60px;
+  /* margin-bottom: 40px; */
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -49,6 +51,10 @@ export const RightSection = styled.div`
 export const ProjectTitleWrapper = styled.div`
   display: flex;
   align-items: center;
+  position: absolute;
+  top: 45px;
+  left: -35px;
+  /* bottom: 50%; */
 
   margin-left: 30px;
   @media (max-width: 768px) {
@@ -69,11 +75,10 @@ export const ProjectLogo = styled.img`
 `;
 
 export const ProjectTitle = styled.div`
-  color: black;
+  color: #404040;
   height: 80px;
-  font-size: 40px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
+  font-size: 30px;
+  font-weight: 600;
   word-wrap: break-word;
   text-align: left;
   overflow: hidden;
@@ -89,9 +94,8 @@ export const ProjectTitle = styled.div`
 `;
 
 export const KohortLabel = styled.div`
-  color: black;
-  font-size: 32px;
-  font-family: 'Inter', sans-serif;
+  color: #404040;
+  font-size: 28px;
   font-weight: 700;
   word-wrap: break-word;
 
@@ -108,10 +112,9 @@ export const XPInfoWrapper = styled.div`
   justify-content: space-between;
 
   .total-avg {
-    color: black;
-    font-size: 20px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
+    color: #404040;
+    font-size: 18px;
+    font-weight: 700;
     margin-right: 5px;
 
     @media (max-width: 768px) {
@@ -121,8 +124,7 @@ export const XPInfoWrapper = styled.div`
 
   .xp-value {
     color: #875cff;
-    font-size: 28px;
-    font-family: 'Inter', sans-serif;
+    font-size: 24px;
     font-weight: 700;
     text-decoration: underline;
     margin-left: 20px;
@@ -140,9 +142,8 @@ export const XPInfo = styled.div`
 `;
 
 export const Dates = styled.div`
-  color: black;
-  font-size: 20px;
-  font-family: 'Inter', sans-serif;
+  color: #404040;
+  font-size: 18px;
   font-weight: 500;
   word-wrap: break-word;
   margin: 30px 0;
@@ -179,7 +180,6 @@ export const ProgressBar = styled.div<{ $progress: number; $maxProgress: number 
 export const ProgressText = styled.div`
   color: black;
   font-size: 24px;
-  font-family: 'Inter', sans-serif;
   font-weight: 500;
   text-align: center;
   margin-top: 5px;
@@ -209,7 +209,7 @@ export const BannerWrapper = styled.div`
 `;
 
 export const BannerImage = styled.img`
-  width: 95%;
+  width: 100%;
   height: 250px; // 높이를 250px로 고정
   border-radius: 20px;
   object-fit: contain; // 이미지 비율을 유지하면서 짤림 없이 표시

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   WalletContainer,
   WalletButton,
@@ -13,7 +13,7 @@ import {
   IconWrapper,
 } from './WalletComponent.styls';
 import { images } from 'src/assets/dashboard/images';
-import FaWallet from 'src/assets/main/business.png';
+import FaWallet from 'src/assets/main/wallet_latest.png';
 import ProfileIcon from 'src/assets/main/account_circle.svg';
 import LogoutIcon from 'src/assets/main/logout.svg';
 import { API_BASE_URL } from 'src/utils/utils';
@@ -37,6 +37,7 @@ const shortenAddress = (address: string) => {
 
 const Wallet: React.FC<WalletProps> = ({ address, profileImage, username, expertise }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
 
@@ -57,8 +58,22 @@ const Wallet: React.FC<WalletProps> = ({ address, profileImage, username, expert
     navigate('/mainboard/dashboard/profile');
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false); // 드롭다운이 열린 상태에서 바깥을 클릭하면 닫기
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   return (
-    <WalletContainer>
+    <WalletContainer ref={dropdownRef}>
       <WalletButton onClick={toggleDropdown}>
         <WalletIcon src={FaWallet} />
         <Address>{shortenAddress(address)}</Address>
@@ -72,7 +87,7 @@ const Wallet: React.FC<WalletProps> = ({ address, profileImage, username, expert
               src={profileImage ? `${API_BASE_URL}/${profileImage}` : images.profileDefaultIcon}
               alt="Profile"
             />
-            <UserInfo>
+            <UserInfo onClick={handleProfileClick}>
               <UserName>{username}</UserName>
               <WalletAddress>{expertise}</WalletAddress>
             </UserInfo>

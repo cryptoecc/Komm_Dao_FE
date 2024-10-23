@@ -43,6 +43,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { XpClaim_ABI } from 'src/configs/contract-abi/XpClaim';
 import Spinner from 'src/components/spinner/Spinner';
+import DailyCheckSection from './dailyCheckComponent/DailyCheckSection';
+import { checkPrime } from 'crypto';
 
 dayjs.extend(customParseFormat);
 
@@ -70,7 +72,7 @@ interface InviteDetail {
 const ContributionDetail: React.FC = () => {
   const navaige = useNavigate();
   const location = useLocation();
-  const { title, xp, imageUrl, logoUrl, startDate, endDate, progress, maxProgress, type, desc, id } =
+  const { title, xp, imageUrl, logoUrl, startDate, endDate, progress, maxProgress, type, desc, id, pjtId } =
     location.state || {};
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isInviteModalOpen, setInviteModalOpen] = useState(false);
@@ -83,9 +85,14 @@ const ContributionDetail: React.FC = () => {
   const [points, setPoints] = useState<number>(0);
   const [rating, setRating] = useState<number>(0);
   const [claim, setClaim] = useState<String>();
+  const [contType, setContType] = useState<string>('');
+  const [dailyCheck, setDailyCheck] = useState<string>('');
+  const [todayChecked, setTodayChecked] = useState<string>('');
 
-  const contractAddress = '0x4C9B3dd7DC97db2E722b7A540e2eC40929426342';
+  const contractAddress = '0x15e7a34b6a5aBf8b0aD4FcD85D873FD7e7163E97';
   const contractABI = XpClaim_ABI;
+  const adminAddress = process.env.REACT_APP_ADMIN_WALLET_ADDRESS || '';
+  const adminPrivateKey = process.env.REACT_APP_ADMIN_WALLET_PRIVATE_KEY || '';
 
   const userId = useSelector((state: RootState) => state.user.user_id);
 
@@ -105,15 +112,22 @@ const ContributionDetail: React.FC = () => {
   };
 
   // 포인트 히스토리 업데이트 함수
-  const updatePointHistory = async (walletAddress: string, xpPoints: number, transactionHash: string) => {
+  const updatePointHistory = async (
+    walletAddress: string,
+    xpPoints: number,
+    transactionHash: string,
+    cont_type: string
+  ) => {
+    console.log(contType);
     try {
       await axios.post(`${API_BASE_URL}/api/user/profile/update-history`, {
         walletAddress,
         date: new Date().toISOString(),
         participation: 'Contribution',
-        activity: 'Invite',
+        activity: cont_type,
         xpEarned: xpPoints,
         transactionId: transactionHash,
+        project_id: pjtId,
       });
 
       console.log(`Point history updated for wallet ${walletAddress}`);
@@ -122,11 +136,9 @@ const ContributionDetail: React.FC = () => {
     }
   };
 
-  console.log(id);
   const handleClaimXPClick = async () => {
     if (isLoading) return; // 중복 방지
 
-    // setPoints(rating);
     setIsLoading(true);
 
     try {
@@ -140,44 +152,27 @@ const ContributionDetail: React.FC = () => {
       });
 
       const xp = userPoint.data.cont_xp;
-      setPoints(xp);
+      const cont_type = userPoint.data.cont_type;
 
-      // 어드민 계정 정보 설정
-      const adminAddress = '0x403746C0D8e91aB0ad15008ab2488036dFb27d3F';
-      const adminPrivateKey = '0636a7f71d25cec64125b88e86474e54e566614e78823145dc7e865b9d53650e';
+      console.log(cont_type);
+      setPoints(xp);
+      setContType(cont_type);
 
       const contract = new web3.eth.Contract(contractABI, contractAddress);
-      const balance = await web3.eth.getBalance(adminAddress);
-      console.log('Admin Address Balance:', balance);
-      // 최신 블록의 baseFee를 가져오기
-      const latestBlock = await web3.eth.getBlock('latest');
-      let baseFee = latestBlock.baseFeePerGas;
 
-      if (typeof baseFee !== 'bigint') {
-        // baseFee가 bigint인 경우 숫자로 변환
-        throw new Error('Failed to retrieve base fee as bigint.');
-      }
-      if (baseFee === undefined) {
-        throw new Error('Failed to retrieve base fee from latest block.');
-      }
-
-      // baseFee보다 높은 maxFeePerGas 설정 (약 20% 더 높게 설정)
-      const maxFeePerGas = (baseFee * 110n) / 100n; // 120%로 계산하기 위해 120n을 사용하여 bigint 연산 // 기본 가스 요금보다 약 20% 높게 설정
-
-      // 가스 가격 및 가스 추정
       const gasEstimate = await contract.methods.claimXP(walletAddress, xp).estimateGas({ from: adminAddress });
+      const gasPrice = await web3.eth.getGasPrice(); // gasPrice를 설정 (Type 0 트랜잭션)
 
-      // // 가스 가격 및 가스 추정
-      const gasPrice = await web3.eth.getGasPrice();
-      // const gasEstimate = await contract.methods.claimXP(walletAddress, xp).estimateGas({ from: adminAddress });
+      const nonceBigInt = await web3.eth.getTransactionCount(adminAddress, 'pending');
+      const nonce = Number(nonceBigInt);
 
       const tx = {
         from: adminAddress,
         to: contractAddress,
         data: contract.methods.claimXP(walletAddress, xp).encodeABI(),
         gas: gasEstimate.toString(),
-        maxFeePerGas: maxFeePerGas.toString(), // bigint를 문자열로 변환
-        maxPriorityFeePerGas: web3.utils.toWei('1', 'gwei'), // 우선 순위 가스 비용 설정 (선택적)
+        gasPrice: gasPrice.toString(), // gasPrice 설정
+        nonce: nonce,
         value: '0x0',
       };
 
@@ -188,26 +183,23 @@ const ContributionDetail: React.FC = () => {
         throw new Error('Transaction failed');
       }
 
-      // 트랜잭션 해시를 문자열로 변환
-      const transactionHash = receipt.transactionHash.toString(); // 문자열로 변환
+      const transactionHash = receipt.transactionHash.toString();
 
-      // 트랜잭션 성공 후, 새로운 API로 XP 잔액 업데이트
       const xpBalanceRaw = await contract.methods.getXP(walletAddress).call();
 
-      // xpBalanceRaw가 undefined 또는 예상치 않은 값일 때 대비하여 처리
-      if (!xpBalanceRaw) {
+      // xpBalanceRaw가 undefined 또는 배열인 경우를 확인
+      if (!xpBalanceRaw || (Array.isArray(xpBalanceRaw) && xpBalanceRaw.length === 0)) {
         throw new Error('Invalid XP balance returned from contract');
       }
+      const xpBalance = parseInt(xpBalanceRaw.toString(), 10);
 
-      const xpBalance = parseInt(xpBalanceRaw.toString(), 10); // toString()으로 변환 후 parseInt
       if (isNaN(xpBalance)) {
         throw new Error('Failed to parse XP balance');
       }
 
       await updateXPBalance(walletAddress, xpBalance);
 
-      // 포인트 히스토리 업데이트
-      await updatePointHistory(walletAddress, xp, transactionHash);
+      await updatePointHistory(walletAddress, xp, transactionHash, cont_type);
 
       await axios.post(`${API_BASE_URL}/api/contribution/update-claimXp`, {
         total_xp: xp,
@@ -215,7 +207,8 @@ const ContributionDetail: React.FC = () => {
         cont_id: id,
       });
 
-      // setIsModalOpen(true);
+      await fetchInviteDetails();
+      await dailyConfirmCheck();
     } catch (error) {
       console.error('XP 클레임 중 오류 발생:', error);
       alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
@@ -323,45 +316,115 @@ const ContributionDetail: React.FC = () => {
   const handleCloseInviteModal = () => {
     setInviteModalOpen(false);
   };
+
+  const fetchInviteDetails = async () => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/contribution/check-applied-email`, {
+        cont_id: id,
+        user_id: userId,
+      });
+      setInviteDetails(response.data.appliedInvitesCount); // 응답 데이터를 상태에 저장
+      console.log('Invite Details:', response.data.appliedInvitesCount);
+
+      const checkConfirm = await axios.post(`${API_BASE_URL}/api/contribution/check-confirm`, {
+        cont_id: id,
+        user_id: userId,
+      });
+
+      console.log(checkConfirm.data.claim_yn);
+      // 백엔드 응답에 따른 claim 상태 설정
+      if (checkConfirm.data && checkConfirm.data.claim_yn) {
+        setClaim(checkConfirm.data.claim_yn);
+      } else {
+        setClaim('N'); // claim_yn 값이 없으면 N으로 설정
+      }
+    } catch (error: any) {
+      console.error('Error fetching invite details:', error);
+
+      // 백엔드에서 "No user contribution found for this mission." 메시지가 온 경우
+      if (error.response && error.response.data.message === 'No user contribution found for this mission.') {
+        setClaim('N'); // 백엔드에서 특정 에러 메시지를 받았을 때 N으로 설정
+      }
+    }
+  };
+
+  fetchInviteDetails(); // 컴포넌트 마운트 시 API 호출
+
   useEffect(() => {
     // 초대 관련 데이터를 가져오는 함수
-    const fetchInviteDetails = async () => {
-      try {
-        const response = await axios.post(`${API_BASE_URL}/api/contribution/check-applied-email`, {
-          cont_id: id,
-          user_id: userId,
-        });
-        setInviteDetails(response.data.appliedInvitesCount); // 응답 데이터를 상태에 저장
-        console.log('Invite Details:', response.data.appliedInvitesCount);
-
-        const checkConfirm = await axios.post(`${API_BASE_URL}/api/contribution/check-confirm`, {
-          cont_id: id,
-          user_id: userId,
-        });
-
-        console.log(checkConfirm.data.claim_yn);
-        // 백엔드 응답에 따른 claim 상태 설정
-        if (checkConfirm.data && checkConfirm.data.claim_yn) {
-          setClaim(checkConfirm.data.claim_yn);
-        } else {
-          setClaim('N'); // claim_yn 값이 없으면 N으로 설정
-        }
-      } catch (error: any) {
-        console.error('Error fetching invite details:', error);
-
-        // 백엔드에서 "No user contribution found for this mission." 메시지가 온 경우
-        if (error.response && error.response.data.message === 'No user contribution found for this mission.') {
-          setClaim('N'); // 백엔드에서 특정 에러 메시지를 받았을 때 N으로 설정
-        }
-      }
-    };
-
-    fetchInviteDetails(); // 컴포넌트 마운트 시 API 호출
+    fetchInviteDetails();
   }, []);
+
+  const dailyConfirmCheck = async () => {
+    try {
+      const check = await axios.post(`${API_BASE_URL}/api/contribution/daily-check-confirm`, {
+        cont_id: id,
+        user_id: userId,
+        cont_type: type,
+      });
+
+      if (check.data && check.data.claim_yn) {
+        setDailyCheck(check.data.claim_yn);
+        setTodayChecked(check.data.participant_yn);
+      } else {
+        setDailyCheck('N');
+        setTodayChecked('N');
+      }
+    } catch (error) {
+      console.error('Error fetching invite details:', error);
+    }
+  };
+
+  useEffect(() => {
+    dailyConfirmCheck();
+  }, [id, userId, type]);
 
   const formatDescription = (desc: string) => {
     return desc.replace(/\r\n/g, '<br />').replace(/\n/g, '<br />'); // \r\n 또는 \n을 <br />로 변환
   };
+
+  const handleDailyCheck = async () => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/contribution/daily-check`, {
+        cont_id: id, // cont_id는 props나 state에서 가져온 값
+        user_id: userId, // Redux에서 가져온 user_id
+        cont_type: type,
+      });
+
+      if (response.status === 201) {
+        console.log('UserContribution created successfully');
+      } else if (response.status === 200) {
+        console.log('UserContribution already exists');
+      }
+
+      await dailyConfirmCheck();
+    } catch (error) {
+      console.error('Error during daily check:', error);
+      alert('Daily check failed. Please try again.');
+    }
+  };
+
+  // const checkDaily = async () => {
+  //   try {
+  //     const response = await axios.post(`${API_BASE_URL}/api/contribution/daily-check-confirm`, {
+  //       cont_id: id,
+  //       user_id: userId,
+  //       cont_type: type,
+  //     });
+
+  //     if (response.data && response.data.claim_yn) {
+  //       setTodayChecked(response.data.claim_yn); // claim_yn 상태 업데이트
+  //     } else {
+  //       setTodayChecked('N');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching claim_yn:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   checkDaily();
+  // }, []);
 
   return (
     <Container>
@@ -383,7 +446,7 @@ const ContributionDetail: React.FC = () => {
           <ContentWrapper>
             <Banner src={imageUrl ? `${API_BASE_URL}/${imageUrl}` : defaultBannerImg} alt="Project Banner" />
             <RewardSection>
-              Reward <span style={{ paddingLeft: '10px' }}>{xp} XP</span>
+              Reward <span style={{ paddingLeft: '10px', color: '#6A5FEB' }}>{xp} XP</span>
             </RewardSection>
             <MissionSection>
               <h3>Mission</h3>
@@ -409,7 +472,7 @@ const ContributionDetail: React.FC = () => {
                       alignItems: 'flex-start',
                       gap: '20px',
                       marginTop: '10px',
-                      marginLeft: '20px',
+                      marginLeft: '40px',
                     }}
                   >
                     <InviteIcon src={inviteImg} alt="Invite Icon" />
@@ -425,6 +488,8 @@ const ContributionDetail: React.FC = () => {
                   <InviteButton onClick={handleInviteClick}>Invite</InviteButton>
                 </InviteSection>
               </>
+            ) : type === 'Daily-check' ? (
+              <DailyCheckSection onDailyCheck={handleDailyCheck} status={dailyCheck} limit={todayChecked} />
             ) : (
               <TaskSection>
                 <ul>
@@ -448,28 +513,39 @@ const ContributionDetail: React.FC = () => {
             )}
           </TaskWrapper>
 
-          <ParticipantSection>
-            <h4>Participants</h4>
-            <ProgressContainer>
-              <ProgressBar $progress={progress} $maxProgress={maxProgress} />
-              <ProgressText>
-                {progress} / {maxProgress}
-              </ProgressText>
-            </ProgressContainer>
-            <AvatarList>
-              {participants.map((participant) => (
-                <Avatar key={participant.id}>
-                  <img src={participant.avatarUrl} alt={participant.name} />
-                  {participant.name}
-                </Avatar>
-              ))}
-            </AvatarList>
-          </ParticipantSection>
-
+          {type !== 'Daily-check' && (
+            <ParticipantSection>
+              <h4>Participants</h4>
+              <ProgressContainer>
+                <ProgressBar $progress={progress} $maxProgress={maxProgress} />
+                <ProgressText>
+                  {progress} / {maxProgress}
+                </ProgressText>
+              </ProgressContainer>
+              <AvatarList>
+                {participants.map((participant) => (
+                  <Avatar key={participant.id}>
+                    <img src={participant.avatarUrl} alt={participant.name} />
+                    {participant.name}
+                  </Avatar>
+                ))}
+              </AvatarList>
+            </ParticipantSection>
+          )}
           {/* Claim 버튼 */}
-          <ClaimButton onClick={handleClaimXPClick} disabled={isLoading || claim === 'N'}>
-            {isLoading ? <Spinner /> : <ClaimButtonText>Claim</ClaimButtonText>}
-          </ClaimButton>
+          {type === 'Invite' ? (
+            <ClaimButton onClick={handleClaimXPClick} disabled={isLoading || claim === 'N'}>
+              {isLoading ? <Spinner /> : <ClaimButtonText>Claim</ClaimButtonText>}
+            </ClaimButton>
+          ) : type === 'Daily-check' ? (
+            <ClaimButton onClick={handleClaimXPClick} disabled={isLoading || dailyCheck === 'N'}>
+              {isLoading ? <Spinner /> : <ClaimButtonText>Claim</ClaimButtonText>}
+            </ClaimButton>
+          ) : (
+            <ClaimButton onClick={handleClaimXPClick} disabled={isLoading || claim === 'N'}>
+              {isLoading ? <Spinner /> : <ClaimButtonText>Claim</ClaimButtonText>}
+            </ClaimButton>
+          )}
         </RightSection>
       </div>
 

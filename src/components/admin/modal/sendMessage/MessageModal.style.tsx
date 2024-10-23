@@ -59,7 +59,7 @@ export const ModalBody = styled.div`
       font-size: 16px;
       font-weight: 300;
       font-family: Inter;
-      color: #000;
+      color: #404040;
     }
 
     input,
@@ -118,7 +118,7 @@ export const Title = styled.input`
     font-size: 16px;
     font-family: Inter;
     font-weight: 300;
-    color: #000;
+    color: #404040;
   }
 `;
 
@@ -131,7 +131,7 @@ export const TextArea = styled.textarea`
     font-size: 16px;
     font-family: Inter;
     font-weight: 300;
-    color: #000;
+    color: #404040;
   }
 `;
 
@@ -142,7 +142,7 @@ export const Option = styled.input`
   border: 1px solid rgba(0, 0, 0, 0.5);
 
   label {
-    color: #000;
+    color: #404040
 
     font-family: Inter;
     font-size: 16px;

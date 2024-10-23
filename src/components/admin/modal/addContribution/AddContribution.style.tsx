@@ -133,7 +133,7 @@ export const Select = styled.select`
   color: #797777;
   option {
     background-color: #fff;
-    color: #000;
+    color: #404040
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
   }
@@ -167,7 +167,7 @@ export const TextArea = styled.textarea`
 export const AddMembersButton = styled.button`
   background-color: transparent;
   border: none;
-  color: #000;
+  color: #404040
   cursor: pointer;
   font-size: 16px;
   display: flex;
@@ -393,7 +393,7 @@ export const MissionSelect = styled.select`
   color: #797777;
   option {
     background-color: #fff;
-    color: #000;
+    color: #404040
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
   }
@@ -412,7 +412,7 @@ export const MissionInput = styled.input`
 
 export const AddMissionButton = styled.button`
   background-color: #7c4dff;
-  color: #000;
+  color: #404040
 
   font-size: 16px;
   cursor: pointer;
@@ -424,7 +424,7 @@ export const AddMissionButton = styled.button`
 
 export const DeleteMissionButton = styled.button`
   background-color: transparent;
-  color: #000;
+  color: #404040
   border: none;
   font-size: 16px;
   /* margin-right: 20px; */

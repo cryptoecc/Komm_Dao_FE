@@ -88,27 +88,28 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
   const [bannerImagePreview, setBannerImagePreview] = useState<string | null>(null);
 
+  const [isProjectCreated, setIsProjectCreated] = useState(false); // 프로젝트 생성 상태
+
   //   const [isModalOpen, setIsModalOpen] = useState(false);
   //   //   const [selectedMembers, setSelectedMembers] = useState<Member[]>([]);
 
   //   const openModal = () => setIsModalOpen(true);
   //   const closeModal = () => setIsModalOpen(false);
 
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/admin/applied-project`);
+      setProjects(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
+  // useEffect에서 프로젝트 데이터를 불러옴
   useEffect(() => {
-    // 백엔드에서 프로젝트 정보를 가져오기
-    const fetchProjects = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/api/admin/applied-project`);
-        setProjects(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-      }
-    };
-
     fetchProjects();
-  }, []);
-
+  }, [isProjectCreated]); // 프로젝트가 생성되었을 때마다 useEffect 재실행
   // 미션 추가 함수
   const addMission = () => {
     setMissions([...missions, { missionType: '', missionUrl: '' }]);
@@ -176,6 +177,7 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
       });
 
       console.log('Contribution created successfully', response.data);
+      setIsProjectCreated(true); // 프로젝트 생성 상태를 업데이트
       onCancel();
     } catch (error) {
       console.error('Error creating contribution', error);
@@ -249,6 +251,7 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
             <option value="Research">Research</option>
             <option value="Marketing">Marketing</option>
             <option value="Invite">Invite</option>
+            <option value="Daily-check">Daily-check</option>
           </Select>
         </TeamCategory>
         <DateWrapper>
@@ -256,6 +259,9 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
             <option value="" disabled>
               Cont. XP
             </option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="300">300</option>
@@ -301,6 +307,7 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
                 <option value="Discord Verify">Discord Verify</option>
                 <option value="Telegram Join">Telegram Join</option>
                 <option value="Invite People">Invite People</option>
+                <option value="Daily Check">Daily Check</option>
               </MissionSelect>
 
               <MissionInput

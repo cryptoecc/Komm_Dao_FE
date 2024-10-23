@@ -87,7 +87,7 @@ const PointsHistory: React.FC = () => {
                   href={`https://holesky.etherscan.io/tx/${item.transactionId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: 'blue', textDecoration: 'underline' }}
+                  style={{ color: '#6A5FEB', textDecoration: 'underline' }}
                 >
                   {item.transactionId.slice(0, 6)}...{item.transactionId.slice(-6)}
                 </a>

@@ -31,6 +31,9 @@ import {
   InputIcon,
   BioInputIcon,
   BioInput,
+  NameInput,
+  Checkbox2,
+  CustomCheckbox,
 } from './ProfileUpdate.style';
 import ArrowDown from 'src/assets/register/arrow_drop_down.svg';
 import ArrowUp from 'src/assets/register/arrow_drop_up.svg';
@@ -71,13 +74,13 @@ const customStyles = (isFocused: boolean) => ({
   control: (provided: any, state: any) => ({
     ...provided,
     width: '100%',
-    height: '100%',
+    height: '60px',
     borderRadius: state.menuIsOpen ? '20px 20px 0 0' : '20px',
     border: '1px solid #858585',
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 500,
     lineHeight: 'normal',
-    color: 'rgba(0, 0, 0, 0.5)',
+    color: '#404040',
     boxShadow: 'none',
     borderColor: state.menuIsOpen ? '#8E63FF' : 'rgba(0, 0, 0, 0.5)',
     '&:hover': {
@@ -103,7 +106,7 @@ const customStyles = (isFocused: boolean) => ({
     fontSize: '14px',
     fontWeight: 500,
     lineHeight: 'normal',
-    color: '#000',
+    color: '#404040',
     '&:hover': {
       backgroundColor: 'rgba(142, 99, 255, 0.1)',
     },
@@ -112,10 +115,10 @@ const customStyles = (isFocused: boolean) => ({
     ...provided,
     display: 'flex',
     alignItems: 'center',
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 500,
     lineHeight: 'normal',
-    color: '#000',
+    color: '#404040',
   }),
   indicatorSeparator: (provided: any) => ({
     display: 'none',
@@ -152,7 +155,7 @@ const CustomInput = (props: InputProps<any, false, GroupBase<any>>) => <componen
 const ProfileUpdate: React.FC = () => {
   const navigate = useNavigate(); // useNavigate 추가
   const user = useSelector((state: RootState) => state.user);
-
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [profileData, setProfileData] = useState<ProfileData>({
     name: '',
     email: '',
@@ -316,7 +319,7 @@ const ProfileUpdate: React.FC = () => {
           <HorizontalGroup>
             <NameField>
               <Label>Name</Label>
-              <Input
+              <NameInput
                 type="text"
                 name="name"
                 placeholder="Enter your name"
@@ -384,8 +387,16 @@ const ProfileUpdate: React.FC = () => {
               />
             </ExpertiseField>
             <CheckboxContainer>
-              <Checkbox type="checkbox" name="stayUpdated" checked={true} disabled={true} />
-              <CheckboxLabel>Stay up to date with Komm DAO</CheckboxLabel>
+              <CheckboxLabel htmlFor="subscribe-checkbox">
+                <Checkbox2
+                  id="subscribe-checkbox" // 체크박스에 id 추가
+                  type="checkbox"
+                  checked={isSubscribed}
+                  onChange={(e) => setIsSubscribed(e.target.checked)}
+                />
+                <CustomCheckbox /> {/* id를 통해 연결 */}
+                Stay up to date with Komm DAO
+              </CheckboxLabel>
             </CheckboxContainer>
           </HorizontalGroup>
           <ButtonGroup>

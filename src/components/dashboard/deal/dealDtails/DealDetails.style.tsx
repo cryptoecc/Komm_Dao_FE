@@ -132,7 +132,7 @@ export const ParticipationCard = styled.div`
 export const ProgressText = styled.span`
   font-size: 18px;
   font-weight: 400;
-  color: #000;
+  color: #404040
   align-self: flex-end;
   margin-bottom: 10px;
 `;
@@ -231,9 +231,7 @@ export const CountdownValue = styled.div`
   font-size: 14px;
   font-weight: 600;
   background-color: #f8f8fa;
-  color: #000;
-
-  @media (max-width: 768px) {
+  color: #404040 @media (max-width: 768px) {
     font-size: 20px;
   }
 `;

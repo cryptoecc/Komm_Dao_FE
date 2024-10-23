@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
+import backArrow from 'src/assets/contribution/arrow_back.svg';
 
 const PageContainer = styled.div`
   display: flex;
@@ -14,12 +15,15 @@ const PageContainer = styled.div`
   justify-content: center;
   /* padding: 40px 10px; */
   height: 100%;
+  margin: 0 auto;
   /* padding: 30px; */
   /* max-height: 1080px; */
-  max-width: 1920px;
-  @media (min-width: 1040px) {
+  /* max-width: 1920px; */
+  @media (min-width: 1600px) {
+    width: 1180px;
+    /* margin-left: 150px;
+    margin-right: 150px; */
     /* height: 700px; */
-    height: 100%;
   }
 `;
 const WalletWrap = styled.div`
@@ -32,7 +36,7 @@ const BackButton = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  color: #875cff;
+  color: #a380f9;
   font-weight: 700;
   margin-bottom: 20px; /* Title 아래에 위치하도록 조정 */
 `;
@@ -41,10 +45,13 @@ const BackLink = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  color: #875cff;
+  color: #a380f9;
   font-weight: 700;
+  font-size: 18px;
   /* padding-left: 60px; */
-  span {
+  img {
+    width: 18px;
+    height: 18px;
     margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 */
   }
 `;
@@ -104,7 +111,7 @@ const DealDtailsPage: React.FC = () => {
       </WalletWrap>
       <BackButton onClick={() => navigate(-1)}>
         <BackLink>
-          <span>&larr;</span>Back to Contribution
+          <img src={backArrow} alt="Back Arrow" /> {/* 이미지로 대체 */}Back to Contribution
         </BackLink>
       </BackButton>
 

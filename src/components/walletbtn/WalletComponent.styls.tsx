@@ -16,6 +16,8 @@ export const WalletButton = styled.div`
 `;
 
 export const WalletIcon = styled.img`
+  width: 30px;
+  height: 30px;
   font-size: 24px;
   margin-right: 8px;
 `;
@@ -35,7 +37,7 @@ export const DropdownMenu = styled.div`
   left: -20px;
   width: 200px;
   background-color: #fff;
-  border: 5px solid #ddd;
+  border: 5px solid #eeedfd;
   border-radius: 10px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
   z-index: 10;
@@ -43,13 +45,14 @@ export const DropdownMenu = styled.div`
 
 export const DropdownItem = styled.div`
   padding: 10px 20px;
+  color: #404040;
   cursor: pointer;
   display: flex;
   align-items: center;
   font-size: 16px;
   font-weight: 500;
   &:hover {
-    background-color: #f8f9fa;
+    background-color: #eeedfd;
   }
 `;
 

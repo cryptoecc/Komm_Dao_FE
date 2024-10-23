@@ -7,7 +7,11 @@ export const Container = styled.div`
   /* justify-content: center; */
   background-color: #f4efff;
   border-radius: 20px;
-  width: 100%;
+
+  @media (min-width: 1600px) {
+    width: 1180px;
+    margin: 0 auto;
+  }
   /* height: 100%; */
   /* max-height: 1080px; */
   /* margin: 0px auto; */
@@ -22,27 +26,27 @@ export const TitleWrapper = styled.div`
 `;
 
 export const ProjectTitle = styled.h1`
-  color: black;
+  color: #404040;
   font-size: 45px;
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
 `;
 
 export const LeftSection = styled.div`
-  width: 55%;
+  width: 50%;
 `;
 
 export const RightSection = styled.div`
-  width: 45%;
+  position: relative;
+  width: 50%;
   margin-left: 40px; /* 왼쪽 섹션과의 간격 확보 */
 `;
 
 export const ActiveBadge = styled.div`
   width: 125px;
-  height: 35px;
-  padding: 17px;
-  background: linear-gradient(0deg, #7c4dff 0%, #7c4dff 100%);
+  height: 38px;
+  /* padding: 17px; */
+  background: linear-gradient(0deg, #6a5feb 0%, #6a5feb 100%);
   border-radius: 30px;
   display: flex;
   justify-content: center;
@@ -51,7 +55,6 @@ export const ActiveBadge = styled.div`
   div {
     color: white;
     font-size: 18px;
-    font-family: 'Inter', sans-serif;
     font-weight: 700;
     word-wrap: break-word;
   }
@@ -70,7 +73,6 @@ export const FinishedBadge = styled.div`
   div {
     color: white;
     font-size: 18px;
-    font-family: 'Inter', sans-serif;
     font-weight: 700;
     word-wrap: break-word;
   }
@@ -94,27 +96,25 @@ export const Banner = styled.img`
 `;
 
 export const RewardSection = styled.div`
-  color: black;
-  font-size: 22px;
-  font-family: 'Inter', sans-serif;
+  color: #404040;
+  font-size: 24px;
   font-weight: 700;
   word-wrap: break-word;
   margin-bottom: 10px;
   width: 100%;
   padding: 10px;
-  border-bottom: 2px #875cff solid;
+  border-bottom: 2px #6a5feb solid;
 
   span {
-    color: #875cff;
-    font-size: 28px;
+    color: #6a5feb;
+    font-size: 24px;
     font-weight: 700;
   }
 `;
 
 export const MissionSection = styled.div`
-  color: black;
-  font-size: 22px;
-  font-family: 'Inter', sans-serif;
+  color: #404040;
+  font-size: 18px;
   font-weight: 700;
   word-wrap: break-word;
   margin-bottom: 20px;
@@ -123,9 +123,8 @@ export const MissionSection = styled.div`
   overflow-y: scroll;
 
   p {
-    color: black;
-    font-size: 17px;
-    font-family: 'Inter', sans-serif;
+    color: #404040;
+    font-size: 16px;
     font-weight: 400;
     word-wrap: break-word;
     line-height: 1.5;
@@ -134,16 +133,16 @@ export const MissionSection = styled.div`
 `;
 
 export const DateSection = styled.div`
-  color: black;
+  color: #404040;
   font-size: 17px;
-  font-family: 'Inter', sans-serif;
   font-weight: 400;
   word-wrap: break-word;
   margin-top: 20px;
   padding: 10px;
 
   h4 {
-    font-size: 22px;
+    color: #404040;
+    font-size: 18px;
     font-weight: 700;
     margin-bottom: 10px;
   }
@@ -206,7 +205,7 @@ export const ParticipantSection = styled.div`
   padding: 10px;
 
   h4 {
-    color: #875cff;
+    color: #6a5feb;
     font-size: 20px; /* 폰트 크기 */
     font-weight: bold;
     margin-bottom: 10px;
@@ -238,15 +237,14 @@ export const ProgressContainer = styled.div`
 export const ProgressBar = styled.div<{ $progress: number; $maxProgress: number }>`
   width: ${({ $progress, $maxProgress }) => ($progress / $maxProgress) * 100}%;
   height: 100%;
-  background-color: #875cff;
+  background-color: #6a5feb;
   border-radius: 10px;
 `;
 
 export const ProgressText = styled.div`
   font-size: 15px; /* 기존 14px에서 16px으로 폰트 크기 증가 */
-  color: #000;
+  color: #404040;
   font-weight: 500;
-  font-family: Inter;
   margin-bottom: 20px; /* 기존 10px에서 20px으로 변경 */
   padding-top: 5px; /* 텍스트와 위 요소 간의 간격 확보 */
   text-align: center; /* 텍스트 중앙 정렬 */
@@ -277,24 +275,25 @@ export const Avatar = styled.div`
 `;
 
 export const ClaimButton = styled.button`
-  background-color: #875cff;
+  position: absolute;
+  background-color: #6a5feb;
   color: white;
   padding: 15px 40px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
-  float: right;
-
+  top: 111%;
+  left: 82%;
   /* margin-left: auto; */
   width: 140px; /* 버튼 너비 설정 */
 
   &:hover {
-    background-color: #6e40cc;
+    background-color: #564dba;
   }
 
   &:disabled {
@@ -307,7 +306,6 @@ export const ClaimButton = styled.button`
 export const ClaimButtonText = styled.div`
   color: white;
   font-size: 18px;
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
 `;
@@ -323,7 +321,7 @@ export const InviteSection = styled.div`
   height: 100px;
 
   h3 {
-    color: #000;
+    color: #404040;
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 5px;
@@ -331,7 +329,7 @@ export const InviteSection = styled.div`
 
   p {
     width: 180px;
-    color: #000;
+    color: #404040;
     margin-top: 10px;
     margin-left: 30px;
     font-size: 12px;
@@ -345,7 +343,7 @@ export const InviteIcon = styled.img`
 `;
 
 export const InviteButton = styled.button`
-  background: var(--Purple-900, #7c4dff);
+  background: var(--Purple-900, #6a5feb);
   color: white;
   border: none;
   border-radius: 20px;
@@ -361,7 +359,7 @@ export const InviteButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #6e40cc;
+    background-color: #564dba;
   }
   float: right;
   /* align-self: flex-end; 오른쪽 수직 정렬 */
@@ -384,4 +382,40 @@ export const ActionButtons = styled.button`
 
   align-self: flex-end; /* 오른쪽 수직 정렬 */
   margin-left: auto; /* 버튼이 수평으로 오른쪽에 붙도록 함 */
+`;
+
+export const DailyCheckWrapper = styled.div`
+  /* align-items: center; */
+  height: 100px;
+  padding: 10px;
+  background-color: white;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #404040;
+    margin-top: 10px;
+  }
+`;
+
+export const DailyCheckButton = styled.button`
+  background-color: #6a5feb;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  align-items: end;
+  float: right;
+
+  &:hover {
+    background-color: #564dba;
+  }
+`;
+
+export const DailyIcon = styled.img`
+  width: 50px;
+  height: 50px;
 `;

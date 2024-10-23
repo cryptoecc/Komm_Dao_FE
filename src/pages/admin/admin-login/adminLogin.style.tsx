@@ -54,7 +54,7 @@ export const Input = styled.input`
 `;
 
 export const Label = styled.label`
-  color: #000;
+  color: #404040
   font-family: Inter;
   font-size: 25px;
   font-style: normal;
@@ -92,7 +92,7 @@ export const ForgotPassword = styled.a`
   margin-top: -10px;
   margin-bottom: 20px;
   cursor: pointer;
-  color: #000;
+  color: #404040
   font-family: Inter;
   font-size: 25px;
   font-style: normal;
@@ -100,7 +100,7 @@ export const ForgotPassword = styled.a`
   line-height: normal;
 
   &:hover {
-    color: #000;
+    color: #404040
   }
 `;
 

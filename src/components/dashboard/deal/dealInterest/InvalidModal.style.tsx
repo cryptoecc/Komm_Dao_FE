@@ -13,10 +13,11 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  width: 450px; /* Slightly smaller width */
+  width: 650px; /* Slightly smaller width */
+  height: 350px;
   background: white;
-  padding: 30px;
-  border-radius: 8px;
+  padding: 40px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,16 +25,17 @@ export const ModalContent = styled.div`
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 
   h2 {
-    margin-bottom: 16px;
-    font-size: 20px;
+    /* margin-bottom: 40px; */
+    font-size: 24px;
     font-weight: bold;
-    color: #000;
+    color: #404040;
   }
 
   p {
     margin-bottom: 16px;
-    font-size: 14px;
-    color: #333; /* Darker text color */
+    margin-top: 20px;
+    font-size: 16px;
+    color: #404040; /* Darker text color */
   }
 `;
 
@@ -42,8 +44,8 @@ export const ConfirmButton = styled.button`
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 8px 24px; /* Larger padding for emphasis */
-  font-size: 14px;
+  padding: 12px 30px; /* Larger padding for emphasis */
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   text-align: right;
@@ -51,4 +53,12 @@ export const ConfirmButton = styled.button`
   &:hover {
     background-color: #6e35b2;
   }
+`;
+
+export const CloseButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: end;
 `;

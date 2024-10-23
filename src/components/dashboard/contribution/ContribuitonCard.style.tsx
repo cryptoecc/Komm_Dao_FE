@@ -15,6 +15,10 @@ export const CardContainer = styled.div`
     background-color: #e0dcf9; /* hover 시 배경색을 약간 어둡게 변경 */
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* 그림자를 더 깊게 변경 */
   }
+
+  @media (min-width: 1600px) {
+    width: 365px;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -51,9 +55,9 @@ export const Logo = styled.img`
 `;
 
 export const Title = styled.h3`
-  font-size: 15px; /* 글자 크기를 약간 줄임 */
+  font-size: 14px; /* 글자 크기를 약간 줄임 */
   font-weight: 600;
-  color: #333;
+  color: #404040;
 `;
 
 export const StatusText = styled.span`
@@ -66,14 +70,14 @@ export const StatusText = styled.span`
 export const XPText = styled.span`
   font-size: 14px;
   font-weight: bold;
-  color: #000;
+  color: #404040;
   margin-bottom: 6px; /* 간격을 줄임 */
   margin-left: auto;
 `;
 
 export const DateRange = styled.span`
   font-size: 12px;
-  color: #888;
+  color: #404040;
   margin-bottom: 8px; /* 간격을 줄임 */
 `;
 
@@ -95,7 +99,7 @@ export const ProgressBar = styled.div<{ $progress: number; $maxProgress: number 
 
 export const ProgressText = styled.span`
   font-size: 12px;
-  color: #555;
+  color: #404040;
   text-align: center;
   width: 100%;
   display: block;

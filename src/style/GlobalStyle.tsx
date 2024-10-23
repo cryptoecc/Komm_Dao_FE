@@ -43,7 +43,7 @@ const GlobalStyle = createGlobalStyle`
     --text-size-medium: 16px;
     --text-size-large: 26px;
     --main-white-color: #FFF;
-    --main-black-color: #000;
+    --main-black-color: #404040
     --main-card-color: #F8F8FA;
     --main-btn-color: #7C4DFF;
     --main-btn-text-color: #875CFF;

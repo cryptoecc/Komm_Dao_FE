@@ -43,7 +43,7 @@ export const ModalHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 50px;
-  color: #000;
+  color: #404040
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -71,7 +71,7 @@ export const WalletOptions = styled.div`
 
 export const WalletOptionButton = styled.button`
   background: #f8f8fa;
-  color: #000;
+  color: #404040
   border: none;
   width: 500px;
   height: 60px;

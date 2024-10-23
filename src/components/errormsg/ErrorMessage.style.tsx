@@ -6,7 +6,7 @@ export const ModalHeader = styled.div`
   justify-content: start;
   /* align-items: center; */
   margin-top: 20px;
-  color: #000;
+  color: #404040
   font-size: 25px;
   font-style: normal;
   font-weight: 400;

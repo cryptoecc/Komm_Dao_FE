@@ -6,23 +6,32 @@ const ProfileUpdate: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <BackButton onClick={() => navigate(-1)}>
+    <Container>
+      {/* <BackButton onClick={() => navigate(-1)}>
         <BackLink>
           <span>&larr;</span>Back to Profile
         </BackLink>
-      </BackButton>
+      </BackButton> */}
       <ProfileContainer>
         <ProfileEdit />
       </ProfileContainer>
-    </>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  max-width: 1920px;
+
+  @media (min-width: 1600px) {
+    margin-top: 90px;
+    margin-left: 180px;
+  }
+`;
+
 const ProfileContainer = styled.div`
-  min-height: 100vh;
-  width: 100%;
-  padding: 30px;
+  /* min-height: 100vh; */
+  /* width: 100%; */
+  padding: 40px;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 

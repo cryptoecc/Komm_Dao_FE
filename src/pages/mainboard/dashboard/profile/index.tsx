@@ -7,11 +7,11 @@ const ProfileMyPage: React.FC = () => {
 
   return (
     <Container>
-      <BackButton onClick={() => navigate(-1)}>
+      {/* <BackButton onClick={() => navigate(-1)}>
         <BackLink>
           <span>&larr;</span>Back to Dashboard
         </BackLink>
-      </BackButton>
+      </BackButton> */}
       <ProfileContainer>
         <ProfileDetails />
       </ProfileContainer>
@@ -21,8 +21,13 @@ const ProfileMyPage: React.FC = () => {
 
 const Container = styled.div`
   /* background-color: #f9f8fe; */
-  max-height: 23%;
+  /* max-height: 23%; */
   padding: 20px; /* 여백 추가 (선택 사항) */
+
+  @media (min-width: 1600px) {
+    margin-top: 60px;
+    /* margin-bottom: 70px; */
+  }
 `;
 
 const ProfileContainer = styled.div`

@@ -181,7 +181,7 @@ export const Input = styled.input`
   font-weight: 400;
   line-height: normal;
   font-family: Inter;
-  color: #000;
+  color: #404040
 
   &::placeholder {
     color: rgba(0, 0, 0, 0.5);
@@ -243,7 +243,7 @@ export const Label = styled.label`
   font-size: 20px;
   font-weight: 500;
   line-height: normal;
-  color: #000;
+  color: #404040
   cursor: pointer;
   user-select: none;
 `;

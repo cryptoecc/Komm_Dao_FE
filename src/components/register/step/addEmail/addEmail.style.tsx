@@ -41,7 +41,7 @@ export const Email = styled.div`
     background: none;
     width: 100%;
     font-size: 20px;
-    color: #000;
+    color: #404040
     font-weight: 400;
     line-height: normal;
 

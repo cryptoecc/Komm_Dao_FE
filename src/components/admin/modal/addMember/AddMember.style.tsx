@@ -10,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.div`
-  color: #000;
+  color: #404040
   font-family: Inter;
   font-size: 28px;
   font-style: normal;
@@ -35,7 +35,7 @@ export const SearchInput = styled.input`
   font-size: 20px;
 
   &::placeholder {
-    color: #000;
+    color: #404040
     font-weight: 300;
     font-style: normal;
     font-family: Inter;
@@ -170,7 +170,7 @@ export const SaveButton = styled.button`
 export const CancelButton = styled.button`
   padding: 12px 26px;
   background: #fff;
-  color: #000;
+  color: #404040
   border-radius: 20px;
   border: 1px solid #000;
   font-family: Inter;

@@ -24,13 +24,20 @@ const ContributionContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   position: relative;
   max-width: 1920px;
+
+  @media (min-width: 1600px) {
+    margin-top: 80px;
+    margin-left: 160px;
+    margin-right: 160px;
+    /* margin-bottom: 70px; */
+  }
 `;
 
 const ContributionHeader = styled.div`
   display: flex;
   justify-content: space-between; /* 양 끝으로 배치 */
   align-items: center; /* 수직 중앙 정렬 */
-  margin-bottom: 20px;
+  /* margin-bottom: px; */
   margin-right: 60px;
 `;
 
@@ -57,7 +64,7 @@ const ContributionTabs = styled.div`
 `;
 
 const TabButton = styled.button<{ $active: boolean }>`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: ${({ $active }) => ($active ? 'bold' : 'normal')};
   color: ${({ $active }) => ($active ? '#875cff' : '#ccc')};
   border: none;
@@ -191,7 +198,7 @@ const Contribution: React.FC = () => {
         <Swiper
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 2000 }}
+          autoplay={{ delay: 5000 }}
           loop={true}
         >
           {contributionData.map((slide) => (
@@ -211,6 +218,7 @@ const Contribution: React.FC = () => {
                 id={slide.cont_id}
                 maxProgress={slide.max_participant}
                 type={slide.cont_type}
+                pjtId={slide.pjt_id}
               />
             </SwiperSlide>
           ))}
@@ -260,6 +268,7 @@ const Contribution: React.FC = () => {
                   maxProgress={card.max_participant}
                   type={card.cont_type} // Kohort only 값을 넘김
                   desc={card.cont_desc}
+                  pjtId={card.pjt_id}
                 />
               ))
             : finishedCards.map((card) => (
@@ -276,6 +285,7 @@ const Contribution: React.FC = () => {
                   maxProgress={card.max_participant}
                   type={card.cont_type} // Kohort only 값을 넘김
                   desc={card.cont_desc}
+                  pjtId={card.pjt_id}
                 />
               ))}
         </CardGrid>

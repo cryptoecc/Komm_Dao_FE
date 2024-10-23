@@ -27,30 +27,30 @@ export const ModalContent = styled.div`
   h2 {
     margin-top: 10px;
     margin-bottom: 30px;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
-    font-family: Inter;
+    color: #404040;
   }
 
   p {
     font-size: 16px;
     font-weight: 400;
-    color: #000;
+    color: #404040;
   }
 
   p:last-child {
     margin-bottom: 24px;
     font-size: 12px;
-    color: #888;
+    color: #404040;
   }
 `;
 
-export const DateText = styled.p`
+export const DateText = styled.span`
   text-align: right;
   margin-top: 80px;
   margin-right: 10px;
-  font-size: 12px;
-  color: #888;
+  font-size: 16px;
+  color: #404040;
   margin-bottom: 8px; /* Smaller space between date and buttons */
 `;
 
@@ -72,7 +72,6 @@ export const EditButton = styled.button`
   padding: 12px 24px;
   font-size: 16px;
   font-weight: 500;
-  font-family: Inter;
   cursor: pointer;
 
   &:hover {
@@ -98,7 +97,6 @@ export const ConfirmButton = styled.button`
 export const SubMission = styled.div`
   p {
     font-size: 22px;
-    font-family: Inter;
     font-style: normal;
     font-weight: 400;
   }
@@ -107,12 +105,12 @@ export const SubMission = styled.div`
 export const Redirect = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 80px;
   gap: 10px;
 
   span {
-    font-family: Inter;
-    font-size: 20px;
+    color: #404040;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

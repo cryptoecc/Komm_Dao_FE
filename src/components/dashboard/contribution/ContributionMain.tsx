@@ -37,6 +37,7 @@ interface ContributionMainProps {
   id: number;
   maxProgress: number;
   type: string;
+  pjtId: number;
 }
 
 const ContributionMain: React.FC<ContributionMainProps> = ({
@@ -54,6 +55,7 @@ const ContributionMain: React.FC<ContributionMainProps> = ({
   id,
   maxProgress,
   type,
+  pjtId,
 }) => {
   const navigate = useNavigate();
 
@@ -71,11 +73,12 @@ const ContributionMain: React.FC<ContributionMainProps> = ({
         maxProgress,
         type,
         id,
+        pjtId,
       },
     });
   };
   return (
-    <div onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+    <div onClick={handleCardClick} style={{ cursor: 'pointer', height: '340px' }}>
       <ProjectTitleWrapper>
         <ProjectLogo src={logoUrl ? `${API_BASE_URL}/${logoUrl}` : defaultDealIcon} alt="Project Logo" />
         <ProjectTitle>{title}</ProjectTitle>

@@ -29,7 +29,7 @@ const ModalTitle = styled.h2`
 `;
 
 const ModalText = styled.p`
-  color: #000;
+  color: #404040
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 35px;

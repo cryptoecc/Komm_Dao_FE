@@ -127,15 +127,17 @@ const ProfileDetails: React.FC = () => {
           <Job>{profileData.expertise}</Job>
           <Email>{profileData.email}</Email>
         </Info>
-        <EditButton onClick={handleEditClick}>
-          <EditIcon src={images.editIcon2} alt="Edit Icon" />
-          Edit
-        </EditButton>
+        <div style={{}}>
+          <EditButton onClick={handleEditClick}>
+            <EditIcon src={images.editIcon2} alt="Edit Icon" />
+            Edit
+          </EditButton>
+        </div>
       </ProfileContainer>
       <WalletAddressWrap>
         <WalletAddress>Wallet Address</WalletAddress>
         <WalletAddressContentsWrap>
-          <WalletContents>{shortenWalletAddress(profileData.walletAddress)}</WalletContents>
+          <WalletContents>{profileData.walletAddress}</WalletContents>
           <CopyButton onClick={handleCopy}>
             <CopyIcon src={images.copyIcon} alt="Copy Icon" />
           </CopyButton>
@@ -148,16 +150,16 @@ const ProfileDetails: React.FC = () => {
       <MembershipNftWrap>
         <MembershipNftTitle>Membership NFT</MembershipNftTitle>
         <MembershipNftWrapInner>
-          <OpenSeaIcon src={images.openSeaIcon} alt="OpenSea Icon" />
+          {/* <OpenSeaIcon src={images.openSeaIcon} alt="OpenSea Icon" /> */}
           <OpenSeaLink href={profileData.membershipNft} target="_blank" rel="noopener noreferrer">
             View on OpenSea
           </OpenSeaLink>
         </MembershipNftWrapInner>
       </MembershipNftWrap>
-      <EditButton onClick={handleEditClick}>
+      {/* <EditButton onClick={handleEditClick}>
         <EditIcon src={images.editIcon2} alt="Edit Icon" />
         Edit
-      </EditButton>
+      </EditButton> */}
     </Container>
   );
 };

@@ -9,24 +9,25 @@ export const CardContainer = styled.div`
 
 export const Header = styled.div`
   display: flex;
-  height: 30px;
+  height: 38px;
   padding: 5px;
   justify-content: center;
   align-items: center;
   align-self: stretch;
   gap: 5px;
-  background: var(--Purple-400, #d3b8ff);
+  background: #eeedfd;
   position: sticky;
   top: 0; /* 상단에 고정 */
   z-index: 1; /* 스크롤되는 내용 위에 오도록 설정 */
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 `;
 
 export const HeaderItem = styled.div`
   flex: 1;
   text-align: center;
   min-width: 100px; /* 아이템의 최소 너비를 설정하여 줄바꿈 방지 */
-  color: #000;
-  font-family: Inter;
+  color: #404040;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -65,10 +66,9 @@ export const DataRow = styled.div`
 export const DataItem = styled.div`
   flex: 1;
   text-align: center;
-  font-family: Inter;
+
   min-width: 100px; /* 아이템의 최소 너비를 설정하여 줄바꿈 방지 */
-  color: #000;
-  font-family: Inter;
+  color: #404040;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -90,7 +90,7 @@ export const NoDataMessage = styled.div`
   font-weight: 500;
   font-size: 20px;
   padding-top: 60px;
-  color: #000;
+  color: #404040;
   /* text-align: center;
   font-size: 14px;
   font-weight: 500;

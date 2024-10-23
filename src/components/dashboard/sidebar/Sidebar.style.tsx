@@ -12,7 +12,7 @@ export const Logo = styled.div`
   height: 80px; /* Fixed size */
   background: url('/assets/images/sidebarLogo.png') no-repeat center center;
   background-size: contain;
-  margin: 20px 0;
+  margin: 70px 0px 20px 0px;
   flex-shrink: 0; /* Prevent the logo from shrinking */
   cursor: pointer;
 
@@ -43,7 +43,7 @@ export const SidebarContainer = styled.div`
   width: 250px;
   height: 100vh;
   flex-shrink: 0;
-  background: #f9f8fe;
+  background: #fff;
   display: flex;
   flex-direction: column;
   padding-left: 20px;
@@ -88,7 +88,7 @@ export const NavItem = styled(NavLink)`
   }
 
   &:hover {
-    background-color: rgba(135, 92, 255, 0.1); /* Hover 배경색 */
+    background-color: #eeedfd; /* Hover 배경색 */
   }
 
   @media (max-width: 768px) {
@@ -113,27 +113,27 @@ export const Icon = styled.div<{ $imageUrl: string }>`
 `;
 
 export const Name = styled.div`
-  color: #1a0737;
-  font-size: 20px;
+  color: #404040;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
   transition: font-size 0.3s ease;
 
   @media (max-width: 1024px) {
-    color: #1a0737;
-    font-size: 10px;
+    color: #404040;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     line-height: normal;
     transition: font-size 0.3s ease;
   }
 
   @media (max-width: 768px) {
-    color: #1a0737;
-    font-size: 10px;
+    color: #404040;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     line-height: normal;
     transition: font-size 0.3s ease;
   }

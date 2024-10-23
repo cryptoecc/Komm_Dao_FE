@@ -157,6 +157,11 @@ const DealDetails: React.FC = () => {
           alt="Banner Image"
         />
         <IconWrapper>
+          {selectedDeal.website && (
+            <a href={formatUrl(selectedDeal.website)} target="_blank" rel="noopener noreferrer">
+              <Icon src={images.language} alt="Website" />
+            </a>
+          )}
           {selectedDeal.x_link && (
             <a href={formatUrl(selectedDeal.x_link)} target="_blank" rel="noopener noreferrer">
               <Icon src={images.twitter} alt="Twitter" />
@@ -165,11 +170,6 @@ const DealDetails: React.FC = () => {
           {selectedDeal.discord_link && (
             <a href={formatUrl(selectedDeal.discord_link)} target="_blank" rel="noopener noreferrer">
               <Icon src={images.discord} alt="Discord" />
-            </a>
-          )}
-          {selectedDeal.website && (
-            <a href={formatUrl(selectedDeal.website)} target="_blank" rel="noopener noreferrer">
-              <Icon src={images.language} alt="Website" />
             </a>
           )}
         </IconWrapper>

@@ -13,20 +13,26 @@ const DashboardContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   position: relative;
   max-width: 1920px;
-  max-height: 1080px;
+
+  @media (min-width: 1600px) {
+    margin-top: 90px;
+    margin-left: 100px;
+    margin-right: 100px;
+    /* margin-bottom: 70px; */
+  }
 `;
 
 const DashboardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
 const DashboardTitle = styled.h1`
-  color: #1a0737;
-  font-size: 32px;
-  font-weight: 400;
+  color: #404040;
+  font-size: 30px;
+  font-weight: 500;
   margin-bottom: 20px;
 `;
 

@@ -49,6 +49,33 @@ const UserApplicants: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
   const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
 
+  const clipboardRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    // Clipboard.js 인스턴스를 해당 버튼에 바인딩
+    if (clipboardRef.current) {
+      const clipboard = new ClipboardJS(clipboardRef.current);
+
+      clipboard.on('success', (e) => {
+        toast.success('Copied to clipboard!', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+        e.clearSelection();
+      });
+
+      clipboard.on('error', () => {
+        toast.error('Failed to copy', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      });
+
+      // 컴포넌트 언마운트 시 Clipboard.js 인스턴스를 해제
+      return () => clipboard.destroy();
+    }
+  }, []);
+
   const handleMouseEnter = useCallback((content: string, e: React.MouseEvent<HTMLTableCellElement>) => {
     if (content === '~~') return;
     const rect = e.currentTarget.getBoundingClientRect();
@@ -149,23 +176,34 @@ const UserApplicants: React.FC = () => {
   };
 
   // 복사 기능 추가
-  const handleCellClick = async (content: string) => {
-    try {
-      await navigator.clipboard.writeText(content);
-      toast.success('Copied to clipboard!', {
-        position: 'top-right', // 문자열로 위치를 지정합니다.
-        autoClose: 1000, // 1초 후 자동으로 알림 닫힘
-      });
-    } catch (error) {
-      toast.error('Failed to copy', {
-        position: 'top-right', // 문자열로 위치를 지정합니다.
-        autoClose: 1000,
-      });
+  // const handleCellClick = async (content: string) => {
+  //   try {
+  //     await navigator.clipboard.writeText(content);
+  //     toast.success('Copied to clipboard!', {
+  //       position: 'top-right', // 문자열로 위치를 지정합니다.
+  //       autoClose: 1000, // 1초 후 자동으로 알림 닫힘
+  //     });
+  //   } catch (error) {
+  //     toast.error('Failed to copy', {
+  //       position: 'top-right', // 문자열로 위치를 지정합니다.
+  //       autoClose: 1000,
+  //     });
+  //   }
+  // };
+
+  // 복사 버튼 클릭 핸들러
+  const handleCellClick = (content: string) => {
+    if (clipboardRef.current) {
+      clipboardRef.current.setAttribute('data-clipboard-text', content);
+      clipboardRef.current.click(); // 버튼 클릭을 트리거하여 클립보드 복사 실행
     }
   };
 
   return (
     <UserApplicantContainer>
+      <button ref={clipboardRef} data-clipboard-text="" style={{ display: 'none' }}>
+        Copy
+      </button>
       <Title>User Mgmt {'>'} Applicants</Title>
       <TopBar onSearchChange={setSearchTerm} />
       <Table>

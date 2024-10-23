@@ -133,7 +133,7 @@ export const Select = styled.select`
   color: #797777;
   option {
     background-color: #fff;
-    color: #000;
+    color: #404040
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
   }
@@ -314,7 +314,7 @@ export const RoundSelect = styled.select`
   color: #797777;
   option {
     background-color: #fff;
-    color: #000;
+    color: #404040
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
   }

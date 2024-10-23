@@ -36,8 +36,9 @@ import 'react-toastify/dist/ReactToastify.css'; // 알림 스타일 추가
 import { images } from 'src/assets/discover/images';
 import ResponseModal from 'src/components/admin/modal/common/ResponseModal';
 import Pagination from 'src/components/pagenation/Pagenation';
+import ClipboardJS from 'clipboard';
 
-const categories = ['Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI']; // 카테고리
+const categories = ['KommDAO', 'Infra', 'Modular', 'Layer2', 'DeFi', 'CeFi', 'Gaming', 'Social', 'AI']; // 카테고리
 
 const AdminDiscover = () => {
   //팝업
@@ -95,6 +96,33 @@ const AdminDiscover = () => {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
   const [itemsPerPage, setItemsPerPage] = useState(20); // 페이지당 항목 수
+
+  const clipboardRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    // Clipboard.js 인스턴스를 해당 버튼에 바인딩
+    if (clipboardRef.current) {
+      const clipboard = new ClipboardJS(clipboardRef.current);
+
+      clipboard.on('success', (e) => {
+        toast.success('Copied to clipboard!', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+        e.clearSelection();
+      });
+
+      clipboard.on('error', () => {
+        toast.error('Failed to copy', {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      });
+
+      // 컴포넌트 언마운트 시 Clipboard.js 인스턴스를 해제
+      return () => clipboard.destroy();
+    }
+  }, []);
 
   const useDebouncedValue = (value: string, delay: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -446,22 +474,28 @@ const AdminDiscover = () => {
   };
 
   // 복사 기능 추가
-  const handleCellClick = async (content: string) => {
-    if (isEditable) {
-      // isEditable이 true인 경우에는 복사 기능을 하지 않음
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(content);
-      toast.success('Copied to clipboard!', {
-        position: 'top-right', // 문자열로 위치를 지정합니다.
-        autoClose: 1000, // 1초 후 자동으로 알림 닫힘
-      });
-    } catch (error) {
-      toast.error('Failed to copy', {
-        position: 'top-right', // 문자열로 위치를 지정합니다.
-        autoClose: 1000,
-      });
+  // const handleCellClick = async (content: string) => {
+  //   if (isEditable) {
+  //     // isEditable이 true인 경우에는 복사 기능을 하지 않음
+  //     return;
+  //   }
+  //   try {
+  //     await navigator.clipboard.writeText(content);
+  //     toast.success('Copied to clipboard!', {
+  //       position: 'top-right', // 문자열로 위치를 지정합니다.
+  //       autoClose: 1000, // 1초 후 자동으로 알림 닫힘
+  //     });
+  //   } catch (error) {
+  //     toast.error('Failed to copy', {
+  //       position: 'top-right', // 문자열로 위치를 지정합니다.
+  //       autoClose: 1000,
+  //     });
+  //   }
+  // };
+  const handleCellClick = (content: string) => {
+    if (clipboardRef.current) {
+      clipboardRef.current.setAttribute('data-clipboard-text', content);
+      clipboardRef.current.click(); // 버튼 클릭을 트리거하여 클립보드 복사 실행
     }
   };
 
@@ -500,6 +534,9 @@ const AdminDiscover = () => {
 
   return (
     <DiscoverContainer>
+      <button ref={clipboardRef} data-clipboard-text="" style={{ display: 'none' }}>
+        Copy
+      </button>
       <Title>Discover Mgmt</Title>
       <TopBar
         onSearchChange={handleSearchChange} // 검색어가 변경될 때 필터링

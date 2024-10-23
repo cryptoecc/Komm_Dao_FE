@@ -32,6 +32,7 @@ interface ContributionCardProps {
   desc: JSX.Element;
   type?: string;
   id: number; // 각 카드의 고유 ID
+  pjtId: number;
 }
 
 const ContributionCard: React.FC<ContributionCardProps> = ({
@@ -46,6 +47,7 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
   desc,
   type,
   id,
+  pjtId,
 }) => {
   const navigate = useNavigate();
   console.log(desc);
@@ -64,6 +66,7 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
         desc,
         type,
         id,
+        pjtId,
       },
     });
   };

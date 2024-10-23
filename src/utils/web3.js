@@ -86,27 +86,50 @@ export const switchToSepolia = async () => {
 export const switchToHolesky = async () => {
   try {
     if (window.ethereum) {
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: '0x4268', // 17000의 16진수
-            chainName: 'Holesky',
-            nativeCurrency: {
-              name: 'HolETH',
-              symbol: 'ETH',
-              decimals: 18,
-            },
-            rpcUrls: ['https://ethereum-holesky-rpc.publicnode.com'],
-            blockExplorerUrls: ['https://holesky.etherscan.io'],
-          },
-        ],
-      });
+      const chainId = '0x4268'; // Holesky 네트워크의 체인 ID (17000의 16진수)
+
+      // 먼저 네트워크 전환을 시도
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId }], // 체인 ID만으로 네트워크 전환
+        });
+      } catch (error) {
+        // 네트워크가 추가되지 않은 경우에만 `wallet_addEthereumChain` 호출
+        if (error.code === 4902) {
+          // 네트워크가 추가되어 있지 않다는 오류 코드 (4902)
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: '0x4268', // 17000의 16진수
+                  chainName: 'Holesky',
+                  nativeCurrency: {
+                    name: 'HolETH',
+                    symbol: 'ETH',
+                    decimals: 18,
+                  },
+                  rpcUrls: ['https://ethereum-holesky-rpc.publicnode.com'],
+                  blockExplorerUrls: ['https://holesky.etherscan.io'],
+                },
+              ],
+            });
+          } catch (addError) {
+            console.error('네트워크 추가 오류:', addError);
+            throw addError;
+          }
+        } else {
+          // 그 외 네트워크 전환 오류 처리
+          console.error('네트워크 전환 오류:', error);
+          throw error;
+        }
+      }
     } else {
       console.error('MetaMask가 설치되어 있지 않습니다.');
     }
   } catch (error) {
-    console.error('네트워크 전환 오류:', error);
+    console.error('switchToHolesky 실행 중 오류:', error);
     throw error;
   }
 };

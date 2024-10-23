@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Title = styled.div`
-  color: #000;
+  color: #404040
   font-family: Inter;
   font-size: 28px;
   font-style: normal;
@@ -26,7 +26,7 @@ export const SearchInput = styled.input`
   font-size: 20px;
 
   &::placeholder {
-    color: #000;
+    color: #404040
     font-weight: 300;
     font-style: normal;
     font-family: Inter;

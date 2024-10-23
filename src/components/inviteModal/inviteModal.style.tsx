@@ -37,7 +37,7 @@ export const ModalHeader = styled.div`
 export const ModalTitle = styled.h3`
   font-size: 26px;
   font-weight: 600;
-  color: #000;
+  color: #404040
   font-family: Inter;
 `;
 
@@ -47,7 +47,7 @@ export const CloseButton = styled.button`
   border: none;
   font-size: 28px;
   cursor: pointer;
-  color: #000;
+  color: #404040;
 `;
 
 // 초대 모달 전체 레이아웃 스타일
@@ -111,7 +111,7 @@ export const EmailInput = styled.input`
 export const AddPersonButton = styled.button`
   background: none;
   border: none;
-  color: #000;
+  color: #404040
   font-size: 17px;
   font-weight: 400;
   font-family: Inter;

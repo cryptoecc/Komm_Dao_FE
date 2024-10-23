@@ -73,7 +73,9 @@ const DiscoverList: React.FC<DiscoverListProps> = ({ searchTerm }) => {
       try {
         // 1. 프로젝트 리스트 불러오기
         const projectResponse = await axios.get(`${API_BASE_URL}/api/admin/main-project-list`);
-        const filteredProjects = projectResponse.data.filter((item: any) => item.apply_yn === 'Y');
+        const filteredProjects = projectResponse.data.filter(
+          (item: any) => item.apply_yn === 'Y' && item.category !== 'KommDAO'
+        );
         console.log(filteredProjects);
         // 2. 유저의 Watchlist 불러오기
         const watchlistResponse = await axios.get(`${API_BASE_URL}/api/user/watchlist/${user.user_id}`);

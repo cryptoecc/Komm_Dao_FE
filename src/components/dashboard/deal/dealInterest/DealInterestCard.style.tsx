@@ -33,7 +33,6 @@ export const Container = styled.div`
 export const Title = styled.h1`
   color: #210d5c;
   font-size: 32px;
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
   margin-top: 30px;
   margin-bottom: 20px;
@@ -139,7 +138,6 @@ export const MaxButton = styled.button`
   transform: translateX(-10%);
   color: #7c4dff;
   font-size: 24px;
-  font-family: 'Inter', sans-serif;
   font-weight: 500;
   background: none;
   border: none;
@@ -203,7 +201,6 @@ export const AllocationInfo = styled.div`
 export const AllocationText = styled.div`
   color: #a380f9;
   font-size: 20px;
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
   text-align: left;
   white-space: nowrap;
@@ -221,7 +218,6 @@ export const AllocationText = styled.div`
 export const AllocationValue = styled.div`
   color: black;
   font-size: 18px;
-  font-family: 'Inter', sans-serif;
   font-weight: 400;
   text-align: right;
   margin-top: 10px;
@@ -246,7 +242,6 @@ export const ContinueButton = styled.button`
   border: none;
   border-radius: 20px;
   font-size: 20px;
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
   cursor: pointer;
   width: 100%;

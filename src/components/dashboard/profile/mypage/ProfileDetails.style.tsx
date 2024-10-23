@@ -30,10 +30,10 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  width: 156px;
-  height: 156px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  border: 5px solid #875cff;
+  /* border: 5px solid #875cff; */
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -56,11 +56,10 @@ export const Info = styled.div`
 `;
 
 export const Name = styled.div`
-  color: #000;
-  font-family: Inter;
-  font-size: 32px;
+  color: #404040;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   line-height: normal;
 
   @media (max-width: 768px) {
@@ -69,28 +68,26 @@ export const Name = styled.div`
 `;
 
 export const Job = styled.div`
-  color: #875cff;
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-
-  @media (max-width: 768px) {
-    font-size: 18px; /* 모바일 화면에서 폰트 크기 조정 */
-  }
-`;
-
-export const Email = styled.div`
-  color: #000;
-  font-family: Inter;
-  font-size: 20px;
+  color: #6a5feb;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 
   @media (max-width: 768px) {
-    font-size: 18px; /* 모바일 화면에서 폰트 크기 조정 */
+    font-size: 14px; /* 모바일 화면에서 폰트 크기 조정 */
+  }
+`;
+
+export const Email = styled.div`
+  color: #404040;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  @media (max-width: 768px) {
+    font-size: 12px; /* 모바일 화면에서 폰트 크기 조정 */
   }
 `;
 
@@ -116,6 +113,7 @@ export const WalletAddressWrap = styled.div`
   align-items: flex-start; /* 왼쪽 정렬 */
   gap: 10px; /* 요소들 사이의 간격 */
   padding: 0 10px; /* 좌우 여백 최소화 */
+  margin-top: 70px;
   margin-bottom: 10px; /* 아래쪽 여백 추가 */
 `;
 
@@ -126,20 +124,18 @@ export const WalletAddressContentsWrap = styled.div`
 `;
 
 export const WalletAddress = styled.div`
-  color: #000;
-  font-family: Inter;
-  font-size: 20px;
+  color: #404040;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 `;
 
 export const WalletContents = styled.div`
-  color: #000;
-  font-family: Inter;
-  font-size: 17x;
+  color: #404040;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
 `;
 
@@ -170,9 +166,9 @@ export const BioWrap = styled.div`
 `;
 
 export const Bio = styled.div`
-  color: #000;
-  font-family: Inter;
-  font-size: 20px;
+  color: #404040;
+
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -180,11 +176,10 @@ export const Bio = styled.div`
 `;
 
 export const BioContents = styled.div`
-  color: #000;
-  font-family: Inter;
-  font-size: 17px;
+  color: #404040;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5;
   width: 100%; /* 부모 요소의 너비를 따름 */
   max-width: 100%; /* 최대 너비를 설정 */
@@ -211,23 +206,24 @@ export const MembershipNftWrapInner = styled.div`
 `;
 
 export const MembershipNftTitle = styled.h3`
-  color: #000;
-  font-family: Inter;
-  font-size: 20px;
+  color: #404040;
+
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 `;
 
 export const OpenSeaIcon = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 `;
 
 export const OpenSeaLink = styled.a`
-  color: #875cff;
-  font-family: Inter;
-  font-size: 17px;
+  margin-top: 5px;
+  margin-left: 20px;
+  color: #6a5feb;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -238,31 +234,25 @@ export const OpenSeaLink = styled.a`
 `;
 
 export const EditButton = styled.button`
-  height: 58px;
-  padding: 17px 26px;
+  padding: 10px 24px;
   gap: 10px;
+  height: 40px;
   flex-shrink: 0;
   border-radius: 20px;
-  background: #000;
-  color: white;
-  font-family: Inter;
-  font-size: 20px;
-  font-weight: 700;
+  color: #fbfbff;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
+  margin-left: 500px;
   align-items: center;
   border-radius: 20px;
-  background: var(--Purple-900, #7c4dff);
-  position: absolute; /* 절대 위치로 설정 */
-  top: 55px; /* 상단에서 20px 위치 */
-  right: -100px; /* 우측에서 20px 위치 */
+  background: #6a5feb;
+  /* position: absolute; 
+  top: 55px; 
+  right: -100px;  */
   &:hover {
-    background: #d1d1e9;
-    color: var(--Purple-900, #7c4dff);
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+    background: #564dba;
   }
 
   @media (max-width: 768px) {
@@ -304,7 +294,7 @@ export const Card = styled.div<{ index: number }>`
 export const CardTitle = styled.h3`
   margin: 0;
   font-size: 24px;
-  color: #000;
+  color: #404040;
 `;
 
 export const CardSubtitle = styled.p`

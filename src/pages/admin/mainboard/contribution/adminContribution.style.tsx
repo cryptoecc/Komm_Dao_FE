@@ -171,7 +171,7 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
     left: 50%;
     transform: translateX(-50%);
     background: #fff;
-    color: #000;
+    color: #404040
     border: 1px solid #ddd;
     padding: 10px;
     z-index: 10;
@@ -239,7 +239,7 @@ export const Popup = styled.div`
   position: fixed;
   border-radius: 10px;
   background: #fff;
-  color: #000;
+  color: #404040
   border: 1px solid #ddd;
   padding: 10px;
   z-index: 10;

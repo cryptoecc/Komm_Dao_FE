@@ -82,7 +82,6 @@ export const StatusBadge = styled.div<{ status: 'Open' | 'Closed' }>`
   border-radius: 20px;
   font-size: 16px;
   font-weight: 700;
-  font-family: 'Inter', sans-serif;
   background: ${(props) =>
     props.status === 'Open'
       ? 'linear-gradient(0deg, #F1ECFF 0%, #F1ECFF 100%)'
@@ -132,7 +131,7 @@ export const PercentageText = styled.div`
   position: absolute;
   font-size: 16px;
   font-weight: 600;
-  color: #000;
+  color: #404040;
   right: 40px;
   bottom: -80px;
   /* float: right; */
@@ -177,7 +176,7 @@ export const Popup = styled.div`
   position: fixed;
   border-radius: 10px;
   background: #fff;
-  color: #000;
+  color: #404040;
   border: 1px solid #ddd;
   padding: 10px;
   z-index: 10;

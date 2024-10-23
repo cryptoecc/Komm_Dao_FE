@@ -45,11 +45,11 @@ const InterestModal: React.FC<InterestModalProps> = ({
       onInvalid();
     } else {
       setIsSubmissionComplete(true);
-      setTimeout(() => {
-        onConfirm();
-        toast.success('Submission successful!'); // 성공 알림 표시
-        navigate('/mainboard/dashboard'); // 대시보드로 리디렉션
-      }, 3000); // 3초 후 리디렉션
+      // setTimeout(() => {
+      //   onConfirm();
+      //   toast.success('Submission successful!'); // 성공 알림 표시
+      //   navigate('/mainboard/dashboard'); // 대시보드로 리디렉션
+      // }, 3000); // 3초 후 리디렉션
     }
   };
 
@@ -62,14 +62,12 @@ const InterestModal: React.FC<InterestModalProps> = ({
         {/* 닫기 버튼 추가 */}
         {isSubmissionComplete ? (
           <>
-            <SubMission>
-              <h2>Submission Completed!</h2>
-              <p>You can track your submission status in the dashboard.</p>
-              <Redirect>
-                <SpinIcon src={spinIcon} />
-                <span>Redirecting to your dashboard...</span> {/* 새로운 내용 추가 */}
-              </Redirect>
-            </SubMission>
+            <h2>Submission Completed!</h2>
+            <p>You can track your submission status in the dashboard.</p>
+            <Redirect>
+              <SpinIcon src={spinIcon} />
+              <span>Redirecting to your dashboard...</span> {/* 새로운 내용 추가 */}
+            </Redirect>
           </>
         ) : (
           <>

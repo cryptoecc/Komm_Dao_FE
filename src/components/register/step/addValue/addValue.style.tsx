@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Text = styled.p`
-  color: #000;
+  color: #404040
   font-family: Inter;
   font-size: 36px;
   font-style: normal;
@@ -11,7 +11,7 @@ export const Text = styled.p`
 `;
 
 export const SubText = styled.p`
-  color: #000;
+  color: #404040
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -27,7 +27,7 @@ export const Textarea = styled.textarea`
   background: #f8f8fa;
   margin-top: 35px;
 
-  color: #000;
+  color: #404040
   font-size: 20px;
   font-style: normal;
   font-weight: 400;

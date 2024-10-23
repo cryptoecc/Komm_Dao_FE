@@ -90,7 +90,6 @@ export const StatusBadge = styled.div<{ $status: 'Open' | 'Closed' }>`
   border-radius: 20px;
   font-size: 16px;
   font-weight: 700;
-  font-family: 'Inter', sans-serif;
   background: ${(props) =>
     props.$status === 'Open'
       ? 'linear-gradient(0deg, #F1ECFF 0%, #F1ECFF 100%)'
@@ -140,7 +139,7 @@ export const Gauge = styled.div<{ $percentage: number }>`
 export const PercentageText = styled.span`
   font-size: 16px;
   font-weight: 600;
-  color: #000;
+  color: #404040;
   text-align: right;
   display: block;
   width: 100%;

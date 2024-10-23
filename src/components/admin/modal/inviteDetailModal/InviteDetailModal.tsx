@@ -71,7 +71,7 @@ const InfoTable = styled.table`
 const ViewButton = styled.button`
   background: none;
   border: none;
-  color: #000;
+  color: #404040
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
