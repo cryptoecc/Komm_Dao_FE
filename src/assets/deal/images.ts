@@ -1,6 +1,6 @@
 import twitter from './x_latest.png';
 import discord from './discord_latest.png';
-import language from './language.png';
+import language from './website_latest.png';
 import MYX from './MYX.png';
 import MYX_bannerr from './MYX_bannerr.png';
 import arrow from './arrow.png';

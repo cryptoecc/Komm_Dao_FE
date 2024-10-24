@@ -6,7 +6,7 @@ import sorticon from './updown.png';
 import downicon from './down.png';
 import twitter from './x_latest.png';
 import discord from './discord_latest.png';
-import language from './language_latest.svg';
+import language from './website_latest.png';
 import user from './default_image.png';
 import share from './share_latest.svg';
 import star2 from './stargray_latest.png';
