@@ -16,6 +16,8 @@ import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import Wallet from 'src/components/walletbtn/WalletComponent';
 import { Pagination, Autoplay } from 'swiper/modules'; // 필요한 모듈 임포트
+import RedirectModal from 'src/components/admin/modal/common/RedirectModal';
+import ContributionModal from 'src/components/admin/modal/redirectMotal/Contribution';
 
 dayjs.extend(customParseFormat);
 
@@ -102,7 +104,12 @@ const Contribution: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const [contributionData, setContributionData] = useState<any[]>([]); // 기여 데이터 상태 추가
   const user = useSelector((state: RootState) => state.user);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   console.log(user);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -147,6 +154,11 @@ const Contribution: React.FC = () => {
 
     fetchContributionData();
   }, []); // 컴포넌트가 마운트될 때 데이터를 가져옴
+
+  // 페이지가 렌더링될 때 모달이 자동으로 열리도록 설정
+  useEffect(() => {
+    setIsModalOpen(true); // 페이지 진입 시 모달 열기
+  }, []);
 
   if (!user || !userData) {
     return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
@@ -289,6 +301,9 @@ const Contribution: React.FC = () => {
                 ))}
           </CardGrid>
         </ContributionContent>
+        <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <ContributionModal onClose={handleCloseModal} />
+        </RedirectModal>
       </ContributionContainer>
     </>
   );

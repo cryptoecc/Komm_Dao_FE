@@ -7,6 +7,7 @@ import Sidebar from '../../components/dashboard/sidebar/Sidebar';
 import styled from 'styled-components';
 import RedirectModal from 'src/components/admin/modal/common/RedirectModal';
 import GovernanceModal from 'src/components/admin/modal/redirectMotal/Governance';
+import ContributionModal from 'src/components/admin/modal/redirectMotal/Contribution';
 
 const MainBoardContainer = styled.div`
   width: 100%;

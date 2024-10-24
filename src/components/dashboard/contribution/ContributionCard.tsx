@@ -89,7 +89,7 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
         <DateRange>
           {startDate} ~ {endDate}
         </DateRange>
-        {type !== 'Daily-check' && (
+        {type !== 'Daily-check' && type !== 'Rate-project' && (
           <>
             <ProgressBarContainer>
               <ProgressBar $progress={progress} $maxProgress={maxProgress} />

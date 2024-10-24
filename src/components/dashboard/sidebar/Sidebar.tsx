@@ -5,6 +5,7 @@ import { SidebarContainer, Logo, NavItem, Icon, Name, NotificationItem } from '.
 import { images } from '../../../assets/dashboard/images';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'src/components/admin/modal/common/Modal';
+import ContributionModal from 'src/components/admin/modal/redirectMotal/Contribution';
 
 interface SidebarProps {
   onGovernanceClick: () => void; // 모달 열기 함수
@@ -12,7 +13,12 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onGovernanceClick }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   // const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleContributionClick = () => {
+    setIsModalOpen(true); // 모달 열기
+  };
 
   const handleLogoClick = () => {
     navigate('/mainboard/dashboard'); // 메인 페이지 경로로 이동
@@ -43,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onGovernanceClick }) => {
         <Icon $imageUrl={images.discoverIcon} />
         <Name>Discover</Name>
       </NavItem>
-      <NavItem to={PATH.CONTRIBUTION}>
+      <NavItem to={PATH.CONTRIBUTION} onClick={handleContributionClick}>
         <Icon $imageUrl={images.contributionIcon} />
         <Name>Contribution</Name>
       </NavItem>

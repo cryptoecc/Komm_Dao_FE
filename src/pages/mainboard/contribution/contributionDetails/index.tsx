@@ -9,18 +9,25 @@ import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import backArrow from 'src/assets/contribution/arrow_back.svg';
 
+const Container = styled.div`
+  /* height: 100%; */
+  max-height: 1080px;
+`;
+
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* padding: 40px 10px; */
+  /* adding: 40px 10px; */
   height: 100%;
+
   margin: 0 auto;
   /* padding: 30px; */
   /* max-height: 1080px; */
   /* max-width: 1920px; */
   @media (min-width: 1600px) {
     width: 1180px;
+    margin-top: 180px;
     /* margin-left: 150px;
     margin-right: 150px; */
     /* height: 700px; */
@@ -100,8 +107,13 @@ const DealDtailsPage: React.FC = () => {
   }
 
   return (
-    <>
+    <Container>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '30px' }}>
+        <BackButton onClick={() => navigate(-1)}>
+          <BackLink>
+            <img src={backArrow} alt="Back Arrow" /> {/* 이미지로 대체 */}Back to Contribution
+          </BackLink>
+        </BackButton>
         <WalletWrap>
           <Wallet
             address={userData.walletAddress}
@@ -110,17 +122,12 @@ const DealDtailsPage: React.FC = () => {
             expertise={userData.expertise}
           />
         </WalletWrap>
-        <BackButton onClick={() => navigate(-1)}>
-          <BackLink>
-            <img src={backArrow} alt="Back Arrow" /> {/* 이미지로 대체 */}Back to Contribution
-          </BackLink>
-        </BackButton>
       </div>
 
       <PageContainer>
         <ContributionDetail />
       </PageContainer>
-    </>
+    </Container>
   );
 };
 

@@ -45,6 +45,7 @@ import { XpClaim_ABI } from 'src/configs/contract-abi/XpClaim';
 import Spinner from 'src/components/spinner/Spinner';
 import DailyCheckSection from './dailyCheckComponent/DailyCheckSection';
 import { checkPrime } from 'crypto';
+import RateProjectSection from './rateProjectComponent/RateProjectSection';
 
 dayjs.extend(customParseFormat);
 
@@ -88,6 +89,9 @@ const ContributionDetail: React.FC = () => {
   const [contType, setContType] = useState<string>('');
   const [dailyCheck, setDailyCheck] = useState<string>('');
   const [todayChecked, setTodayChecked] = useState<string>('');
+  const [data, setData] = useState([]);
+  const [rateConfirm, setRateConfirm] = useState<string>('');
+  const [isReloaded, setIsReloaded] = useState(false); // 리렌더링을 위한 상태
 
   const contractAddress = '0x15e7a34b6a5aBf8b0aD4FcD85D873FD7e7163E97';
   const contractABI = XpClaim_ABI;
@@ -95,6 +99,8 @@ const ContributionDetail: React.FC = () => {
   const adminPrivateKey = process.env.REACT_APP_ADMIN_WALLET_PRIVATE_KEY || '';
 
   const userId = useSelector((state: RootState) => state.user.user_id);
+  const userWallet = useSelector((state: RootState) => state.user.wallet_addr);
+  console.log(type);
 
   // XP 잔액을 가져와서 백엔드에 업데이트하는 함수
   const updateXPBalance = async (walletAddress: string, xpBalance: number) => {
@@ -209,9 +215,11 @@ const ContributionDetail: React.FC = () => {
 
       await fetchInviteDetails();
       await dailyConfirmCheck();
+
+      setIsReloaded((prev) => !prev);
     } catch (error) {
-      console.error('XP 클레임 중 오류 발생:', error);
-      alert('XP 클레임 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      console.error('XP Claimed Error :', error);
+      alert('XP Claimed Error. Please try it again');
     } finally {
       setIsLoading(false); // 요청 완료 후 로딩 상태 해제
     }
@@ -372,6 +380,8 @@ const ContributionDetail: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching invite details:', error);
+      setDailyCheck('N');
+      setTodayChecked('N');
     }
   };
 
@@ -404,27 +414,9 @@ const ContributionDetail: React.FC = () => {
     }
   };
 
-  // const checkDaily = async () => {
-  //   try {
-  //     const response = await axios.post(`${API_BASE_URL}/api/contribution/daily-check-confirm`, {
-  //       cont_id: id,
-  //       user_id: userId,
-  //       cont_type: type,
-  //     });
-
-  //     if (response.data && response.data.claim_yn) {
-  //       setTodayChecked(response.data.claim_yn); // claim_yn 상태 업데이트
-  //     } else {
-  //       setTodayChecked('N');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching claim_yn:', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkDaily();
-  // }, []);
+  const handleRateConfirmChange = (newRateConfirm: string) => {
+    setRateConfirm(newRateConfirm); // 자식 컴포넌트로부터 받은 값을 저장
+  };
 
   return (
     <Container>
@@ -490,6 +482,15 @@ const ContributionDetail: React.FC = () => {
               </>
             ) : type === 'Daily-check' ? (
               <DailyCheckSection onDailyCheck={handleDailyCheck} status={dailyCheck} limit={todayChecked} />
+            ) : type === 'Rate-project' ? (
+              <RateProjectSection
+                id={id}
+                pjtId={pjtId}
+                type={type}
+                xp={xp}
+                onRateConfirmChange={handleRateConfirmChange}
+                isReloaded={isReloaded}
+              />
             ) : (
               <TaskSection>
                 <ul>
@@ -513,7 +514,7 @@ const ContributionDetail: React.FC = () => {
             )}
           </TaskWrapper>
 
-          {type !== 'Daily-check' && (
+          {type !== 'Daily-check' && type !== 'Rate-project' && (
             <ParticipantSection>
               <h4>Participants</h4>
               <ProgressContainer>
@@ -539,6 +540,10 @@ const ContributionDetail: React.FC = () => {
             </ClaimButton>
           ) : type === 'Daily-check' ? (
             <ClaimButton onClick={handleClaimXPClick} disabled={isLoading || dailyCheck === 'N'}>
+              {isLoading ? <Spinner /> : <ClaimButtonText>Claim</ClaimButtonText>}
+            </ClaimButton>
+          ) : type === 'Rate-project' ? (
+            <ClaimButton onClick={handleClaimXPClick} disabled={isLoading || rateConfirm === 'N'}>
               {isLoading ? <Spinner /> : <ClaimButtonText>Claim</ClaimButtonText>}
             </ClaimButton>
           ) : (

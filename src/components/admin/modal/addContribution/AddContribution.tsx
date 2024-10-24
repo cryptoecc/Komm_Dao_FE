@@ -252,6 +252,7 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
             <option value="Marketing">Marketing</option>
             <option value="Invite">Invite</option>
             <option value="Daily-check">Daily-check</option>
+            <option value="Rate-project">Rate-project</option>
           </Select>
         </TeamCategory>
         <DateWrapper>
@@ -308,6 +309,7 @@ const AddContribution: React.FC<AddContributionProps> = ({ onCancel }) => {
                 <option value="Telegram Join">Telegram Join</option>
                 <option value="Invite People">Invite People</option>
                 <option value="Daily Check">Daily Check</option>
+                <option value="Rate Project">Rate Project</option>
               </MissionSelect>
 
               <MissionInput
