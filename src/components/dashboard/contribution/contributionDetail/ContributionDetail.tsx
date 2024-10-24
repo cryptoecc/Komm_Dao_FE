@@ -520,32 +520,36 @@ const ContributionDetail: React.FC = () => {
             )}
           </TaskWrapper>
 
-          {type !== 'Daily-check' && type !== 'Rate-project' && (
-            <ParticipantSection>
-              <h4>Participants</h4>
-              <ProgressContainer>
-                <ProgressBar $progress={progress} $maxProgress={maxProgress} />
-                <ProgressText>
-                  {progress} / {maxProgress}
-                </ProgressText>
-              </ProgressContainer>
-              <AvatarList>
-                {participants.map((participant) => (
-                  <Avatar key={participant.id}>
-                    <img
-                      src={
-                        participant.user_image_link
-                          ? `${API_BASE_URL}/${participant.user_image_link}`
-                          : images.profileDefaultIcon
-                      }
-                      alt={participant.user_name || 'Default Avatar'}
-                    />
-                    {participant.user_name}
-                  </Avatar>
-                ))}
-              </AvatarList>
-            </ParticipantSection>
-          )}
+          {type !== 'Daily-check' &&
+            type !== 'Rate-project' &&
+            participants &&
+            Array.isArray(participants) &&
+            participants.length > 0 && (
+              <ParticipantSection>
+                <h4>Participants</h4>
+                <ProgressContainer>
+                  <ProgressBar $progress={progress} $maxProgress={maxProgress} />
+                  <ProgressText>
+                    {progress} / {maxProgress}
+                  </ProgressText>
+                </ProgressContainer>
+                <AvatarList>
+                  {participants.map((participant) => (
+                    <Avatar key={participant.id}>
+                      <img
+                        src={
+                          participant.user_image_link
+                            ? `${API_BASE_URL}/${participant.user_image_link}`
+                            : images.profileDefaultIcon
+                        }
+                        alt={participant.user_name || 'Default Avatar'}
+                      />
+                      {participant.user_name}
+                    </Avatar>
+                  ))}
+                </AvatarList>
+              </ParticipantSection>
+            )}
           {/* Claim 버튼 */}
           {type === 'Invite' ? (
             <ClaimButton onClick={handleClaimXPClick} disabled={isLoading || claim === 'N'}>
