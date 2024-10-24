@@ -193,7 +193,7 @@ export const TooltipContainer = styled.div`
     line-height: 25px;
     position: absolute;
     background-color: #eeedfd;
-    color: #404040
+    color: #404040;
     text-align: left;
     padding: 20px;
     border-radius: 8px;

@@ -130,7 +130,7 @@ export const Select = styled.select`
 
   option {
     background-color: #fff;
-    color: #404040
+    color: #404040;
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
   }
@@ -169,7 +169,7 @@ export const TextArea = styled.textarea`
 export const AddMembersButton = styled.button`
   background-color: transparent;
   border: none;
-  color: #404040
+  color: #404040;
   cursor: pointer;
   font-size: 16px;
   margin-bottom: 20px;

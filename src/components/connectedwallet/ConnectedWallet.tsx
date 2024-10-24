@@ -55,7 +55,7 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
       if (response.data.success) {
         console.log(response.data);
         dispatch(setUserData(response.data.data));
-        alert('Wallet verified successfully');
+        alert('Wallet connected successfully');
         navigate('/mainboard/dashboard');
       } else {
         // 백엔드에서 전송된 메시지에 따라 알림 또는 오류 메시지 설정
@@ -88,7 +88,7 @@ const ConnectedWallet: React.FC<ConnectedWalletProps> = ({ walletAddress, onDisc
         <CloseIcon />
       </CloseButton>
       <ModalHeader>
-        <h2>Sign in with your wallet</h2>
+        <h2>Sign with your wallet</h2>
       </ModalHeader>
       <ConnectedWalletWrapper>
         <div>

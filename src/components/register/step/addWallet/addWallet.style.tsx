@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div``;
 
 export const Text = styled.p`
-  color: #404040
+  color: #404040;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -11,7 +11,7 @@ export const Text = styled.p`
 `;
 
 export const SubText = styled.p`
-  color: #404040
+  color: #404040;
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -19,9 +19,9 @@ export const SubText = styled.p`
 `;
 
 export const WalletContainer = styled.div`
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
   height: 58px;
-  /* justify-content: ; */
   align-items: center;
   gap: 10px;
   margin-top: 40px;

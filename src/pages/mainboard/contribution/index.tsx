@@ -39,6 +39,7 @@ const ContributionHeader = styled.div`
   align-items: center; /* 수직 중앙 정렬 */
   /* margin-bottom: px; */
   margin-right: 60px;
+  margin-top: 30px;
 `;
 
 const WalletWrap = styled.div`
@@ -46,11 +47,9 @@ const WalletWrap = styled.div`
 `;
 
 const ContributionTitle = styled.h1`
-  color: #1a0737;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  color: #404040;
+  font-size: 30px;
+  font-weight: 500;
   margin-bottom: 20px;
 `;
 
@@ -181,7 +180,7 @@ const Contribution: React.FC = () => {
   console.log(contributionData);
 
   return (
-    <ContributionContainer>
+    <>
       <ContributionHeader>
         <ContributionTitle>Contribution</ContributionTitle>
         <WalletWrap>
@@ -193,37 +192,37 @@ const Contribution: React.FC = () => {
           />
         </WalletWrap>
       </ContributionHeader>
-
-      <ContributionContent>
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
-          loop={true}
-        >
-          {contributionData.map((slide) => (
-            <SwiperSlide key={slide.cont_id}>
-              <ContributionMain
-                logoUrl={slide.cont_logo}
-                title={slide.pjt_name}
-                kohortLabel={slide.cont_category}
-                totalAvg={'300'}
-                xp={slide.cont_xp}
-                startDate={slide.start_date}
-                endDate={slide.end_date}
-                progress={slide.cur_participant}
-                progressText={slide.progressText}
-                desc={slide.cont_desc}
-                imageUrl={slide.cont_banner}
-                id={slide.cont_id}
-                maxProgress={slide.max_participant}
-                type={slide.cont_type}
-                pjtId={slide.pjt_id}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        {/* <Slider {...settings}>
+      <ContributionContainer>
+        <ContributionContent>
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 5000 }}
+            loop={true}
+          >
+            {contributionData.map((slide) => (
+              <SwiperSlide key={slide.cont_id}>
+                <ContributionMain
+                  logoUrl={slide.cont_logo}
+                  title={slide.pjt_name}
+                  kohortLabel={slide.cont_category}
+                  totalAvg={'300'}
+                  xp={slide.cont_xp}
+                  startDate={slide.start_date}
+                  endDate={slide.end_date}
+                  progress={slide.cur_participant}
+                  progressText={slide.progressText}
+                  desc={slide.cont_desc}
+                  imageUrl={slide.cont_banner}
+                  id={slide.cont_id}
+                  maxProgress={slide.max_participant}
+                  type={slide.cont_type}
+                  pjtId={slide.pjt_id}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* <Slider {...settings}>
           {contributionData.map((slide) => (
             <ContributionMain
               key={slide.cont_id}
@@ -244,53 +243,54 @@ const Contribution: React.FC = () => {
             />
           ))}
         </Slider> */}
-        <ContributionTabs>
-          <TabButton $active={activeTab === 'Ongoing'} onClick={() => setActiveTab('Ongoing')}>
-            Ongoing
-          </TabButton>
-          <TabButton $active={activeTab === 'Finished'} onClick={() => setActiveTab('Finished')}>
-            Finished
-          </TabButton>
-        </ContributionTabs>
-        <CardGrid>
-          {activeTab === 'Ongoing'
-            ? ongoingCards.map((card) => (
-                <ContributionCard
-                  key={card.cont_id}
-                  id={card.cont_id} // id를 추가하여 넘김
-                  title={card.pjt_name}
-                  xp={card.cont_xp}
-                  imageUrl={card.cont_banner}
-                  logoUrl={card.cont_logo}
-                  startDate={card.start_date}
-                  endDate={card.end_date}
-                  progress={card.cur_participant}
-                  maxProgress={card.max_participant}
-                  type={card.cont_type} // Kohort only 값을 넘김
-                  desc={card.cont_desc}
-                  pjtId={card.pjt_id}
-                />
-              ))
-            : finishedCards.map((card) => (
-                <ContributionCard
-                  key={card.cont_id}
-                  id={card.cont_id} // id를 추가하여 넘김
-                  title={card.pjt_name}
-                  xp={card.cont_xp}
-                  imageUrl={card.cont_banner}
-                  logoUrl={card.cont_logo}
-                  startDate={card.start_date}
-                  endDate={card.end_date}
-                  progress={card.cur_participant}
-                  maxProgress={card.max_participant}
-                  type={card.cont_type} // Kohort only 값을 넘김
-                  desc={card.cont_desc}
-                  pjtId={card.pjt_id}
-                />
-              ))}
-        </CardGrid>
-      </ContributionContent>
-    </ContributionContainer>
+          <ContributionTabs>
+            <TabButton $active={activeTab === 'Ongoing'} onClick={() => setActiveTab('Ongoing')}>
+              Ongoing
+            </TabButton>
+            <TabButton $active={activeTab === 'Finished'} onClick={() => setActiveTab('Finished')}>
+              Finished
+            </TabButton>
+          </ContributionTabs>
+          <CardGrid>
+            {activeTab === 'Ongoing'
+              ? ongoingCards.map((card) => (
+                  <ContributionCard
+                    key={card.cont_id}
+                    id={card.cont_id} // id를 추가하여 넘김
+                    title={card.pjt_name}
+                    xp={card.cont_xp}
+                    imageUrl={card.cont_banner}
+                    logoUrl={card.cont_logo}
+                    startDate={card.start_date}
+                    endDate={card.end_date}
+                    progress={card.cur_participant}
+                    maxProgress={card.max_participant}
+                    type={card.cont_type} // Kohort only 값을 넘김
+                    desc={card.cont_desc}
+                    pjtId={card.pjt_id}
+                  />
+                ))
+              : finishedCards.map((card) => (
+                  <ContributionCard
+                    key={card.cont_id}
+                    id={card.cont_id} // id를 추가하여 넘김
+                    title={card.pjt_name}
+                    xp={card.cont_xp}
+                    imageUrl={card.cont_banner}
+                    logoUrl={card.cont_logo}
+                    startDate={card.start_date}
+                    endDate={card.end_date}
+                    progress={card.cur_participant}
+                    maxProgress={card.max_participant}
+                    type={card.cont_type} // Kohort only 값을 넘김
+                    desc={card.cont_desc}
+                    pjtId={card.pjt_id}
+                  />
+                ))}
+          </CardGrid>
+        </ContributionContent>
+      </ContributionContainer>
+    </>
   );
 };
 

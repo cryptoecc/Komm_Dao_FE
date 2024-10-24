@@ -13,7 +13,6 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ onClose }) => {
     const timer = setTimeout(() => {
       window.location.href = '/registration'; // 등록 페이지로 리디렉션
     }, 3000); // 5초 후 리디렉션
-
     return () => clearTimeout(timer);
   }, []);
 

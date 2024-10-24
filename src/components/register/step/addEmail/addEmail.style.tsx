@@ -41,7 +41,7 @@ export const Email = styled.div`
     background: none;
     width: 100%;
     font-size: 20px;
-    color: #404040
+    color: #404040;
     font-weight: 400;
     line-height: normal;
 
@@ -63,7 +63,7 @@ export const NextButton = styled.button`
   background: var(--Purple-900, #6a5feb);
   border: none;
   border-radius: 20px;
-  padding: 8px 30px;
+  padding: 10px 30px;
   color: #fff;
   font-size: 20px;
   font-weight: 700;
@@ -156,6 +156,12 @@ export const Code = styled.div`
 
     &:focus {
       outline: none;
+    }
+
+    &::placeholder {
+      color: #404040; // placeholder의 텍스트 색상 변경
+      font-size: 20px;
+      /* opacity: 0.7; // 투명도 조절 */
     }
   }
 `;

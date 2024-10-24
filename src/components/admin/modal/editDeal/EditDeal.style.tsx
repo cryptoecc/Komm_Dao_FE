@@ -133,7 +133,7 @@ export const Select = styled.select`
   color: #797777;
   option {
     background-color: #fff;
-    color: #404040
+    color: #404040;
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
   }
@@ -269,7 +269,6 @@ export const Date = styled.div`
     border: 1px solid rgba(0, 0, 0, 0.5);
     font-size: 20px;
     font-weight: 300;
-    font-family: Inter;
     font-style: normal;
     /* display: flex; */
     align-items: center;
@@ -314,7 +313,7 @@ export const RoundSelect = styled.select`
   color: #797777;
   option {
     background-color: #fff;
-    color: #404040
+    color: #404040;
     padding: 10px;
     border-radius: 20px; /* 옵션의 모서리를 둥글게 */
   }

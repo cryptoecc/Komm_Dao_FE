@@ -37,9 +37,10 @@ export const ProfileImage = styled.img`
   flex-shrink: 0;
   border-radius: 50px;
   object-fit: cover;
+  image-rendering: auto;
 
   @media (max-width: 768px) {
-    width: 90px; /* 작은 화면에서는 이미지 크기 축소 */
+    width: 80px; /* 작은 화면에서는 이미지 크기 축소 */
     height: 80px;
     margin-top: 10px;
     border-radius: 50px;
@@ -263,10 +264,13 @@ export const StatValue = styled.div`
 `;
 
 export const StyledLinkWrap = styled.div`
-  width: 100%;
+  width: 212px;
   display: flex;
   align-items: center;
   /* margin-top: 10px; */
+  border-bottom: 2px solid #6a5feb; /* 밑줄 스타일 추가 */
+  padding-bottom: 1px; /* 밑줄과의 간격 조절 */
+
   @media (min-width: 768px) {
     margin: 0;
   }
@@ -279,7 +283,7 @@ export const StyledLink = styled(Link)`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  text-decoration-line: underline;
+  /* text-decoration-line: underline; */
   margin-top: 10px;
 
   @media (max-width: 768px) {

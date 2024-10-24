@@ -15,7 +15,7 @@ const DashboardContainer = styled.div`
   max-width: 1920px;
 
   @media (min-width: 1600px) {
-    margin-top: 90px;
+    margin-top: 70px;
     margin-left: 100px;
     margin-right: 100px;
     /* margin-bottom: 70px; */
@@ -26,7 +26,8 @@ const DashboardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
+  margin-top: 30px;
 `;
 
 const DashboardTitle = styled.h1`
@@ -34,6 +35,7 @@ const DashboardTitle = styled.h1`
   font-size: 30px;
   font-weight: 500;
   margin-bottom: 20px;
+  margin-right: 100px;
 `;
 
 const WalletWrap = styled.div`
@@ -87,7 +89,7 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <DashboardContainer>
+    <>
       <DashboardHeader>
         <DashboardTitle>Dashboard</DashboardTitle>
         <WalletWrap>
@@ -99,9 +101,11 @@ const Dashboard: React.FC = () => {
           />
         </WalletWrap>
       </DashboardHeader>
-      <ProfileCard />
-      <UserStats />
-    </DashboardContainer>
+      <DashboardContainer>
+        <ProfileCard />
+        <UserStats />
+      </DashboardContainer>
+    </>
   );
 };
 

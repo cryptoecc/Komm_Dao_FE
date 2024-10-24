@@ -37,8 +37,7 @@ export const ModalHeader = styled.div`
 export const ModalTitle = styled.h3`
   font-size: 26px;
   font-weight: 600;
-  color: #404040
-  font-family: Inter;
+  color: #404040;
 `;
 
 // 닫기 버튼 스타일
@@ -111,10 +110,9 @@ export const EmailInput = styled.input`
 export const AddPersonButton = styled.button`
   background: none;
   border: none;
-  color: #404040
+  color: #404040;
   font-size: 17px;
   font-weight: 400;
-  font-family: Inter;
   cursor: pointer;
   margin: 10px 0;
 
@@ -167,7 +165,6 @@ export const RemoveButton = styled.button`
 
 export const Label = styled.label`
   font-weight: 400;
-  font-family: Inter;
   margin-bottom: 5px;
   font-size: 16px;
 `;

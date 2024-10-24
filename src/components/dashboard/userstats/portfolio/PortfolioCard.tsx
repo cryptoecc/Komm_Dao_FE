@@ -54,8 +54,8 @@ const PortfolioCard: React.FC = () => {
       <Header>
         <HeaderItem>Date</HeaderItem>
         <HeaderItem>Participation</HeaderItem>
-        <HeaderItem>Project</HeaderItem>
-        <HeaderItem>Amount</HeaderItem>
+        <HeaderItem className="project">Project</HeaderItem>
+        <HeaderItem className="amount">Amount</HeaderItem>
         <HeaderItem>Status</HeaderItem>
       </Header>
       <DataContainer>
@@ -68,8 +68,8 @@ const PortfolioCard: React.FC = () => {
             <DataRow key={index}>
               <DataItem>{item.update_date}</DataItem>
               <DataItem>{item.participation}</DataItem>
-              <DataItem>{item.deal_name}</DataItem>
-              <DataItem>{item.user_value}</DataItem>
+              <DataItem className="dealname">{item.deal_name}</DataItem>
+              <DataItem className="uservalue">{item.user_value}</DataItem>
               <DataItem>{item.deal_status}</DataItem>
             </DataRow>
           ))

@@ -1,6 +1,6 @@
 // src/assets/dashboard/images.ts
 import dashboardIcon from './dashboard.png';
-import dealIcon from './deal.png';
+import dealIcon from './edit_latest.svg';
 import discoverIcon from './discover.png';
 import contributionIcon from './contribution.png';
 import governanceIcon from './governance.png';
@@ -14,6 +14,7 @@ import openSeaIcon from './openSea.png';
 import editIcon2 from './edit.png';
 import default_profile from './default_image.png';
 import edit_black from './edit_black.png';
+import arrow_forward from './arrow_forward.svg';
 
 export const images = {
   dashboardIcon,
@@ -31,4 +32,5 @@ export const images = {
   openSeaIcon,
   default_profile,
   edit_black,
+  arrow_forward,
 };

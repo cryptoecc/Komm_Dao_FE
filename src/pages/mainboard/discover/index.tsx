@@ -24,6 +24,7 @@ const DiscoverdHeader = styled.div`
   display: flex;
   justify-content: space-between; /* 양 끝으로 배치 */
   align-items: center; /* 수직 중앙 정렬 */
+  margin-top: 30px;
   margin-bottom: 20px;
 `;
 
@@ -32,11 +33,9 @@ const WalletWrap = styled.div`
 `;
 
 const DiscoverTitle = styled.h1`
-  color: #1a0737;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  color: #404040;
+  font-size: 30px;
+  font-weight: 500;
   margin-bottom: 20px;
 `;
 
@@ -107,7 +106,7 @@ const Discover: React.FC = () => {
   };
 
   return (
-    <DiscoverContainer>
+    <>
       <DiscoverdHeader>
         <DiscoverTitle>Discover</DiscoverTitle>
         <WalletWrap>
@@ -119,21 +118,22 @@ const Discover: React.FC = () => {
           />
         </WalletWrap>
       </DiscoverdHeader>
-
-      <DiscoverContent>
-        <TopContents>
-          <SearchBar onSearch={handleSearch} />
-          <CalendarButton onClick={handleCalenderClick}>
-            <img src={CalendarIcon} alt="Calendar icon" />
-            My Calendar
-          </CalendarButton>
-        </TopContents>
-        <DiscoverList searchTerm={searchTerm} />
-      </DiscoverContent>
-      <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <CalenderModal onClose={handleCloseModal} />
-      </RedirectModal>
-    </DiscoverContainer>
+      <DiscoverContainer>
+        <DiscoverContent>
+          <TopContents>
+            <SearchBar onSearch={handleSearch} />
+            <CalendarButton onClick={handleCalenderClick}>
+              <img src={CalendarIcon} alt="Calendar icon" />
+              My Calendar
+            </CalendarButton>
+          </TopContents>
+          <DiscoverList searchTerm={searchTerm} />
+        </DiscoverContent>
+        <RedirectModal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <CalenderModal onClose={handleCloseModal} />
+        </RedirectModal>
+      </DiscoverContainer>
+    </>
   );
 };
 

@@ -6,8 +6,8 @@ export const ModalHeader = styled.div`
   justify-content: start;
   /* align-items: center; */
   margin-top: 20px;
-  color: #404040
-  font-size: 25px;
+  color: #404040;
+  font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -18,7 +18,7 @@ export const ModalHeader = styled.div`
 
 export const DirectMsg = styled.p`
   color: #875cff;
-  font-size: 25px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

@@ -29,14 +29,12 @@ const WalletWrap = styled.div`
 
 const BackButton = styled.div`
   display: flex;
-  height: 20px;
   gap: 15px;
-  width: 180px;
-  /* float: left; */
   cursor: pointer;
-  color: #875cff;
-  font-weight: 700;
-  font-size: 20px;
+  align-items: center;
+  color: #6a5feb;
+  font-weight: 500;
+  font-size: 18px;
   /* margin-bottom: 20px; Title 아래에 위치하도록 조정 */
 `;
 
@@ -113,8 +111,8 @@ const DealDtailsPage: React.FC = () => {
     return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
   }
   return (
-    <PageContainer>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '30px' }}>
         <BackButton onClick={() => navigate(-1)}>
           <ArrowIcon />
           Back to Deal
@@ -128,8 +126,10 @@ const DealDtailsPage: React.FC = () => {
           />
         </WalletWrap>
       </div>
-      <DealDetails />
-    </PageContainer>
+      <PageContainer>
+        <DealDetails />
+      </PageContainer>
+    </>
   );
 };
 

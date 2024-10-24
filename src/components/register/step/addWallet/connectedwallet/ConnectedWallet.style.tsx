@@ -16,12 +16,11 @@ export const ModalHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 50px;
-  color: #404040
+  color: #404040;
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  font-family: Inter;
   padding: 0px 256px 60px 0px;
   /* top: 150px; */
 `;
@@ -49,7 +48,7 @@ export const ConnectedWalletWrapper = styled.div`
 
 export const DisconnectButton = styled.button`
   display: flex;
-  color: #404040
+  color: #404040;
   font-size: 20px;
   font-weight: 400;
   line-height: normal;
@@ -78,7 +77,7 @@ export const CancelButton = styled.button`
   padding: 17px 26px;
   align-items: center;
   border: 1px solid #000;
-  color: #404040
+  color: #404040;
   font-size: 20px;
   font-style: normal;
   font-weight: 500;

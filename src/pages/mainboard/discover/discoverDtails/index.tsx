@@ -43,8 +43,9 @@ const BackButton = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  color: #875cff;
-  font-weight: 700;
+  color: #6a5feb;
+  font-size: 18px;
+  font-weight: 500;
   margin-bottom: 20px;
 `;
 
@@ -139,11 +140,12 @@ const DiscoverDetails: React.FC = () => {
     return <div>Loading...</div>; // user 또는 userData가 없을 때 로딩 처리
   }
   return (
-    <DiscoverContainer>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <>
+      {' '}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '30px' }}>
         <BackButton onClick={() => navigate(-1)}>
           <ArrowIcon />
-          Back to Deal
+          Back to Discover
         </BackButton>
         <WalletWrap>
           <Wallet
@@ -154,12 +156,14 @@ const DiscoverDetails: React.FC = () => {
           />
         </WalletWrap>
       </div>
-      <DiscoverContent>
-        <DiscoverDetail />
-        <CommunityRating rating={rating} percentile={percentile} />
-        <DiscoverParticipantList participants={participants} onXpClaimed={handleXpClaimed} />
-      </DiscoverContent>
-    </DiscoverContainer>
+      <DiscoverContainer>
+        <DiscoverContent>
+          <DiscoverDetail />
+          <CommunityRating rating={rating} percentile={percentile} />
+          <DiscoverParticipantList participants={participants} onXpClaimed={handleXpClaimed} />
+        </DiscoverContent>
+      </DiscoverContainer>
+    </>
   );
 };
 

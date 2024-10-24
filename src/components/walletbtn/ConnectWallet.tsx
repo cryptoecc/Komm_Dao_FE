@@ -88,7 +88,7 @@ const ConnectWallet: React.FC = () => {
               <CloseIcon />
             </CloseButton>
             <ModalHeader>
-              <h2>Sign in with your wallet</h2>
+              <h2>Sign with your wallet</h2>
             </ModalHeader>
             <WalletOptions>
               <WalletOptionButton onClick={() => handleConnect('metamask')}>

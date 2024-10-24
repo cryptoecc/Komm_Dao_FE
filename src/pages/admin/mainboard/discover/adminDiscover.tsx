@@ -493,6 +493,9 @@ const AdminDiscover = () => {
   //   }
   // };
   const handleCellClick = (content: string) => {
+    if (isEditable) {
+      return;
+    }
     if (clipboardRef.current) {
       clipboardRef.current.setAttribute('data-clipboard-text', content);
       clipboardRef.current.click(); // 버튼 클릭을 트리거하여 클립보드 복사 실행

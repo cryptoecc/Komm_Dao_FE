@@ -24,14 +24,28 @@ export const Header = styled.div`
 `;
 
 export const HeaderItem = styled.div`
-  flex: 1;
+  /* flex: 1; */
   text-align: center;
-  min-width: 100px; /* 아이템의 최소 너비를 설정하여 줄바꿈 방지 */
+  width: 300px; /* 아이템의 최소 너비를 설정하여 줄바꿈 방지 */
   color: #404040;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 17.86px; /* 99.222% */
+
+  &.project {
+    width: 400px;
+
+    /* flex-basis: 50px; */
+    /* flex-shrink: 0; 너비를 고정하고 줄어들지 않게 설정 */
+  }
+
+  &.amount {
+    width: 200px;
+
+    /* flex-basis: 50px; */
+    /* flex-shrink: 0; 너비를 고정하고 줄어들지 않게 설정 */
+  }
 
   @media (max-width: 768px) {
     font-size: 12px; /* 화면이 좁을 때 텍스트 크기 줄이기 */
@@ -64,16 +78,25 @@ export const DataRow = styled.div`
 `;
 
 export const DataItem = styled.div`
-  flex: 1;
   text-align: center;
-
-  min-width: 100px; /* 아이템의 최소 너비를 설정하여 줄바꿈 방지 */
+  /* padding-left: 5px; */
+  width: 300px; /* 아이템의 최소 너비를 설정하여 줄바꿈 방지 */
   color: #404040;
-
+  align-items: center;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 17.86px; /* 111.625% */
+
+  &.dealname {
+    width: 400px;
+    padding-left: 15px;
+  }
+
+  &.uservalue {
+    width: 200px;
+    padding-left: 15px;
+  }
 
   @media (max-width: 768px) {
     font-size: 12px; /* 화면이 좁을 때 텍스트 크기 줄이기 */

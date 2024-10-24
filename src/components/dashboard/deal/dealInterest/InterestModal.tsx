@@ -45,11 +45,11 @@ const InterestModal: React.FC<InterestModalProps> = ({
       onInvalid();
     } else {
       setIsSubmissionComplete(true);
-      // setTimeout(() => {
-      //   onConfirm();
-      //   toast.success('Submission successful!'); // 성공 알림 표시
-      //   navigate('/mainboard/dashboard'); // 대시보드로 리디렉션
-      // }, 3000); // 3초 후 리디렉션
+      setTimeout(() => {
+        onConfirm();
+        toast.success('Submission successful!'); // 성공 알림 표시
+        navigate('/mainboard/dashboard'); // 대시보드로 리디렉션
+      }, 3000); // 3초 후 리디렉션
     }
   };
 

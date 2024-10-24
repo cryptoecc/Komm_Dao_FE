@@ -180,12 +180,10 @@ export const Input = styled.input`
   font-size: 20px;
   font-weight: 400;
   line-height: normal;
-  font-family: Inter;
-  color: #404040
+  color: #404040;
 
   &::placeholder {
     color: rgba(0, 0, 0, 0.5);
-    font-family: Inter;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -204,7 +202,6 @@ export const TextArea = styled.textarea`
   font-weight: 400;
   line-height: normal;
   color: rgba(0, 0, 0, 0.5);
-  font-family: Inter;
 `;
 
 export const CheckboxWrapper = styled.div`
@@ -243,7 +240,7 @@ export const Label = styled.label`
   font-size: 20px;
   font-weight: 500;
   line-height: normal;
-  color: #404040
+  color: #404040;
   cursor: pointer;
   user-select: none;
 `;

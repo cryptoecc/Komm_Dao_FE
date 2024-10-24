@@ -131,7 +131,7 @@ const ProfileCard: React.FC = () => {
           <StatValue>{formatNumber(userData.stats?.governance ?? 0)}</StatValue>
         </Stat>
         <StyledLinkWrap>
-          <LinkIcon src={images.pointsIcon} alt="Points Icon" />
+          <LinkIcon src={images.arrow_forward} alt="Points Icon" />
           <StyledLink to="/mainboard/discover/calendar" onClick={handleCalenderClick}>
             Go to My Calendar
           </StyledLink>

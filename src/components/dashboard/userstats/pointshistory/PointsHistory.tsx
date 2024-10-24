@@ -64,8 +64,8 @@ const PointsHistory: React.FC = () => {
       <Header>
         <HeaderItem>Date</HeaderItem>
         <HeaderItem>Participation</HeaderItem>
-        <HeaderItem>Activity</HeaderItem>
-        <HeaderItem>XP Earned</HeaderItem>
+        <HeaderItem className="activity">Activity</HeaderItem>
+        <HeaderItem className="xp">XP Earned</HeaderItem>
         <HeaderItem>Transaction ID</HeaderItem>
       </Header>
       <DataContainer>
@@ -80,8 +80,8 @@ const PointsHistory: React.FC = () => {
             <DataRow key={index}>
               <DataItem>{new Date(item.date).toLocaleString()}</DataItem>
               <DataItem>{item.participation}</DataItem>
-              <DataItem>{item.activity}</DataItem>
-              <DataItem>{item.xpEarned}</DataItem>
+              <DataItem className="activity">{item.activity}</DataItem>
+              <DataItem className="xp">{item.xpEarned}</DataItem>
               <DataItem>
                 <a
                   href={`https://holesky.etherscan.io/tx/${item.transactionId}`}

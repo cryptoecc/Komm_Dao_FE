@@ -28,6 +28,10 @@ export const Container = styled.div`
     padding: 8px;
     min-height: 55vh;
   }
+
+  @media (min-width: 1600px) {
+    margin-top: 50px;
+  }
 `;
 
 export const Title = styled.h1`

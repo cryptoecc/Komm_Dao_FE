@@ -22,7 +22,7 @@ const NextButton = styled.button`
   &:disabled {
     background: #fff;
     border: 1px solid #000;
-    color: #404040
+    color: #404040;
     line-height: normal;
     cursor: not-allowed;
     font-weight: 500;

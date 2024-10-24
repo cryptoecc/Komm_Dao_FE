@@ -23,7 +23,7 @@ export const ModalContent = styled.div`
 export const ModalTitle = styled.h2`
   font-size: 28px;
   font-weight: bold;
-  color: #404040
+  color: #404040;
   margin-bottom: 20px;
 `;
 

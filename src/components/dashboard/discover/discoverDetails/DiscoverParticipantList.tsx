@@ -79,7 +79,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants,
   const truncateProjectName = (name: string, maxLength: number) => {
     return name.length > maxLength ? name.substring(0, maxLength) + '...' : name;
   };
-  const truncatedProjectName = truncateProjectName(projectName, 6);
+  // const truncatedProjectName = truncateProjectName(projectName, 6);
 
   // 메타마스크 서명창이 안뜨는 경우
   const handleClaimXPClick = async () => {
@@ -138,7 +138,7 @@ const DiscoverParticipantList: React.FC<ParticipantListProps> = ({ participants,
         walletAddress,
         date: new Date().toISOString(),
         participation: 'Discover',
-        activity: `Voted on Project ${truncatedProjectName}`,
+        activity: `Voted on Project ${projectName}`,
         xpEarned: xpPoints,
         transactionId: transactionHash,
         project_id: projectId, // Project ID 추가

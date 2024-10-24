@@ -47,7 +47,7 @@ const ModalContainer = styled.div`
 `;
 
 const ModalTitle = styled.h2`
-  color: #404040
+  color: #404040;
   margin-top: 30px;
   float: left;
   margin-left: 10px;

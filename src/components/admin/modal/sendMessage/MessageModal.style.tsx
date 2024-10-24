@@ -142,9 +142,7 @@ export const Option = styled.input`
   border: 1px solid rgba(0, 0, 0, 0.5);
 
   label {
-    color: #404040
-
-    font-family: Inter;
+    color: #404040;
     font-size: 16px;
     font-style: normal;
     font-weight: 300;

@@ -132,7 +132,7 @@ export const ParticipationCard = styled.div`
 export const ProgressText = styled.span`
   font-size: 18px;
   font-weight: 400;
-  color: #404040
+  color: #404040;
   align-self: flex-end;
   margin-bottom: 10px;
 `;
@@ -175,7 +175,6 @@ export const DealRoundText = styled.div`
 export const DealRaisingText = styled.div`
   color: black;
   font-size: 25px;
-  font-family: Inter;
   font-weight: 400;
   word-wrap: break-word;
 `;
@@ -231,7 +230,8 @@ export const CountdownValue = styled.div`
   font-size: 14px;
   font-weight: 600;
   background-color: #f8f8fa;
-  color: #404040 @media (max-width: 768px) {
+  color: #404040;
+  @media (max-width: 768px) {
     font-size: 20px;
   }
 `;

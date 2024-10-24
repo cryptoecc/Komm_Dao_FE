@@ -18,7 +18,7 @@ export const DealCardContainer = styled.div`
 `;
 
 export const DealText = styled.div`
-  color: #404040
+  color: #404040;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;

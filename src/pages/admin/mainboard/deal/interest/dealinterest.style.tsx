@@ -13,7 +13,6 @@ export const DiscoverContainer = styled.div`
 
 export const Title = styled.h1`
   color: #1a0737;
-  font-family: Inter;
   font-size: 30px;
   font-style: normal;
   font-weight: 400;
@@ -114,7 +113,7 @@ export const TableCell = styled.td<{ $isSelected?: boolean }>`
     left: 50%;
     transform: translateX(-50%);
     background: #fff;
-    color: #404040
+    color: #404040;
     border: 1px solid #ddd;
     padding: 10px;
     z-index: 10;
@@ -175,7 +174,7 @@ export const Popup = styled.div`
   position: fixed;
   border-radius: 10px;
   background: #fff;
-  color: #404040
+  color: #404040;
   border: 1px solid #ddd;
   padding: 10px;
   z-index: 10;

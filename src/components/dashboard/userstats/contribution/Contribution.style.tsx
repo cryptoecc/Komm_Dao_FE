@@ -14,7 +14,7 @@ export const ContributionCardContainer = styled.div`
 `;
 
 export const ContributionText = styled.div`
-  color: #404040
+  color: #404040;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
