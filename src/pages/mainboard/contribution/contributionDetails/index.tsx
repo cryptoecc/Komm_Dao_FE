@@ -100,23 +100,27 @@ const DealDtailsPage: React.FC = () => {
   }
 
   return (
-    <PageContainer>
-      <WalletWrap>
-        <Wallet
-          address={userData.walletAddress}
-          username={userData.name}
-          profileImage={userData.profileImage}
-          expertise={userData.expertise}
-        />
-      </WalletWrap>
-      <BackButton onClick={() => navigate(-1)}>
-        <BackLink>
-          <img src={backArrow} alt="Back Arrow" /> {/* 이미지로 대체 */}Back to Contribution
-        </BackLink>
-      </BackButton>
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '30px' }}>
+        <WalletWrap>
+          <Wallet
+            address={userData.walletAddress}
+            username={userData.name}
+            profileImage={userData.profileImage}
+            expertise={userData.expertise}
+          />
+        </WalletWrap>
+        <BackButton onClick={() => navigate(-1)}>
+          <BackLink>
+            <img src={backArrow} alt="Back Arrow" /> {/* 이미지로 대체 */}Back to Contribution
+          </BackLink>
+        </BackButton>
+      </div>
 
-      <ContributionDetail />
-    </PageContainer>
+      <PageContainer>
+        <ContributionDetail />
+      </PageContainer>
+    </>
   );
 };
 

@@ -38,7 +38,7 @@ import axios from 'axios';
 import { API_BASE_URL } from 'src/utils/utils';
 import defaultDealIcon from 'src/assets/deal/MYX.png';
 import defaultBannerImg from 'src/assets/deal/DELEGATE_banner.png';
-import inviteImg from 'src/assets/contribution/inviteIcon.png';
+import inviteImg from 'src/assets/contribution/invite_latest.png';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { XpClaim_ABI } from 'src/configs/contract-abi/XpClaim';

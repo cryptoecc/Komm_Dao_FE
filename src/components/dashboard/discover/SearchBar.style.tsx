@@ -20,12 +20,15 @@ export const SearchInput = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
+  /* align-items: center; */
   padding-left: 10px; /* Add padding to the left of the input text */
 `;
 
 export const SearchIcon = styled.img`
+  padding-top: 3px;
   width: 30px;
   height: 30px;
+  /* align-items: center; */
   cursor: pointer;
 `;
 

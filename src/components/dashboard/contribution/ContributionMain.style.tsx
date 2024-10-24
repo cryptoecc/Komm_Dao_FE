@@ -76,7 +76,7 @@ export const ProjectLogo = styled.img`
 
 export const ProjectTitle = styled.div`
   color: #404040;
-  height: 80px;
+  height: 70px;
   font-size: 30px;
   font-weight: 600;
   word-wrap: break-word;

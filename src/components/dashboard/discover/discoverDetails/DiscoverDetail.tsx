@@ -121,7 +121,7 @@ const DiscoverDetail = () => {
               <img src={images.discord} alt="Language" />
             </a>
           )}
-          <ShareIcon src={images.share} alt="Share" onClick={() => setIsShareModalOpen(true)} />
+          {/* <ShareIcon src={images.share} alt="Share" onClick={() => setIsShareModalOpen(true)} /> */}
         </SocialIcons>
         <div>
           {!isInWatchlist && (

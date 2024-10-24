@@ -18,8 +18,7 @@ export const ProfileContainer = styled.div`
 
 export const Text = styled.p`
   color: #404040;
-  font-size: 36px;
-
+  font-size: 30px;
   font-weight: 600;
   line-height: normal;
 `;
@@ -27,7 +26,6 @@ export const Text = styled.p`
 export const SubText = styled.p`
   color: #404040;
   font-size: 24px;
-
   font-weight: 400;
   line-height: normal;
   margin-top: 20px;
@@ -172,6 +170,7 @@ export const CustomOption = styled.option`
 export const Input = styled.input`
   width: 400px;
   height: 60px;
+  font-size: 18px;
   margin-left: 50px;
   padding: 10px;
   border-radius: 10px;
@@ -183,8 +182,9 @@ export const Input = styled.input`
   color: #404040;
 
   &::placeholder {
+    /* padding-left: 10px; */
     color: rgba(0, 0, 0, 0.5);
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -198,10 +198,10 @@ export const TextArea = styled.textarea`
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   background: #f8f8fa;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   line-height: normal;
-  color: rgba(0, 0, 0, 0.5);
+  color: #404040;
 `;
 
 export const CheckboxWrapper = styled.div`
@@ -249,13 +249,13 @@ export const SaveButton = styled.button`
   /* align-items: center; */
   background: #7c4dff;
   width: 100px;
-  height: 58px;
+  height: 40px;
   color: #fff;
   border: none;
-  padding: 17px 26px;
+  padding: 8px 26px;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   line-height: normal;
   font-weight: 700;
 

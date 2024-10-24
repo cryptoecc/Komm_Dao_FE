@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export const Text = styled.p`
   color: #404040;
-  font-family: Inter;
-  font-size: 36px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -11,7 +10,6 @@ export const Text = styled.p`
 
 export const SubText = styled.p`
   color: #404040;
-  font-family: Inter;
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -25,17 +23,17 @@ export const Wrap = styled.div`
 `;
 
 export const Button = styled.button`
-  height: 58px;
-  padding: 17px 26px;
+  height: 40px;
+  padding: 8px 26px;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 18px;
   background: #6a5feb;
   margin-top: 30px;
 
   color: #fbfbff;
   font-size: 20px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   line-height: normal;
   cursor: pointer;
 

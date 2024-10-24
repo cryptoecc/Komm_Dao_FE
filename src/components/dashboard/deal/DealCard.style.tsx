@@ -9,7 +9,7 @@ export const DealCardContainer = styled.div`
   /* padding: 5px; */
   /* margin-left: 10px; */
   /* width: 100%; */
-  height: 459px;
+  height: 540px;
   box-sizing: border-box;
 
   @media (min-width: 600px) {
@@ -35,7 +35,7 @@ export const DealItem = styled.div`
   border-radius: 30px;
   padding: 20px;
   width: 100%;
-  height: 459px;
+  height: 540px;
   max-width: 512px;
   position: relative;
   transition: border 0.3s ease, border-radius 0.3s ease;
@@ -92,25 +92,26 @@ export const StatusBadge = styled.div<{ $status: 'Open' | 'Closed' }>`
   font-weight: 700;
   background: ${(props) =>
     props.$status === 'Open'
-      ? 'linear-gradient(0deg, #F1ECFF 0%, #F1ECFF 100%)'
+      ? 'linear-gradient(0deg, #EEEDFD 0%, #EEEDFD 100%)'
       : 'linear-gradient(0deg, #DADADB 0%, #DADADB 100%)'};
-  color: ${(props) => (props.$status === 'Open' ? '#875CFF' : '#555555')};
+  color: ${(props) => (props.$status === 'Open' ? '#6A5FEB' : '#555')};
 `;
 
 export const DealTitle = styled.h3`
   padding: 5px;
-  font-size: 22px;
+  font-size: 24px;
+  color: #404040;
   font-weight: 600;
   margin-top: 50px;
 `;
 
 export const DealDescription = styled.p`
-  font-size: 18px;
-  font-weight: 400;
-  height: 100px;
-  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  height: 170px;
+  color: #404040;
   margin: 10px 0;
-  max-height: 100px;
+  /* max-height: 100px; */
   overflow-y: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -131,13 +132,13 @@ export const GaugeWrapper = styled.div`
 export const Gauge = styled.div<{ $percentage: number }>`
   width: ${(props) => props.$percentage}%;
   height: 100%;
-  background: #875cff;
+  background: #6a5feb;
   transition: width 0.3s ease;
   border-radius: 8px;
 `;
 
 export const PercentageText = styled.span`
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   color: #404040;
   text-align: right;

@@ -150,7 +150,7 @@ const ProfileDetails: React.FC = () => {
       <MembershipNftWrap>
         <MembershipNftTitle>Membership NFT</MembershipNftTitle>
         <MembershipNftWrapInner>
-          {/* <OpenSeaIcon src={images.openSeaIcon} alt="OpenSea Icon" /> */}
+          <OpenSeaIcon src={images.openSeaIcon} alt="OpenSea Icon" />
           <OpenSeaLink href={profileData.membershipNft} target="_blank" rel="noopener noreferrer">
             View on OpenSea
           </OpenSeaLink>

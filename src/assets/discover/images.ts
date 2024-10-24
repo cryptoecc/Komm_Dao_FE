@@ -1,5 +1,5 @@
 import calendar_btn from './calendar_btn.png';
-import checked_star from './checked_star.png';
+import checked_star from './starcolor_latest.png';
 import star from './star.png';
 import search from './search.png';
 import sorticon from './updown.png';
@@ -9,7 +9,7 @@ import discord from './discord_latest.png';
 import language from './language_latest.svg';
 import user from './default_image.png';
 import share from './share_latest.svg';
-import star2 from './star2.png';
+import star2 from './stargray_latest.png';
 import profile from './profile_default.png';
 import exclamationIcon from './exclamationIcon.png';
 import telegram from './telegram.png';

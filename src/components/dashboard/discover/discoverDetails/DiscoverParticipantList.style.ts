@@ -40,8 +40,8 @@ export const RightSection = styled.div`
 
 export const ParticipantItem = styled.div`
   img {
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     margin: 0; /* Ensure no extra margin is added */
   }
 `;

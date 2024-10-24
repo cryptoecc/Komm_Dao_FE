@@ -165,13 +165,21 @@ const AddEmail: React.FC<StepProps> = ({ onComplete, fromProfileUpdate, onUpdate
                 placeholder="Verification code"
                 value={verificationCode}
                 onChange={handleVerificationCodeChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault(); // 엔터키를 눌렀을 때 기본 폼 제출 동작을 막음
+                  }
+                }}
               />
             </Code>
             {verificationError && <ErrorMessage>{verificationError}</ErrorMessage>}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
               <div
                 style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}
-                onClick={() => setIsEmailSent(false)}
+                onClick={(e) => {
+                  e.preventDefault(); // 기본 동작을 막음
+                  setIsEmailSent(false); // 클릭 시 이메일 수정 모드로
+                }}
               >
                 <EditImage />
                 <Edit>Edit Email</Edit>

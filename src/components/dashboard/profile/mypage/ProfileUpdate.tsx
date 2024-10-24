@@ -328,7 +328,7 @@ const ProfileUpdate: React.FC = () => {
               />
               <InputIcon src={images.edit_black} alt="Edit" />
             </NameField>
-            <MembershipNftField>
+            {/* <MembershipNftField>
               <Label>Membership NFT</Label>
               <MembershipNftInputWrapper>
                 <MembershipNftIcon src={images.openSeaIcon} alt="OpenSea Icon" />
@@ -342,7 +342,7 @@ const ProfileUpdate: React.FC = () => {
                   onChange={handleInputChange}
                 />
               </MembershipNftInputWrapper>
-            </MembershipNftField>
+            </MembershipNftField> */}
           </HorizontalGroup>
           <EmailField>
             <Label>Email</Label>
@@ -386,18 +386,18 @@ const ProfileUpdate: React.FC = () => {
                 isSearchable={false}
               />
             </ExpertiseField>
-            <CheckboxContainer>
+            {/* <CheckboxContainer>
               <CheckboxLabel htmlFor="subscribe-checkbox">
                 <Checkbox2
-                  id="subscribe-checkbox" // 체크박스에 id 추가
+                  id="subscribe-checkbox" 
                   type="checkbox"
                   checked={isSubscribed}
                   onChange={(e) => setIsSubscribed(e.target.checked)}
                 />
-                <CustomCheckbox /> {/* id를 통해 연결 */}
+                <CustomCheckbox /> 
                 Stay up to date with Komm DAO
               </CheckboxLabel>
-            </CheckboxContainer>
+            </CheckboxContainer> */}
           </HorizontalGroup>
           <ButtonGroup>
             <Button className="cancel" onClick={handleCancel}>

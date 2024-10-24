@@ -1,5 +1,5 @@
-import twitter from './twitter.png';
-import discord from './discord.png';
+import twitter from './x_latest.png';
+import discord from './discord_latest.png';
 import language from './language.png';
 import MYX from './MYX.png';
 import MYX_bannerr from './MYX_bannerr.png';

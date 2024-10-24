@@ -220,8 +220,8 @@ export const OpenSeaIcon = styled.img`
 `;
 
 export const OpenSeaLink = styled.a`
-  margin-top: 5px;
-  margin-left: 20px;
+  /* margin-top: 5px; */
+
   color: #6a5feb;
   font-size: 14px;
   font-style: normal;

@@ -264,7 +264,7 @@ export const StatValue = styled.div`
 `;
 
 export const StyledLinkWrap = styled.div`
-  width: 212px;
+  width: 180px;
   display: flex;
   align-items: center;
   /* margin-top: 10px; */
@@ -279,7 +279,7 @@ export const StyledLinkWrap = styled.div`
 export const StyledLink = styled(Link)`
   align-items: center;
   color: #6a5feb;
-  font-size: 20px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;

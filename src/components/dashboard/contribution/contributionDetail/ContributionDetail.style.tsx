@@ -322,24 +322,24 @@ export const InviteSection = styled.div`
 
   h3 {
     color: #404040;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 600;
     margin-bottom: 5px;
   }
 
   p {
-    width: 180px;
+    width: 220px;
     color: #404040;
     margin-top: 10px;
     margin-left: 30px;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 400;
   }
 `;
 
 export const InviteIcon = styled.img`
-  width: 38px;
-  height: 38px;
+  width: 50px;
+  height: 50px;
 `;
 
 export const InviteButton = styled.button`
@@ -347,11 +347,12 @@ export const InviteButton = styled.button`
   color: white;
   border: none;
   border-radius: 20px;
-  padding: 10px 26px;
-  font-size: 14px;
+  padding: 8px 30px;
+  font-size: 18px;
   font-weight: 700;
   margin-right: 20px;
-  margin-top: 20px;
+  margin-top: 12px;
+  height: 45px;
   cursor: pointer;
   /* position: relative; */
   /* top: 40px; */

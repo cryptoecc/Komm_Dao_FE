@@ -18,6 +18,11 @@ const DiscoverContainer = styled.div`
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   position: relative;
+
+  @media (min-width: 1600px) {
+    margin-top: 60px;
+    /* margin-bottom: 70px; */
+  }
 `;
 
 const DiscoverdHeader = styled.div`

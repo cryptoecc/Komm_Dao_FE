@@ -9,10 +9,10 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  border: 7px #f2eeff solid;
+  border: 7px solid #f2eeff;
   border-radius: 10px;
   width: 60%;
-  max-width: 600px;
+  max-width: 800px;
   min-height: 80vh;
   margin: 0 auto;
   justify-content: space-between;
@@ -35,11 +35,11 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  color: #210d5c;
+  color: #564dba;
   font-size: 32px;
-  font-weight: 700;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  font-weight: 600;
+  margin-top: 50px;
+  /* margin-bottom: 20px; */
   text-align: center;
 
   @media (max-width: 768px) {
@@ -58,10 +58,11 @@ export const InputContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 80%;
-  height: 80px;
+  max-width: 500px;
+  height: 93px;
   background: white;
   border-radius: 10px;
-  border: 5px #d9d9d9 solid;
+  border: 5px solid #d9d9d9;
   padding: 10px;
   margin-bottom: 30px;
   position: relative;
@@ -85,8 +86,10 @@ export const Input = styled.input.attrs<InputProps>({ type: 'text' })`
   width: 60%;
   text-align: center;
   outline: none;
+  color: #5c5c5c;
+  font-weight: 500;
 
-  font-size: ${(props) => (props.isNumeric ? '28px' : '16px')};
+  font-size: ${(props) => (props.isNumeric ? '30px' : '16px')};
   margin-left: 70px;
 
   &::placeholder {
@@ -118,11 +121,12 @@ export const Input = styled.input.attrs<InputProps>({ type: 'text' })`
 `;
 
 export const USDTText = styled.span`
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.5);
   padding-right: 5px;
-  margin-right: 30px;
+  margin-right: 10px;
+  line-height: normal;
 
   @media (max-width: 768px) {
     font-size: 16px;
@@ -137,11 +141,12 @@ export const USDTText = styled.span`
 
 export const MaxButton = styled.button`
   position: absolute;
-  bottom: -40px;
+  bottom: -50px;
   right: 0;
   transform: translateX(-10%);
-  color: #7c4dff;
-  font-size: 24px;
+  color: #6a5feb;
+  line-height: normal;
+  font-size: 30px;
   font-weight: 500;
   background: none;
   border: none;
@@ -203,9 +208,9 @@ export const AllocationInfo = styled.div`
 `;
 
 export const AllocationText = styled.div`
-  color: #a380f9;
-  font-size: 20px;
-  font-weight: 700;
+  color: #6a5feb;
+  font-size: 24px;
+  font-weight: 600;
   text-align: left;
   white-space: nowrap;
 
@@ -220,9 +225,9 @@ export const AllocationText = styled.div`
 `;
 
 export const AllocationValue = styled.div`
-  color: black;
-  font-size: 18px;
-  font-weight: 400;
+  color: #404040;
+  font-size: 20px;
+  font-weight: 500;
   text-align: right;
   margin-top: 10px;
 
@@ -238,18 +243,19 @@ export const AllocationValue = styled.div`
 `;
 
 export const ContinueButton = styled.button`
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-bottom: 40px;
   padding: 15px 26px;
-  background: linear-gradient(0deg, #7c4dff 0%, #7c4dff 100%);
+  background: linear-gradient(0deg, #6a5feb 0%, #6a5feb 100%);
   color: white;
   border: none;
   border-radius: 20px;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   width: 100%;
   max-width: 180px;
+  height: 60px;
 
   @media (max-width: 768px) {
     font-size: 18px;

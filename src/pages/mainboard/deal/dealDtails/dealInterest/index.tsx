@@ -101,7 +101,7 @@ const DealInterestPage: React.FC = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '30px' }}>
         <BackButton onClick={() => navigate(-1)}>
           <ArrowIcon />
-          Back to Deal
+          Back to Deal Description
         </BackButton>
         <WalletWrap>
           <Wallet

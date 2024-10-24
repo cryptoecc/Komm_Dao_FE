@@ -29,15 +29,15 @@ export const AcceptButton = styled.button`
   background: #6a5feb;
   color: #fff;
   border: none;
-  padding: 17px 26px;
+  height: 40px;
+  padding: 8px 26px;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 20px;
-  font-weight: 700;
+  font-weight: 600;
   float: right;
   align-items: center;
-  height: 58px;
 
   &:hover {
     background: #564dba;

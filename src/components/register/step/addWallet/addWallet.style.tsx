@@ -4,7 +4,7 @@ export const Container = styled.div``;
 
 export const Text = styled.p`
   color: #404040;
-  font-size: 36px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -27,17 +27,17 @@ export const WalletContainer = styled.div`
   margin-top: 40px;
 
   button {
-    background-color: #7c4dff;
+    background-color: #6a5feb;
     color: white;
     border: none;
     padding: 17px 26px;
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
     line-height: normal;
     border-radius: 20px;
     cursor: pointer;
     &:hover {
-      background-color: #7a52e3;
+      background-color: #564dba;
     }
   }
 `;

@@ -4,14 +4,14 @@ import EditImg from 'src/assets/register/Edit.svg';
 
 export const Text = styled.p`
   color: #404040;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 600;
   line-height: normal;
 `;
 
 export const SubText = styled.p`
   color: #404040;
-  font-size: 20px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -59,14 +59,15 @@ export const NextButton = styled.button`
   width: 100px; */
   display: inline-flex;
   justify-content: center;
+  height: 40px;
   /* right: 50px; */
   background: var(--Purple-900, #6a5feb);
   border: none;
   border-radius: 20px;
-  padding: 10px 30px;
+  padding: 9px 26px;
   color: #fff;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
   float: right;
 

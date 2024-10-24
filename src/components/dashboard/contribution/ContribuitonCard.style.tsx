@@ -8,6 +8,7 @@ export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
+  height: 268px;
   /* margin: 10px; */
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 트랜지션 추가 */
   cursor: pointer;

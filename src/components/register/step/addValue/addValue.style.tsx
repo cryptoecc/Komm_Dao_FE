@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Text = styled.p`
   color: #404040;
-  font-size: 36px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -13,7 +13,7 @@ export const SubText = styled.p`
   color: #404040;
   font-size: 24px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
 `;
 
@@ -27,13 +27,13 @@ export const Textarea = styled.textarea`
   margin-top: 35px;
 
   color: #404040;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 
   &::placeholder {
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -58,17 +58,16 @@ export const ErrorMessage = styled.p`
 
 export const Submit = styled.button`
   background: #6a5feb;
-  color: #fbfbff;
+  color: #fff;
   border: none;
-  padding: 17px 26px;
+  padding: 9px 26px;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 10px;
-  font-weight: 700;
+  font-weight: 600;
   align-items: center;
-  height: 58px;
-
+  height: 40px;
   /* margin-left: 500px; */
   /* float: right; */
   /* margin-left: 50px; */

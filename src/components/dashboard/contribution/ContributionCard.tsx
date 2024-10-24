@@ -71,6 +71,8 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
     });
   };
 
+  console.log(type);
+
   return (
     <CardContainer onClick={handleCardClick}>
       <ImageContainer>
@@ -87,12 +89,16 @@ const ContributionCard: React.FC<ContributionCardProps> = ({
         <DateRange>
           {startDate} ~ {endDate}
         </DateRange>
-        <ProgressBarContainer>
-          <ProgressBar $progress={progress} $maxProgress={maxProgress} />
-        </ProgressBarContainer>
-        <ProgressText>
-          {progress} / {maxProgress}
-        </ProgressText>
+        {type !== 'Daily-check' && (
+          <>
+            <ProgressBarContainer>
+              <ProgressBar $progress={progress} $maxProgress={maxProgress} />
+            </ProgressBarContainer>
+            <ProgressText>
+              {progress} / {maxProgress}
+            </ProgressText>
+          </>
+        )}
       </CardContent>
     </CardContainer>
   );

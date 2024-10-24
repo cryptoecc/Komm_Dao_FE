@@ -62,8 +62,9 @@ export const LogoImage = styled.img`
 
 export const DealNameText = styled.h2`
   font-size: 24px;
-  font-weight: 700;
-  color: #333;
+  font-weight: 600;
+  color: #404040;
+  line-height: normal;
 `;
 
 export const BannerImage = styled.img`
@@ -89,16 +90,16 @@ export const IconWrapper = styled.div`
 `;
 
 export const Icon = styled.img`
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
 `;
 
 export const DealSummary = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  color: black;
-  line-height: 1.6;
+  font-size: 16px;
+  font-weight: 400;
+  color: #404040;
+  line-height: 30px;
   overflow-y: auto;
   max-width: 650px;
   min-height: 200px;
@@ -114,7 +115,7 @@ export const DealSummary = styled.div`
 
 export const ParticipationCard = styled.div`
   background: #ffffff;
-  border: 7px solid #f3efff;
+  border: 7px solid #eeedfd;
   border-radius: 20px;
   padding: 40px;
   width: 100%;
@@ -131,7 +132,7 @@ export const ParticipationCard = styled.div`
 
 export const ProgressText = styled.span`
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   color: #404040;
   align-self: flex-end;
   margin-bottom: 10px;
@@ -140,7 +141,7 @@ export const ProgressText = styled.span`
 export const ProgressBar = styled.div`
   width: 100%;
   height: 10px;
-  background: #e0e0e0;
+  background: #fff;
   border-radius: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -150,8 +151,8 @@ export const ProgressBar = styled.div`
 export const ProgressFill = styled.div<{ percentage: number }>`
   width: ${(props) => props.percentage}%;
   height: 100%;
-  background: #875cff;
-  border-radius: 5px;
+  background: #6a5feb;
+  border-radius: 10px;
   transition: width 0.3s ease;
 `;
 
@@ -167,15 +168,16 @@ export const DealInfoRow = styled.div`
 `;
 
 export const DealRoundText = styled.div`
-  font-size: 32px;
+  font-size: 24px;
+  color: #404040;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 export const DealRaisingText = styled.div`
-  color: black;
-  font-size: 25px;
-  font-weight: 400;
+  color: #404040;
+  font-size: 20px;
+  font-weight: 500;
   word-wrap: break-word;
 `;
 
@@ -198,9 +200,9 @@ export const CountdownText = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-top: 30px;
-  font-size: 20px;
-  font-weight: 400;
-  color: #a380f9;
+  font-size: 18px;
+  font-weight: 600;
+  color: #6a5feb;
   width: 100%;
 
   @media (max-width: 768px) {
@@ -238,8 +240,8 @@ export const CountdownValue = styled.div`
 
 export const CountdownLabel = styled.div`
   font-size: 14px;
-  font-weight: 400;
-  color: black;
+  font-weight: 500;
+  color: #404040;
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -248,14 +250,16 @@ export const CountdownLabel = styled.div`
 
 export const ParticipateButton = styled.button`
   margin-top: 20px;
-  background-color: #875cff;
-  color: white;
+  background-color: #6a5feb;
+  color: #fbfbff;
   border: none;
-  padding: 15px 30px;
+  padding: 7px 26px;
   border-radius: 20px;
   font-size: 18px;
   cursor: pointer;
   align-self: flex-end;
+  height: 40px;
+  font-weight: 600;
 
   @media (max-width: 768px) {
     align-self: flex-start;
@@ -265,7 +269,7 @@ export const ParticipateButton = styled.button`
   }
 
   &:hover {
-    background-color: #774bcc;
+    background-color: #564dba;
   }
 
   &:disabled,

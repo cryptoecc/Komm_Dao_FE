@@ -71,14 +71,14 @@ export const CancelButton = styled.button`
   display: inline-flex;
   justify-content: center;
   background: #fff;
-  height: 58px;
+  height: 40px;
   border: 1px solid #000;
   border-radius: 20px;
   padding: 17px 26px;
   align-items: center;
   border: 1px solid #000;
   color: #404040;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -86,15 +86,15 @@ export const CancelButton = styled.button`
 `;
 
 export const SignButton = styled.button`
-  background-color: var(--Purple-900, #7c4dff);
+  background-color: var(--Purple-900, #6a5feb);
   display: inline-flex;
-  height: 58px;
+  height: 40px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   color: #fff;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   line-height: normal;
   border: none;
   border-radius: 20px;
@@ -102,7 +102,13 @@ export const SignButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #7a52e3;
+    background-color: #564dba;
+  }
+
+  &:active {
+    border: 1px solid #6a5feb;
+    background: #fbfbff;
+    color: #6a5feb;
   }
 `;
 
