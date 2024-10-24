@@ -23,15 +23,15 @@ export const Wrap = styled.div`
 `;
 
 export const Button = styled.button`
-  height: 40px;
-  padding: 8px 26px;
+  height: 45px;
+  padding: 10px 26px;
   align-items: center;
   border-radius: 18px;
   background: #6a5feb;
   margin-top: 30px;
 
   color: #fbfbff;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;

@@ -60,14 +60,14 @@ export const Submit = styled.button`
   background: #6a5feb;
   color: #fff;
   border: none;
-  padding: 9px 26px;
+  padding: 10px 26px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 18px;
   margin-top: 10px;
   font-weight: 600;
   align-items: center;
-  height: 40px;
+  height: 45px;
   /* margin-left: 500px; */
   /* float: right; */
   /* margin-left: 50px; */

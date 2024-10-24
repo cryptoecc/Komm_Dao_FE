@@ -351,7 +351,7 @@ export const ButtonGroup = styled.div`
 `;
 
 export const Button = styled.button`
-  padding: 8px 24px;
+  padding: 10px 24px;
   border: none;
   border-radius: 5px;
   font-size: 18px;
@@ -378,15 +378,6 @@ export const Button = styled.button`
   &.save:hover {
     &:hover {
       background: #564dba;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
-    }
-  }
-  &.cancel:hover {
-    &:hover {
-      background: #d1d1e9;
-
       font-style: normal;
       font-weight: 600;
       line-height: normal;

@@ -253,12 +253,12 @@ export const ParticipateButton = styled.button`
   background-color: #6a5feb;
   color: #fbfbff;
   border: none;
-  padding: 7px 26px;
+  padding: 10px 26px;
   border-radius: 20px;
   font-size: 18px;
   cursor: pointer;
   align-self: flex-end;
-  height: 40px;
+  height: 45px;
   font-weight: 600;
 
   @media (max-width: 768px) {

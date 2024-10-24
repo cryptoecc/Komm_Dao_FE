@@ -59,12 +59,12 @@ export const NextButton = styled.button`
   width: 100px; */
   display: inline-flex;
   justify-content: center;
-  height: 40px;
+  height: 45px;
   /* right: 50px; */
   background: var(--Purple-900, #6a5feb);
   border: none;
   border-radius: 20px;
-  padding: 9px 26px;
+  padding: 10px 26px;
   color: #fff;
   font-size: 18px;
   font-weight: 600;

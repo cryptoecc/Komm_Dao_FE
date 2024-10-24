@@ -46,13 +46,14 @@ import Spinner from 'src/components/spinner/Spinner';
 import DailyCheckSection from './dailyCheckComponent/DailyCheckSection';
 import { checkPrime } from 'crypto';
 import RateProjectSection from './rateProjectComponent/RateProjectSection';
+import { images } from 'src/assets/dashboard/images';
 
 dayjs.extend(customParseFormat);
 
 interface Participant {
   id: number;
-  name: string;
-  avatarUrl: string;
+  user_name: string;
+  user_image_link: string;
 }
 
 interface InviteDetail {
@@ -225,18 +226,23 @@ const ContributionDetail: React.FC = () => {
     }
   };
 
+  const participantList = async () => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/contribution/get-participant`, {
+        cont_id: id,
+        cont_type: type,
+      });
+
+      console.log(response.data);
+      setParticipants(response.data.participants);
+    } catch (error) {
+      console.log('Error fetching participant data', error);
+    }
+  };
+
   useEffect(() => {
     // 더미 데이터를 사용하여 참가자 목록을 설정
-    const dummyParticipants: Participant[] = [
-      { id: 1, name: 'User 1', avatarUrl: 'https://randomuser.me/api/portraits/men/1.jpg' },
-      { id: 2, name: 'User 2', avatarUrl: 'https://randomuser.me/api/portraits/women/2.jpg' },
-      { id: 3, name: 'User 3', avatarUrl: 'https://randomuser.me/api/portraits/men/3.jpg' },
-      { id: 4, name: 'User 4', avatarUrl: 'https://randomuser.me/api/portraits/women/4.jpg' },
-      { id: 5, name: 'User 5', avatarUrl: 'https://randomuser.me/api/portraits/men/5.jpg' },
-    ];
-
-    setParticipants(dummyParticipants);
-    setParticipantCount(dummyParticipants.length); // 참여자 수 저장
+    participantList();
   }, []);
 
   useEffect(() => {
@@ -526,8 +532,15 @@ const ContributionDetail: React.FC = () => {
               <AvatarList>
                 {participants.map((participant) => (
                   <Avatar key={participant.id}>
-                    <img src={participant.avatarUrl} alt={participant.name} />
-                    {participant.name}
+                    <img
+                      src={
+                        participant.user_image_link
+                          ? `${API_BASE_URL}/${participant.user_image_link}`
+                          : images.profileDefaultIcon
+                      }
+                      alt={participant.user_name || 'Default Avatar'}
+                    />
+                    {participant.user_name}
                   </Avatar>
                 ))}
               </AvatarList>

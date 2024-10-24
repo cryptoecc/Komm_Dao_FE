@@ -29,8 +29,9 @@ export const AcceptButton = styled.button`
   background: #6a5feb;
   color: #fff;
   border: none;
-  height: 40px;
-  padding: 8px 26px;
+  height: 45px;
+  padding: 10px 26px;
+  /* text-align: center; */
   border-radius: 20px;
   cursor: pointer;
   font-size: 18px;

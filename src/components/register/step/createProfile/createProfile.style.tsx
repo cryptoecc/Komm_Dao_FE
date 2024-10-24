@@ -249,15 +249,15 @@ export const SaveButton = styled.button`
   /* align-items: center; */
   background: #7c4dff;
   width: 100px;
-  height: 40px;
+  height: 45px;
   color: #fff;
   border: none;
-  padding: 8px 26px;
+  padding: 10px 26px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 18px;
   line-height: normal;
-  font-weight: 700;
+  font-weight: 600;
 
   &:hover {
     background: #6b42d9;

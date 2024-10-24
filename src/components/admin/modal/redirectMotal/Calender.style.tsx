@@ -6,17 +6,17 @@ export const ButtonGroup = styled.div`
 `;
 
 export const ConfirmButton = styled.button`
-  background: var(--Purple-900, #7c4dff);
+  background: var(--Purple-900, #6a5feb);
   color: white;
   border: none;
   border-radius: 20px;
-  font-weight: 700;
-  padding: 14px 34px;
-  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 34px;
+  font-size: 18px;
   cursor: pointer;
 
   &:hover {
-    background-color: #6e35b2;
+    background-color: #564dba;
   }
 `;
 

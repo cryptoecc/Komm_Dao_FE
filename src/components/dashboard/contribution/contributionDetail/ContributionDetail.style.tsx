@@ -261,16 +261,16 @@ export const AvatarList = styled.div`
 export const Avatar = styled.div`
   gap: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  font-size: 12px;
-  color: #333;
+  font-size: 14px;
+  font-weight: 400;
+  color: #404040;
 
   img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-bottom: 5px;
   }
 `;
 
